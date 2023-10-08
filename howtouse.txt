@@ -11,3 +11,9 @@ git add .
 
 //コミットを追加 まだアップロードされてない
 git commit -m "-m is an option for adding messages"
+
+//***をmainにプッシュ ここでアップロードされる
+git push *** main
+
+//ログを確認
+git log
