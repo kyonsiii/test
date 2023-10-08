@@ -1,0 +1,13 @@
+cd git\xxx
+
+//ブランチを確認
+git branch
+
+//変更を確認
+git status
+
+//変更を追加(フォルダ内全部) まだアップロードされてない
+git add .
+
+//コミットを追加 まだアップロードされてない
+git commit -m "-m is an option for adding messages"
