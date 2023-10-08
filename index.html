@@ -16,6 +16,8 @@
 
             td, th{
                 border: 1px solid pink;
+                text-align: left;
+                vertical-align: top;
             }
             img.tiny{
                 width: 2em;
@@ -99,15 +101,8 @@
         <table id="result">
             <thead>
                 <tr>
-                    <th>No.</th>
                     <th>ポケモン</th>
-                    <th>睡眠タイプ</th>
-                    <th>得意</th>
-                    <th>きのみ</th>
-                    <th>たべもの1</th>                   
-                    <th>スキル</th>
-                    <th>FP</th>
-                    <th>sec</th>
+                    <th>詳細</th>
                 </tr>
             </thead>
             <tbody id="result_rows">
@@ -193,6 +188,18 @@
                 getTr(){
                     let r = document.createElement("tr");
                     let c;
+
+                    c = r.insertCell();
+                    c.innerHTML = ("No." + this.no + " ") + this.name + " (" + this.sleepType + ")"
+                                + "<br>" + "<img src=\"img/poke/" + String(this.no).padStart(3, '0') + ".png\" class=\"normal\">";
+
+                    c = r.insertCell();
+                    c.innerHTML = ("得意: " + this.specialty).padEnd(8) + "- " + this.skill
+                                + "<br>" + "<img src=\"img/berry/" + this.berry + ".png\" class=\"tiny\">" + this.berry
+                                + "<br>" + "<img src=\"img/food/" + this.food1 + ".png\" class=\"tiny\">" + this.food1
+                                + "<br>" + "<img src=\"img/food/" + this.food2 + ".png\" class=\"tiny\">" + this.food2
+                                + "<br>" + "<img src=\"img/food/" + this.food3 + ".png\" class=\"tiny\">" + this.food3;
+                    /*
                     c = r.insertCell(); c.textContent = this.no;
                     c = r.insertCell(); c.innerHTML = this.name + "<br>" + "<img src=\"img/poke/" + String(this.no).padStart(3, '0') + ".png\" class=\"normal\">";
                     c = r.insertCell(); c.textContent = this.sleepType;
@@ -204,9 +211,14 @@
                     c = r.insertCell(); c.textContent = this.skill;
                     c = r.insertCell(); c.textContent = this.friendp;
                     c = r.insertCell(); c.textContent = this.sec;
+                    */
+
                     return r;
                 }
 
+                getTr2(){
+
+                }
 
                 containsFood(food){
                     return this.food1 == food || this.food2 == food || this.food3 == food;
