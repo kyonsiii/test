@@ -25,8 +25,8 @@
             }
 
             img.normal{
-                width: 6em;
-                height: 6em;
+                width: 5em;
+                height: 5em;
             }
         </style>
     </head>
@@ -190,13 +190,15 @@
                     let c;
 
                     c = r.insertCell();
-                    c.innerHTML = ("No." + this.no + " ") + this.name + " (" + this.sleepType + ")"
-                                + "<br>" + "<img src=\"img/poke/" + String(this.no).padStart(3, '0') + ".png\" class=\"normal\">";
+                    c.innerHTML = ("No." + this.no + " ") + this.name 
+                                + "<br>" + "<img src=\"img/poke/" + String(this.no).padStart(3, '0') + ".png\" class=\"normal\">"
+                                + "<br>睡眠: " + this.sleepType
+                                + "<br>得意: " + this.specialty
+                                + "<br>" + this.skill;
 
                     c = r.insertCell();
-                    c.innerHTML = ("得意: " + this.specialty).padEnd(8) + "- " + this.skill
-                                + "<br>" + "<img src=\"img/berry/" + this.berry + ".png\" class=\"tiny\">" + this.berry
-                                + "<br>" + "<img src=\"img/food/" + this.food1 + ".png\" class=\"tiny\">" + this.food1
+                    c.innerHTML = "<img src=\"img/berry/" + this.berry + ".png\" class=\"tiny\">" + this.berry
+                                + "<br><br>" + "<img src=\"img/food/" + this.food1 + ".png\" class=\"tiny\"><b>" + this.food1 + "(確定)</b>"
                                 + "<br>" + "<img src=\"img/food/" + this.food2 + ".png\" class=\"tiny\">" + this.food2
                                 + "<br>" + "<img src=\"img/food/" + this.food3 + ".png\" class=\"tiny\">" + this.food3;
                     /*
@@ -228,7 +230,6 @@
 
             //最後のカンマの消し忘れに注意
             const pokemons = [
-                new pokemon(0, "NULL"),
                 new pokemon(1, "フシギダネ", "うとうと", "食材", "ドリのみ", "あまいミツ", "あんみんトマト", "ほっこりポテト", "食材ゲットS", 5, 4400),
                 new pokemon(2, "フシギソウ", "うとうと", "食材", "ドリのみ", "あまいミツ", "あんみんトマト", "ほっこりポテト", "食材ゲットS", 12, 3300),
                 new pokemon(3, "フシギバナ", "うとうと", "食材", "ドリのみ", "あまいミツ", "あんみんトマト", "ほっこりポテト", "食材ゲットS", 20, 2800),
