@@ -161,7 +161,7 @@
             function reset(onlyTBody){
                 resultTBody.innerHTML = "";
                 if (onlyTBody) return;
-                console.log("A");
+
                 box_specialty.options[0].selected = true;
                 box_berry.options[0].selected = true;
                 box_food.options[0].selected = true;
@@ -200,26 +200,10 @@
                                 + "<br><br>" + "<img src=\"img/food/" + this.food1 + ".png\" class=\"tiny\"><b>" + this.food1 + "(確定)</b>"
                                 + "<br>" + "<img src=\"img/food/" + this.food2 + ".png\" class=\"tiny\">" + this.food2
                                 + "<br>" + "<img src=\"img/food/" + this.food3 + ".png\" class=\"tiny\">" + this.food3;
-                    /*
-                    c = r.insertCell(); c.textContent = this.no;
-                    c = r.insertCell(); c.innerHTML = this.name + "<br>" + "<img src=\"img/poke/" + String(this.no).padStart(3, '0') + ".png\" class=\"normal\">";
-                    c = r.insertCell(); c.textContent = this.sleepType;
-                    c = r.insertCell(); c.textContent = this.specialty;
-                    c = r.insertCell(); c.innerHTML = "<img src=\"img/berry/" + this.berry + ".png\" class=\"tiny\">" + this.berry;
-                    c = r.insertCell(); c.innerHTML = "<img src=\"img/food/" + this.food1 + ".png\" class=\"tiny\">" + this.food1 + "<br>"
-                                                    + "<img src=\"img/food/" + this.food2 + ".png\" class=\"tiny\">" + this.food2 + "<br>" 
-                                                    + "<img src=\"img/food/" + this.food3 + ".png\" class=\"tiny\">" + this.food3;
-                    c = r.insertCell(); c.textContent = this.skill;
-                    c = r.insertCell(); c.textContent = this.friendp;
-                    c = r.insertCell(); c.textContent = this.sec;
-                    */
 
                     return r;
                 }
 
-                getTr2(){
-
-                }
 
                 containsFood(food){
                     return this.food1 == food || this.food2 == food || this.food3 == food;
@@ -338,12 +322,6 @@
                 new pokemon(471, "グレイシア", "ぐっすり", "スキル", "チーゴのみ", "モーモーミルク", "リラックスカカオ", "マメミート", "料理パワーアップS", 20, 3200),
                 new pokemon(700, "ニンフィア", "すやすや", "スキル", "モモンのみ", "モーモーミルク", "リラックスカカオ", "マメミート", "げんきオールS", 20, 2600)
             ];
-            
-            
-            
-            
-
-
         </script>
     </body>
 
