@@ -17,18 +17,84 @@
             td, th{
                 border: 1px solid pink;
             }
+            img.tiny{
+                width: 2em;
+                height: 2em;
+            }
 
+            img.normal{
+                width: 6em;
+                height: 6em;
+            }
         </style>
     </head>
 
 
     <body>
-        <button id="executeButton">実行1</button>
-        <select id="pokeNo">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
+        <button id="button_reset">リセット</button>
+        <select id="select_specialty">
+            <option value = "----">----</option>
+            <option value = "スキル">スキル</option>
+            <option value = "きのみ">きのみ</option>
+            <option value = "食材">食材</option>
         </select>
+
+
+        <select id="select_berry">
+            <option value = "----">----</option>
+            <option value = "ウイのみ">ウイのみ</option>
+            <option value = "ウブのみ">ウブのみ</option>
+            <option value = "オボンのみ">オボンのみ</option>
+            <option value = "オレンのみ">オレンのみ</option>
+            <option value = "カゴのみ">カゴのみ</option>
+            <option value = "キーのみ">キーのみ</option>
+            <option value = "クラボのみ">クラボのみ</option>
+            <option value = "シーヤのみ">シーヤのみ</option>
+            <option value = "チーゴのみ">チーゴのみ</option>
+            <option value = "ドリのみ">ドリのみ</option>
+            <option value = "ヒメリのみ">ヒメリのみ</option>
+            <option value = "フィラのみ">フィラのみ</option>
+            <option value = "ブリーのみ">ブリーのみ</option>
+            <option value = "ベリブのみ">ベリブのみ</option>
+            <option value = "マゴのみ">マゴのみ</option>
+            <option value = "モモンのみ">モモンのみ</option>
+            <option value = "ヤチェのみ">ヤチェのみ</option>
+            <option value = "ラムのみ">ラムのみ</option>
+        </select>
+
+        <select id="select_food">
+            <option value = "----">----</option>
+            <option value="あじわいキノコ">あじわいキノコ</option>
+            <option value="あったかジンジャー">あったかジンジャー</option>
+            <option value="あまいミツ">あまいミツ</option>
+            <option value="あんみんトマト">あんみんトマト</option>
+            <option value="おいしいシッポ">おいしいシッポ</option>
+            <option value="げきからハーブ">げきからハーブ</option>
+            <option value="とくせんエッグ">とくせんエッグ</option>
+            <option value="とくせんリンゴ">とくせんリンゴ</option>
+            <option value="ふといながねぎ">ふといながねぎ</option>
+            <option value="ほっこりポテト">ほっこりポテト</option>
+            <option value="ピュアなオイル">ピュアなオイル</option>
+            <option value="マメミート">マメミート</option>
+            <option value="モーモーミルク">モーモーミルク</option>
+            <option value="リラックスカカオ">リラックスカカオ</option>
+            <option value="ワカクサ大豆">ワカクサ大豆</option>
+        </select>
+
+        <select id="select_skill">
+            <option value = "----">----</option>
+            <option value="食材ゲットS">食材ゲットS</option>
+            <option value="げんきチャージS">げんきチャージS</option>
+            <option value="エナジーチャージS">エナジーチャージS</option>
+            <option value="げんきオールS">げんきオールS</option>
+            <option value="ゆめのかけらゲットS">ゆめのかけらゲットS</option>
+            <option value="おてつだいサポートS">おてつだいサポートS</option>
+            <option value="げんきエールS">げんきエールS</option>
+            <option value="料理パワーアップS">料理パワーアップS</option>
+            <option value="ゆびをふる">ゆびをふる</option>
+            <option value="エナジーチャージM">エナジーチャージM</option>
+        </select>
+
 
         <table id="result">
             <thead>
@@ -38,16 +104,13 @@
                     <th>睡眠タイプ</th>
                     <th>得意</th>
                     <th>きのみ</th>
-                    <th>たべもの1</th>
-                    <th>たべもの2</th>
-                    <th>たべもの3</th>
+                    <th>たべもの1</th>                   
                     <th>スキル</th>
-                    <th>フレンドP</th>
+                    <th>FP</th>
                     <th>sec</th>
                 </tr>
             </thead>
-            
-            <tbody>
+            <tbody id="result_rows">
 
             </tbody>
         </table>
@@ -65,13 +128,51 @@
 
         <!--以下、スクリプト-->
         <script>
-            let lbox = document.getElementById('pokeNo');
-            let btn = document.getElementById('executeButton');
-            btn.addEventListener("click", () => {
-                pokemons[lbox.value].showParameters()
-                var table = document.getElementById("result");
-                table.tBodies[0].appendChild(pokemons[lbox.value].getTr());
-            });
+            //Initialize
+            const resultTable = document.getElementById("result");
+            const resultTBody = resultTable.tBodies[0];
+            const button_reset =  document.getElementById('button_reset');
+            const box_specialty = document.getElementById('select_specialty');
+            const box_berry = document.getElementById('select_berry');            
+            const box_food = document.getElementById('select_food');
+            const box_skill = document.getElementById('select_skill');
+
+            button_reset.addEventListener("click", () =>{reset();});
+            box_specialty.addEventListener("change", ()=>{setResult();});
+            box_berry.addEventListener("change", ()=>{setResult();});                
+            box_food.addEventListener("change", ()=>{setResult();});
+            box_skill.addEventListener("change", ()=>{setResult();});
+
+
+            function setResult(){
+                let ignoreSpecialty = (box_specialty.value == "----");
+                let ignoreBerry = (box_berry.value == "----");
+                let ignoreFood = (box_food.value == "----");
+                let ignoreSkill = (box_skill.value == "----");
+
+                let results = pokemons.filter(p => (ignoreSpecialty || p.specialty == box_specialty.value)
+                                                && (ignoreBerry || p.berry == box_berry.value)
+                                                && (ignoreFood || p.containsFood(box_food.value))
+                                                && (ignoreSkill || p.skill == box_skill.value)                                             
+                );
+
+                reset(true);
+
+                for (var i = 0; i < results.length; i++){
+                    resultTBody.appendChild(results[i].getTr());
+                }
+            }
+
+
+            function reset(onlyTBody){
+                resultTBody.innerHTML = "";
+                if (onlyTBody) return;
+                console.log("A");
+                box_specialty.options[0].selected = true;
+                box_berry.options[0].selected = true;
+                box_food.options[0].selected = true;
+                box_skill.options[0].selected = true;
+            }
 
 
             class pokemon{
@@ -89,29 +190,30 @@
                     this.sec = sec;
                 }
 
-                showParameters(){
-                    console.log(this.name);
-                }        
-                
                 getTr(){
                     let r = document.createElement("tr");
                     let c;
                     c = r.insertCell(); c.textContent = this.no;
-                    c = r.insertCell(); c.textContent = this.name;
+                    c = r.insertCell(); c.innerHTML = this.name + "<br>" + "<img src=\"img/poke/" + String(this.no).padStart(3, '0') + ".png\" class=\"normal\">";
                     c = r.insertCell(); c.textContent = this.sleepType;
                     c = r.insertCell(); c.textContent = this.specialty;
-                    c = r.insertCell(); c.textContent = this.berry;
-                    c = r.insertCell(); c.textContent = this.food1;
-                    c = r.insertCell(); c.textContent = this.food2;
-                    c = r.insertCell(); c.textContent = this.food3;
+                    c = r.insertCell(); c.innerHTML = "<img src=\"img/berry/" + this.berry + ".png\" class=\"tiny\">" + this.berry;
+                    c = r.insertCell(); c.innerHTML = "<img src=\"img/food/" + this.food1 + ".png\" class=\"tiny\">" + this.food1 + "<br>"
+                                                    + "<img src=\"img/food/" + this.food2 + ".png\" class=\"tiny\">" + this.food2 + "<br>" 
+                                                    + "<img src=\"img/food/" + this.food3 + ".png\" class=\"tiny\">" + this.food3;
                     c = r.insertCell(); c.textContent = this.skill;
                     c = r.insertCell(); c.textContent = this.friendp;
                     c = r.insertCell(); c.textContent = this.sec;
-
-
                     return r;
                 }
+
+
+                containsFood(food){
+                    return this.food1 == food || this.food2 == food || this.food3 == food;
+                }
             }
+
+
             //最後のカンマの消し忘れに注意
             const pokemons = [
                 new pokemon(0, "NULL"),
@@ -132,7 +234,6 @@
                 new pokemon(23, "アーボ", "うとうと", "きのみ", "カゴのみ", "マメミート", "とくせんエッグ", "げきからハーブ", "げんきチャージS", 5, 5000),
                 new pokemon(24, "アーボック", "うとうと", "きのみ", "カゴのみ", "マメミート", "とくせんエッグ", "げきからハーブ", "げんきチャージS", 12, 3700),
                 new pokemon(25, "ピカチュウ", "すやすや", "きのみ", "ウブのみ", "とくせんリンゴ", "あったかジンジャー", "とくせんエッグ", "エナジーチャージS", 7, 2700),
-                new pokemon(173, "ピィ", "ぐっすり", "きのみ", "モモンのみ", "とくせんリンゴ", "あまいミツ", "ワカクサ大豆", "ゆびをふる", 5, 5600),
                 new pokemon(35, "ピッピ", "すやすや", "きのみ", "モモンのみ", "とくせんリンゴ", "あまいミツ", "ワカクサ大豆", "ゆびをふる", 7, 4000),
                 new pokemon(26, "ライチュウ", "すやすや", "きのみ", "ウブのみ", "とくせんリンゴ", "あったかジンジャー", "とくせんエッグ", "エナジーチャージS", 18, 2200),
                 new pokemon(39, "プリン", "すやすや", "スキル", "モモンのみ", "あまいミツ", "ピュアなオイル", "リラックスカカオ", "げんきオールS", 7, 3900),
@@ -181,8 +282,8 @@
                 new pokemon(158, "ワニノコ", "ぐっすり", "きのみ", "オレンのみ", "マメミート", "ピュアなオイル", "なし", "エナジーチャージS", 5, 4500),
                 new pokemon(159, "アリゲイツ", "ぐっすり", "きのみ", "オレンのみ", "マメミート", "ピュアなオイル", "なし", "エナジーチャージS", 12, 3400),
                 new pokemon(160, "オーダイル", "ぐっすり", "きのみ", "オレンのみ", "マメミート", "ピュアなオイル", "なし", "エナジーチャージS", 20, 2800),
-                new pokemon(700, "ニンフィア", "すやすや", "スキル", "モモンのみ", "モーモーミルク", "リラックスカカオ", "マメミート", "げんきオールS", 20, 2600),
                 new pokemon(172, "ピチュー", "ぐっすり", "きのみ", "ウブのみ", "とくせんリンゴ", "あったかジンジャー", "とくせんエッグ", "エナジーチャージS", 5, 4300),
+                new pokemon(173, "ピィ", "ぐっすり", "きのみ", "モモンのみ", "とくせんリンゴ", "あまいミツ", "ワカクサ大豆", "ゆびをふる", 5, 5600),
                 new pokemon(174, "ププリン", "ぐっすり", "スキル", "モモンのみ", "あまいミツ", "ピュアなオイル", "リラックスカカオ", "げんきオールS", 5, 5200),
                 new pokemon(175, "トゲピー", "ぐっすり", "スキル", "モモンのみ", "とくせんエッグ", "あったかジンジャー", "リラックスカカオ", "ゆびをふる", 5, 4800),
                 new pokemon(176, "トゲチック", "すやすや", "スキル", "モモンのみ", "とくせんエッグ", "あったかジンジャー", "リラックスカカオ", "ゆびをふる", 12, 3800),
