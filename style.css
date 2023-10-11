@@ -11,6 +11,7 @@ select{
 table{
     border-collapse: collapse;
     border: 2px solid orange;
+    margin-bottom: 2em;
 }
 
 td, th{
@@ -45,6 +46,26 @@ table thead tr th {
     border: 1px solid cornflowerblue;
 }
 
+#taupe_table{
+    border-collapse: collapse;
+    border: 2px solid #771100;
+}
+
+
+#taupe_table td, #taupe_table th{
+    border: 1px solid #AA4400;
+}
+
+
+#uno_table{
+    border-collapse: collapse;
+    border: 2px solid  #ff8eca;
+}
+
+
+#uno_table td, #uno_table th{
+    border: 1px solid #FFAADD;
+}
 
 .table_sleep th{
     text-align: center;
@@ -77,6 +98,7 @@ img.normal{
     width: 5em;
     height: 5em;
 }
+
 .current{
     background-color: yellow;
     color: red;

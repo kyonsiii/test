@@ -44,22 +44,22 @@
                     <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
-                    <td>209万～</td>
+                    <td>208万～</td>
                     <td>5</td>
                     <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
-                    <td>465万～</td>
+                    <td>464万～</td>
                     <td>6</td>
                     <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
-                    <td>848万～</td>
+                    <td>834万～</td>
                     <td>7</td>
                     <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
-                    <td>2000万～</td>
+                    <td>1958万～</td>
                     <td>8</td>
                     <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
@@ -83,27 +83,27 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td>183万～</td>
+                    <td>159万～</td>
                     <td>4</td>
                     <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
-                    <td>351万～</td>
+                    <td>357万～</td>
                     <td>5</td>
                     <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
-                    <td>710万～</td>
+                    <td>717万～</td>
                     <td>6</td>
                     <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
-                    <td>1391万～</td>
+                    <td>1361万～</td>
                     <td>7</td>
                     <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
-                    <td>3108万～</td>
+                    <td>3064万～</td>
                     <td>8</td>
                     <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
@@ -111,6 +111,93 @@
             </tbody>
         </table>
 
+        トープ<br>
+        <table id="taupe_table"  class="table_sleep">
+            <thead>
+                <tr>
+                    <th>得点</th>
+                    <th>出現</th>
+                    <th>ボタン</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>----</td>
+                    <td>3</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>188万～</td>
+                    <td>4</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>463万～</td>
+                    <td>5</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>995万～</td>
+                    <td>6</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>1957万～</td>
+                    <td>7</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>4377万～</td>
+                    <td>8</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+
+            </tbody>
+        </table>
+        
+        ウノハナ<br>
+        <table id="uno_table"  class="table_sleep">
+            <thead>
+                <tr>
+                    <th>得点</th>
+                    <th>出現</th>
+                    <th>ボタン</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>----</td>
+                    <td>3</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>329万～</td>
+                    <td>4</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>883万～</td>
+                    <td>5</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>1567万～</td>
+                    <td>6</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>3045万～</td>
+                    <td>7</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>6961万～</td>
+                    <td>8</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+
+            </tbody>
+        </table>
 
 
         <!--以下、スクリプト-->
@@ -148,14 +235,22 @@
 
                 let resStr = String(hour).padStart(2, "0") + ":" + String(minutes).padStart(2, "0") + "(" + finalScore.toLocaleString() + ")";
 
+                let remain = (sleepMinutes > 510 || sleepMinutes < 0) ? 0 : 510 - sleepMinutes; 
                 if (sleepMinutes > 510){
                     resStr += "<br><span class=\"result_alert\">8時間半を超えています</span>";
                 }
                 else if (sleepMinutes < 90){
                     resStr += "<br><span class=\"result_alert\">1時間半未満です</span>";
                 }
+                else{
+                    let remHour = Math.floor(remain / 60);
+                    let remMinutes = Math.ceil(remain % 60);
+                    let remFinal = Math.floor((remHour*60 + remMinutes) * powerPerMinute);
+                    resStr += "<br>残り: " + String(remHour).padStart(2, "0") + ":" + String(remMinutes).padStart(2, "0") + "(" + remFinal.toLocaleString() + ")";
+                }
                 document.getElementById('calc_result').innerHTML= resStr;
             }
+
 
             function setTarget(button){
                 let row = button.parentElement.parentElement;
@@ -165,6 +260,7 @@
                 highlightRow(row);
             }
 
+
             function highlightRow(row){
                 let allRows = document.querySelectorAll('.table_sleep tr');
                 allRows.forEach((r)=>{
@@ -173,8 +269,6 @@
                 
                 row.classList.add('target_highlight');
             }
-
-
         </script>
     </body>
 
