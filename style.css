@@ -1,18 +1,17 @@
 button{
     font-size: 1em;
 }
+
+
 select{
     font-size: 1.75em;
 }
+
+
 table{
     border-collapse: collapse;
     border: 2px solid orange;
 }
-
-table thead tr th {
-    color:black;
-}
-
 
 td, th{
     border: 1px solid pink;
@@ -20,9 +19,9 @@ td, th{
     vertical-align: top;
 }
 
-#wakakusa_table th, #cyan_table th{
-    width: 6em;
 
+table thead tr th {
+    color:black;
 }
 
 #wakakusa_table{
@@ -30,10 +29,9 @@ td, th{
     border: 2px solid green;
 }
 
+
 #wakakusa_table td, #wakakusa_table th{
     border: 1px solid #AAAA00;
-    text-align: left;
-    vertical-align: top;
 }
 
 
@@ -42,11 +40,29 @@ td, th{
     border: 2px solid royalblue;
 }
 
+
 #cyan_table td, #cyan_table th{
     border: 1px solid cornflowerblue;
-    text-align: left;
-    vertical-align: top;
 }
+
+
+.table_sleep th{
+    text-align: center;
+}
+.table_sleep td{
+    text-align: center;
+}
+.table_sleep th:first-child{
+    width: 5em;
+}
+
+.table_sleep th:nth-child(2){
+    width: 3em;
+}
+.table_sleep th:nth-child(3){
+    width: 7em;
+}
+
 
 .button_set{
     font-size: 0.75em;
@@ -69,6 +85,18 @@ img.normal{
 
 .input_short{
     width: 12em;
+}
+
+.target_highlight{
+    background-color: #FAEEC8;
+}
+
+.result_alert{
+    background-color: yellow;
+    color:red;
+    font-weight: 600;
+
+
 }
 
 

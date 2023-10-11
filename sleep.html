@@ -15,13 +15,16 @@
         </p>
 
 
-        現在のパワー: <input type="text" id="current_power" class="input_short"><br>
-        目標得点　　: <input type="text" id="target_power" class="input_short"><br>
+        <p>
+            現在のパワー: <input type="text" id="current_power" class="input_short"><br>
+            目標得点　　: <input type="text" id="target_power" class="input_short"><br>
+            <button id="button_calc">計算</button><br>
+            <span id="calc_result"></span>
+        </p>
 
-        <button id="button_calc">計算</button><br>
 
         ワカクサ<br>
-        <table id="wakakusa_table">
+        <table id="wakakusa_table" class="table_sleep">
             <thead>
                 <tr>
                     <th>得点</th>
@@ -29,7 +32,7 @@
                     <th>ボタン</th>
                 </tr>
             </thead>
-            <tbody id="result_rows">
+            <tbody>
                 <tr>
                     <td>----</td>
                     <td>3</td>
@@ -65,7 +68,7 @@
         </table>
 
         シアン<br>
-        <table id="cyan_table">
+        <table id="cyan_table"  class="table_sleep">
             <thead>
                 <tr>
                     <th>得点</th>
@@ -73,7 +76,7 @@
                     <th>ボタン</th>
                 </tr>
             </thead>
-            <tbody id="result_rows">
+            <tbody>
                 <tr>
                     <td>----</td>
                     <td>3</td>
@@ -142,14 +145,33 @@
                 let hour = Math.floor(sleepMinutes / 60);
                 let minutes = Math.ceil(sleepMinutes % 60);
                 let finalScore = Math.floor((hour*60 + minutes) * powerPerMinute);
-                
-                alert(hour + ":" + minutes + "(" + finalScore.toLocaleString() + ")");
+
+                let resStr = String(hour).padStart(2, "0") + ":" + String(minutes).padStart(2, "0") + "(" + finalScore.toLocaleString() + ")";
+
+                if (sleepMinutes > 510){
+                    resStr += "<br><span class=\"result_alert\">8時間半を超えています</span>";
+                }
+                else if (sleepMinutes < 90){
+                    resStr += "<br><span class=\"result_alert\">1時間半未満です</span>";
+                }
+                document.getElementById('calc_result').innerHTML= resStr;
             }
 
             function setTarget(button){
                 let row = button.parentElement.parentElement;
                 let num = Number(row.children[0].textContent.replace("万～", "0000")).toLocaleString();
                 input_target.value = num;
+
+                highlightRow(row);
+            }
+
+            function highlightRow(row){
+                let allRows = document.querySelectorAll('.table_sleep tr');
+                allRows.forEach((r)=>{
+                    r.classList.remove('target_highlight');
+                });
+                
+                row.classList.add('target_highlight');
             }
 
 
