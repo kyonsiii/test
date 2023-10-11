@@ -11,86 +11,89 @@
 
 
     <body>
-        <a href = "./index.html" class="current">ポケモン</a>
-        <a href = "./sleep.html">睡眠計算</a>
-        <br>
+        <p>
+            <a href = "./index.html" class="current">ポケモン</a>
+            <a href = "./sleep.html">睡眠計算</a>
+        </p>
 
-        <select id="select_specialty">
-            <option value = "----">----</option>
-            <option value = "スキル">スキル</option>
-            <option value = "きのみ">きのみ</option>
-            <option value = "食材">食材</option>
-        </select>
-
-
-        <select id="select_berry">
-            <option value = "----">----</option>
-            <option value = "ウイのみ">ウイのみ</option>
-            <option value = "ウブのみ">ウブのみ</option>
-            <option value = "オボンのみ">オボンのみ</option>
-            <option value = "オレンのみ">オレンのみ</option>
-            <option value = "カゴのみ">カゴのみ</option>
-            <option value = "キーのみ">キーのみ</option>
-            <option value = "クラボのみ">クラボのみ</option>
-            <option value = "シーヤのみ">シーヤのみ</option>
-            <option value = "チーゴのみ">チーゴのみ</option>
-            <option value = "ドリのみ">ドリのみ</option>
-            <option value = "ヒメリのみ">ヒメリのみ</option>
-            <option value = "フィラのみ">フィラのみ</option>
-            <option value = "ブリーのみ">ブリーのみ</option>
-            <option value = "ベリブのみ">ベリブのみ</option>
-            <option value = "マゴのみ">マゴのみ</option>
-            <option value = "モモンのみ">モモンのみ</option>
-            <option value = "ヤチェのみ">ヤチェのみ</option>
-            <option value = "ラムのみ">ラムのみ</option>
-        </select>
-
-        <select id="select_food">
-            <option value = "----">----</option>
-            <option value="あじわいキノコ">あじわいキノコ</option>
-            <option value="あったかジンジャー">あったかジンジャー</option>
-            <option value="あまいミツ">あまいミツ</option>
-            <option value="あんみんトマト">あんみんトマト</option>
-            <option value="おいしいシッポ">おいしいシッポ</option>
-            <option value="げきからハーブ">げきからハーブ</option>
-            <option value="とくせんエッグ">とくせんエッグ</option>
-            <option value="とくせんリンゴ">とくせんリンゴ</option>
-            <option value="ふといながねぎ">ふといながねぎ</option>
-            <option value="ほっこりポテト">ほっこりポテト</option>
-            <option value="ピュアなオイル">ピュアなオイル</option>
-            <option value="マメミート">マメミート</option>
-            <option value="モーモーミルク">モーモーミルク</option>
-            <option value="リラックスカカオ">リラックスカカオ</option>
-            <option value="ワカクサ大豆">ワカクサ大豆</option>
-        </select>
-
-        <select id="select_skill">
-            <option value = "----">----</option>
-            <option value="食材ゲットS">食材ゲットS</option>
-            <option value="げんきチャージS">げんきチャージS</option>
-            <option value="エナジーチャージS">エナジーチャージS</option>
-            <option value="げんきオールS">げんきオールS</option>
-            <option value="ゆめのかけらゲットS">ゆめのかけらゲットS</option>
-            <option value="おてつだいサポートS">おてつだいサポートS</option>
-            <option value="げんきエールS">げんきエールS</option>
-            <option value="料理パワーアップS">料理パワーアップS</option>
-            <option value="ゆびをふる">ゆびをふる</option>
-            <option value="エナジーチャージM">エナジーチャージM</option>
-        </select>
-
-        <button id="button_reset">リセット</button>
-
-        <table id="result">
-            <thead>
-                <tr>
-                    <th>ポケモン</th>
-                    <th>詳細</th>
-                </tr>
-            </thead>
-            <tbody id="result_rows">
-
-            </tbody>
-        </table>
+        <p>
+            <select id="select_specialty">
+                <option value = "----">----</option>
+                <option value = "スキル">スキル</option>
+                <option value = "きのみ">きのみ</option>
+                <option value = "食材">食材</option>
+            </select>
+    
+    
+            <select id="select_berry">
+                <option value = "----">----</option>
+                <option value = "ウイのみ">ウイのみ</option>
+                <option value = "ウブのみ">ウブのみ</option>
+                <option value = "オボンのみ">オボンのみ</option>
+                <option value = "オレンのみ">オレンのみ</option>
+                <option value = "カゴのみ">カゴのみ</option>
+                <option value = "キーのみ">キーのみ</option>
+                <option value = "クラボのみ">クラボのみ</option>
+                <option value = "シーヤのみ">シーヤのみ</option>
+                <option value = "チーゴのみ">チーゴのみ</option>
+                <option value = "ドリのみ">ドリのみ</option>
+                <option value = "ヒメリのみ">ヒメリのみ</option>
+                <option value = "フィラのみ">フィラのみ</option>
+                <option value = "ブリーのみ">ブリーのみ</option>
+                <option value = "ベリブのみ">ベリブのみ</option>
+                <option value = "マゴのみ">マゴのみ</option>
+                <option value = "モモンのみ">モモンのみ</option>
+                <option value = "ヤチェのみ">ヤチェのみ</option>
+                <option value = "ラムのみ">ラムのみ</option>
+            </select>
+    
+            <select id="select_food">
+                <option value = "----">----</option>
+                <option value="あじわいキノコ">あじわいキノコ</option>
+                <option value="あったかジンジャー">あったかジンジャー</option>
+                <option value="あまいミツ">あまいミツ</option>
+                <option value="あんみんトマト">あんみんトマト</option>
+                <option value="おいしいシッポ">おいしいシッポ</option>
+                <option value="げきからハーブ">げきからハーブ</option>
+                <option value="とくせんエッグ">とくせんエッグ</option>
+                <option value="とくせんリンゴ">とくせんリンゴ</option>
+                <option value="ふといながねぎ">ふといながねぎ</option>
+                <option value="ほっこりポテト">ほっこりポテト</option>
+                <option value="ピュアなオイル">ピュアなオイル</option>
+                <option value="マメミート">マメミート</option>
+                <option value="モーモーミルク">モーモーミルク</option>
+                <option value="リラックスカカオ">リラックスカカオ</option>
+                <option value="ワカクサ大豆">ワカクサ大豆</option>
+            </select>
+    
+            <select id="select_skill">
+                <option value = "----">----</option>
+                <option value="食材ゲットS">食材ゲットS</option>
+                <option value="げんきチャージS">げんきチャージS</option>
+                <option value="エナジーチャージS">エナジーチャージS</option>
+                <option value="げんきオールS">げんきオールS</option>
+                <option value="ゆめのかけらゲットS">ゆめのかけらゲットS</option>
+                <option value="おてつだいサポートS">おてつだいサポートS</option>
+                <option value="げんきエールS">げんきエールS</option>
+                <option value="料理パワーアップS">料理パワーアップS</option>
+                <option value="ゆびをふる">ゆびをふる</option>
+                <option value="エナジーチャージM">エナジーチャージM</option>
+            </select>
+    
+            <button id="button_reset">リセット</button>
+    
+            <table id="result">
+                <thead>
+                    <tr>
+                        <th>ポケモン</th>
+                        <th>詳細</th>
+                    </tr>
+                </thead>
+                <tbody id="result_rows">
+    
+                </tbody>
+            </table>
+        </p>
 
 
 
