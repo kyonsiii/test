@@ -3,42 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="style.css" rel="stylesheet"/>
+
         <title>ポケモンスリープアプリ</title>
-        <style>
-            button{
-                font-size: 1em;
-            }
-            select{
-                font-size: 2em;
-            }
-            table{
-                border-collapse: collapse;
-                border: 2px solid orange;
-            }
 
-            table thead tr th {
-                color:black;
-            }
-
-            td, th{
-                border: 1px solid pink;
-                text-align: left;
-                vertical-align: top;
-            }
-            img.tiny{
-                width: 2em;
-                height: 2em;
-            }
-
-            img.normal{
-                width: 5em;
-                height: 5em;
-            }
-        </style>
     </head>
 
 
     <body>
+        <a href = "./index.html" class="current">ポケモン</a>
+        <a href = "./sleep.html">睡眠計算</a>
+        <br>
+
         <select id="select_specialty">
             <option value = "----">----</option>
             <option value = "スキル">スキル</option>
@@ -191,9 +167,9 @@
                     c = r.insertCell();
                     c.innerHTML = ("No." + this.no + " ") + this.name 
                                 + "<br>" + "<img src=\"img/poke/" + String(this.no).padStart(3, '0') + ".png\" class=\"normal\">"
-                                + "<br>睡眠: " + this.sleepType
-                                + "<br>得意: " + this.specialty
-                                + "<br>" + this.skill;
+                                + "<br>" + this.sleepType + " - " + this.specialty
+                                + "<br>" + this.skill
+                                + "<br>" + this.sec + "秒";
 
                     c = r.insertCell();
                     c.innerHTML = "<img src=\"img/berry/" + this.berry + ".png\" class=\"tiny\">" + this.berry

@@ -1,0 +1,74 @@
+button{
+    font-size: 1em;
+}
+select{
+    font-size: 1.75em;
+}
+table{
+    border-collapse: collapse;
+    border: 2px solid orange;
+}
+
+table thead tr th {
+    color:black;
+}
+
+
+td, th{
+    border: 1px solid pink;
+    text-align: left;
+    vertical-align: top;
+}
+
+#wakakusa_table th, #cyan_table th{
+    width: 6em;
+
+}
+
+#wakakusa_table{
+    border-collapse: collapse;
+    border: 2px solid green;
+}
+
+#wakakusa_table td, #wakakusa_table th{
+    border: 1px solid #AAAA00;
+    text-align: left;
+    vertical-align: top;
+}
+
+
+#cyan_table{
+    border-collapse: collapse;
+    border: 2px solid royalblue;
+}
+
+#cyan_table td, #cyan_table th{
+    border: 1px solid cornflowerblue;
+    text-align: left;
+    vertical-align: top;
+}
+
+.button_set{
+    font-size: 0.75em;
+}
+
+img.tiny{
+    width: 2em;
+    height: 2em;
+}
+
+img.normal{
+    width: 5em;
+    height: 5em;
+}
+.current{
+    background-color: yellow;
+    color: red;
+    font-weight: 700;
+}
+
+.input_short{
+    width: 12em;
+}
+
+

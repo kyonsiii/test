@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="style.css" rel="stylesheet"/>
+        <title>睡眠計算</title>
+    </head>
+
+
+    <body>
+        <p>
+            <a href = "./index.html">ポケモン</a>
+            <a href = "./sleep.html" class="current">睡眠計算</a>
+        </p>
+
+
+        現在のパワー: <input type="text" id="current_power" class="input_short"><br>
+        目標得点　　: <input type="text" id="target_power" class="input_short"><br>
+
+        <button id="button_calc">計算</button><br>
+
+        ワカクサ<br>
+        <table id="wakakusa_table">
+            <thead>
+                <tr>
+                    <th>得点</th>
+                    <th>出現</th>
+                    <th>ボタン</th>
+                </tr>
+            </thead>
+            <tbody id="result_rows">
+                <tr>
+                    <td>----</td>
+                    <td>3</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>98万～</td>
+                    <td>4</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>209万～</td>
+                    <td>5</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>465万～</td>
+                    <td>6</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>848万～</td>
+                    <td>7</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>2000万～</td>
+                    <td>8</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        シアン<br>
+        <table id="cyan_table">
+            <thead>
+                <tr>
+                    <th>得点</th>
+                    <th>出現</th>
+                    <th>ボタン</th>
+                </tr>
+            </thead>
+            <tbody id="result_rows">
+                <tr>
+                    <td>----</td>
+                    <td>3</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>183万～</td>
+                    <td>4</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>351万～</td>
+                    <td>5</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>710万～</td>
+                    <td>6</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>1391万～</td>
+                    <td>7</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+                <tr>
+                    <td>3108万～</td>
+                    <td>8</td>
+                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
+                </tr>
+
+            </tbody>
+        </table>
+
+
+
+        <!--以下、スクリプト-->
+        <script>
+            //Initialize
+            const input_current = document.getElementById('current_power');
+            const input_target = document.getElementById('target_power');
+            const button_calc =  document.getElementById('button_calc');
+
+
+            button_calc.addEventListener("click", () =>{calc()});
+
+
+
+            function calc(){
+                let powerNum = Number(input_current.value.replace(/,/g, ""));
+                if (isNaN(powerNum) || powerNum == ""){
+                    alert("\"" + input_current.value + "\"" + "を数値に変換できません");
+                    return;
+                }
+
+                let targetNum = Number(input_target.value.replace(/,/g, ""));
+                if (isNaN(targetNum) || targetNum == ""){
+                    alert("\"" + input_target.value + "\"" + "を数値に変換できません");
+                    return;
+                }
+
+                let maxPower = powerNum * 100;
+                let powerPerMinute = maxPower / 510;
+                let sleepMinutes = targetNum / powerPerMinute;
+
+                let hour = Math.floor(sleepMinutes / 60);
+                let minutes = Math.ceil(sleepMinutes % 60);
+                let finalScore = Math.floor((hour*60 + minutes) * powerPerMinute);
+                
+                alert(hour + ":" + minutes + "(" + finalScore.toLocaleString() + ")");
+            }
+
+            function setTarget(button){
+                let row = button.parentElement.parentElement;
+                let num = Number(row.children[0].textContent.replace("万～", "0000")).toLocaleString();
+                input_target.value = num;
+            }
+
+
+        </script>
+    </body>
+
+</html>
