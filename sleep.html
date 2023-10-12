@@ -12,6 +12,7 @@
         <p>
             <a href = "./index.html">ポケモン</a>
             <a href = "./sleep.html" class="current">睡眠計算</a>
+            <a href = "./cook.html">料理</a>
         </p>
 
 
@@ -23,6 +24,7 @@
         </p>
 
 
+        <!--ボタンはJavascriptで後から追加-->
         ワカクサ<br>
         <table id="wakakusa_table" class="table_sleep">
             <thead>
@@ -34,34 +36,24 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>----</td>
-                    <td>3</td>
-                    <td></td>
-                </tr>
-                <tr>
                     <td>98万～</td>
                     <td>4</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>208万～</td>
                     <td>5</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>464万～</td>
                     <td>6</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>834万～</td>
                     <td>7</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>1958万～</td>
                     <td>8</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
 
             </tbody>
@@ -78,34 +70,24 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>----</td>
-                    <td>3</td>
-                    <td></td>
-                </tr>
-                <tr>
                     <td>159万～</td>
                     <td>4</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>357万～</td>
                     <td>5</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>717万～</td>
                     <td>6</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>1361万～</td>
                     <td>7</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>3064万～</td>
                     <td>8</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
 
             </tbody>
@@ -122,34 +104,24 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>----</td>
-                    <td>3</td>
-                    <td></td>
-                </tr>
-                <tr>
                     <td>188万～</td>
                     <td>4</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>463万～</td>
                     <td>5</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>995万～</td>
                     <td>6</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>1957万～</td>
                     <td>7</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>4377万～</td>
                     <td>8</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
 
             </tbody>
@@ -166,34 +138,24 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>----</td>
-                    <td>3</td>
-                    <td></td>
-                </tr>
-                <tr>
                     <td>329万～</td>
                     <td>4</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>883万～</td>
                     <td>5</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>1567万～</td>
                     <td>6</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>3045万～</td>
                     <td>7</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
                 <tr>
                     <td>6961万～</td>
                     <td>8</td>
-                    <td><button class="button_set" onclick="setTarget(this)">目標にセット</button></td>
                 </tr>
 
             </tbody>
@@ -210,8 +172,10 @@
 
             button_calc.addEventListener("click", () =>{calc()});
 
+            addButtonIntoTr()
 
 
+            //関数宣言
             function calc(){
                 let powerNum = Number(input_current.value.replace(/,/g, ""));
                 if (isNaN(powerNum) || powerNum == ""){
@@ -233,7 +197,7 @@
                 let minutes = Math.ceil(sleepMinutes % 60);
                 let finalScore = Math.floor((hour*60 + minutes) * powerPerMinute);
 
-                let resStr = String(hour).padStart(2, "0") + ":" + String(minutes).padStart(2, "0") + "(" + finalScore.toLocaleString() + ")";
+                let resStr = "<span class=\"target_highlight\">時間: " + String(hour).padStart(2, "0") + ":" + String(minutes).padStart(2, "0") + "(" + finalScore.toLocaleString() + ")</span>";
 
                 let remain = (sleepMinutes > 510 || sleepMinutes < 0) ? 0 : 510 - sleepMinutes; 
                 if (sleepMinutes > 510){
@@ -268,6 +232,19 @@
                 });
                 
                 row.classList.add('target_highlight');
+            }
+
+
+            function addButtonIntoTr(){
+                let allRows = document.querySelectorAll('.table_sleep tbody > tr');
+                allRows.forEach((r)=>{                    
+                    let b = document.createElement('button');
+                    b.textContent = "目標にセット";
+                    b.classList.add('button_set');
+                    b.setAttribute('onclick', 'setTarget(this)');
+                    let td = r.insertCell();
+                    td.appendChild(b);
+                });
             }
         </script>
     </body>

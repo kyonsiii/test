@@ -14,6 +14,7 @@
         <p>
             <a href = "./index.html" class="current">ポケモン</a>
             <a href = "./sleep.html">睡眠計算</a>
+            <a href = "./cook.html">料理</a>
         </p>
 
         <p>
@@ -126,8 +127,7 @@
                 let results = pokemons.filter(p => (ignoreSpecialty || p.specialty == box_specialty.value)
                                                 && (ignoreBerry || p.berry == box_berry.value)
                                                 && (ignoreFood || p.containsFood(box_food.value))
-                                                && (ignoreSkill || p.skill == box_skill.value)                                             
-                );
+                                                && (ignoreSkill || p.skill == box_skill.value));
 
                 reset(true);
 
@@ -185,7 +185,7 @@
 
 
                 containsFood(food){
-                    return this.food1 == food || this.food2 == food || this.food3 == food;
+                    return (this.food1 == food || this.food2 == food || this.food3 == food);
                 }
             }
 
@@ -299,8 +299,11 @@
                 new pokemon(468, "トゲキッス", "すやすや", "スキル", "モモンのみ", "とくせんエッグ", "あったかジンジャー", "リラックスカカオ", "ゆびをふる", 22, 2600),
                 new pokemon(470, "リーフィア", "うとうと", "スキル", "ドリのみ", "モーモーミルク", "リラックスカカオ", "マメミート", "げんきエールS", 20, 3000),
                 new pokemon(471, "グレイシア", "ぐっすり", "スキル", "チーゴのみ", "モーモーミルク", "リラックスカカオ", "マメミート", "料理パワーアップS", 20, 3200),
-                new pokemon(700, "ニンフィア", "すやすや", "スキル", "モモンのみ", "モーモーミルク", "リラックスカカオ", "マメミート", "げんきオールS", 20, 2600)
-            ];
+                new pokemon(700, "ニンフィア", "すやすや", "スキル", "モモンのみ", "モーモーミルク", "リラックスカカオ", "マメミート", "げんきオールS", 20, 2600)];
+
+            window.onload = ()=>{
+                setResult();
+            }
         </script>
     </body>
 

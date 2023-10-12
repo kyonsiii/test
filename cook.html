@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="style.css" rel="stylesheet"/>
+        <title>睡眠計算</title>
+    </head>
+
+
+    <body>
+        <p>
+            <a href = "./index.html">ポケモン</a>
+            <a href = "./sleep.html">睡眠計算</a>
+            <a href = "./cook.html" class ="current">料理</a>
+        </p>
+
+
+        <p>       
+            レシピの種類:<br>
+            <b>
+                <input type="radio" name="recipe_type" id="type_all" value="all">ALL
+                <input type="radio" name="recipe_type" id="type_soup" value="カレー・シチュー">カレー・シチュー
+                <input type="radio" name="recipe_type" id="type_salad" value="サラダ">サラダ
+                <input type="radio" name="recipe_type" id="type_dessert" value="デザート・ドリンク">デザート・ドリンク
+                <br>
+                <input type="checkbox" id="reject_advanced">上位素材を除く     
+            </b>
+        </p>
+
+        <p>
+            
+
+        </p>
+
+        <p>
+            <table id="recipe_table">
+                <tbody>
+                </tbody>
+            </table>
+        </p>
+
+
+        <!--以下、スクリプト-->
+        <script>
+            //Initialize
+            const recipe_table = document.getElementById('recipe_table');
+            const radio_all = document.getElementById('type_all');
+            const radio_soup = document.getElementById('type_soup');
+            const radio_salad = document.getElementById('type_salad');
+            const radio_dessert = document.getElementById('type_dessert');
+            const check_advanced = document.getElementById('reject_advanced');
+
+            radio_all.setAttribute('onclick', 'setTarget(this)');
+            radio_soup.setAttribute('onclick', 'setTarget(this)');
+            radio_salad.setAttribute('onclick', 'setTarget(this)');
+            radio_dessert.setAttribute('onclick', 'setTarget(this)');
+            check_advanced.setAttribute('onchange', 'setTarget(null)');
+ 
+         
+            let ttt = document.getElementById('soup_table');
+
+
+
+
+            //関数宣言
+            function setTableRows(){
+                for (let i = 0; i < recipes.length; i++){
+                    recipe_table.tBodies[0].appendChild(recipes[i].getTr());
+                }
+            }
+
+
+            function setTarget(rb){    
+                //rbがnullの時はレシピの種類以外から呼び出されている   
+                let rows = document.querySelectorAll('#recipe_table tbody > tr');
+
+                if (rb != null){
+                    for (let i = 0; i < rows.length; i++){
+                        let recipe = getRecipeOf(rows[i].getElementsByClassName('recipe_title')[0].textContent);   
+         
+                        rows[i].style.display = (rb.value == "all") ? ""
+                                               : (rb.value != recipe.category) ? "none" : "";
+                    }
+                }
+
+                let visibleRows = Array.from(rows).filter(r => r.style.display == "");
+                for (let i = 0; i < visibleRows.length; i++){
+                    let recipe = getRecipeOf(visibleRows[i].getElementsByClassName('recipe_title')[0].textContent);   
+                    visibleRows[i].style.display = (!check_advanced.checked) ? ""
+                                                  : (recipe.hasAnyAdvancedFood) ? "none" : "";
+                }
+                
+
+                
+            }
+
+            function getRecipeOf(recipeName){
+                return recipes.find(r => recipeName.includes(r.recipeName));
+            }
+
+
+
+            //クラス            
+            class recipe{
+                constructor(no, category, recipeName, recipePower, food1, num1, food2, num2, food3, num3, food4, num4, food5, num5){
+                    this.advancedFoods = ["あじわいキノコ", "おいしいシッポ", "ふといながねぎ", "ほっこりポテト"];
+                    this.no = no;
+                    this.category = category;
+                    this.recipeName = recipeName;
+                    this.recipePower = recipePower;
+
+                    this.food1 = (food1 == undefined) ? "" : food1;
+                    this.food2 = (food2 == undefined) ? "" : food2;
+                    this.food3 = (food3 == undefined) ? "" : food3;
+                    this.food4 = (food4 == undefined) ? "" : food4;
+                    this.food5 = (food5 == undefined) ? "" : food5;
+
+                    this.num1 = (num1 == undefined) ? 0 : num1;
+                    this.num2 = (num2 == undefined) ? 0 : num2;
+                    this.num3 = (num3 == undefined) ? 0 : num3;
+                    this.num4 = (num4 == undefined) ? 0 : num4;
+                    this.num5 = (num5 == undefined) ? 0 : num5;
+
+                    this.hasAnyAdvancedFood = this.advancedFoods.some(f => [food1, food2, food3, food4, food5].includes(f));              
+                }
+
+                getTr(){
+                    let r = document.createElement("tr");
+                    let c;
+                    c = r.insertCell();
+
+                    let el = document.createElement('div');
+                    el.classList.add('recipe_title');
+                    el.setAttribute('recipe_type', this.category);
+                    el.textContent = this.recipeName + " (" + this.recipePower.toLocaleString() + ")"
+                    c.appendChild(el);
+
+                    let el2 = document.createElement('div');
+                    el2.classList.add('recipe_detail');
+                    el2.innerHTML = "<img class=\"normal\" src=\"img/recipe/" + this.recipeName + ".png\">" + this.getFoodsStr();
+                    c.appendChild(el2);
+                    return r;
+                }
+
+                getFoodsStr(){
+                    let str = this.food1 + "x" + this.num1;
+                    if (this.food2 == "") return str + this.getTotalFoodsCount();
+
+                    str += "<br>" + this.food2 + "x" + this.num2;
+                    if (this.food3 == "") return str + this.getTotalFoodsCount();
+                    
+                    str += "<br>" + this.food3 + "x" + this.num3;
+                    if (this.food4 == "") return str + this.getTotalFoodsCount();
+                    
+                    str += "<br>" + this.food4 + "x" + this.num4;
+                    if (this.food5 == "") return str + this.getTotalFoodsCount();
+                    
+                    str += "<br>" + this.food5 + "x" + this.num5;
+                    return str + this.getTotalFoodsCount();
+                }
+
+                getTotalFoodsCount(){
+                    return "<br>【計" + (this.num1 + this.num2 + this.num3 + this.num4 + this.num5) + "個】";
+                }
+
+
+
+            }
+
+
+            const recipes = [
+                new recipe( 1, "カレー・シチュー", "とくせんリンゴカレー", 668, "とくせんリンゴ", 7),
+                new recipe( 2, "カレー・シチュー", "たんじゅんホワイトシチュー", 727, "モーモーミルク", 7),
+                new recipe( 3, "カレー・シチュー", "ベイビィハニーカレー", 749, "あまいミツ", 7),
+                new recipe( 4, "カレー・シチュー", "マメバーグカレー", 764, "マメミート", 7),
+                new recipe( 5, "カレー・シチュー", "満腹チーズバーグカレー", 1785, "モーモーミルク", 8, "マメミート", 8),
+                new recipe( 6, "カレー・シチュー", "ひでりカツカレー", 1815, "マメミート", 10, "ピュアなオイル", 5),
+                new recipe( 7, "カレー・シチュー", "サンパワートマトカレー", 1943, "げきからハーブ", 5, "あんみんトマト", 10),
+                new recipe( 8, "カレー・シチュー", "とけるオムカレー", 2009, "とくせんエッグ", 10, "あんみんトマト", 6),
+                new recipe( 9, "カレー・シチュー", "ほっこりポテトシチュー", 3089, "モーモーミルク", 10, "ほっこりポテト", 8, "あじわいキノコ", 4),
+                new recipe(10, "カレー・シチュー", "ビルドアップマメカレー", 3274, "ワカクサ大豆", 12, "マメミート", 6, "とくせんエッグ", 4, "げきからハーブ", 4),
+                new recipe(11, "カレー・シチュー", "キノコのほうしカレー", 4041, "ほっこりポテト", 9, "あじわいキノコ", 14),
+                new recipe(12, "カレー・シチュー", "たまごバクダンカレー", 4253, "ほっこりポテト", 4, "とくせんリンゴ", 11, "とくせんエッグ", 8, "あまいミツ", 12),
+                new recipe(13, "カレー・シチュー", "からくちネギもりカレー", 5900, "ふといながねぎ", 14, "げきからハーブ", 8, "あったかジンジャー", 10),
+                new recipe(14, "カレー・シチュー", "ニンジャカレー", 6159, "ワカクサ大豆", 15, "マメミート", 9, "ふといながねぎ", 9, "あじわいキノコ", 5),
+                new recipe(15, "カレー・シチュー", "あぶりテールカレー", 7483, "げきからハーブ", 25, "おいしいシッポ", 8),
+                new recipe(16, "カレー・シチュー", "ぜったいねむりカレー", 9010, "リラックスカカオ", 12, "モーモーミルク", 10, "ほっこりポテト", 18, "あんみんトマト", 15),
+                new recipe(31, "サラダ", "とくせんリンゴサラダ", 763, "とくせんリンゴ", 8),
+                new recipe(32, "サラダ", "マメハムサラダ", 873, "マメミート", 8),
+                new recipe(33, "サラダ", "あんみんトマトサラダ", 933, "あんみんトマト", 8),
+                new recipe(34, "サラダ", "ゆきかきシーザーサラダ", 1774, "モーモーミルク", 10, "マメミート", 6),
+                new recipe(35, "サラダ", "うるおいとうふサラダ", 1843, "ワカクサ大豆", 10, "あんみんトマト", 6),
+                new recipe(36, "サラダ", "ねっぷうとうふサラダ", 1976, "ワカクサ大豆", 10, "げきからハーブ", 6),
+                new recipe(37, "サラダ", "メロメロりんごのチーズサラダ", 2579, "モーモーミルク", 5, "ピュアなオイル", 3, "とくせんリンゴ", 15),
+                new recipe(38, "サラダ", "めんえきねぎサラダ", 2658, "ふといながねぎ", 10, "あったかジンジャー", 5),
+                new recipe(39, "サラダ", "モーモーカプレーゼ", 2856, "モーモーミルク", 12, "ピュアなオイル", 5, "あんみんトマト", 6),
+                new recipe(40, "サラダ", "ばかぢからサラダ", 2958, "マメミート", 9, "ほっこりポテト", 3, "とくせんエッグ", 5, "あったかジンジャー", 6),
+                new recipe(41, "サラダ", "ムラっけチョコミートサラダ", 3558, "リラックスカカオ", 14, "マメミート", 9),
+                new recipe(42, "サラダ", "くいしんぼうポテトサラダ", 5040, "マメミート", 7, "ほっこりポテト", 14, "とくせんリンゴ", 6, "とくせんエッグ", 9),
+                new recipe(43, "サラダ", "オーバーヒートサラダ", 5225, "げきからハーブ", 17, "あんみんトマト", 8, "あったかジンジャー", 10),
+                new recipe(44, "サラダ", "キノコのほうしサラダ", 5859, "ピュアなオイル", 8, "あんみんトマト", 8, "あじわいキノコ", 17),
+                new recipe(45, "サラダ", "ヤドンテールのペッパーサラダ", 8169, "ピュアなオイル", 8, "げきからハーブ", 10, "おいしいシッポ", 10),
+                new recipe(46, "サラダ", "ニンジャサラダ", 10095, "ワカクサ大豆", 15, "ふといながねぎ", 15, "あったかジンジャー", 11, "あじわいキノコ", 12),
+                new recipe(61, "デザート・ドリンク", "モーモーホットミルク", 727, "モーモーミルク", 7),
+                new recipe(62, "デザート・ドリンク", "とくせんリンゴジュース", 763, "とくせんリンゴ", 8),
+                new recipe(63, "デザート・ドリンク", "クラフトサイコソーダ", 964, "あまいミツ", 9),
+                new recipe(64, "デザート・ドリンク", "ねがいごとアップルパイ", 1634, "モーモーミルク", 4, "とくせんリンゴ", 12),
+                new recipe(65, "デザート・ドリンク", "じゅくせいスイートポテト", 1783, "モーモーミルク", 5, "ほっこりポテト", 9),
+                new recipe(66, "デザート・ドリンク", "ひのこジンジャーティー", 1788, "とくせんリンゴ", 7, "あったかジンジャー", 9),
+                new recipe(67, "デザート・ドリンク", "マイペースやさいジュース", 1798, "とくせんリンゴ", 7, "あんみんトマト", 9),
+                new recipe(68, "デザート・ドリンク", "かるわざソイケーキ", 1798, "ワカクサ大豆", 7, "とくせんエッグ", 8),
+                new recipe(69, "デザート・ドリンク", "おおきいマラサダ", 2927, "モーモーミルク", 7, "ピュアなオイル", 10, "あまいミツ", 6),
+                new recipe(70, "デザート・ドリンク", "はりきりプロテインスムージー", 3168, "ワカクサ大豆", 15, "リラックスカカオ", 8),
+                new recipe(71, "デザート・ドリンク", "ちからもちソイドーナツ", 3213, "ワカクサ大豆", 6, "リラックスカカオ", 7, "ピュアなオイル", 9),
+                new recipe(72, "デザート・ドリンク", "あまいかおりチョコケーキ", 3280, "リラックスカカオ", 8, "モーモーミルク", 7, "あまいミツ", 9),
+                new recipe(73, "デザート・ドリンク", "あくまのキッスフルーツオレ", 4734, "リラックスカカオ", 8, "モーモーミルク", 9, "とくせんリンゴ", 11, "あまいミツ", 7),
+                new recipe(74, "デザート・ドリンク", "ふくつのジンジャークッキー", 4921, "リラックスカカオ", 5, "とくせんエッグ", 4, "あまいミツ", 14, "あったかジンジャー", 12),
+                new recipe(75, "デザート・ドリンク", "ネロリはかせのかいふくティー", 5065, "とくせんリンゴ", 15, "あったかジンジャー", 11, "あじわいキノコ", 9),
+                new recipe(76, "デザート・ドリンク", "プリンのプリンアラモード", 7594, "モーモーミルク", 10, "とくせんリンゴ", 10, "とくせんエッグ", 15, "あまいミツ", 20)];
+
+            window.onload = ()=>{
+                setTableRows();
+            }
+        </script>
+
+        
+    </body>
+
+</html>

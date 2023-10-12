@@ -8,6 +8,7 @@ select{
 }
 
 
+/*テーブル系*/
 table{
     border-collapse: collapse;
     border: 2px solid orange;
@@ -20,53 +21,11 @@ td, th{
     vertical-align: top;
 }
 
-
 table thead tr th {
     color:black;
 }
 
-#wakakusa_table{
-    border-collapse: collapse;
-    border: 2px solid green;
-}
-
-
-#wakakusa_table td, #wakakusa_table th{
-    border: 1px solid #AAAA00;
-}
-
-
-#cyan_table{
-    border-collapse: collapse;
-    border: 2px solid royalblue;
-}
-
-
-#cyan_table td, #cyan_table th{
-    border: 1px solid cornflowerblue;
-}
-
-#taupe_table{
-    border-collapse: collapse;
-    border: 2px solid #771100;
-}
-
-
-#taupe_table td, #taupe_table th{
-    border: 1px solid #AA4400;
-}
-
-
-#uno_table{
-    border-collapse: collapse;
-    border: 2px solid  #ff8eca;
-}
-
-
-#uno_table td, #uno_table th{
-    border: 1px solid #FFAADD;
-}
-
+/*テーブル - クラスセレクタ*/
 .table_sleep th{
     text-align: center;
 }
@@ -83,20 +42,84 @@ table thead tr th {
 .table_sleep th:nth-child(3){
     width: 7em;
 }
+#wakakusa_table{
+    border-collapse: collapse;
+    border: 2px solid green;
+}
 
+/*テーブル(睡眠計算) - IDセレクタ*/
+#wakakusa_table td, #wakakusa_table th{
+    border: 1px solid #AAAA00;
+}
+
+#cyan_table{
+    border: 2px solid royalblue;
+}
+
+
+#cyan_table td, #cyan_table th{
+    border: 1px solid cornflowerblue;
+}
+
+#taupe_table{
+    border: 2px solid #771100;
+}
+
+
+#taupe_table td, #taupe_table th{
+    border: 1px solid #AA4400;
+}
+
+
+#uno_table{
+    border: 2px solid  #ff8eca;
+}
+
+
+#uno_table td, #uno_table th{
+    border: 1px solid #FFAADD;
+}
+
+
+/*テーブル(レシピ) - IDセレクタ*/
+#soup_table{
+    border: 2px solid brown;
+}
+#soup_table td{
+    border: 1px solid brown;
+}
+
+#soup_table tr{
+    border: 2px solid pink;
+}
+
+.recipe_title{
+    width: 21em;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+}
+
+.recipe_detail{
+    display: flex;
+}
+.recipe_detail img{
+    padding-right: 1em;
+}
 
 .button_set{
     font-size: 0.75em;
 }
 
+
+/*イメージ*/
 img.tiny{
     width: 2em;
-    height: 2em;
+    height: auto;
 }
 
 img.normal{
     width: 5em;
-    height: 5em;
+    height: auto;
 }
 
 .current{
