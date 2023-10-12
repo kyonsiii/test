@@ -117,7 +117,8 @@ img.tiny{
 
 img.normal{
     width: 5em;
-    height: auto;
+    height: 5em;
+
 }
 
 .current{
