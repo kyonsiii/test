@@ -130,9 +130,9 @@
                                                 && (ignoreSkill || p.skill == box_skill.value));
 
                 reset(true);
-
-                for (var i = 0; i < results.length; i++){
-                    resultTBody.appendChild(results[i].getTr());
+      
+                for (let res of results) {
+                    resultTBody.appendChild(res.getTr());
                 }
             }
 

@@ -91,8 +91,10 @@ table thead tr th {
     border: 2px solid pink;
 }
 
+/*レシピのタグ*/
 .recipe_title{
-    width: 21em;
+    font-size: 0.9em;
+    width: 24em;
     margin-bottom: 0.5em;
     font-weight: 600;
 }
@@ -100,13 +102,11 @@ table thead tr th {
 .recipe_detail{
     display: flex;
 }
+
 .recipe_detail img{
     padding-right: 1em;
 }
 
-.button_set{
-    font-size: 0.75em;
-}
 
 
 /*イメージ*/
@@ -141,4 +141,10 @@ img.normal{
     font-weight: 600;
 }
 
+.ingredients{
+    list-style: none;
+}
 
+.button_set{
+    font-size: 0.75em;
+}

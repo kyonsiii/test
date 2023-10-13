@@ -16,22 +16,37 @@
         </p>
 
 
-        <p>       
+        <p id="current_recipe_type">
             レシピの種類:<br>
             <b>
-                <input type="radio" name="recipe_type" id="type_all" value="all">ALL
-                <input type="radio" name="recipe_type" id="type_soup" value="カレー・シチュー">カレー・シチュー
-                <input type="radio" name="recipe_type" id="type_salad" value="サラダ">サラダ
-                <input type="radio" name="recipe_type" id="type_dessert" value="デザート・ドリンク">デザート・ドリンク
+                <input type="radio" name="recipe_type" onclick="setTarget(this)" value="all" checked="true">ALL
+                <input type="radio" name="recipe_type" onclick="setTarget(this)" value="カレー・シチュー">カレー・シチュー
+                <input type="radio" name="recipe_type" onclick="setTarget(this)" value="サラダ">サラダ
+                <input type="radio" name="recipe_type" onclick="setTarget(this)" value="デザート・ドリンク">デザート・ドリンク
                 <br>
-                <input type="checkbox" id="reject_advanced">上位素材を除く     
+                <input type="checkbox" onchange="setTarget(null)" id="reject_advanced">上位素材を除く
             </b>
         </p>
 
-        <p>
-            
-
+        <!--
+        <p id="filter_ingredient">
+            <select id="select_ingredient">
+                <option value = "----">----</option>
+                <option value = "モーモーミルク">モーモーミルク</option>
+            </select>
         </p>
+        -->
+
+
+        <p id="recipe_limit">
+            <input type="radio" name="recipe_limit" onchange="setTarget(null)" value="9999" checked="true">制限なし
+            <input type="radio" name="recipe_limit" onchange="setTarget(null)" value="15">15
+            <input type="radio" name="recipe_limit" onchange="setTarget(null)" value="21">21
+            <input type="radio" name="recipe_limit" onchange="setTarget(null)" value="27">27
+            <input type="radio" name="recipe_limit" onchange="setTarget(null)" value="33">33
+            <input type="radio" name="recipe_limit" onchange="setTarget(null)" value="39">39
+            <input type="radio" name="recipe_limit" onchange="setTarget(null)" value="45">45            
+        </p>    
 
         <p>
             <table id="recipe_table">
@@ -45,55 +60,58 @@
         <script>
             //Initialize
             const recipe_table = document.getElementById('recipe_table');
-            const radio_all = document.getElementById('type_all');
-            const radio_soup = document.getElementById('type_soup');
-            const radio_salad = document.getElementById('type_salad');
-            const radio_dessert = document.getElementById('type_dessert');
             const check_advanced = document.getElementById('reject_advanced');
-
-            radio_all.setAttribute('onclick', 'setTarget(this)');
-            radio_soup.setAttribute('onclick', 'setTarget(this)');
-            radio_salad.setAttribute('onclick', 'setTarget(this)');
-            radio_dessert.setAttribute('onclick', 'setTarget(this)');
-            check_advanced.setAttribute('onchange', 'setTarget(null)');
- 
-         
-            let ttt = document.getElementById('soup_table');
-
-
 
 
             //関数宣言
             function setTableRows(){
+                /*
                 for (let i = 0; i < recipes.length; i++){
                     recipe_table.tBodies[0].appendChild(recipes[i].getTr());
+                }
+                */
+
+                for (let r of recipes){
+                    recipe_table.tBodies[0].appendChild(r.getTr());
                 }
             }
 
 
-            function setTarget(rb){    
-                //rbがnullの時はレシピの種類以外から呼び出されている   
+            function getCheckedRaddioButtonOf(el){
+                let buttons = el.querySelectorAll('input[type="radio"]');
+                return Array.from(buttons).find(b => b.checked == true);
+            }
+
+    
+            function setTarget(rb){
+                rb = rb ?? getCheckedRaddioButtonOf(document.getElementById('current_recipe_type'));//rbがnullの時はレシピの種類以外から呼び出されている
                 let rows = document.querySelectorAll('#recipe_table tbody > tr');
 
-                if (rb != null){
-                    for (let i = 0; i < rows.length; i++){
-                        let recipe = getRecipeOf(rows[i].getElementsByClassName('recipe_title')[0].textContent);   
-         
-                        rows[i].style.display = (rb.value == "all") ? ""
-                                               : (rb.value != recipe.category) ? "none" : "";
+                if (rb != null) {
+                    for (let r of rows) {
+                        let recipe = getRecipeOf(r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_name'));
+
+                        r.style.display = (rb.value == "all") ? ""
+                                         : (rb.value != recipe.category) ? "none" : "";
                     }
                 }
 
                 let visibleRows = Array.from(rows).filter(r => r.style.display == "");
-                for (let i = 0; i < visibleRows.length; i++){
-                    let recipe = getRecipeOf(visibleRows[i].getElementsByClassName('recipe_title')[0].textContent);   
-                    visibleRows[i].style.display = (!check_advanced.checked) ? ""
-                                                  : (recipe.hasAnyAdvancedFood) ? "none" : "";
+                for (let r of visibleRows) {
+                    let recipe = getRecipeOf(r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_name'));
+                    r.style.display = (!check_advanced.checked) ? ""
+                                     : (recipe.hasAnyAdvancedFood) ? "none" : "";
                 }
-                
 
-                
+                visibleRows = visibleRows.filter(r => r.style.display == "");
+                let limit = getCheckedRaddioButtonOf(document.getElementById('recipe_limit')).value;
+                for (let r of visibleRows){
+                    let recipe = getRecipeOf(r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_name'));
+                    r.style.display = (recipe.isEnoughSlots(limit)) ? "" : "none";
+                }
+
             }
+
 
             function getRecipeOf(recipeName){
                 return recipes.find(r => recipeName.includes(r.recipeName));
@@ -101,7 +119,24 @@
 
 
 
-            //クラス            
+            //クラス
+            class ingredient{
+                    constructor(food, num, isAdvanced){
+                        this.food = (food == undefined) ? "" : food;
+                        this.num = (num == undefined) ? 0 : num;
+                        this.isAdvanced = isAdvanced;
+                    }
+
+
+                    getLi(){
+                        let el = document.createElement('li');
+                        el.innerHTML = (this.isAdvanced) ? "<strong>" + this.food + "x" + this.num + "</strong>"
+                                      : this.food + "x" + this.num;
+                        return el;
+                    }
+            }
+
+
             class recipe{
                 constructor(no, category, recipeName, recipePower, food1, num1, food2, num2, food3, num3, food4, num4, food5, num5){
                     this.advancedFoods = ["あじわいキノコ", "おいしいシッポ", "ふといながねぎ", "ほっこりポテト"];
@@ -110,20 +145,20 @@
                     this.recipeName = recipeName;
                     this.recipePower = recipePower;
 
-                    this.food1 = (food1 == undefined) ? "" : food1;
-                    this.food2 = (food2 == undefined) ? "" : food2;
-                    this.food3 = (food3 == undefined) ? "" : food3;
-                    this.food4 = (food4 == undefined) ? "" : food4;
-                    this.food5 = (food5 == undefined) ? "" : food5;
+                    this.ingredients = [
+                        new ingredient(food1, num1, this.advancedFoods.includes(food1)),
+                        new ingredient(food2, num2, this.advancedFoods.includes(food2)),
+                        new ingredient(food3, num3, this.advancedFoods.includes(food3)),
+                        new ingredient(food4, num4, this.advancedFoods.includes(food4)),
+                        new ingredient(food5, num5, this.advancedFoods.includes(food5))
+                    ];
 
-                    this.num1 = (num1 == undefined) ? 0 : num1;
-                    this.num2 = (num2 == undefined) ? 0 : num2;
-                    this.num3 = (num3 == undefined) ? 0 : num3;
-                    this.num4 = (num4 == undefined) ? 0 : num4;
-                    this.num5 = (num5 == undefined) ? 0 : num5;
-
-                    this.hasAnyAdvancedFood = this.advancedFoods.some(f => [food1, food2, food3, food4, food5].includes(f));              
+                    this.allFoods = this.ingredients.filter(a => a.food != "");
+                    this.totalFoodsCount = 0;
+                    this.allFoods.forEach(f => this.totalFoodsCount+= f.num);
+                    this.hasAnyAdvancedFood = this.allFoods.some(f => f.isAdvanced);
                 }
+
 
                 getTr(){
                     let r = document.createElement("tr");
@@ -133,38 +168,35 @@
                     let el = document.createElement('div');
                     el.classList.add('recipe_title');
                     el.setAttribute('recipe_type', this.category);
-                    el.textContent = this.recipeName + " (" + this.recipePower.toLocaleString() + ")"
+                    el.setAttribute('recipe_name', this.recipeName);
+                    el.setAttribute('recipe_total', this.totalFoodsCount);
+                    el.setAttribute('recipe_power', this.recipePower);
+                    el.innerHTML = this.recipeName + " /計" + this.totalFoodsCount + "個 [" + this.recipePower.toLocaleString() + "]"
                     c.appendChild(el);
 
                     let el2 = document.createElement('div');
                     el2.classList.add('recipe_detail');
-                    el2.innerHTML = "<img class=\"normal\" src=\"img/recipe/" + this.recipeName + ".png\">" + this.getFoodsStr();
+                    //el2.innerHTML = "<img class=\"normal\" src=\"img/recipe/" + this.recipeName + ".png\">" + this.getFoodsStr();
+
+                    let img = document.createElement('img');
+                    img.classList.add("normal");
+                    img.src = "img/recipe/" + this.recipeName + ".png";
+
+                    let list = document.createElement('ul');
+                    list.classList.add("ingredients");
+                    this.allFoods.map(f => f.getLi()).forEach(f => list.appendChild(f));
+
+
+                    el2.appendChild(img);
+                    el2.appendChild(list);
                     c.appendChild(el2);
                     return r;
                 }
 
-                getFoodsStr(){
-                    let str = this.food1 + "x" + this.num1;
-                    if (this.food2 == "") return str + this.getTotalFoodsCount();
 
-                    str += "<br>" + this.food2 + "x" + this.num2;
-                    if (this.food3 == "") return str + this.getTotalFoodsCount();
-                    
-                    str += "<br>" + this.food3 + "x" + this.num3;
-                    if (this.food4 == "") return str + this.getTotalFoodsCount();
-                    
-                    str += "<br>" + this.food4 + "x" + this.num4;
-                    if (this.food5 == "") return str + this.getTotalFoodsCount();
-                    
-                    str += "<br>" + this.food5 + "x" + this.num5;
-                    return str + this.getTotalFoodsCount();
+                isEnoughSlots(num){
+                    return this.totalFoodsCount <= num;
                 }
-
-                getTotalFoodsCount(){
-                    return "<br>【計" + (this.num1 + this.num2 + this.num3 + this.num4 + this.num5) + "個】";
-                }
-
-
             }
 
 
@@ -223,7 +255,7 @@
             }
         </script>
 
-        
+
     </body>
 
 </html>
