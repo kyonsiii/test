@@ -24,7 +24,8 @@
                 <input type="radio" name="recipe_type" onclick="setTarget(this)" value="サラダ">サラダ
                 <input type="radio" name="recipe_type" onclick="setTarget(this)" value="デザート・ドリンク">デザート・ドリンク
                 <br>
-                <input type="checkbox" onchange="setTarget(null)" id="reject_advanced">上位素材を除く
+                <input type="checkbox" onchange="setTarget(null)" id="without_advanced">上位素材を除く
+                <input type="checkbox" onchange="setTarget(null)" id="only_advanced">上位素材使用のみ
             </b>
         </p>
 
@@ -60,8 +61,8 @@
         <script>
             //Initialize
             const recipe_table = document.getElementById('recipe_table');
-            const check_advanced = document.getElementById('reject_advanced');
-
+            const checkBox_without_advanced = document.getElementById('without_advanced');
+            const checkBox_only_advanced = document.getElementById('only_advanced');
 
             //関数宣言
             function setTableRows(){
@@ -87,6 +88,11 @@
                 rb = rb ?? getCheckedRaddioButtonOf(document.getElementById('current_recipe_type'));//rbがnullの時はレシピの種類以外から呼び出されている
                 let rows = document.querySelectorAll('#recipe_table tbody > tr');
 
+                if (checkBox_without_advanced.checked && checkBox_only_advanced.checked){
+                    checkBox_without_advanced.checked = false;
+                    checkBox_only_advanced.checked = false;                    
+                }
+
                 if (rb != null) {
                     for (let r of rows) {
                         let recipe = getRecipeOf(r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_name'));
@@ -99,8 +105,11 @@
                 let visibleRows = Array.from(rows).filter(r => r.style.display == "");
                 for (let r of visibleRows) {
                     let recipe = getRecipeOf(r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_name'));
-                    r.style.display = (!check_advanced.checked) ? ""
-                                     : (recipe.hasAnyAdvancedFood) ? "none" : "";
+                    r.style.display = (checkBox_without_advanced.checked && recipe.hasAnyAdvancedFood) ? "none" 
+                                     : (checkBox_only_advanced.checked && !recipe.hasAnyAdvancedFood) ? "none"
+                                      : "";
+    
+         
                 }
 
                 visibleRows = visibleRows.filter(r => r.style.display == "");
