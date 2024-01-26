@@ -17,3 +17,8 @@ git push *** main
 
 //ログを確認
 git log
+
+
+
+//リモートの確認
+git remote -v
