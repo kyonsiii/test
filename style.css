@@ -6,6 +6,11 @@ select{
     font-size: 1.75em;
 }
 
+#select_food_cook{
+    font-size: 1em;
+}
+
+
 /*テーブル系*/
 table{
     border-collapse: collapse;

@@ -18,15 +18,44 @@
 
         <p id="current_recipe_type">
             レシピの種類:<br>
-            <b>
-                <input type="radio" name="recipe_type" onclick="setTarget(this)" value="all" checked="true">ALL
-                <input type="radio" name="recipe_type" onclick="setTarget(this)" value="カレー・シチュー">カレー・シチュー
-                <input type="radio" name="recipe_type" onclick="setTarget(this)" value="サラダ">サラダ
-                <input type="radio" name="recipe_type" onclick="setTarget(this)" value="デザート・ドリンク">デザート・ドリンク
-                <br>
-                <input type="checkbox" onchange="setTarget(null)" id="without_advanced">上位素材を除く
-                <input type="checkbox" onchange="setTarget(null)" id="only_advanced">上位素材使用のみ
-            </b>
+            <input type="radio" name="recipe_type" onclick="setTarget(this, this)" value="all" checked="true">ALL
+            <input type="radio" name="recipe_type" onclick="setTarget(this, this)" value="カレー・シチュー">カレー・シチュー
+            <input type="radio" name="recipe_type" onclick="setTarget(this, this)" value="サラダ">サラダ
+            <input type="radio" name="recipe_type" onclick="setTarget(this, this)" value="デザート・ドリンク">デザート・ドリンク
+            <br>
+
+            <input type="checkbox" onchange="setTarget(this, null)" id="without_advanced">上位素材を除く
+            <input type="checkbox" onchange="setTarget(this, null)" id="only_advanced">上位素材使用のみ
+            <br>
+                <p id="recipe_limit">
+                    <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="9999" checked="true">制限なし
+                    <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="15">15
+                    <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="21">21
+                    <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="27">27
+                    <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="33">33
+                    <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="39">39
+                    <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="45">45 
+                    <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="54">54           
+                </p>   
+            <select id="select_food" onchange="setTarget(this, null)">
+                <option value = "----">----</option>
+                <option value="あじわいキノコ">あじわいキノコ</option>
+                <option value="あったかジンジャー">あったかジンジャー</option>
+                <option value="あまいミツ">あまいミツ</option>
+                <option value="あんみんトマト">あんみんトマト</option>
+                <option value="おいしいシッポ">おいしいシッポ</option>
+                <option value="げきからハーブ">げきからハーブ</option>
+                <option value="とくせんエッグ">とくせんエッグ</option>
+                <option value="とくせんリンゴ">とくせんリンゴ</option>
+                <option value="ふといながねぎ">ふといながねぎ</option>
+                <option value="ほっこりポテト">ほっこりポテト</option>
+                <option value="ピュアなオイル">ピュアなオイル</option>
+                <option value="マメミート">マメミート</option>
+                <option value="モーモーミルク">モーモーミルク</option>
+                <option value="リラックスカカオ">リラックスカカオ</option>                
+                <option value="ワカクサコーン">ワカクサコーン</option>
+                <option value="ワカクサ大豆">ワカクサ大豆</option>
+            </select>
         </p>
 
         <!--
@@ -39,16 +68,7 @@
         -->
 
 
-        <p id="recipe_limit">
-            <input type="radio" name="recipe_limit" onchange="setTarget(null)" value="9999" checked="true">制限なし
-            <input type="radio" name="recipe_limit" onchange="setTarget(null)" value="15">15
-            <input type="radio" name="recipe_limit" onchange="setTarget(null)" value="21">21
-            <input type="radio" name="recipe_limit" onchange="setTarget(null)" value="27">27
-            <input type="radio" name="recipe_limit" onchange="setTarget(null)" value="33">33
-            <input type="radio" name="recipe_limit" onchange="setTarget(null)" value="39">39
-            <input type="radio" name="recipe_limit" onchange="setTarget(null)" value="45">45 
-            <input type="radio" name="recipe_limit" onchange="setTarget(null)" value="54">54           
-        </p>    
+ 
 
         <p>
             <table id="recipe_table">
@@ -64,6 +84,7 @@
             const recipe_table = document.getElementById('recipe_table');
             const checkBox_without_advanced = document.getElementById('without_advanced');
             const checkBox_only_advanced = document.getElementById('only_advanced');
+            const selectBox_food = document.getElementById('select_food');
 
             //関数宣言
             function setTableRows(){
@@ -81,38 +102,41 @@
 
             function getCheckedRaddioButtonOf(el){
                 let buttons = el.querySelectorAll('input[type="radio"]');
-                return Array.from(buttons).find(b => b.checked == true);
+                return Array.from(buttons).find(b => b.checked);
             }
 
     
-            function setTarget(rb){
+            function setTarget(sender, rb){
                 rb = rb ?? getCheckedRaddioButtonOf(document.getElementById('current_recipe_type'));//rbがnullの時はレシピの種類以外から呼び出されている
                 let rows = document.querySelectorAll('#recipe_table tbody > tr');
 
                 if (checkBox_without_advanced.checked && checkBox_only_advanced.checked){
-                    checkBox_without_advanced.checked = false;
-                    checkBox_only_advanced.checked = false;                    
-                }
-
-                if (rb != null) {
-                    for (let r of rows) {
-                        let recipe = getRecipeOf(r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_name'));
-
-                        r.style.display = (rb.value == "all") ? ""
-                                         : (rb.value != recipe.category) ? "none" : "";
+                    if (sender == checkBox_without_advanced){
+                        checkBox_only_advanced.checked = false;
+                    }
+                    else{
+                        checkBox_without_advanced.checked = false;
                     }
                 }
 
+                //レシピの種類をフィルター
+                for (let r of rows) {
+                    let recipe = getRecipeOf(r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_name'));
+                    r.style.display = (rb.value == "all") ? ""
+                                     : (rb.value != recipe.category) ? "none"
+                                      : "";
+                }
+
+                //上位食材が含まれているかどうかのフィルター
                 let visibleRows = Array.from(rows).filter(r => r.style.display == "");
                 for (let r of visibleRows) {
                     let recipe = getRecipeOf(r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_name'));
                     r.style.display = (checkBox_without_advanced.checked && recipe.hasAnyAdvancedFood) ? "none" 
                                      : (checkBox_only_advanced.checked && !recipe.hasAnyAdvancedFood) ? "none"
                                       : "";
-    
-         
                 }
 
+                //なべの数が足りているかどうかのフィルター
                 visibleRows = visibleRows.filter(r => r.style.display == "");
                 let limit = getCheckedRaddioButtonOf(document.getElementById('recipe_limit')).value;
                 for (let r of visibleRows){
@@ -120,6 +144,15 @@
                     r.style.display = (recipe.isEnoughSlots(limit)) ? "" : "none";
                 }
 
+                //選択した食材が含まれているかの確認
+                if (selectBox_food.value != "----"){
+                    visibleRows = visibleRows.filter(r => r.style.display == "");
+                    for (let r of visibleRows){
+                        let recipe = getRecipeOf(r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_name'));
+                        r.style.display = (recipe.containsFood(selectBox_food.value)) ? "" : "none";
+                    }
+                }
+                
             }
 
 
@@ -206,6 +239,10 @@
 
                 isEnoughSlots(num){
                     return this.totalFoodsCount <= num;
+                }
+
+                containsFood(food){
+                    return this.ingredients.some(x => x.food == food);
                 }
             }
 
