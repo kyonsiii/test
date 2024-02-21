@@ -45,56 +45,56 @@ table thead tr th {
 .table_sleep th:nth-child(3){
     width: 7em;
 }
-#wakakusa_table{
-    border-collapse: collapse;
-    border: 2px solid green;
-}
 
 /*テーブル(睡眠計算) - IDセレクタ*/
-#wakakusa_table td, #wakakusa_table th{
+#quick table{
+    border: 2px solid black;
+}
+#quick td, #quick th{
+    border: 1px solid #002288;
+}
+
+#wakakusa table{
+    border: 2px solid green;
+}
+#wakakusa td, #wakakusa th{
     border: 1px solid #AAAA00;
 }
 
-#cyan_table{
+
+#cyan table{
     border: 2px solid royalblue;
 }
-
-
-#cyan_table td, #cyan_table th{
+#cyan td, #cyan th{
     border: 1px solid cornflowerblue;
 }
 
-#taupe_table{
+
+#taupe table{
     border: 2px solid #771100;
 }
-
-
-#taupe_table td, #taupe_table th{
+#taupe td, #taupe th{
     border: 1px solid #AA4400;
 }
 
 
-#uno_table{
+#uno table{
     border: 2px solid  #ff8eca;
 }
-
-
-#uno_table td, #uno_table th{
+#uno td, #uno th{
     border: 1px solid #FFAADD;
 }
 
 
-/*テーブル(レシピ) - IDセレクタ*/
-#soup_table{
-    border: 2px solid brown;
+#rapiz table{
+    border: 2px solid  #8899FF;
 }
-#soup_table td{
-    border: 1px solid brown;
+#rapiz td, #rapiz th{
+    border: 1px solid #6677CC;
 }
 
-#soup_table tr{
-    border: 2px solid pink;
-}
+
+
 
 /*レシピのタグ*/
 .recipe_title{

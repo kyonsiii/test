@@ -23,143 +23,235 @@
             <span id="calc_result"></span>
         </p>
 
+        <p id="field_filter">
+            <input type="radio" name="field_filter" onchange="filterField(this)" value="wakakusa">ワカクサ
+            <input type="radio" name="field_filter" onchange="filterField(this)" value="cyan">シアン
+            <input type="radio" name="field_filter" onchange="filterField(this)" value="taupe">トープ
+            <input type="radio" name="field_filter" onchange="filterField(this)" value="uno">ウノハナ
+            <input type="radio" name="field_filter" onchange="filterField(this)" value="rapiz">ラピス
+        </p>
 
         <!--ボタンはJavascriptで後から追加-->
-        ワカクサ<br>
-        <table id="wakakusa_table" class="table_sleep">
-            <thead>
-                <tr>
-                    <th>得点</th>
-                    <th>出現</th>
-                    <th>ボタン</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>98万～</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>208万～</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td>464万～</td>
-                    <td>6</td>
-                </tr>
-                <tr>
-                    <td>834万～</td>
-                    <td>7</td>
-                </tr>
-                <tr>
-                    <td>1958万～</td>
-                    <td>8</td>
-                </tr>
-
-            </tbody>
-        </table>
-
-        シアン<br>
-        <table id="cyan_table"  class="table_sleep">
-            <thead>
-                <tr>
-                    <th>得点</th>
-                    <th>出現</th>
-                    <th>ボタン</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>159万～</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>357万～</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td>717万～</td>
-                    <td>6</td>
-                </tr>
-                <tr>
-                    <td>1361万～</td>
-                    <td>7</td>
-                </tr>
-                <tr>
-                    <td>3064万～</td>
-                    <td>8</td>
-                </tr>
-
-            </tbody>
-        </table>
-
-        トープ<br>
-        <table id="taupe_table"  class="table_sleep">
-            <thead>
-                <tr>
-                    <th>得点</th>
-                    <th>出現</th>
-                    <th>ボタン</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>188万～</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>463万～</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td>995万～</td>
-                    <td>6</td>
-                </tr>
-                <tr>
-                    <td>1957万～</td>
-                    <td>7</td>
-                </tr>
-                <tr>
-                    <td>4377万～</td>
-                    <td>8</td>
-                </tr>
-
-            </tbody>
-        </table>
         
-        ウノハナ<br>
-        <table id="uno_table"  class="table_sleep">
-            <thead>
-                <tr>
-                    <th>得点</th>
-                    <th>出現</th>
-                    <th>ボタン</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>329万～</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>883万～</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td>1567万～</td>
-                    <td>6</td>
-                </tr>
-                <tr>
-                    <td>3045万～</td>
-                    <td>7</td>
-                </tr>
-                <tr>
-                    <td>6961万～</td>
-                    <td>8</td>
-                </tr>
+        <div id="quick">
+            クイック<br>
+            <table class="table_sleep">
+                <thead>
+                    <tr>
+                        <th>得点</th>
+                        <th>出現</th>
+                        <th>ボタン</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>500万～</td>
+                        <td>---</td>
+                    </tr>
+                    <tr>
+                        <td>1000万～</td>
+                        <td>---</td>
+                    </tr>
+                    <tr>
+                        <td>1200万～</td>
+                        <td>---</td>
+                    </tr>
+                    <tr>
+                        <td>1500万～</td>
+                        <td>---</td>
+                    </tr>
+                    <tr>
+                        <td>2000万～</td>
+                        <td>---</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-            </tbody>
-        </table>
+        <div id="field_tables">
+            <div id="wakakusa">
+                ワカクサ<br>
+                <table class="table_sleep">
+                    <thead>
+                        <tr>
+                            <th>得点</th>
+                            <th>出現</th>
+                            <th>ボタン</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>98万～</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>208万～</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>464万～</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>834万～</td>
+                            <td>7</td>
+                        </tr>
+                        <tr>
+                            <td>1958万～</td>
+                            <td>8</td>
+                        </tr>
+        
+                    </tbody>
+                </table>
+            </div>
+    
+    
+            <div id="cyan">
+                シアン<br>
+                <table class="table_sleep">
+                    <thead>
+                        <tr>
+                            <th>得点</th>
+                            <th>出現</th>
+                            <th>ボタン</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>159万～</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>357万～</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>717万～</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>1361万～</td>
+                            <td>7</td>
+                        </tr>
+                        <tr>
+                            <td>3064万～</td>
+                            <td>8</td>
+                        </tr>
+        
+                    </tbody>
+                </table>
+            </div>
+    
+    
+            <div id="taupe">
+                トープ<br>
+                <table class="table_sleep">
+                    <thead>
+                        <tr>
+                            <th>得点</th>
+                            <th>出現</th>
+                            <th>ボタン</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>188万～</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>463万～</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>995万～</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>1957万～</td>
+                            <td>7</td>
+                        </tr>
+                        <tr>
+                            <td>4377万～</td>
+                            <td>8</td>
+                        </tr>
+        
+                    </tbody>
+                </table>
+            </div>
+    
+            <div id="uno">
+                ウノハナ<br>
+                <table class="table_sleep">
+                    <thead>
+                        <tr>
+                            <th>得点</th>
+                            <th>出現</th>
+                            <th>ボタン</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>283万～</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>717万～</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1547万～</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>2878万～</td>
+                            <td>7</td>
+                        </tr>
+                        <tr>
+                            <td>6571万～</td>
+                            <td>8</td>
+                        </tr>
+        
+                    </tbody>
+                </table>
+            </div>
+            
+    
+            <div id="rapiz">
+                ラピスラズリ湖畔<br>
+                <table class="table_sleep">
+                    <thead>
+                        <tr>
+                            <th>得点</th>
+                            <th>出現</th>
+                            <th>ボタン</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>316万～</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>775万～</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1668万～</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>3045万～</td>
+                            <td>7</td>
+                        </tr>
+                        <tr>
+                            <td>6880万～</td>
+                            <td>8</td>
+                        </tr>
+        
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
 
         <!--以下、スクリプト-->
@@ -245,6 +337,16 @@
                     let td = r.insertCell();
                     td.appendChild(b);
                 });
+            }
+
+
+            function filterField(rb){
+                let el = document.getElementById(rb.value);
+                let tables = document.getElementById('field_tables').children;
+
+                for (let t of tables) {
+                    t.style.display = (t == el) ? "" : "none";
+                }
             }
         </script>
     </body>
