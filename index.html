@@ -41,6 +41,15 @@
     
             <button id="button_reset">リセット</button>
     
+
+            <div id="field_buttons">
+                <img name="シアン" src="img/field/シアン.png" class="field" onclick="selectField(this)">
+                <img name="トープ" src="img/field/トープ.png" class="field" onclick="selectField(this)">
+                <img name="ウノハナ" src="img/field/ウノハナ.png" class="field" onclick="selectField(this)">
+                <img name="ラピス" src="img/field/ラピス.png" class="field" onclick="selectField(this)">
+            </div>
+
+
             <div id="berry_buttons">
                 <img name="キーのみ" src="img/berry/キーのみ.png" onclick="selectIcon(this)">
                 <img name="ヒメリのみ" src="img/berry/ヒメリのみ.png" onclick="selectIcon(this)">
@@ -113,14 +122,59 @@
 
             box_skill.addEventListener("change", ()=>{setResult();});
 
-            function selectIcon(el){
-                if (el == null){
 
-                    return;
+            function reset(onlyTBody, ignoreSetResult = false){
+                resultTBody.innerHTML = "";
+                if (onlyTBody) return;
+
+                box_specialty.options[0].selected = true;
+                box_skill.options[0].selected = true;
+                this.selectIcon(null, ignoreSetResult);
+            }
+
+
+            function selectField(el){
+                fieldName = el.name;
+                this.reset(false, true);
+                
+                if (fieldName == "シアン"){
+                    this.selectIcon(this.getBerryIconOf("オレンのみ"), true);
+                    this.selectIcon(this.getBerryIconOf("シーヤのみ"), true);
+                    this.selectIcon(this.getBerryIconOf("モモンのみ"));
                 }
+                else if (fieldName == "トープ"){
+                    this.selectIcon(this.getBerryIconOf("ヒメリのみ"), true);
+                    this.selectIcon(this.getBerryIconOf("フィラのみ"), true);
+                    this.selectIcon(this.getBerryIconOf("オボンのみ"));
+                }
+                else if (fieldName == "ウノハナ"){
+                    this.selectIcon(this.getBerryIconOf("キーのみ"), true);
+                    this.selectIcon(this.getBerryIconOf("チーゴのみ"), true);
+                    this.selectIcon(this.getBerryIconOf("ウイのみ"));
+                }
+                else if (fieldName == "ラピス"){
+                    this.selectIcon(this.getBerryIconOf("ドリのみ"), true);
+                    this.selectIcon(this.getBerryIconOf("クラボのみ"), true);
+                    this.selectIcon(this.getBerryIconOf("マゴのみ"));
+                }
+            }
 
-                if (el.style.margin == "" || el.style.margin == "4px"){
-                    el.style.margin = "0";
+            function getBerryIconOf(berryName){
+                let a = document.getElementById('berry_buttons').children;
+                for (let i = 0; i < a.length; i++){
+                    if (a[i].name == berryName) return a[i];
+                }
+                return null;
+            }
+
+
+            function selectIcon(el, ignoreSetResult = false){
+                if (el == null){
+                    Array.from(document.getElementById('berry_buttons').children).forEach(c => this.changeIconStyle(c, false));
+                    Array.from(document.getElementById('food_buttons').children).forEach(c => this.changeIconStyle(c, false));
+                }
+                else if (el.style.margin == "" || el.style.margin == "4px"){
+                    el.style.margin = "0px";
                     el.style.border = "4px solid blue";
                     el.value = "ON";
                 }
@@ -130,12 +184,24 @@
                     el.value = "";
                 }
 
-                this.setResult();
+                if (!ignoreSetResult) this.setResult();
             }
 
+
+            function changeIconStyle(el, turnOn){
+                if (turnOn){
+                    el.style.margin = "0px";
+                    el.style.border = "4px solid blue";
+                    el.value = "ON";
+                }
+                else{
+                    el.style.margin = "4px";
+                    el.style.border = "";
+                    el.value = "";
+                }
+            }
  
             function setResult(){
-
                 let selectedBerries = Array.from(document.getElementById('berry_buttons').children).filter(c => c.value == "ON").map(c => c.name).join("");
                 let selectedFoods = Array.from(document.getElementById('food_buttons').children).filter(c => c.value == "ON").map(c => c.name).join("");
                 console.log(selectedBerries == "");
@@ -158,16 +224,7 @@
             }
 
 
-            function reset(onlyTBody){
-                resultTBody.innerHTML = "";
-                if (onlyTBody) return;
-
-                box_specialty.options[0].selected = true;
-                box_skill.options[0].selected = true;
-
-                this.setResult();
-            }
-
+           
 
             class pokemon{
                 constructor(no, name, sleepType, specialty, berry, food1, food2, food3, skill, friendp, sec, indicator){

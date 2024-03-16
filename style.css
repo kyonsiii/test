@@ -139,7 +139,10 @@ img.tiny{
 img.normal{
     width: 5em;
     height: 5em;
+}
 
+img.field{
+    width: 22%;
 }
 
 .current{
