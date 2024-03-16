@@ -143,6 +143,7 @@ img.normal{
 
 img.field{
     width: 22%;
+    max-width: 10em;
 }
 
 .current{
