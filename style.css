@@ -115,6 +115,18 @@ table thead tr th {
 
 
 /*イメージ*/
+#berry_buttons, #food_buttons{
+    border: 2px solid black;
+    max-width: 470px;
+    margin-top: -2px;
+}
+
+#berry_buttons img, #food_buttons img{
+    width: 2em;
+    height: 2em;
+    margin: 4px;
+}
+
 img.tiny{
     width: 2em;
     height: auto;
