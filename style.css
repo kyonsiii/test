@@ -16,10 +16,6 @@ select{
     margin-top: 1em;
 }
 
-#result td:nth-child(1){
-    max-width: 9em;
-}
-
 table{
     border-collapse: collapse;
     border: 2px solid orange;
