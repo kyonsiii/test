@@ -80,6 +80,7 @@
                 <img name="おいしいシッポ" src="img/food/おいしいシッポ.png" onclick="selectIcon(this)">
                 <img name="ワカクサコーン" src="img/food/ワカクサコーン.png" onclick="selectIcon(this)">
             </div>
+            
             <table id="result">
                 <thead>
                     <tr>
@@ -194,7 +195,7 @@
                                 + "<br>" + this.sleepType + " - " + this.specialty
                                 + "<br>" + this.skill
                                 + "<br>" + this.sec
-                                + "<br>" + this.indicator;
+                                + "<br>" + "<font size=" + "1.5em" + "" + ">" + this.indicator + "</span>";
 
                     c = r.insertCell();
                     c.innerHTML = "<img src=\"img/berry/" + this.berry + ".png\" class=\"tiny\">" + this.berry

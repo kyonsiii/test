@@ -12,6 +12,14 @@ select{
 
 
 /*テーブル系*/
+#result{
+    margin-top: 1em;
+}
+
+#result td:nth-child(1){
+    max-width: 10em;
+}
+
 table{
     border-collapse: collapse;
     border: 2px solid orange;
