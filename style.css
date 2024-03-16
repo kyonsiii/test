@@ -17,7 +17,7 @@ select{
 }
 
 #result td:nth-child(1){
-    max-width: 8em;
+    max-width: 9em;
 }
 
 table{
