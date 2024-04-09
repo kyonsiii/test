@@ -139,6 +139,8 @@ img.tiny{
 img.normal{
     width: 5em;
     height: 5em;
+    padding-right: 0.5em;
+    float: left;
 }
 
 img.field{
