@@ -27,13 +27,18 @@
             <input type="checkbox" onchange="setTarget(this, null)" id="without_advanced">上位素材を除く
             <input type="checkbox" onchange="setTarget(this, null)" id="only_advanced">上位素材使用のみ
             <br>
-                <p id="recipe_limit">
-                    <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="9999" checked="true">制限なし
-                    <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="45">45 
-                    <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="51">51 
-                    <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="54">54 
-                    <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="57">57           
-                </p>   
+            <div id="recipe_limit">
+                <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="9999" checked="true">制限なし
+                <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="45">45 
+                <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="51">51 
+                <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="54">54 
+                <input type="radio" name="recipe_limit" onchange="setTarget(this, null)" value="57">57         
+            </div>   
+            <div id="recipe_limit_type">
+                <input type="radio" name="recipe_limit_type" onchange="setTarget(this, null)" value="more" checked="true">以上
+                <input type="radio" name="recipe_limit_type" onchange="setTarget(this, null)" value="less">以下  
+            </div>
+
             <select id="select_food" onchange="setTarget(this, null)">
                 <option value = "----">----</option>
                 <option value="あじわいキノコ">あじわいキノコ</option>
@@ -85,12 +90,6 @@
 
             //関数宣言
             function setTableRows(){
-                /*
-                for (let i = 0; i < recipes.length; i++){
-                    recipe_table.tBodies[0].appendChild(recipes[i].getTr());
-                }
-                */
-
                 for (let r of recipes){
                     recipe_table.tBodies[0].appendChild(r.getTr());
                 }
@@ -133,12 +132,14 @@
                                       : "";
                 }
 
-                //なべの数が足りているかどうかのフィルター
+                //なべの数のフィルター
+                let moreThanMode = getCheckedRaddioButtonOf(document.getElementById('recipe_limit_type')).value == "more";
                 visibleRows = visibleRows.filter(r => r.style.display == "");
-                let limit = getCheckedRaddioButtonOf(document.getElementById('recipe_limit')).value;
+                let nabeNum = getCheckedRaddioButtonOf(document.getElementById('recipe_limit')).value;
                 for (let r of visibleRows){
                     let recipe = getRecipeOf(r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_name'));
-                    r.style.display = (recipe.isEnoughSlots(limit)) ? "" : "none";
+                    r.style.display = (moreThanMode) ? recipe.moreThan(nabeNum) ? "" : "none"
+                                                      : recipe.lessThan(nabeNum) ? "" : "none";
                 }
 
                 //選択した食材が含まれているかの確認
@@ -234,10 +235,16 @@
                 }
 
 
-                isEnoughSlots(num){
-                    return this.totalFoodsCount <= num;
+
+                //個数制限なしの場合は9999が入力されるのでかならずtrueを返すようにする
+                lessThan(num){
+                    return (num == 9999) ? true : this.totalFoodsCount <= num;
                 }
 
+                moreThan(num){
+                    return (num == 9999) ? true : this.totalFoodsCount >= num;
+                }
+                
                 containsFood(food){
                     return this.ingredients.some(x => x.food == food);
                 }
