@@ -286,10 +286,10 @@
 
             function getCookie(name){
                 let cookies = document.cookie.split(';');
-                for (let c of cookies){
-                    console.log(c);
-                    if (c.indexOf(name) == 0){
-                        return c.split('=')[1];
+                for (let i; i < cookies.length ; i++){
+                    console.log(cookie[i]);
+                    if (cookie[i].indexOf(name) == 0){
+                        return cookie[i].split('=')[1];
                     }
                 }
                 return null;
