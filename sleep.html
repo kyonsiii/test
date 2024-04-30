@@ -32,41 +32,6 @@
         </p>
 
         <!--ボタンはJavascriptで後から追加-->
-        
-        <div id="quick">
-            クイック<br>
-            <table class="table_sleep">
-                <thead>
-                    <tr>
-                        <th>得点</th>
-                        <th>出現</th>
-                        <th>ボタン</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>500万～</td>
-                        <td>---</td>
-                    </tr>
-                    <tr>
-                        <td>1000万～</td>
-                        <td>---</td>
-                    </tr>
-                    <tr>
-                        <td>1200万～</td>
-                        <td>---</td>
-                    </tr>
-                    <tr>
-                        <td>1500万～</td>
-                        <td>---</td>
-                    </tr>
-                    <tr>
-                        <td>2000万～</td>
-                        <td>---</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
 
         <div id="field_tables">
             <div id="wakakusa">
@@ -305,6 +270,9 @@
                     resStr += "<br>残り: " + String(remHour).padStart(2, "0") + ":" + String(remMinutes).padStart(2, "0") + "(" + remFinal.toLocaleString() + ")";
                 }
                 document.getElementById('calc_result').innerHTML= resStr;
+                document.cookie = "currentPower=225,000";
+                let aaaa = document.cookie.split(';')[0];
+                console.log(aaaa);
             }
 
 
