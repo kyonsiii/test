@@ -270,11 +270,6 @@
                     resStr += "<br>残り: " + String(remHour).padStart(2, "0") + ":" + String(remMinutes).padStart(2, "0") + "(" + remFinal.toLocaleString() + ")";
                 }
                 document.getElementById('calc_result').innerHTML= resStr;
-                
-                setCookie("currentPower", powerNum.toString(), 30);
-                setCookie("targetPower", targetNum.toString(), 30)
-                console.log(getCookie("currentPower"));
-                console.log(getCookie("targetPower"));
             }
 
             function setCookie(name, value, days){
@@ -285,10 +280,8 @@
 
 
             function getCookie(name){
-                akert(document.cookie);
                 let cookies = document.cookie.split(';');
                 for (let i; i < cookies.length ; i++){
-                    console.log(cookie[i]);
                     if (cookie[i].indexOf(name) == 0){
                         return cookie[i].split('=')[1];
                     }
