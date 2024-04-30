@@ -270,9 +270,28 @@
                     resStr += "<br>残り: " + String(remHour).padStart(2, "0") + ":" + String(remMinutes).padStart(2, "0") + "(" + remFinal.toLocaleString() + ")";
                 }
                 document.getElementById('calc_result').innerHTML= resStr;
-                document.cookie = "currentPower=225,000";
-                let aaaa = document.cookie.split(';')[0];
-                console.log(aaaa);
+                
+                setCookie("currentPower", powerNum.toString(), 30);
+                setCookie("targetPower", targetNum.toString(), 30)
+                console.log(getCookie("currentPower"));
+                console.log(getCookie("targetPower"));
+            }
+
+            function setCookie(name, value, days){
+                let date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = name + "=" + (value || "") + ";expires=" + date.toUTCString() + ";path=/sleep.html";
+            }
+
+
+            function getCookie(name){
+                let cookies = document.cookie.split(';');
+                for (let c of cookies){
+                    if (c.indexOf(name) == 0){
+                        return c.split('=')[1];
+                    }
+                }
+                return null;
             }
 
 
