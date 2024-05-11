@@ -10,6 +10,12 @@ select{
     font-size: 1em;
 }
 
+/*Span*/
+span.indicator_text{
+    font-size: 0.8em;
+    display: inline-block;
+    width: 8em;
+}
 
 /*テーブル系*/
 #result{
