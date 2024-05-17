@@ -27,6 +27,7 @@
             <input type="radio" name="field_filter" onchange="filterField(this)" value="wakakusa">ワカクサ
             <input type="radio" name="field_filter" onchange="filterField(this)" value="cyan">シアン
             <input type="radio" name="field_filter" onchange="filterField(this)" value="taupe">トープ
+            <br>
             <input type="radio" name="field_filter" onchange="filterField(this)" value="uno">ウノハナ
             <input type="radio" name="field_filter" onchange="filterField(this)" value="rapiz">ラピス
         </p>
@@ -46,7 +47,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>98万～</td>
+                            <td>9万～</td>
                             <td>4</td>
                         </tr>
                         <tr>
@@ -54,7 +55,7 @@
                             <td>5</td>
                         </tr>
                         <tr>
-                            <td>464万～</td>
+                            <td>463万～</td>
                             <td>6</td>
                         </tr>
                         <tr>
@@ -62,7 +63,7 @@
                             <td>7</td>
                         </tr>
                         <tr>
-                            <td>1958万～</td>
+                            <td>1957万～</td>
                             <td>8</td>
                         </tr>
         
@@ -83,11 +84,11 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>159万～</td>
+                            <td>158万～</td>
                             <td>4</td>
                         </tr>
                         <tr>
-                            <td>357万～</td>
+                            <td>352万～</td>
                             <td>5</td>
                         </tr>
                         <tr>
@@ -95,11 +96,11 @@
                             <td>6</td>
                         </tr>
                         <tr>
-                            <td>1361万～</td>
+                            <td>1349万～</td>
                             <td>7</td>
                         </tr>
                         <tr>
-                            <td>3064万～</td>
+                            <td>3050万～</td>
                             <td>8</td>
                         </tr>
         
@@ -120,7 +121,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>188万～</td>
+                            <td>183万～</td>
                             <td>4</td>
                         </tr>
                         <tr>
@@ -128,7 +129,7 @@
                             <td>5</td>
                         </tr>
                         <tr>
-                            <td>995万～</td>
+                            <td>994万～</td>
                             <td>6</td>
                         </tr>
                         <tr>
@@ -136,7 +137,7 @@
                             <td>7</td>
                         </tr>
                         <tr>
-                            <td>4377万～</td>
+                            <td>4371万～</td>
                             <td>8</td>
                         </tr>
         
@@ -172,7 +173,7 @@
                             <td>7</td>
                         </tr>
                         <tr>
-                            <td>6571万～</td>
+                            <td>6570万～</td>
                             <td>8</td>
                         </tr>
         
@@ -197,19 +198,19 @@
                             <td>4</td>
                         </tr>
                         <tr>
-                            <td>775万～</td>
+                            <td>774万～</td>
                             <td>5</td>
                         </tr>
                         <tr>
-                            <td>1668万～</td>
+                            <td>1666万～</td>
                             <td>6</td>
                         </tr>
                         <tr>
-                            <td>3045万～</td>
+                            <td>3050万～</td>
                             <td>7</td>
                         </tr>
                         <tr>
-                            <td>6880万～</td>
+                            <td>6867万～</td>
                             <td>8</td>
                         </tr>
         
@@ -248,7 +249,7 @@
 
                 let maxPower = powerNum * 100;
                 let powerPerMinute = maxPower / 510;
-                let sleepMinutes = targetNum / powerPerMinute;
+                let sleepMinutes = Math.ceil(targetNum / powerPerMinute);
 
                 let hour = Math.floor(sleepMinutes / 60);
                 let minutes = Math.ceil(sleepMinutes % 60);
@@ -268,6 +269,7 @@
                     let remMinutes = Math.ceil(remain % 60);
                     let remFinal = Math.floor((remHour*60 + remMinutes) * powerPerMinute);
                     resStr += "<br>残り: " + String(remHour).padStart(2, "0") + ":" + String(remMinutes).padStart(2, "0") + "(" + remFinal.toLocaleString() + ")";
+                    resStr += "<br>元気 +" + Math.floor(sleepMinutes / 510 * 100)
                 }
                 document.getElementById('calc_result').innerHTML= resStr;
                 
