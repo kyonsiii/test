@@ -214,7 +214,7 @@
                 let results = pokemons.filter(p => (ignoreSpecialty || p.specialty == box_specialty.value)
                                                 && (ignoreBerry || selectedBerries.includes(p.berry))
                                                 && (ignoreFood || p.containsFood(selectedFoods))
-                                                && (ignoreSkill || p.skill == box_skill.value));
+                                                && (ignoreSkill || p.skill.indexOf(box_skill.value) > -1));
 
                 reset(true);
       
@@ -257,9 +257,9 @@
                                 + "<br>" + this.skill
                                 + "<br>" + this.sec
                                 + "<p>" + this.indicator
-                                + "<br><span class=\"indicator_text\">きのみRank</span> " + this.indicatorChar.repeat(this.berryIndicator)
-                                + "<br><span class=\"indicator_text\">食材Rank</span> " + this.indicatorChar.repeat(this.foodIndicator)
-                                + "<br><span class=\"indicator_text\">スキルRank</span> " + this.indicatorChar.repeat(this.skillIndicator)
+                                + "<br><span class=\"indicator_text\">きのみRank</span> " + this.getIndicatorBarOf(this.berryIndicator)//this.indicatorChar.repeat(this.berryIndicator)
+                                + "<br><span class=\"indicator_text\">食材Rank</span> " +  this.getIndicatorBarOf(this.foodIndicator)//this.indicatorChar.repeat(this.foodIndicator)
+                                + "<br><span class=\"indicator_text\">スキルRank</span> " + this.getIndicatorBarOf(this.skillIndicator) //this.indicatorChar.repeat(this.skillIndicator)
                                 + "</p>";
 
                     c = r.insertCell();
@@ -275,6 +275,10 @@
                 containsFood(foods){
                     //return (this.food1 == food || this.food2 == food || this.food3 == food);
                     return (foods.includes(this.food1) || foods.includes(this.food2) ||foods.includes(this.food3));
+                }
+
+                getIndicatorBarOf(num){
+                    return "[" + num + "] " + this.indicatorChar.repeat(num);
                 }
             }
 
