@@ -274,13 +274,13 @@
 
 
                 containsFood(foods){
-                    //return (this.food1 == food || this.food2 == food || this.food3 == food);
                     return (foods.includes(this.food1) || foods.includes(this.food2) || foods.includes(this.food3));
                 }
 
 
                 getIndicatorBarOf(num){
-                    return this.indicatorChar.repeat(num) + " [" + num + "]";
+                    let left = (num >= 10) ? "[" + num + "] " : "[<font color='white'>_</font>" + num + "] ";
+                    return left + this.indicatorChar.repeat(num);
                 }
             }
 
