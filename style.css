@@ -114,7 +114,7 @@ table thead tr th {
     font-size: 1em;
 }
 #weekend{
-    font-size: 2em;
+    font-size: 1.75em;
 }
 
 
@@ -189,7 +189,7 @@ img.field{
 }
 
 .ingredients{
-    font-size: 1.34em;
+    font-size: 1.2em;
     list-style: none;
     padding-inline-start: 0;
 }
