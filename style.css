@@ -111,7 +111,10 @@ table thead tr th {
 }
 
 #recipe_table{
-    font-size: 1.25em;
+    font-size: 1em;
+}
+#weekend{
+    font-size: 2em;
 }
 
 
@@ -186,6 +189,7 @@ img.field{
 }
 
 .ingredients{
+    font-size: 1.34em;
     list-style: none;
     padding-inline-start: 0;
 }
