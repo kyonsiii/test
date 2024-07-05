@@ -2,6 +2,11 @@ button{
     font-size: 1em;
 }
 
+button.recipe_weekend{
+    font-size: 0.8em;
+    margin-top: 1em;
+}
+
 select{
     font-size: 1.75em;
 }
@@ -70,7 +75,9 @@ table thead tr th {
 #wakakusa td, #wakakusa th{
     border: 1px solid #AAAA00;
 }
-
+#weekend td{
+    vertical-align: bottom;
+}
 
 #cyan table{
     border: 2px solid royalblue;
@@ -118,9 +125,6 @@ table thead tr th {
     display: flex;
 }
 
-.recipe_detail img{
-    padding-right: 1em;
-}
 
 
 
@@ -140,6 +144,12 @@ table thead tr th {
 img.tiny{
     width: 2em;
     height: auto;
+}
+
+img.ex-tiny{
+    width: 1.5em;
+    height: auto;
+
 }
 
 img.normal{
