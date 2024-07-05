@@ -110,12 +110,13 @@ table thead tr th {
     border: 1px solid #6677CC;
 }
 
-
+#recipe_table{
+    font-size: 1.25em;
+}
 
 
 /*レシピのタグ*/
 .recipe_title{
-    font-size: 0.9em;
     width: 24em;
     margin-bottom: 0.5em;
     font-weight: 600;
@@ -186,6 +187,7 @@ img.field{
 
 .ingredients{
     list-style: none;
+    padding-inline-start: 0;
 }
 
 .button_set{
