@@ -301,8 +301,8 @@
                 let row = button.parentElement.parentElement;
                 let num = Number(row.children[0].textContent.replace("万～", "0000")).toLocaleString();
                 input_target.value = num;
-
                 highlightRow(row);
+                this.setCookie("target", num, 7)
             }
 
 
@@ -356,14 +356,20 @@
                           ?.substring(keyEQ.length) || null;
             }
 
+
             window.onload = ()=>{
-                let c = this.getCookie("myField");
-                if (c == null) return;
+                let field = this.getCookie("myField");
+                if (field != null){
+                    let buttons = Array.from(document.getElementById('field_filter').children);
+                    buttons.find(rb => rb.value == field).click();
+                }
 
-                let buttons = Array.from(document.getElementById('field_filter').children);
-                let x = buttons.find(rb => rb.value == c);
-                this.setTarget(x);
+                let target = this.getComputedStyle("target");
+                if (target != null){
+                    input_target.value = target;
+                }
 
+                
             }
         </script>
     </body>
