@@ -336,6 +336,28 @@
                 for (let t of tables) {
                     t.style.display = (t == el) ? "" : "none";
                 }
+
+                this.setCookie("myField", rb.name, 7);
+                console.log(document.cookie);
+            }
+
+            function setCookie(key, value, days){
+                let expires = new Date();
+                expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+            }
+
+
+            function getCookie(key){
+                let keyEQ = key + "=";
+                let arrr = document.cookie.split(';');
+                for (let i = 0; i < arrr.length; i ++ ){
+                    console.log(arrr[i]);
+                }
+                return document.cookie.split(';')
+                        .map(a => a.trim())
+                         .find(c => c.startsWith(keyEQ))
+                          ?.substring(keyEQ.length) || null;
             }
         </script>
     </body>
