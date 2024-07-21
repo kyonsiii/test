@@ -364,7 +364,7 @@
                     buttons.find(rb => rb.value == field).click();
                 }
 
-                let target = this.getComputedStyle("target");
+                let target = this.getCookie("target");
                 if (target != null){
                     input_target.value = target;
                 }
