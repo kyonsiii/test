@@ -279,10 +279,11 @@
                 console.log(getCookie("targetPower"));
             }
 
-            function setCookie(name, value, days){
-                let date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                document.cookie = name + "=" + (value || "") + ";expires=" + date.toUTCString() + ";path=/";
+
+            function setCookie(key, value, days){
+                let expires = new Date();
+                expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = `${key}=${value};expires=${expires.toUTCString()};path=/`;
             }
 
 
@@ -302,7 +303,6 @@
                 let num = Number(row.children[0].textContent.replace("万～", "0000")).toLocaleString();
                 input_target.value = num;
                 highlightRow(row);
-                this.setCookie("target", num, 7)
             }
 
 
@@ -340,12 +340,6 @@
                 this.setCookie("myField", rb.value, 7);
             }
 
-            function setCookie(key, value, days){
-                let expires = new Date();
-                expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-                document.cookie = `${key}=${value};expires=${expires.toUTCString()};path=/`;
-            }
-
 
             function getCookie(key){
                 let keyEQ = key + "=";
@@ -363,8 +357,13 @@
                     let buttons = Array.from(document.getElementById('field_filter').children);
                     buttons.find(rb => rb.value == field).click();
                 }
-
-                let target = this.getCookie("target");
+                
+                let curPower = this.getCookie("currentPower");
+                if (curPower != null){
+                    input_current.value = curPower;
+                }
+                
+                let target = this.getCookie("targetPower");
                 if (target != null){
                     input_target.value = target;
                 }
