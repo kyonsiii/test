@@ -5,6 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="style.css" rel="stylesheet"/>
         <title>睡眠計算</title>
+
+        <!-- css -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.js">
+        <!-- js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.js"></script>
     </head>
 
 
@@ -220,6 +225,11 @@
         </div>
 
 
+        <div id="type_calc">
+        </div>
+          
+
+
         <!--以下、スクリプト-->
         <script>
             //Initialize
@@ -280,12 +290,6 @@
             }
 
 
-            function setCookie(key, value, days){
-                let expires = new Date();
-                expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-                document.cookie = `${key}=${value};expires=${expires.toUTCString()};path=/`;
-            }
-
 
             function getCookie(name){
                 let cookies = document.cookie.split(';');
@@ -341,13 +345,33 @@
             }
 
 
+            function setCookie(key, value, days){
+                let expires = new Date();
+                expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = `${key}=${value};expires=${expires.toUTCString()};path=/`;
+            }
+
+
             function getCookie(key){
                 let keyEQ = key + "=";
-                let arrr = document.cookie.split(';');
                 return document.cookie.split(';')
                         .map(a => a.trim())
                          .find(c => c.startsWith(keyEQ))
                           ?.substring(keyEQ.length) || null;
+            }
+
+
+            function createSlider(){
+                const el = document.getElementById('sleep_calc');
+                noUiSlider.create(el, {
+                    start: [25,75],
+                    connect: true,
+                    range: {
+                        'min': 0,
+                        'max': 100
+                    }
+                });
+
             }
 
 
@@ -368,7 +392,23 @@
                     input_target.value = target;
                 }
 
-                
+                const range = document.getElementById('range');
+                noUiSlider.create(range, {
+
+                    range: {
+                        'min': 0,
+                        'max': 100
+                    },
+                    step: 1,
+                    start: [2, 4],
+                    connect: true,
+                    behaviour: 'tap-drag',
+                    pips: {
+                        mode: 'steps',
+                        stepped: true,
+                        density: 10
+                    }
+                });
             }
         </script>
     </body>
