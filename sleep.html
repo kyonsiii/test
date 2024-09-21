@@ -234,7 +234,7 @@
                     <tr>
                         <td>狙い値</td>
                         <td><input type="text" id="calc_target" class="calc_sleep_input" /></td>
-                        <td><button onclick="showDifferencesOfRatio();" class="smaller">計算</button></td>
+                        <td><button onclick="showRatioCalcResult();" class="smaller">計算</button></td>
                     </tr>
     
                 </tbody>
@@ -266,10 +266,9 @@
             const input_target = document.getElementById('target_power');
             const button_calc =  document.getElementById('button_calc');
 
-
             button_calc.addEventListener("click", () =>{calc()});
 
-            addButtonIntoTr()
+            addButtonIntoTr();
 
 
             //関数宣言
@@ -308,27 +307,14 @@
                     let remMinutes = Math.ceil(remain % 60);
                     let remFinal = Math.floor((remHour*60 + remMinutes) * powerPerMinute);
                     resStr += "<br>残り: " + String(remHour).padStart(2, "0") + ":" + String(remMinutes).padStart(2, "0") + "(" + remFinal.toLocaleString() + ")";
-                    resStr += "<br>元気 +" + Math.floor(sleepMinutes / 510 * 100)
+                    resStr += "<br>元気 +" + Math.floor(sleepMinutes / 510 * 100);
                 }
                 document.getElementById('calc_result').innerHTML= resStr;
                 
                 setCookie("currentPower", powerNum.toString(), 30);
-                setCookie("targetPower", targetNum.toString(), 30)
-
+                setCookie("targetPower", targetNum.toString(), 30);
             }
-
-
-
-            function getCookie(name){
-                let cookies = document.cookie.split(';');
-                for (let i; i < cookies.length ; i++){
-                    if (cookie[i].indexOf(name) == 0){
-                        return cookie[i].split('=')[1];
-                    }
-                }
-                return null;
-            }
-
+            
 
             function setTarget(button){
                 let row = button.parentElement.parentElement;
@@ -373,28 +359,12 @@
             }
 
 
-            function setCookie(key, value, days){
-                let expires = new Date();
-                expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-                document.cookie = `${key}=${value};expires=${expires.toUTCString()};path=/`;
-            }
 
 
-            function getCookie(key){
-                let keyEQ = key + "=";
-                return document.cookie.split(';')
-                        .map(a => a.trim())
-                         .find(c => c.startsWith(keyEQ))
-                          ?.substring(keyEQ.length) || null;
-            }
-
-
-
-            //睡眠記録関連
+            //睡眠記録関連(初期化用)
             function setSleepCalcRows(){
                 let calcTableEl = document.getElementById('calc_table');
                 let tbody = calcTableEl.tBodies[0];
-
 
                 for (let i = 1; i <= 30; i++){
                     let r = tbody.insertRow();
@@ -411,10 +381,45 @@
             }
 
 
+            //睡眠記録関連(ボタンで呼び出すもの)
+            function showRatioCalcResult(){
+                let targTb = document.getElementById('calc_target');
+                if (targTb.value == "") {
+                    this.showCurrentRatio();
+                    return;
+                }
+
+                this.recalcRatioOf(targTb);
+                let values = targTb.value.split('-').map(v => parseInt(v, 10));
+                let ratios = this.getCurrentRatio();
+                
+                let uto_diff  = Math.round((values[0] - ratios[0]) * 10) / 10;
+                let suya_diff = Math.round((values[1] - ratios[1]) * 10) / 10;
+                let gusu_diff = Math.round((values[2] - ratios[2]) * 10) / 10;
+                let diff_max = Math.max(uto_diff, suya_diff, gusu_diff);
+                let maxType = (diff_max == uto_diff)  ? "「うとうと」 になる可能性が高い"
+                             : (diff_max == suya_diff) ? "「すやすや」 になる可能性が高い"
+                                                        : "「ぐっすり」 になる可能性が高い";
+                let mes = values[0] + "(" + this.numberToSignedNumber(uto_diff) + ") - "
+                         + values[1] + "(" + this.numberToSignedNumber(suya_diff) + ") - "
+                          + values[2] + "(" + this.numberToSignedNumber(gusu_diff) + ")"
+                           + "\n" + maxType;  
+
+                this.setCookie("calcRecords", this.createRecords().join(","), 30);
+                alert(mes);
+            }
 
 
+            function showCurrentRatio(){
+                let x = this.getCurrentRatio();
+                this.setCookie("calcRecords", this.createRecords().join(","), 30);
+                alert(x[0] + "-" + x[1] + "-" + x[2]);
+            }
 
 
+            function numberToSignedNumber(num){
+                return (num >= 0) ? "+" + num : num.toString();
+            }
 
 
             function offsetCalcRowValue(reverseMode){
@@ -428,25 +433,13 @@
 
                     row.getElementsByTagName('input')[0].value = prevRow.getElementsByTagName('input')[0].value;      
                 }
-
+                
                 document.getElementById('calc_row_'+ iEnd).getElementsByTagName('input')[0].value = '';
             }
 
 
-
-
-
             function getSleepRecordsToClipboard(){
                 navigator.clipboard.writeText(this.createRecords().join(","));
-            }
-
-
-            function recalcSleepRecords(){
-                for (let i = 1; i <= 30; i++){
-                    let r = document.getElementById('calc_row_' + i);
-                    let tb = r.getElementsByTagName('input')[0];
-                    if (tb.value != "") this.recalcRatioOf(tb);
-                }
             }
 
 
@@ -467,9 +460,10 @@
                 for (let i = 0; i < 30; i++){
                     document.getElementById('calc_row_' + (i + 1)).getElementsByTagName('input')[0].value = values[i];
                 }
-            }            
+            }    
 
 
+            //睡眠記録関連(その他)
             function createRecords(){
                 this.recalcSleepRecords();
                 let values = [];
@@ -480,6 +474,26 @@
                     values.push(tmp);
                 }
                 return values;
+            }
+
+
+            function recalcSleepRecords(){
+                for (let i = 1; i <= 30; i++){
+                    let r = document.getElementById('calc_row_' + i);
+                    let tb = r.getElementsByTagName('input')[0];
+                    if (tb.value != "") this.recalcRatioOf(tb);
+                }
+            }
+
+
+            function recalcRatioOf(tb){           
+                let tmp = tb.value.replace(/[ _-]/g, "-");
+                let numbers = tmp.split('-').map(n => parseInt(n, 10));
+                let uto = numbers[0];
+                let suya = numbers[1];
+                let gusu = 100 - uto - suya;
+                if (gusu < 0) gusu = NaN;
+                tb.value = uto + "-" + suya + "-" + gusu;     
             }
 
 
@@ -514,59 +528,35 @@
             }
 
 
-            function showCurrentRatio(){
-                let x = this.getCurrentRatio();
-                this.setCookie("calcRecords", this.createRecords().join(","), 30);
-                alert(x[0] + "-" + x[1] + "-" + x[2]);
+            //Cookie関連
+            function setCookie(key, value, days){
+                let expires = new Date();
+                expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = `${key}=${value};expires=${expires.toUTCString()};path=/`;
             }
 
 
-            function showDifferencesOfRatio(){
-                let targTb = document.getElementById('calc_target');
-                if (targTb.value == "") {
-                    this.showCurrentRatio();
-                    return;
+            function getCookie(key){
+                let keyEQ = key + "=";
+                return document.cookie.split(';')
+                        .map(a => a.trim())
+                         .find(c => c.startsWith(keyEQ))
+                          ?.substring(keyEQ.length) || null;
+            }
+
+            /* どっちや・・・？
+            function getCookie(name){
+                let cookies = document.cookie.split(';');
+                for (let i; i < cookies.length ; i++){
+                    if (cookie[i].indexOf(name) == 0){
+                        return cookie[i].split('=')[1];
+                    }
                 }
-
-                this.recalcRatioOf(targTb);
-                let values = targTb.value.split('-').map(v => parseInt(v, 10));
-                let ratios = this.getCurrentRatio();
-                
-                let uto_diff  = Math.round((values[0] - ratios[0]) * 10) / 10;
-                let suya_diff = Math.round((values[1] - ratios[1]) * 10) / 10;
-                let gusu_diff = Math.round((values[2] - ratios[2]) * 10) / 10;
-                let diff_max = Math.max(uto_diff, suya_diff, gusu_diff);
-
-                let maxType = (diff_max == uto_diff)  ? "「うとうと」 になる可能性が高い"
-                             : (diff_max == suya_diff) ? "「すやすや」 になる可能性が高い"
-                              : "「ぐっすり」 になる可能性が高い";
-
-                let mes = values[0] + "(" + this.numberToSignedNumber(uto_diff) + ") - "
-                         + values[1] + "(" + this.numberToSignedNumber(suya_diff) + ") - "
-                          + values[2] + "(" + this.numberToSignedNumber(gusu_diff) + ")"
-                           + "\n" + maxType;  
-
-                this.setCookie("calcRecords", this.createRecords().join(","), 30);
-                alert(mes);
+                return null;
             }
+            */
 
-
-            function numberToSignedNumber(num){
-                return (num >= 0) ? "+" + num : num.toString();
-            }
-
-
-            function recalcRatioOf(tb){           
-                let tmp = tb.value.replace(/[ _-]/g, "-");
-                let numbers = tmp.split('-').map(n => parseInt(n, 10));
-                let uto = numbers[0];
-                let suya = numbers[1];
-                let gusu = 100 - uto - suya;
-                if (gusu < 0) gusu = NaN;
-                tb.value = uto + "-" + suya + "-" + gusu;     
-            }
-
-
+            //ロード時の処理
             window.onload = ()=>{
                 let field = this.getCookie("myField");
                 if (field != null){
@@ -589,9 +579,6 @@
                 if (records != null){
                     this.setSleepRecords(records);
                 }
-
-
-                
             }
         </script>
     </body>
