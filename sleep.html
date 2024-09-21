@@ -391,8 +391,24 @@
 
 
             //睡眠記録関連
+            function setSleepCalcRows(){
+                let calcTableEl = document.getElementById('calc_table');
+                let tbody = calcTableEl.tBodies[0];
 
 
+                for (let i = 1; i <= 30; i++){
+                    let r = tbody.insertRow();
+                    r.id = "calc_row_" + i;
+                    let c1 = r.insertCell();
+                    c1.textContent = i + "回前";
+
+                    let c2 = r.insertCell();
+                    c2.innerHTML = '<input type="text" class="calc_sleep_input" />';
+                    
+                    let c3 = r.insertCell();
+                    c3.innerHTML = '<button tabindex="-1" onclick="offsetCalcRowValue(false);" class="smaller">↓</button> <button tabindex="-1" onclick="offsetCalcRowValue(true);"  class="smaller">↑</button>'
+                }
+            }
 
 
 
@@ -417,24 +433,7 @@
             }
 
 
-            function setSleepCalcRows(){
-                let calcTableEl = document.getElementById('calc_table');
-                let tbody = calcTableEl.tBodies[0];
 
-
-                for (let i = 1; i <= 30; i++){
-                    let r = tbody.insertRow();
-                    r.id = "calc_row_" + i;
-                    let c1 = r.insertCell();
-                    c1.textContent = i + "回前";
-
-                    let c2 = r.insertCell();
-                    c2.innerHTML = '<input type="text" class="calc_sleep_input" />';
-                    
-                    let c3 = r.insertCell();
-                    c3.innerHTML = '<button tabindex="-1" onclick="offsetCalcRowValue(false);" class="smaller">↓</button> <button tabindex="-1" onclick="offsetCalcRowValue(true);"  class="smaller">↑</button>'
-                }
-            }
 
 
             function getSleepRecordsToClipboard(){
@@ -584,13 +583,14 @@
                     input_target.value = target;
                 }
 
+                this.setSleepCalcRows();
                 let records = this.getCookie("calcRecords");
                 if (records != null){
                     this.setSleepRecords(records);
                 }
 
 
-                this.setSleepCalcRows();
+                
             }
         </script>
     </body>
