@@ -516,6 +516,7 @@
 
             function showCurrentRatio(){
                 let x = this.getCurrentRatio();
+                this.setCookie("calcRecords", this.createRecords().join(","), 30);
                 alert(x[0] + "-" + x[1] + "-" + x[2]);
             }
 
