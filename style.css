@@ -6,10 +6,15 @@ button{
     font-size: 1em;
 }
 
+button.smaller{
+    font-size:0.75em;
+}
+
 button.recipe_weekend{
     font-size: 1.5em;
     margin-top: 0.5em;
 }
+
 
 select{
     font-size: 1.75em;
@@ -65,6 +70,29 @@ table thead tr th {
     width: 7em;
 }
 
+
+.table_calc td{
+    font-size: 0.8em;
+}
+
+.table_calc th:first-child{
+    font-size: 0.8em;
+    width: 4em;
+}
+
+.table_calc th:nth-child(2){
+    font-size: 0.8em;
+    width: 7em;
+}
+/*.calc_sleep_input{
+    width: 7em;
+}
+*/
+.table_calc th:nth-child(3){
+    font-size:0.8em;
+    width: 4em;
+}
+
 /*テーブル(睡眠計算) - IDセレクタ*/
 #quick table{
     border: 2px solid black;
@@ -89,7 +117,6 @@ table thead tr th {
 #cyan td, #cyan th{
     border: 1px solid cornflowerblue;
 }
-
 
 #taupe table{
     border: 2px solid #771100;
@@ -180,6 +207,10 @@ img.field{
 
 .input_short{
     width: 12em;
+}
+
+.calc_sleep_input{
+    width: 7em;
 }
 
 .target_highlight{
