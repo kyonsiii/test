@@ -1,5 +1,15 @@
 cd git\xxx
 
+
+
+
+
+
+
+
+
+
+
 //ブランチを確認
 git branch
 
@@ -19,6 +29,18 @@ git push *** main
 git log
 
 
-
 //リモートの確認
 git remote -v
+
+
+//ブランチの作成
+git branch new-branch-name
+
+//ブランチの切り替え
+git checkout new-branch-name
+
+//ブランチの作成&切り替え
+git checkout -b new-branch-name
+
+git add .
+git push 
