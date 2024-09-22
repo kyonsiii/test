@@ -6,7 +6,7 @@ class PokeSleepingCalc{
     
 
     //睡眠記録関連(初期化用)
-    setSleepCalcRows(){
+    addInputRowsToTable(){
         let calcTableEl = document.getElementById('calc_table');
         let tbody = calcTableEl.tBodies[0];
 
@@ -89,12 +89,12 @@ class PokeSleepingCalc{
 
     setSleepRecordsFromTextBox(){
         let tb = document.getElementById('import_text');
-        this.setSleepRecords(tb.value);
+        this.setRecordsToInputBoxes(tb.value);
         tb.value = "";
     }
 
 
-    setSleepRecords(csvData){
+    setRecordsToInputBoxes(csvData){
         let values = csvData.split(',');
         if (values.length != 30){
             alert("30個のデータの場合のみ取り込めます。");

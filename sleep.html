@@ -296,8 +296,8 @@
                 this.pokesleeping = new PokeSleeping();
                 this.calc = new PokeSleepingCalc();
 
-                this.calc.setSleepCalcRows();
-                /*
+                this.calc.addInputRowsToTable();
+                
                 let field = this.getCookie("myField");
                 if (field != null){
                     let buttons = Array.from(document.getElementById('field_filter').children);
@@ -306,20 +306,19 @@
                 
                 let curPower = this.getCookie("currentPower");
                 if (curPower != null){
-                    input_current.value = curPower;
+                    this.pokesleeping.input_current.value = curPower;
                 }
                 
                 let target = this.getCookie("targetPower");
                 if (target != null){
-                    input_target.value = target;
+                    this.pokesleeping.input_target.value = target;
                 }
 
-                this.setSleepCalcRows();
                 let records = this.getCookie("calcRecords");
                 if (records != null){
-                    this.setSleepRecords(records);
+                    this.calc.setRecordsToInputBoxes(records);
                 }
-                */
+            
             }
         </script>
     </body>
