@@ -43,7 +43,7 @@ class PokeSleepingCalc{
         let diff_max = Math.max(uto_diff, suya_diff, gusu_diff);
         let maxType = (diff_max == uto_diff)  ? "「うとうと」 になる可能性が高い"
                     : (diff_max == suya_diff) ? "「すやすや」 になる可能性が高い"
-                                                : "「ぐっすり」 になる可能性が高い";
+                                              : "「ぐっすり」 になる可能性が高い";
         let mes = values[0] + "(" + this.numberToSignedNumber(uto_diff) + ") - "
                 + values[1] + "(" + this.numberToSignedNumber(suya_diff) + ") - "
                 + values[2] + "(" + this.numberToSignedNumber(gusu_diff) + ")"

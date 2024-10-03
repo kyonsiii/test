@@ -149,6 +149,50 @@ class Pokedex{
             new Pokemon(913, "ウェルカモ", "ぐっすり", "食材", "オレンのみ", "ワカクサ大豆", "ふといながねぎ", "ピュアなオイル", "エナジーチャージM", 12, 3600,"きのみ無: 31.0(62.0)<br>きのみＳ: 62.0(124.0)<br>Raichu60: Lv60", 3, 7, 3),
             new Pokemon(914, "ウェーニバル", "ぐっすり", "食材", "クラボのみ", "ワカクサ大豆", "ふといながねぎ", "ピュアなオイル", "エナジーチャージM", 20, 2600,"きのみ無: 37.4(74.8)<br>きのみＳ: 74.8(149.6)<br>Raichu60: Lv54", 5, 9, 4)
         ];
+
+
+
+        this.berries =
+        [
+            {no: 1, name: "キーのみ", power: 28},
+            {no: 2, name: "ヒメリのみ", power: 27},
+            {no: 3, name: "オレンのみ", power: 31},
+            {no: 4, name: "ウブのみ", power: 25},
+            {no: 5, name: "ドリのみ", power: 30},
+            {no: 6, name: "チーゴのみ", power: 32},
+            {no: 7, name: "クラボのみ", power: 27},
+            {no: 8, name: "カゴのみ", power: 32},
+            {no: 9, name: "フィラのみ", power: 29},
+            {no: 10, name: "シーヤのみ", power: 24},
+            {no: 11, name: "マゴのみ", power: 26},
+            {no: 12, name: "ラムのみ", power: 24},
+            {no: 13, name: "オボンのみ", power: 30},
+            {no: 14, name: "ブリーのみ", power: 26},
+            {no: 15, name: "ヤチェのみ", power: 35},
+            {no: 16, name: "ウイのみ", power: 31},
+            {no: 17, name: "ベリブのみ", power: 33},
+            {no: 18, name: "モモンのみ", power: 26}
+        ];
+    }
+
+    getPokemonByName(name){
+        for (let i = 0; i < this.pokemons.length; i++){
+            if (this.pokemons[i].name == name) return this.pokemons[i];
+        }
+        return null;
+    }
+
+    getBerryPowerBaseOf(name){
+        for (let i = 0; i < this.berries.length; i++){
+            if (this.berries[i].name == name) return this.berries[i].power;
+        }
+        return -1;
+    }
+
+    getBerryPowerOf(berryName, lv){
+        let powerBase = this.getBerryPowerBaseOf(berryName);
+        if (powerBase == -1) return -1;
+        return Math.round(Math.max(powerBase + (lv - 1), powerBase * Math.pow(1.025, lv - 1)) * 100) / 100;
     }
 }
 

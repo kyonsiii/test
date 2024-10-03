@@ -24,10 +24,12 @@ class PokeCook{
         let el = document.createElement('div');
         el.classList.add('recipe_title');
         el.setAttribute('recipe_type', recipe.category);
-        el.setAttribute('recipe_name', recipe.recipeName);
+        el.setAttribute('recipe_name', recipe.name);
+        el.setAttribute('recipe_ingredients', recipe.ingredients.map(x => x.name).join(","));
+        el.setAttribute('recipe_advanced', recipe.hasAnyAdvancedFood);
         el.setAttribute('recipe_total', recipe.totalFoodsCount);
-        el.setAttribute('recipe_power', recipe.recipePower);
-        el.innerHTML = recipe.recipeName + " /計" + recipe.totalFoodsCount + "個 [" + recipe.recipePower.toLocaleString() + "]"
+        el.setAttribute('recipe_power', recipe.energy);
+        el.innerHTML = recipe.name + " /計" + recipe.totalFoodsCount + "個 [" + recipe.energy.toLocaleString() + "]"
         c.appendChild(el);
 
         let el2 = document.createElement('div');
@@ -36,14 +38,14 @@ class PokeCook{
 
         let img = document.createElement('img');
         img.classList.add("normal");
-        img.src = "img/recipe/" + recipe.recipeName + ".png";
+        img.src = "img/recipe/" + recipe.name + ".png";
 
         let list = document.createElement('ul');
         list.classList.add("ingredients");
-        recipe.allFoods.map(f => f.getLi()).forEach(f => list.appendChild(f));
+        recipe.ingredients.map(f => f.getLi()).forEach(f => list.appendChild(f));
         
         let btn = document.createElement('button');
-        btn.value = recipe.recipeName;
+        btn.value = recipe.name;
         btn.classList.add('recipe_weekend'); 
         btn.textContent = "0個 作成";
         btn.addEventListener('click', () =>{
@@ -82,45 +84,44 @@ class PokeCook{
 
         //レシピの種類をフィルター
         for (let r of rows) {
-            let recipe = this.getRecipeOf(r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_name'));
             r.style.display = (rb.value == "all") ? ""
-                            : (rb.value != recipe.category) ? "none"
+                            : (rb.value != r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_type')) ? "none"
                             : "";
         }
 
         //上位食材が含まれているかどうかのフィルター
         let visibleRows = Array.from(rows).filter(r => r.style.display == "");
         for (let r of visibleRows) {
-            let recipe = this.getRecipeOf(r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_name'));
-            r.style.display = (this.checkBox_without_advanced.checked && recipe.hasAnyAdvancedFood) ? "none" 
-                            : (this.checkBox_only_advanced.checked && !recipe.hasAnyAdvancedFood) ? "none"
+            let advanced = r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_advanced');
+
+            r.style.display = (this.checkBox_without_advanced.checked && (advanced == "true")) ? "none" 
+                            : (this.checkBox_only_advanced.checked && (advanced == "false")) ? "none"
                             : "";
         }
+
 
         //なべの数のフィルター
         let moreThanMode = this.getCheckedRadioButtonOf(document.getElementById('recipe_limit_type')).value == "more";
         visibleRows = visibleRows.filter(r => r.style.display == "");
         let nabeNum = this.getCheckedRadioButtonOf(document.getElementById('recipe_limit')).value;
         for (let r of visibleRows){
-            let recipe = this.getRecipeOf(r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_name'));
-            r.style.display = (moreThanMode) ? recipe.moreThan(nabeNum) ? "" : "none"
-                                            : recipe.lessThan(nabeNum) ? "" : "none";
+            let total = Number(r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_total'));
+            r.style.display = (nabeNum == 9999) ? ""
+                             : (moreThanMode) ? (total >= nabeNum) ? "" : "none"
+                                              : (total <= nabeNum) ? "" : "none";
         }
+      
 
         //選択した食材が含まれているかの確認
         if (this.selectBox_food.value != "----"){
             visibleRows = visibleRows.filter(r => r.style.display == "");
             for (let r of visibleRows){
-                let recipe = this.getRecipeOf(r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_name'));
-                r.style.display = (recipe.containsFood(this.selectBox_food.value)) ? "" : "none";
+                let ingredients =  r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_ingredients');
+                r.style.display = (ingredients.includes(this.selectBox_food.value)) ? "" : "none";
             }
         }
+        return;
         
-    }
-
-
-    getRecipeOf(recipeName){
-        return this.recipes.find(r => recipeName.includes(r.recipeName));
     }
 
 
@@ -130,13 +131,13 @@ class PokeCook{
 
         this.recipes.forEach(r =>{
             if (r.weekendCount > 0){
-                title += r.recipeName + "x" + r.weekendCount + "<br>"
+                title += r.name + "x" + r.weekendCount + "<br>"
                 r.ingredients.forEach(x => {
-                    if (x.food != ""){
-                        if (dic[x.food]){
-                            dic[x.food] += (x.num * r.weekendCount);
+                    if (x.name != ""){
+                        if (dic[x.name]){
+                            dic[x.name] += (x.num * r.weekendCount);
                         } else {
-                            dic[x.food] = (x.num * r.weekendCount);
+                            dic[x.name] = (x.num * r.weekendCount);
                         }
                     }
                 });
