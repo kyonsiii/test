@@ -13,6 +13,9 @@ cd git\xxx
 //ブランチを確認
 git branch
 
+ main
+  ┗ *ttt
+      ┗
 //変更を確認
 git status
 
@@ -43,4 +46,8 @@ git checkout new-branch-name
 git checkout -b new-branch-name
 
 git add .
-git push 
+git push origin new-branch-name
+
+
+//公開ページの切り替え
+GitHubのリポジトリへ行き、Setting→Pages→Branchを変更
