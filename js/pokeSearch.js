@@ -59,6 +59,11 @@ class PokeDB{
             this.selectIcon(this.getBerryIconOf("クラボのみ"), true);
             this.selectIcon(this.getBerryIconOf("マゴのみ"));
         }
+        else if (fieldName == "ゴールド"){
+            this.selectIcon(this.getBerryIconOf("ウブのみ"), true);
+            this.selectIcon(this.getBerryIconOf("ブリーのみ"), true);
+            this.selectIcon(this.getBerryIconOf("ベリブのみ"));
+        }
     }
     
     getBerryIconOf(berryName){

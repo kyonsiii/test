@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="style.css" rel="stylesheet"/>
         <script src="js/main.js"></script>
-        <script src="js/pokesleeping.js"></script>  
-        <script src="js/pokesleeping_calc.js"></script>
+        <script src="js/pokeSleeping.js"></script>  
+        <script src="js/pokeSleepingCalc.js"></script>
         <title>睡眠計算v1.0.0</title>
     </head>
 
@@ -33,6 +33,7 @@
             <br>
             <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="uno">ウノハナ
             <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="rapiz">ラピス
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="gold">ゴールド
         </p>
 
         <!--ボタンはJavascriptで後から追加-->
@@ -238,6 +239,48 @@
                         </tr>
                         <tr>
                             <td>6867万～</td>
+                            <td>8</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
+                        </tr>
+        
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div id="gold">
+                ゴールド旧発電所<br>
+                <table class="table_sleep">
+                    <thead>
+                        <tr>
+                            <th>得点</th>
+                            <th>出現</th>
+                            <th>ボタン</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>606万～</td>
+                            <td>4</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
+                        </tr>
+                        <tr>
+                            <td>1438万～</td>
+                            <td>5</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
+                        </tr>
+                        <tr>
+                            <td>3068万～</td>
+                            <td>6</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
+                        </tr>
+                        <tr>
+                            <td>4996万～</td>
+                            <td>7</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
+                        </tr>
+                        <tr>
+                            <td>9845万～</td>
                             <td>8</td>
                             <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
