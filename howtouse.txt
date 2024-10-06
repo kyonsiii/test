@@ -49,5 +49,8 @@ git add .
 git push origin new-branch-name
 
 
+//ブランチの削除
+git push origin --delete ttt
+
 //公開ページの切り替え
 GitHubのリポジトリへ行き、Setting→Pages→Branchを変更

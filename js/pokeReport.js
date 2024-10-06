@@ -3,8 +3,8 @@ class PokeReport{
         this.pokedex = pokedex;
     }
 
-    createReport(foodName, min = 0){
-        let targetPokemons = this.pokedex.pokemons.filter(p => p.containsFood(foodName));
+    createReport(foodName, min = 0, onlyFullyEvolved = false){
+        let targetPokemons = this.pokedex.pokemons.filter(p => (!onlyFullyEvolved || p.fullyEvolved) && p.containsFood(foodName));
 
         let tbody = document.createElement("tbody");
         tbody.id = "report_result";
