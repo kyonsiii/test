@@ -355,6 +355,16 @@ class FoodCombination{
         }
         return false;
     }
+
+    getExpectionOf(foodName){
+        for (let i = 0; i < this.foods.length; i++){
+            if (this.foods[i].name == foodName){
+                console.log(this.foods[i].expection);
+                return this.foods[i].expection;
+            }
+        }
+        return 0;
+    }
 }
 
 

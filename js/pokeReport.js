@@ -8,18 +8,27 @@ class PokeReport{
 
         let tbody = document.createElement("tbody");
         tbody.id = "report_result";
+
+        let pokeAndComb = [];
         for (let i = 0; i < targetPokemons.length; i++){
             let p = targetPokemons[i]
             p.foodCombinations.forEach(c => {
                 if (c.contains(foodName, min)){
-                    let r = document.createElement("tr");
-                    r.appendChild(this.createPokemonAndFoodTd(p, c));
-                    c.insertResultTo(foodName, r);
+                    pokeAndComb.push({poke: p, comb: c});
 
-                    tbody.appendChild(r);
                 }                
             });
         }
+
+        
+        let sorted = pokeAndComb.sort((a, b) => b.comb.getExpectionOf(foodName) - a.comb.getExpectionOf(foodName));
+
+        sorted.forEach(x => {
+            let r = document.createElement("tr");
+            r.appendChild(this.createPokemonAndFoodTd(x.poke, x.comb));
+            x.comb.insertResultTo(foodName, r);
+            tbody.appendChild(r);
+        });
         return tbody;
     }
 
