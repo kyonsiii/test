@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="style.css" rel="stylesheet"/>
+        <script src="js/main.js"></script>
+        <script src="js/pokeReport.js"></script>
+        <script src="js/pokedex2.js"></script>
+
+        <title>レポート(仮)v0.0.1</title>
+
+    </head>
+
+
+    <body>
+        <p>
+            <a href = "./index.html">ポケモン</a>
+            <a href = "./sleep.html">睡眠計算</a>
+            <a href = "./cook.html">料理</a>
+            <a href = "./report.html" class="current">レポート(仮)</a>
+        </p>
+<!--
+        <p>
+            <select id="select_specialty">
+                <option value = "----">----</option>
+                <option value = "スキル">スキル</option>
+                <option value = "きのみ">きのみ</option>
+                <option value = "食材">食材</option>
+            </select>
+    
+            <select id="select_skill">
+                <option value = "----">----</option>
+                <option value="食材ゲットS">食材ゲットS</option>
+                <option value="げんきチャージS">げんきチャージS</option>
+                <option value="エナジーチャージS">エナジーチャージS</option>
+                <option value="げんきオールS">げんきオールS</option>
+                <option value="ゆめのかけらゲットS">ゆめのかけらゲットS</option>
+                <option value="おてつだいサポートS">おてつだいサポートS</option>
+                <option value="げんきエールS">げんきエールS</option>
+                <option value="料理パワーアップS">料理パワーアップS</option>
+                <option value="ゆびをふる">ゆびをふる</option>
+                <option value="エナジーチャージM">エナジーチャージM</option>
+            </select>
+    
+            <button id="button_reset">リセット</button>
+    
+
+            <div id="field_buttons">
+                <img name="シアン" src="img/field/シアン.png" class="field" onclick="pokedb.selectField(this)">
+                <img name="トープ" src="img/field/トープ.png" class="field" onclick="pokedb.selectField(this)">
+                <img name="ウノハナ" src="img/field/ウノハナ.png" class="field" onclick="pokedb.selectField(this)">
+                <img name="ラピス" src="img/field/ラピス.png" class="field" onclick="pokedb.selectField(this)">
+                <img name="ゴールド" src="img/field/ゴールド.png" class="field" onclick="pokedb.selectField(this)">
+            </div>
+
+
+            <div id="berry_buttons">
+                <img name="キーのみ" src="img/berry/キーのみ.png" onclick="addReportOf(this)">
+                <img name="ヒメリのみ" src="img/berry/ヒメリのみ.png" onclick="addReportOf(this)">
+                <img name="オレンのみ" src="img/berry/オレンのみ.png" onclick="addReportOf(this)">
+                <img name="ウブのみ" src="img/berry/ウブのみ.png" onclick="addReportOf(this)">
+                <img name="ドリのみ" src="img/berry/ドリのみ.png" onclick="addReportOf(this)">
+                <img name="チーゴのみ" src="img/berry/チーゴのみ.png" onclick="addReportOf(this)">
+                <img name="クラボのみ" src="img/berry/クラボのみ.png" onclick="addReportOf(this)">
+                <img name="カゴのみ" src="img/berry/カゴのみ.png" onclick="addReportOf(this)">
+                <img name="フィラのみ" src="img/berry/フィラのみ.png" onclick="addReportOf(this)">
+                <img name="シーヤのみ" src="img/berry/シーヤのみ.png" onclick="addReportOf(this)">
+                <img name="マゴのみ" src="img/berry/マゴのみ.png" onclick="addReportOf(this)">
+                <img name="ラムのみ" src="img/berry/ラムのみ.png" onclick="addReportOf(this)">
+                <img name="オボンのみ" src="img/berry/オボンのみ.png" onclick="addReportOf(this)">
+                <img name="ブリーのみ" src="img/berry/ブリーのみ.png" onclick="addReportOf(this)">
+                <img name="ヤチェのみ" src="img/berry/ヤチェのみ.png" onclick="addReportOf(this)">
+                <img name="ウイのみ" src="img/berry/ウイのみ.png" onclick="addReportOf(this)">
+                <img name="ベリブのみ" src="img/berry/ベリブのみ.png" onclick="addReportOf(this)">
+                <img name="モモンのみ" src="img/berry/モモンのみ.png" onclick="addReportOf(this)">
+            </div>
+-->
+            <div id="food_buttons">
+                <img name="とくせんリンゴ" src="img/food/とくせんリンゴ.png" onclick="addReportOf(this)">
+                <img name="モーモーミルク" src="img/food/モーモーミルク.png" onclick="addReportOf(this)">
+                <img name="ワカクサ大豆" src="img/food/ワカクサ大豆.png" onclick="addReportOf(this)">
+                <img name="あまいミツ" src="img/food/あまいミツ.png" onclick="addReportOf(this)">
+                <img name="マメミート" src="img/food/マメミート.png" onclick="addReportOf(this)">
+                <img name="あったかジンジャー" src="img/food/あったかジンジャー.png" onclick="addReportOf(this)">
+                <img name="あんみんトマト" src="img/food/あんみんトマト.png" onclick="addReportOf(this)">
+                <img name="とくせんエッグ" src="img/food/とくせんエッグ.png" onclick="addReportOf(this)">
+                <img name="ピュアなオイル" src="img/food/ピュアなオイル.png" onclick="addReportOf(this)">
+                <img name="ほっこりポテト" src="img/food/ほっこりポテト.png" onclick="addReportOf(this)">
+                <img name="げきからハーブ" src="img/food/げきからハーブ.png" onclick="addReportOf(this)">
+                <img name="リラックスカカオ" src="img/food/リラックスカカオ.png" onclick="addReportOf(this)">
+                <img name="あじわいキノコ" src="img/food/あじわいキノコ.png" onclick="addReportOf(this)">
+                <img name="ふといながねぎ" src="img/food/ふといながねぎ.png" onclick="addReportOf(this)">
+                <img name="おいしいシッポ" src="img/food/おいしいシッポ.png" onclick="addReportOf(this)">
+                <img name="ワカクサコーン" src="img/food/ワカクサコーン.png" onclick="addReportOf(this)">
+                <img name="めざましコーヒー" src="img/food/めざましコーヒー.png" onclick="addReportOf(this)">
+            </div>
+            <input type="text" id="food_min" style="width:3em;" value="0">個以上
+
+            <div id="result">
+                <table id="result_table">
+
+                </table>
+            </div>
+        </p>
+
+
+
+
+
+        <!--以下、スクリプト-->
+        <script>
+            function addReportOf(sender){
+                let foodName = sender.name;
+                let min = document.getElementById('food_min').value;
+                let el = document.getElementById('result_table');
+                el.innerHTML = "";
+                el.appendChild(this.pokeReport.createReport(foodName, min));
+            }
+            window.onload = ()=>{
+                this.pokedex = new Pokedex();
+                this.pokeReport = new PokeReport(this.pokedex);
+            }
+        </script>
+    </body>
+
+</html>
