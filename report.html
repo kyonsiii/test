@@ -46,7 +46,7 @@
                 マイポケモン:
                 
                 ポケモン名:
-                <select id="input_mypoke_name" style="width:10em; font-size:1em">
+                <select id="input_mypoke_name" style="width:10em; font-size:1em" onclick="initializePokeList()">
                 </select>
 
 
@@ -55,8 +55,8 @@
                 食材:<input type="text" id="input_mypoke_foods" style="width:3em;" value="AAA">(ABC表記)
                 <br>
                 
-                おてスピ(性格補正):<input type="text" id="input_mypoke_spd_char_adj" style="width:3em;" value="0.00">
-                おてスピ(サブスキ):<input type="text" id="input_mypoke_spd_skill_adj" style="width:3em;" value="0.00">
+                おてスピ(性格):<input type="text" id="input_mypoke_spd_char_adj" style="width:3em;" value="0.00">
+                おてスピ(サブ):<input type="text" id="input_mypoke_spd_skill_adj" style="width:3em;" value="0.00">
                 <br>
                 食材補正:<input type="text" id="input_mypoke_food_adj" style="width:3em;" value="0.00"> (性格↑20% 食S/M 18/36%)
                 <br>
@@ -87,6 +87,7 @@
                 let mypoke = this.getMyPokemon(foodName);
                 console.log(mypoke);
             }
+
 
             function getMyPokemon(foodName){
                 let name = this.document.getElementById('input_mypoke_name').value;
@@ -124,13 +125,8 @@
                 console.log(comb);
             }
 
-
-
-            window.onload = ()=>{
-                this.pokedex = new Pokedex();
-                this.pokemons = pokedex.pokemons;
-                this.pokeReport = new PokeReport(this.pokedex);
-                this.pokeReport.initialize();
+            function initializePokeList(){
+                if (this.selectBoxInitialized) return;
 
                 let list = document.getElementById('input_mypoke_name');
                 let blankOp = document.createElement('option');
@@ -139,14 +135,21 @@
                 list.appendChild(blankOp);
 
                 for (let i = 0; i < pokemons.length; i++){
-                    let op = document.createElement('option');
-                    
+                    let op = document.createElement('option');                    
                     op.text = pokemons[i].name;
                     op.value = pokemons[i].name;   
                     list.appendChild(op);                 
                 }
+                this.selectBoxInitialized = true;
+            }
 
 
+            window.onload = ()=>{
+                this.pokedex = new Pokedex();
+                this.pokemons = pokedex.pokemons;
+                this.pokeReport = new PokeReport(this.pokedex);
+                this.pokeReport.initialize();
+                this.selectBoxInitialized = false;
             }
         </script>
     </body>
