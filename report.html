@@ -9,7 +9,27 @@
         <script src="js/pokedex2.js"></script>
 
         <title>レポート(仮)v0.0.1</title>
-
+        <style>
+            .example2{
+                display: flex;
+            }
+            .example2 label{
+                background: #DDDDDD;
+                color: #666666;
+                padding: 1px;
+                margin: 3px;
+                text-align: center;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .example2 input:checked+label{
+                background: #60ffca;
+                color: #000000;
+            }
+            .example2 input{
+                display: none;
+            }
+            </style>
     </head>
 
 
@@ -43,24 +63,61 @@
             <input type="text" id="food_min" style="width:3em;" value="0">個以上
             <input type="checkbox" id="only_fully_evolved" checked="true">最終進化のみ(イワーク、ヤルキモノを除く)
             <div>
-                マイポケモン:
-                
-                ポケモン名:
-                <select id="input_mypoke_name" style="width:10em; font-size:1em" onclick="initializePokeList()">
+                マイポケモン登録フォームv2:<br>
+                <select id="input_mypoke_name" style="width:10em; font-size:1em" onclick="initializePokeList()" onchange="setFoodImages(this)"></select>
+                Lv<select id="input_mypoke_lv" style="width:3em; font-size:1em" onclick="initializePokeList()"></select>
+
+                <img id="input_mypoke_food_1" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
+                <img id="input_mypoke_food_2" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
+                <img id="input_mypoke_food_3" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
+                <br>
+                <select id="input_mypoke_char" style="width:15em; font-size:1em">
+                    <option value = '{"speedAdj":0.11,  "foodAdj":0.00}'>さみしがり (速↑元↓)</option>
+                    <option value = '{"speedAdj":0.11,  "foodAdj":-0.2}'>いじっぱり (速↑食↓)</option>
+                    <option value = '{"speedAdj":0.11,  "foodAdj":0.00}'>やんちゃ (速↑ス↓)</option>
+                    <option value = '{"speedAdj":0.11,  "foodAdj":0.00}'>ゆうかん (速↑E↓)</option>
+                    <option value = '{"speedAdj":-0.09, "foodAdj":0.00}'>ずぶとい (元↑速↓)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":-0.2}'>わんぱく (元↑食↓)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":0.00}'>のうてんき (元↑ス↓)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":0.00}'>のんき (元↑E↓)</option>
+                    <option value = '{"speedAdj":-0.09, "foodAdj":0.2}' >ひかえめ (食↑速↓)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":0.2}' >おっとり (食↑元↓)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":0.2}' >うっかりや (食↑ス↓)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":0.2}' >れいせい (食↑E↓)</option>
+                    <option value = '{"speedAdj":-0.09, "foodAdj":0.0}' >おだやか (ス↑速↓)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >おとなしい (ス↑元↓)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":-0.2}'>しんちょう (ス↑食↓)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >なまいき (ス↑E↓)</option>
+                    <option value = '{"speedAdj":-0.09, "foodAdj":0.0}' >おくびょう (E↑速↓)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >せっかち (E↑元↓)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":-0.2}'>ようき (E↑食↓)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >むじゃき (E↑ス↓)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >がんばりや (無補正)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >すなお (無補正)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >てれや (無補正)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >きまぐれ (無補正)</option>
+                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >まじめ (無補正)</option>
                 </select>
 
-
-                <br>
-                Lv:<input type="text" id="input_mypoke_lv" style="width:3em;" value="60">
-                食材:<input type="text" id="input_mypoke_foods" style="width:3em;" value="AAA">(ABC表記)
-                <br>
+                <div class="example2">
+                    <input type="checkbox" id="input_mypoke_speeddS"><label for="input_mypoke_speeddS">おてスピS</label>
+                    <input type="checkbox" id="input_mypoke_spdM"><label for="input_mypoke_spdM">おてスピM</label>
+                    <input type="checkbox" id="input_mypoke_foodS"><label for="input_mypoke_foodS">食材S</label>
+                    <input type="checkbox" id="input_mypoke_foodM"><label for="input_mypoke_foodM">食材M</label>
+                </div>
                 
-                おてスピ(性格):<input type="text" id="input_mypoke_spd_char_adj" style="width:3em;" value="0.00">
-                おてスピ(サブ):<input type="text" id="input_mypoke_spd_skill_adj" style="width:3em;" value="0.00">
                 <br>
-                食材補正:<input type="text" id="input_mypoke_food_adj" style="width:3em;" value="0.00"> (性格↑20% 食S/M 18/36%)
-                <br>
+                <select id="input_mypoke_registered" style="width:15em; font-size:1em">
+                    <option>Temp</option>
+                </select>
+                <button id="input_mypoke_delete" onclick="deleteRegisteredMypoke()">削除</button>
 
+
+
+
+            </div>
+
+            <div>
 
             </div>
 
@@ -76,6 +133,54 @@
 
         <!--以下、スクリプト-->
         <script>
+
+            function deleteRegisteredMypoke(){
+                let list = document.getElementById("input_mypoke_registered");
+                list.removeChild(list.children[list.selectedIndex]);
+
+            }
+
+            
+            function setFoodImages(el){
+                el = document.getElementById("input_mypoke_name");
+                let poke = pokedex.getPokemonByName(el.value);
+                if (poke == null){
+
+                }
+                
+                let img1 = document.getElementById('input_mypoke_food_1');
+                let img2 = document.getElementById('input_mypoke_food_2');
+                let img3 = document.getElementById('input_mypoke_food_3');
+                this.setFoodImageOnImgEl(img1, poke, 1);
+                this.setFoodImageOnImgEl(img2, poke, 2);
+                this.setFoodImageOnImgEl(img3, poke, 3);
+            }
+
+
+            function setFoodImageOnImgEl(el, poke, max){
+                let values = poke.getAllFoodNames();
+                let value = values[0];
+                el.setAttribute("values", values.slice(0, max).join(","));
+                el.setAttribute("value", value);
+                el.setAttribute("code", "A")
+                this.toggleFood(el, 0);
+            }
+
+
+            function toggleFood(el, setIndex = -1){
+                let values = el.getAttribute("values").split(",");
+                let index = values.indexOf(el.getAttribute("value"));
+                let next = (setIndex != -1) ? setIndex
+                          : ((index + 1) >= values.length) ? 0 : index + 1;
+                
+                el.src = el.getAttribute("dir") + values[next] + ".png";
+                el.setAttribute("value", values[next]);
+                el.setAttribute("code", String.fromCharCode(65 + next));
+               
+            }
+
+
+
             function addReportOf(sender){
                 let foodName = sender.name;
                 let min = document.getElementById('food_min').value;
@@ -84,36 +189,35 @@
                 el.innerHTML = "";
                 el.appendChild(this.pokeReport.createReport(foodName, min, onlyFullyEvolved));
 
-                let mypoke = this.getMyPokemon(foodName);
-                console.log(mypoke);
+                let json = this.createMyPokeJsonFromInputForm(foodName);
+                if (json == null) return;
+                this.insertMyPokemon(json);
+                let list = document.getElementById("input_mypoke_registered");
+                list.children[0].value = JSON.stringify(json);
             }
 
 
-            function getMyPokemon(foodName){
+            function createMyPokeJsonFromInputForm(foodName){
                 let name = this.document.getElementById('input_mypoke_name').value;
                 if (name == "") return null;
 
-                let lv = this.document.getElementById('input_mypoke_lv').value;
-                let code = this.document.getElementById('input_mypoke_foods').value;
-                let spdCharAdj = Number(this.document.getElementById('input_mypoke_spd_char_adj').value);
-                let spdSkillAdj = Number(this.document.getElementById('input_mypoke_spd_skill_adj').value);
-                let foodAdj = Number(this.document.getElementById('input_mypoke_food_adj').value);
+                return this.createAdjustJson(name, foodName);
+            }
 
-                let poke = pokedex.getPokemonByName(name);
-                let x = poke.getOtetsudaiCountDay(lv, spdCharAdj, spdSkillAdj);
-                let comb = new FoodCombination(poke, lv, poke.getOtetsudaiCountDay(lv, spdCharAdj, spdSkillAdj), code, foodAdj);
 
-                //contains(foodName, min = 0
-                if (!comb.contains(foodName))   return;
+            function insertMyPokemon(json){
+                let poke = pokedex.getPokemonByName(json.name);
+                let comb = new FoodCombination(poke, json.lv, poke.getOtetsudaiCountDay(json.lv, json.speedAdj, json.subSpeedAdj), json.code, json.foodAdj + json.subFoodAdj);
+                if (!comb.contains(json.food))   return;
 
                 let tr = document.createElement('tr');
                 tr.style.backgroundColor = '#CCDDFF';
-                comb.insertResultTo(tr, foodName, poke);
+                comb.insertResultTo(tr, json.food, poke);
 
                 let tb = document.getElementById('result_table').tBodies[0];
                 let rows = tb.children;
 
-                let target = comb.getExpectionOf(foodName);
+                let target = comb.getExpectionOf(json.food);
                 for (let i = 0; i < rows.length; i++){
                     let value = rows[i].children[1].getAttribute('value');
                     if (value <= target){
@@ -121,8 +225,34 @@
                         break;
                     }
                 }
-
             }
+
+
+            function createAdjustJson(name, foodName){
+                let charList = document.getElementById("input_mypoke_char");
+                let json = JSON.parse(charList.children[charList.selectedIndex].value);
+                json.subSpeedAdj = (document.getElementById("input_mypoke_speeddS").checked) ? 0.07 : 0;
+                json.subSpeedAdj += (document.getElementById("input_mypoke_spdM").checked) ? 0.14 : 0;
+                json.subFoodAdj = (document.getElementById("input_mypoke_foodS").checked) ? 0.18 : 0;
+                json.subFoodAdj += (document.getElementById("input_mypoke_foodM").checked) ? 0.36 : 0; 
+                json.subSpeedAdj = Math.round(json.subSpeedAdj * 100) / 100;
+                json.subFoodAdj = Math.round(json.subFoodAdj * 100) / 100;
+
+                json.name = name;
+                json.food = foodName;
+                json.lv = this.document.getElementById('input_mypoke_lv').value;
+                json.code = this.getMyPokeFoodCode();
+                return json;
+            }
+
+
+
+            function getMyPokeFoodCode(){
+                return document.getElementById("input_mypoke_food_1").getAttribute("code")
+                     + document.getElementById("input_mypoke_food_2").getAttribute("code")
+                     + document.getElementById("input_mypoke_food_3").getAttribute("code");
+            }
+
 
             function initializePokeList(){
                 if (this.selectBoxInitialized) return;
@@ -140,6 +270,19 @@
                     op.value = names[i];   
                     list.appendChild(op);                 
                 }
+
+                list = document.getElementById('input_mypoke_lv');
+                blankOp = document.createElement('option');
+
+
+                for (let i = 1; i <= 60; i++){
+                    let op = document.createElement('option');                    
+                    op.text = i;
+                    op.value = i;   
+                    list.appendChild(op);                 
+                }
+                list.selectedIndex = 0;
+
                 this.selectBoxInitialized = true;
             }
 

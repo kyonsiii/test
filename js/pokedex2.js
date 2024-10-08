@@ -252,6 +252,13 @@ class Pokemon{
         return (foods.includes(this.food1) || foods.includes(this.food2) || (this.food3 == "" ? false : foods.includes(this.food3)) );
     }
 
+    getAllFoodNames(){
+        let tmp = [this.food1];
+        if (this.food2 != "") tmp.push(this.food2)
+        if (this.food3 != "") tmp.push(this.food3)
+        return tmp;
+    }
+
 
     getIndicatorBarOf(num){
         let left = (num >= 10) ? "" + num + " " : "<font color='white'>_</font>" + num + " ";
@@ -275,7 +282,8 @@ class FoodCombination{
         this.code = code;
         this.lv = lv;
         this.foods = [];
-        let codeForCalc = (lv < 60) ? code.substring(0, 2) : code; //lvが60未満の時は3つ目の食材は取れない
+        let codeForCalc = (lv < 30) ? code.substring(0, 1)
+                         : (lv < 60) ? code.substring(0, 2) : code; //lvが60未満の時は3つ目の食材は取れない
         let foodName = -1;
         let foodNum = -1;
         let foodExpection = -1;
