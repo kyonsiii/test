@@ -22,33 +22,54 @@
         </p>
 
             <div id="food_buttons">
-                <img name="とくせんリンゴ" src="img/food/とくせんリンゴ.png" onclick="addReportOf(this)">
-                <img name="モーモーミルク" src="img/food/モーモーミルク.png" onclick="addReportOf(this)">
-                <img name="ワカクサ大豆" src="img/food/ワカクサ大豆.png" onclick="addReportOf(this)">
-                <img name="あまいミツ" src="img/food/あまいミツ.png" onclick="addReportOf(this)">
-                <img name="マメミート" src="img/food/マメミート.png" onclick="addReportOf(this)">
-                <img name="あったかジンジャー" src="img/food/あったかジンジャー.png" onclick="addReportOf(this)">
-                <img name="あんみんトマト" src="img/food/あんみんトマト.png" onclick="addReportOf(this)">
-                <img name="とくせんエッグ" src="img/food/とくせんエッグ.png" onclick="addReportOf(this)">
-                <img name="ピュアなオイル" src="img/food/ピュアなオイル.png" onclick="addReportOf(this)">
-                <img name="ほっこりポテト" src="img/food/ほっこりポテト.png" onclick="addReportOf(this)">
-                <img name="げきからハーブ" src="img/food/げきからハーブ.png" onclick="addReportOf(this)">
-                <img name="リラックスカカオ" src="img/food/リラックスカカオ.png" onclick="addReportOf(this)">
-                <img name="あじわいキノコ" src="img/food/あじわいキノコ.png" onclick="addReportOf(this)">
-                <img name="ふといながねぎ" src="img/food/ふといながねぎ.png" onclick="addReportOf(this)">
-                <img name="おいしいシッポ" src="img/food/おいしいシッポ.png" onclick="addReportOf(this)">
-                <img name="ワカクサコーン" src="img/food/ワカクサコーン.png" onclick="addReportOf(this)">
-                <img name="めざましコーヒー" src="img/food/めざましコーヒー.png" onclick="addReportOf(this)">
+                <img name="とくせんリンゴ" src="img/food/とくせんリンゴ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="モーモーミルク" src="img/food/モーモーミルク.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="ワカクサ大豆" src="img/food/ワカクサ大豆.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="あまいミツ" src="img/food/あまいミツ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="マメミート" src="img/food/マメミート.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="あったかジンジャー" src="img/food/あったかジンジャー.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="あんみんトマト" src="img/food/あんみんトマト.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="とくせんエッグ" src="img/food/とくせんエッグ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="ピュアなオイル" src="img/food/ピュアなオイル.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="ほっこりポテト" src="img/food/ほっこりポテト.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="げきからハーブ" src="img/food/げきからハーブ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="リラックスカカオ" src="img/food/リラックスカカオ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="あじわいキノコ" src="img/food/あじわいキノコ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="ふといながねぎ" src="img/food/ふといながねぎ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="おいしいシッポ" src="img/food/おいしいシッポ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="ワカクサコーン" src="img/food/ワカクサコーン.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+                <img name="めざましコーヒー" src="img/food/めざましコーヒー.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
             </div>
             <input type="text" id="food_min" style="width:3em;" value="0">個以上
             <input type="checkbox" id="only_fully_evolved" checked="true">最終進化のみ(イワーク、ヤルキモノを除く)
+            <div>
+                マイポケモン:
+                
+                ポケモン名:
+                <select id="input_mypoke_name" style="width:10em; font-size:1em">
+                </select>
+
+
+                <br>
+                Lv:<input type="text" id="input_mypoke_lv" style="width:3em;" value="60">
+                食材:<input type="text" id="input_mypoke_foods" style="width:3em;" value="AAA">(ABC表記)
+                <br>
+                
+                おてスピ(性格補正):<input type="text" id="input_mypoke_spd_char_adj" style="width:3em;" value="0.00">
+                おてスピ(サブスキ):<input type="text" id="input_mypoke_spd_skill_adj" style="width:3em;" value="0.00">
+                <br>
+                食材補正:<input type="text" id="input_mypoke_food_adj" style="width:3em;" value="0.00"> (性格↑20% 食S/M 18/36%)
+                <br>
+
+
+            </div>
+
             <div id="result">
                 <table id="result_table">
 
                 </table>
             </div>
         </p>
-
 
 
 
@@ -62,10 +83,70 @@
                 let el = document.getElementById('result_table');
                 el.innerHTML = "";
                 el.appendChild(this.pokeReport.createReport(foodName, min, onlyFullyEvolved));
+
+                let mypoke = this.getMyPokemon(foodName);
+                console.log(mypoke);
             }
+
+            function getMyPokemon(foodName){
+                let name = this.document.getElementById('input_mypoke_name').value;
+                if (name == "") return null;
+
+                let lv = this.document.getElementById('input_mypoke_lv').value;
+                let code = this.document.getElementById('input_mypoke_foods').value;
+                let spdCharAdj = Number(this.document.getElementById('input_mypoke_spd_char_adj').value);
+                let spdSkillAdj = Number(this.document.getElementById('input_mypoke_spd_skill_adj').value);
+                let foodAdj = Number(this.document.getElementById('input_mypoke_food_adj').value);
+
+                let poke = pokedex.getPokemonByName(name);
+                let x = poke.getOtetsudaiCountDay(lv, spdCharAdj, spdSkillAdj);
+                let comb = new FoodCombination(poke, lv, poke.getOtetsudaiCountDay(lv, spdCharAdj, spdSkillAdj), code, foodAdj);
+
+                //contains(foodName, min = 0
+                if (!comb.contains(foodName))   return;
+
+                let tr = document.createElement('tr');
+                tr.style.backgroundColor = '#CCDDFF';
+                comb.insertResultTo(tr, foodName, poke);
+
+                let tb = document.getElementById('result_table').tBodies[0];
+                let rows = tb.children;
+
+                let target = comb.getExpectionOf(foodName);
+                for (let i = 0; i < rows.length; i++){
+                    let value = rows[i].children[1].getAttribute('value');
+                    if (value <= target){
+                    tb.insertBefore(tr, rows[i]);
+                        break;
+                    }
+                }
+
+                console.log(comb);
+            }
+
+
+
             window.onload = ()=>{
                 this.pokedex = new Pokedex();
+                this.pokemons = pokedex.pokemons;
                 this.pokeReport = new PokeReport(this.pokedex);
+                this.pokeReport.initialize();
+
+                let list = document.getElementById('input_mypoke_name');
+                let blankOp = document.createElement('option');
+                blankOp.text = "";
+                blankOp.value = "";
+                list.appendChild(blankOp);
+
+                for (let i = 0; i < pokemons.length; i++){
+                    let op = document.createElement('option');
+                    
+                    op.text = pokemons[i].name;
+                    op.value = pokemons[i].name;   
+                    list.appendChild(op);                 
+                }
+
+
             }
         </script>
     </body>

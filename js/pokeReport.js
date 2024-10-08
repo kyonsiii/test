@@ -1,9 +1,20 @@
 class PokeReport{
     constructor(pokedex){
         this.pokedex = pokedex;
+        this.combinationsInitialized = false;
+    }
+
+    initialize(){
+        this.pokedex.pokemons.forEach(p => p.setFoodCombinations());
+        this.combinationsInitialized = true;
     }
 
     createReport(foodName, min = 0, onlyFullyEvolved = false){
+        if (!this.combinationsInitialized){
+            alert("食べ物組み合わせが生成されていません。初期化をしてから実行してください。")
+            return null;
+        }
+
         let targetPokemons = this.pokedex.pokemons.filter(p => (!onlyFullyEvolved || p.fullyEvolved) && p.containsFood(foodName));
 
         let tbody = document.createElement("tbody");
@@ -25,35 +36,38 @@ class PokeReport{
 
         sorted.forEach(x => {
             let r = document.createElement("tr");
-            r.appendChild(this.createPokemonAndFoodTd(x.poke, x.comb));
-            x.comb.insertResultTo(foodName, r);
+            x.comb.insertResultTo(r, foodName, x.poke)
             tbody.appendChild(r);
         });
         return tbody;
     }
 
-    createPokemonAndFoodTd(poke, combination){
-        let el = document.createElement("td");
-        let img = document.createElement("img");
-        img.src = "img/poke/" + String(poke.no).padStart(3, '0') + ".png"
-        img.classList.add("tiny");
-        el.appendChild(img);
+ 
 
-        let lv = document.createElement("span");
-        lv.textContent = (combination.code.length == 2 ) ? "Lv30" : "Lv60";
-        el.appendChild(lv);
-
-        for (let i = 0; i < combination.code.length; i++){
-            let c = combination.code[i];
-            let fImg = document.createElement("img");
-            let food = (c == "A") ? poke.food1
-                      : (c == "B") ? poke.food2 : poke.food3;
-            fImg.src = "img/food/" + food + ".png";
-            fImg.classList.add("ex-tiny");
-            el.appendChild(fImg);
+    selectIcon(el){
+        Array.from(document.getElementById('food_buttons').children).forEach(c => this.changeIconStyle(c, false));
+        if (el.style.margin == "" || el.style.margin == "4px"){
+            el.style.margin = "0px";
+            el.style.border = "4px solid blue";
+            el.value = "ON";
         }
-        
-        return el;
+        else{
+            el.style.margin = "4px";
+            el.style.border = "";
+            el.value = "";
+        }
+    }
 
+    changeIconStyle(el, turnOn){
+        if (turnOn){
+            el.style.margin = "0px";
+            el.style.border = "4px solid blue";
+            el.value = "ON";
+        }
+        else{
+            el.style.margin = "4px";
+            el.style.border = "";
+            el.value = "";
+        }
     }
 }

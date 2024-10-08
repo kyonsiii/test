@@ -2,9 +2,9 @@ cd git\xxx
 
 
 ◆ファイル名の大文字小文字変更をgitに反映する
+git mv -f .\js\pokesleeping.js .\js\pokeSleeping.js
 
-
-
+git mv -f pokeCook.js .\js\pokeCook.js
 
 
 

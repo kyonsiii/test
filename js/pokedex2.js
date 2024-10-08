@@ -231,7 +231,6 @@ class Pokemon{
     constructor(json){
         Object.assign(this, json);
         this.indicatorChar = "|";
-        this.setFoodCombinations();   
     }
 
     setFoodCombinations(){
@@ -240,11 +239,11 @@ class Pokemon{
 
         for (let ib = 0; ib < 2; ib++){         //2つ目の食材はAかB
             code = 'A' + String.fromCharCode(65 + ib);
-            this.foodCombinations.push(new FoodCombination(this, this.getOtetsudaiCountDay(30), code));
+            this.foodCombinations.push(new FoodCombination(this, 30, this.getOtetsudaiCountDay(30), code));
 
             for (let ic = 0; ic < 3; ic++){      //3つ目の食材はAかBかC なお、Cがない場合もある
                 if (this.food3 == "" && ic == 2) continue;
-                this.foodCombinations.push(new FoodCombination(this, this.getOtetsudaiCountDay(60), code + String.fromCharCode(65 + ic)));
+                this.foodCombinations.push(new FoodCombination(this, 60, this.getOtetsudaiCountDay(60), code + String.fromCharCode(65 + ic)));
             }
         }
     }
@@ -259,37 +258,45 @@ class Pokemon{
         return left + this.indicatorChar.repeat(num);
     }
 
-    getOtetsudaiCountDay(lv, genkiAdj = 0.52){
-        return 86400 / (this.sec / (1 + (0.002 * lv)) * genkiAdj);
+    getOtetsudaiCountDay(lv, spdAdj = 0.0, subAdj = 0.0, genkiAdj = 0.52){//speedAdjはプラスのほうが○
+        let lvAdj  = 1 - ((lv - 1) * 0.002);
+        spdAdj = 1 - spdAdj;
+        subAdj = 1 - subAdj;
+
+        let adjSec = this.sec * lvAdj * spdAdj * subAdj;
+        return 86400 / (adjSec * genkiAdj);
     }
+
 }
 
 
 class FoodCombination{
-    constructor(poke, otetudaiCount, code){
+    constructor(poke, lv, otetudaiCount, code, foodRateAdjust = 0){
         this.code = code;
+        this.lv = lv;
         this.foods = [];
+        let codeForCalc = (lv < 60) ? code.substring(0, 2) : code; //lvが60未満の時は3つ目の食材は取れない
         let foodName = -1;
         let foodNum = -1;
         let foodExpection = -1;
-        let otetudaiPerItem = otetudaiCount / code.length;
+        let otetudaiPerItem = otetudaiCount / codeForCalc.length;        
 
-        for (let i = 0; i < code.length; i++){
-            if (code[i] == "A") {
+        for (let i = 0; i < codeForCalc.length; i++){
+            if (i == 2 && lv < 60) continue;
+            if (codeForCalc[i] == "A") {
                 foodName = poke.food1;
                 foodNum = poke.food1Num[i];
-            } else if (code[i] == "B") {
+            } else if (codeForCalc[i] == "B") {
                 foodName = poke.food2;
                 foodNum = poke.food2Num[i];
-            } else if (code[i] == "C") {
+            } else if (codeForCalc[i] == "C") {
                 foodName = poke.food3;
                 foodNum = poke.food3Num[i];
             } else {
                 continue;
             }
-
             
-            foodExpection = foodNum * otetudaiPerItem * poke.foodRate
+            foodExpection = foodNum * otetudaiPerItem * (poke.foodRate * (1 + foodRateAdjust))
 
             let f = this.foods.find(x => x.name == foodName);
             if (f === undefined){
@@ -301,6 +308,49 @@ class FoodCombination{
         }
         for (let i = 0; i < this.foods.length; i++){
             this.foods[i].expection = Math.round(this.foods[i].expection);
+        }
+    }
+
+
+    insertResultTo(tr, foodName, poke){
+        let cell = tr.insertCell();
+        let img = document.createElement("img");
+        img.src = "img/poke/" + String(poke.no).padStart(3, '0') + ".png"
+        img.classList.add("tiny");
+        cell.appendChild(img);
+
+        let lv = document.createElement("span");
+        lv.textContent = "Lv" + this.lv;
+        cell.appendChild(lv);
+
+        for (let i = 0; i < this.code.length; i++){
+            let c = this.code[i];
+            let fImg = document.createElement("img");
+            let food = (c == "A") ? poke.food1
+                      : (c == "B") ? poke.food2 : poke.food3;
+            fImg.src = "img/food/" + food + ".png";
+            fImg.classList.add("ex-tiny");
+            cell.appendChild(fImg);
+        }
+
+        this.setCombinationResultTo(tr, foodName);
+
+    }
+
+    setCombinationResultTo(row, targetFoodName){
+        for (let i = 0; i < 3; i++){
+            if (this.foods[i].name == targetFoodName){
+                row.appendChild(this.getResultCell(i, true));
+                break;
+            }
+        }
+
+        for (let i = 0; i < 3; i++){
+            if (i >= this.foods.length) {  
+                row.appendChild(this.getResultCell(i, false));
+            } else if (this.foods[i].name != targetFoodName){
+                row.appendChild(this.getResultCell(i, false));
+            }
         }
     }
 
@@ -330,22 +380,6 @@ class FoodCombination{
         return c;
     }
 
-    insertResultTo(targetFoodName, row){
-        for (let i = 0; i < 3; i++){
-            if (this.foods[i].name == targetFoodName){
-                row.appendChild(this.getResultCell(i, true));
-                break;
-            }
-        }
-
-        for (let i = 0; i < 3; i++){
-            if (i >= this.foods.length) {  
-                row.appendChild(this.getResultCell(i, false));
-            } else if (this.foods[i].name != targetFoodName){
-                row.appendChild(this.getResultCell(i, false));
-            }
-        }
-    }
 
 
     contains(foodName, min = 0){
