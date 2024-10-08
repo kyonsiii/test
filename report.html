@@ -122,7 +122,6 @@
                     }
                 }
 
-                console.log(comb);
             }
 
             function initializePokeList(){
@@ -134,10 +133,11 @@
                 blankOp.value = "";
                 list.appendChild(blankOp);
 
-                for (let i = 0; i < pokemons.length; i++){
+                let names = pokemons.map(p => p.name).sort();
+                for (let i = 0; i < names.length; i++){
                     let op = document.createElement('option');                    
-                    op.text = pokemons[i].name;
-                    op.value = pokemons[i].name;   
+                    op.text = names[i];
+                    op.value = names[i];   
                     list.appendChild(op);                 
                 }
                 this.selectBoxInitialized = true;
