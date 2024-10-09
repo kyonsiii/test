@@ -210,6 +210,18 @@ new Pokemon({no:914,name:"ウェーニバル",sleepType:"ぐっすり",specialty
         return null;
     }
 
+    getNoByName(name){
+        let p = this.getPokemonByName(name);
+        return (p == null) ? -1 : p.no;
+    }
+
+    getPokemonByNo(no){
+        for (let i = 0; i < this.pokemons.length; i++){
+            if (this.pokemons[i].no == no) return this.pokemons[i];
+        }
+        return null;
+    }
+
     getBerryPowerBaseOf(name){
         for (let i = 0; i < this.berries.length; i++){
             if (this.berries[i].name == name) return this.berries[i].power;

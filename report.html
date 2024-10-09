@@ -8,7 +8,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.0.5t</title>
+        <title>レポート(仮)v0.0.5tt</title>
         <style>
             .example2{
                 display: flex;
@@ -72,31 +72,31 @@
                 <img id="input_mypoke_food_3" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
                 <br>
                 <select id="input_mypoke_char" style="width:15.5em; font-size:1em">
-                    <option value = '{"speedAdj": 0.11, "foodAdj": 0.0}' identifier="寂">さみしがり (速↑元↓)</option>
-                    <option value = '{"speedAdj": 0.11, "foodAdj":-0.2}' identifier="い">いじっぱり (速↑食↓)</option>
-                    <option value = '{"speedAdj": 0.11, "foodAdj": 0.0}' identifier="や">やんちゃ (速↑ス↓)</option>
-                    <option value = '{"speedAdj": 0.11, "foodAdj": 0.0}' identifier="勇">ゆうかん (速↑E↓)</option>
-                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.0}' identifier="ず">ずぶとい (元↑速↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj":-0.2}' identifier="わ">わんぱく (元↑食↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="能">のうてんき (元↑ス↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="の">のんき (元↑E↓)</option>
-                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.2}' identifier="ひ">ひかえめ (食↑速↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.2}' identifier="お">おっとり (食↑元↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.2}' identifier="う">うっかりや (食↑ス↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.2}' identifier="冷">れいせい (食↑E↓)</option>
-                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.0}' identifier="穏">おだやか (ス↑速↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="大">おとなしい (ス↑元↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj":-0.2}' identifier="慎">しんちょう (ス↑食↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="な">なまいき (ス↑E↓)</option>
-                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.0}' identifier="臆">おくびょう (E↑速↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="せ">せっかち (E↑元↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj":-0.2}' identifier="陽">ようき (E↑食↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="む">むじゃき (E↑ス↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="□">がんばりや (無補正)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="□">すなお (無補正)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="□">てれや (無補正)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="□">きまぐれ (無補正)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="□">まじめ (無補正)</option>
+                    <option value = '{"speedAdj": 0.11, "foodAdj": 0.0}' characteristic="寂">さみしがり (速↑元↓)</option>
+                    <option value = '{"speedAdj": 0.11, "foodAdj":-0.2}' characteristic="い">いじっぱり (速↑食↓)</option>
+                    <option value = '{"speedAdj": 0.11, "foodAdj": 0.0}' characteristic="や">やんちゃ (速↑ス↓)</option>
+                    <option value = '{"speedAdj": 0.11, "foodAdj": 0.0}' characteristic="勇">ゆうかん (速↑E↓)</option>
+                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.0}' characteristic="ず">ずぶとい (元↑速↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj":-0.2}' characteristic="わ">わんぱく (元↑食↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="能">のうてんき (元↑ス↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="の">のんき (元↑E↓)</option>
+                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.2}' characteristic="ひ">ひかえめ (食↑速↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.2}' characteristic="お">おっとり (食↑元↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.2}' characteristic="う">うっかりや (食↑ス↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.2}' characteristic="冷">れいせい (食↑E↓)</option>
+                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.0}' characteristic="穏">おだやか (ス↑速↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="大">おとなしい (ス↑元↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj":-0.2}' characteristic="慎">しんちょう (ス↑食↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="な">なまいき (ス↑E↓)</option>
+                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.0}' characteristic="臆">おくびょう (E↑速↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="せ">せっかち (E↑元↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj":-0.2}' characteristic="陽">ようき (E↑食↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="む">むじゃき (E↑ス↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="□">がんばりや (無補正)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="□">すなお (無補正)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="□">てれや (無補正)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="□">きまぐれ (無補正)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="□">まじめ (無補正)</option>
                 </select>
 
                 <div class="example2">
@@ -203,7 +203,8 @@
                 json.subSpeedAdj = Math.round(json.subSpeedAdj * 100) / 100;
                 json.subFoodAdj = Math.round(json.subFoodAdj * 100) / 100;
 
-                json.identifier = charList.children[charList.selectedIndex].getAttribute("identifier");
+                json.characteristic = charList.children[charList.selectedIndex].getAttribute("characteristic");
+                json.identifier = "";
                 if (document.getElementById("input_mypoke_speedS").checked) json.identifier += ".";
                 if (document.getElementById("input_mypoke_speedM").checked) json.identifier += ":" ;
                 if (document.getElementById("input_mypoke_foodS").checked)  json.identifier += "f";
@@ -232,19 +233,9 @@
                 for (let i = 0; i < options.length; i++){
                     values.push(options[i].value);
                 }
-
             
                 setCookie("myPokeList", values.join("/"), 30);
-
-                setCookie("test3", "アゴジムシ,30,AAA,わf,0,-0.2,0,0.18/アブソル,30,AAA,寂,0.11,0,0,0/イシツブテ,30,AAA,寂,0.11,0,0,0/アリゲイツ,30,AAA,寂,0.11,0,0,0/アチゲータ,30,AAA,寂F,0.11,0,0,0.36", 30);
-                alert(getCookie("test3"));
-
-                setCookie("test4", "0-4-96,1-74-25,0-1-99,2-77-21,7-53-40,0-0-100,0-78-22,1-3-96,3-76-21,2-5-93,80-18-2,0-6-94,1-60-39,0-5-95,1-6-93,4-2-94,3-40-57,80-17-3,8-30-62,81-11-8,2-29-69,58-24-18,8-32-60,0-5-95,12-43-45,0-9-91,9-2-89,7-3-90,88-2-10,9-4-87");
-                alert(getCookie("test4"));
-
-                setCookie("test5", "agojimusi,30,AAA,waf,0,-0.2,0,0.18/abusol,30,AAA,sabi,0.11,0,0,0/stonekun,30,AAA,sabi,0.11,0,0,0/arigate,30,AAA,sabi,0.11,0,0,0/achi,30,AAA,sabiF,0.11,0,0,0.36");
-                alert(getCookie("test5"));
-
+                alert(getCookie("myPokeList"));
             }     
 
 
@@ -253,7 +244,10 @@
 
             //クッキー関連(呼び出し)
             function setMypokesToListFromCookie(){
-                let jss = cookieItemToJsons(getCookie("myPokeList"));
+                let c = getCookie("myPokeList")
+                if (c == null) return; 
+
+                let jss = cookieItemToJsons(c);
                 if (jss == null) return;
                 for (let i = 0; i < jss.length; i++){
                     let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));
@@ -266,7 +260,7 @@
 
 
             function fff(){//テスト用
-                let jss = cookieItemToJsons('ウツボット,60,ABA,寂F,0.11,0,0,0.36/フシギバナ,50,ABB,寂F,0.11,0,0,0.36');
+                let jss = cookieItemToJsons('738,30,AAA,yn,.:,0.11,0,0.21,0/9,60,ABA,yu,F,0.11,0,0,0.36/910,30,AAA,sb,F,0.11,0,0,0.36');
                 for (let i = 0; i < jss.length; i++){
                     let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));
                     if (maxFlag){
@@ -288,17 +282,20 @@
 
             function cookieItemToJson(str){
                 let tmp = str.split(",");
+                
                 return{
-                    name: tmp[0],
+                    name: this.pokedex.getPokemonByNo(Number(tmp[0])).name,
                     lv: Number(tmp[1]),
                     code: tmp[2],
-                    identifier: tmp[3],
-                    speedAdj: Number(tmp[4]),
-                    foodAdj: Number(tmp[5]),
-                    subSpeedAdj: Number(tmp[6]),
-                    subFoodAdj: Number(tmp[7])
+                    characteristic: this.characteristicConv(tmp[3]),
+                    identifier: tmp[4],
+                    speedAdj: Number(tmp[5]),
+                    foodAdj: Number(tmp[6]),
+                    subSpeedAdj: Number(tmp[7]),
+                    subFoodAdj: Number(tmp[8])
                 };
             }
+
 
 
 
@@ -375,6 +372,17 @@
             }
 
 
+            function addMyPokeToList(op){
+                let myList = document.getElementById("input_mypoke_registered");
+                if (myList.children.length >= 30){
+                    alert("マイポケモンは30体まで登録可能です。");
+                    return;
+                }
+                myList.appendChild(op);
+                return myList.children.length >= 30;
+            }
+
+
             function deleteRegisteredMypoke(){
                 let list = document.getElementById("input_mypoke_registered");
                 if (list.children.length == 0) return;
@@ -391,15 +399,17 @@
             function createMyPokeOption(json){
                 let op = document.createElement("option");
                 op.value = this.jsonToOptionValue(json);
-                op.text = json.name + "Lv" + json.lv + json.code + " " + json.identifier;
+                op.text = json.name + "Lv" + json.lv + json.code + " " + json.characteristic + json.identifier;
                 return op;
             }
 
+
             function jsonToOptionValue(json){
                 return [
-                   json.name,
+                   this.pokedex.getNoByName(json.name),
                    json.lv,
                    json.code,
+                   this.characteristicConv(json.characteristic),
                    json.identifier,
                    json.speedAdj,
                    json.foodAdj,
@@ -408,18 +418,56 @@
                 ];
             }
 
+            function characteristicConv(v){
+                switch(v){
+                    case "寂": return "sb"; break;
+                    case "い": return "ij"; break;
+                    case "や": return "yn"; break;
+                    case "勇": return "yu"; break;
+                    case "ず": return "zb"; break;
+                    case "わ": return "wp"; break;
+                    case "能": return "nt"; break;
+                    case "の": return "nn"; break;
+                    case "ひ": return "hk"; break;
+                    case "お": return "or"; break;
+                    case "う": return "uk"; break;
+                    case "冷": return "ri"; break;
+                    case "穏": return "od"; break;
+                    case "大": return "on"; break;
+                    case "慎": return "sn"; break;
+                    case "な": return "nm"; break;
+                    case "臆": return "ok"; break;
+                    case "せ": return "sk"; break;
+                    case "陽": return "yu"; break;
+                    case "む": return "mj"; break;
+                    case "□": return "xx"; break;
 
-            function addMyPokeToList(op){
-                let myList = document.getElementById("input_mypoke_registered");
-                if (myList.children.length >= 30){
-                    alert("マイポケモンは30体まで登録可能です。");
-                    return;
-                }
-                myList.appendChild(op);
-                return myList.children.length >= 30;
+                    case "sb": return "寂"; break;
+                    case "ij": return "い"; break;
+                    case "yn": return "や"; break;
+                    case "yu": return "勇"; break;
+                    case "zb": return "ず"; break;
+                    case "wp": return "わ"; break;
+                    case "nt": return "能"; break;
+                    case "nn": return "の"; break;
+                    case "hk": return "ひ"; break;
+                    case "or": return "お"; break;
+                    case "uk": return "う"; break;
+                    case "ri": return "冷"; break;
+                    case "od": return "穏"; break;
+                    case "on": return "大"; break;
+                    case "sn": return "慎"; break;
+                    case "nm": return "な"; break;
+                    case "ok": return "臆"; break;
+                    case "sk": return "せ"; break;
+                    case "yu": return "陽"; break;
+                    case "mj": return "む"; break;
+                    case "xx": return "□"; break;
+                    default: return "--";
+                }                
             }
 
-            
+       
 
 
 
