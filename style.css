@@ -2,17 +2,19 @@ html {
     touch-action: manipulation;
 }
 
-#page_link div{
-    display: inline-block;;
+
+#page_link a{
+    display: inline-block;
     height: 3em;
     width: 3em;
     margin-bottom: 1em;
+
 }
 
 #page_link img{
     width: 3em;
     height: auto;
-    margin-right: 1em;
+    margin: auto;
     vertical-align: middle;
 }
 
@@ -23,6 +25,25 @@ html {
     border: 1px dotted salmon;
 }
 
+.sub_skill_check{
+    display: flex;
+}
+.sub_skill_check label{
+    background: #DDDDDD;
+    color: #666666;
+    padding: 1px;
+    margin: 3px;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.sub_skill_check input:checked+label{
+    background: #60ffca;
+    color: #000000;
+}
+.sub_skill_check input{
+    display: none;
+}
 
 button{
     font-size: 1em;

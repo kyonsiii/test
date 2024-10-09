@@ -9,36 +9,16 @@
         <script src="js/pokedex2.js"></script>
 
         <title>レポート(仮)v0.0.5</title>
-        <style>
-            .example2{
-                display: flex;
-            }
-            .example2 label{
-                background: #DDDDDD;
-                color: #666666;
-                padding: 1px;
-                margin: 3px;
-                text-align: center;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-            .example2 input:checked+label{
-                background: #60ffca;
-                color: #000000;
-            }
-            .example2 input{
-                display: none;
-            }
-            </style>
+
     </head>
 
 
     <body>
         <div id="page_link">
-            <div><a href = "./index.html"><img src="img/pages/pokedex.png"></a></div>
-            <div><a href = "./sleep.html"><img src="img/pages/sleep.png"></a></div>
-            <div><a href = "./cook.html"><img src="img/pages/cook.png"></a></div>
-            <div class="current"><a href = "./report.html"><img src="img/pages/report.png"></a></div>
+            <a href = "./index.html"><img src="img/pages/pokedex.png"></a>
+            <a href = "./sleep.html"><img src="img/pages/sleep.png"></a>
+            <a href = "./cook.html"><img src="img/pages/cook.png"></a>            
+            <a href = "./report.html" class ="current"><img src="img/pages/report.png"></a>
         </div>
 
             <div id="food_buttons">
@@ -99,7 +79,7 @@
                     <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="□">まじめ (無補正)</option>
                 </select>
 
-                <div class="example2">
+                <div class="sub_skill_check">
                     <input type="checkbox" id="input_mypoke_speedS"><label for="input_mypoke_speedS">おてスピS</label>
                     <input type="checkbox" id="input_mypoke_speedM"><label for="input_mypoke_speedM">おてスピM</label>
                     <input type="checkbox" id="input_mypoke_foodS"><label for="input_mypoke_foodS">食材S</label>
