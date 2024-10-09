@@ -8,7 +8,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.0.4ttttt</title>
+        <title>レポート(仮)v0.0.5t</title>
         <style>
             .example2{
                 display: flex;
@@ -235,12 +235,16 @@
 
             
                 setCookie("myPokeList", values.join("/"), 30);
-                setCookie("test", values[0], 30);
-                alert(getCookie("test"));
-                setCookie("test2", "/", 30);
-                alert(getCookie("test2"));
+
                 setCookie("test3", "アゴジムシ,30,AAA,わf,0,-0.2,0,0.18/アブソル,30,AAA,寂,0.11,0,0,0/イシツブテ,30,AAA,寂,0.11,0,0,0/アリゲイツ,30,AAA,寂,0.11,0,0,0/アチゲータ,30,AAA,寂F,0.11,0,0,0.36", 30);
                 alert(getCookie("test3"));
+
+                setCookie("test4", "0-4-96,1-74-25,0-1-99,2-77-21,7-53-40,0-0-100,0-78-22,1-3-96,3-76-21,2-5-93,80-18-2,0-6-94,1-60-39,0-5-95,1-6-93,4-2-94,3-40-57,80-17-3,8-30-62,81-11-8,2-29-69,58-24-18,8-32-60,0-5-95,12-43-45,0-9-91,9-2-89,7-3-90,88-2-10,9-4-87");
+                alert(getCookie("test4"));
+
+                setCookie("test5", "agojimusi,30,AAA,waf,0,-0.2,0,0.18/abusol,30,AAA,sabi,0.11,0,0,0/stonekun,30,AAA,sabi,0.11,0,0,0/arigate,30,AAA,sabi,0.11,0,0,0/achi,30,AAA,sabiF,0.11,0,0,0.36");
+                alert(getCookie("test5"));
+
             }     
 
 
