@@ -8,7 +8,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.0.4t</title>
+        <title>レポート(仮)v0.0.4tt</title>
         <style>
             .example2{
                 display: flex;
@@ -234,7 +234,10 @@
                 }
                 console.log(values.join("/"));
                 setCookie("myPokeList", values.join("/"), 30);
-                alert(getCookie("myPokeList"));
+                setCookie("test", values[i], 30);
+                alert(getCookie("test"));
+                setCookie("test2", "/", 30);
+                alert(getCookie("test2"));
             }     
 
 
