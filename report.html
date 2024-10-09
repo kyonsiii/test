@@ -8,7 +8,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.0.3</title>
+        <title>レポート(仮)v0.0.4</title>
         <style>
             .example2{
                 display: flex;
@@ -242,6 +242,7 @@
             //クッキー関連(呼び出し)
             function setMypokesToListFromCookie(){
                 let jss = cookieItemToJsons(getCookie("myPokeList"));
+                if (jss == null) return;
                 for (let i = 0; i < jss.length; i++){
                     let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));
                     if (maxFlag){
@@ -354,7 +355,7 @@
                     return;
                 }
 
-                let res = window.confirm(js.name +  "\nを登録してもよろしいですか？");
+                let res = window.confirm(json.name +  "\nを登録してもよろしいですか？");
                 if (res == false) return;
 
                 this.addMyPokeToList(this.createMyPokeOption(json));
