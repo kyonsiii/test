@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.0.5b</title>
+        <title>レポート(仮)v0.0.5c</title>
 
     </head>
 
@@ -392,12 +392,13 @@
 
             function addMyPokeToList(op){
                 let myList = document.getElementById("input_mypoke_registered");
-                if (myList.children.length >= 30){
+                let max = 70;
+                if (myList.children.length >= max){
                     alert("Myポケモンは70体まで登録可能です。");
                     return false;
                 }
                 myList.appendChild(op);
-                return myList.children.length >= 70;
+                return myList.children.length >= max;
             }
 
 
