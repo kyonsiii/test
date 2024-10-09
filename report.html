@@ -110,7 +110,7 @@
                 <button id="input_mypoke_reset" style="font-size:0.7em; vertical-align: middle;" onclick="resetInputForm();">リセット</button>
                 
                 <br>
-                <select id="input_mypoke_registered" style="width:15em; font-size:1em; vertical-align: middle;">
+                <select id="input_mypoke_registered" style="width:15em; font-size:1em; vertical-align: middle;" onclick="initializeMyPokeList();">
                 </select>
                 <button id="input_mypoke_delete" style="font-size:0.7em; vertical-align: middle;" onclick="deleteRegisteredMypoke()">削除</button>
 
@@ -135,6 +135,11 @@
 
         <!--以下、スクリプト-->
         <script>
+
+            function initializeMyPokeList(){
+                setMypokesToListFromCookie();
+            }
+
             function addReportOf(el){
                 let foodName = el.name;
                 let min = document.getElementById('food_min').value;
@@ -354,6 +359,9 @@
                     return;
                 }
 
+                let res = window.confirm(js.name +  "\nを登録してもよろしいですか？");
+                if (res == false) return;
+
                 this.addMyPokeToList(this.createMyPokeOption(json));
                 this.setMyPokeCookie();
             }
@@ -446,7 +454,7 @@
                 this.pokeReport = new PokeReport(this.pokedex);
                 this.pokeReport.initialize();
                 this.selectBoxInitialized = false;
-                this.setMypokesToListFromCookie();
+                
             }
         </script>
     </body>
