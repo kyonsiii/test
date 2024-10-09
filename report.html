@@ -116,10 +116,14 @@
 
                 </table>
             </div>
-            <strong>登録済みMyポケモン:</strong><br>
-            <select id="input_mypoke_registered" style="width:15em; font-size:1em; vertical-align: middle;">
-            </select>
-            <button id="input_mypoke_delete" style="font-size:1em; vertical-align: middle;" onclick="deleteRegisteredMypoke()">削除</button>
+
+            <div id="mypoke_list">
+                <strong>登録済みMyポケモン:</strong><br>
+                <select id="input_mypoke_registered" style="width:15em; font-size:1em; vertical-align: middle;">
+                </select>
+                <button id="input_mypoke_delete" style="font-size:1em; vertical-align: middle;" onclick="deleteRegisteredMypoke()">削除</button>
+            </div>
+           
         </p>
 
 
@@ -269,6 +273,7 @@
             }   
 
 
+            /*
             function fff(){//テスト用
                 let jss = cookieItemToJsons('736,30,AAA,ij,,0.11,-0.2,0,0,PK/359,30,AAA,hk,.,-0.09,0.2,0.07,0,GR/736,30,AAA,ij,F,0.11,-0.2,0,0.36,BL');
                 for (let i = 0; i < jss.length; i++){
@@ -279,6 +284,7 @@
                     }            
                 }
             }
+            */
 
             function cookieItemToJsons(c){
                 let ccc = c.split("/");
@@ -387,11 +393,11 @@
             function addMyPokeToList(op){
                 let myList = document.getElementById("input_mypoke_registered");
                 if (myList.children.length >= 30){
-                    alert("Myポケモンは30体まで登録可能です。");
-                    return;
+                    alert("Myポケモンは70体まで登録可能です。");
+                    return false;
                 }
                 myList.appendChild(op);
-                return myList.children.length >= 30;
+                return myList.children.length >= 70;
             }
 
 

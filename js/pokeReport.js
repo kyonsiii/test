@@ -29,10 +29,8 @@ class PokeReport{
                 }                
             });
         }
-
         
         let sorted = pokeAndComb.sort((a, b) => b.comb.getExpectionOf(foodName) - a.comb.getExpectionOf(foodName));
-
         sorted.forEach(x => {
             let r = document.createElement("tr");
             x.comb.insertResultTo(r, foodName, x.poke)

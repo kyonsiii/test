@@ -3,6 +3,10 @@ html {
 }
 
 
+#mypoke_list{
+    padding-bottom: 5em;
+}
+
 #page_link a{
     display: inline-block;
     height: 3em;
@@ -291,7 +295,10 @@ img.tiny{
 img.ex-tiny{
     width: 1.5em;
     height: auto;
+}
 
+img.disabled{
+    filter:grayscale(80%);
 }
 
 img.normal{

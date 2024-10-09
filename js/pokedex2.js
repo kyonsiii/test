@@ -350,6 +350,8 @@ class FoodCombination{
                       : (c == "B") ? poke.food2 : poke.food3;
             fImg.src = "img/food/" + food + ".png";
             fImg.classList.add("ex-tiny");
+            if (i == 1 && this.lv < 30) fImg.classList.add("disabled");
+            if (i == 2 && this.lv < 60) fImg.classList.add("disabled");
             cell.appendChild(fImg);
         }
 
