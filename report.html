@@ -34,11 +34,11 @@
 
 
     <body>
-        <p>
-            <a href = "./index.html">ポケモン</a>
-            <a href = "./sleep.html">睡眠計算</a>
-            <a href = "./cook.html">料理</a>
-            <a href = "./report.html" class="current">レポート(仮)</a>
+        <p id="page_link">
+            <a href = "./index.html"><img src="img/_/pokedex.png"></a>
+            <a href = "./sleep.html"><img src="img/_/sleep.png"></a>
+            <a href = "./cook.html"><img src="img/_/cook.png"></a>
+            <a href = "./report.html" class="current"><img src="img/_/report.png"></a>
         </p>
 
             <div id="food_buttons">
@@ -63,54 +63,56 @@
             <input type="text" id="food_min" style="width:3em;" value="0">個以上
             <input type="checkbox" id="only_fully_evolved" checked="true">最終進化のみ(イワーク、ヤルキモノを除く)
             <div>
-                マイポケモン登録フォームv2:<br>
+                Myポケモン登録フォームv2:<br>
                 <select id="input_mypoke_name" style="width:10em; font-size:1em" onclick="initializePokeList()" onchange="setFoodImages(this)"></select>
-                Lv<select id="input_mypoke_lv" style="width:3em; font-size:1em" onclick="initializePokeList()"></select>
+                Lv<select id="input_mypoke_lv" style="width:4em; font-size:1em" onclick="initializePokeList()"></select>
 
                 <img id="input_mypoke_food_1" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
                 <img id="input_mypoke_food_2" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
                 <img id="input_mypoke_food_3" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
                 <br>
-                <select id="input_mypoke_char" style="width:15em; font-size:1em">
-                    <option value = '{"speedAdj":0.11,  "foodAdj":0.00}'>さみしがり (速↑元↓)</option>
-                    <option value = '{"speedAdj":0.11,  "foodAdj":-0.2}'>いじっぱり (速↑食↓)</option>
-                    <option value = '{"speedAdj":0.11,  "foodAdj":0.00}'>やんちゃ (速↑ス↓)</option>
-                    <option value = '{"speedAdj":0.11,  "foodAdj":0.00}'>ゆうかん (速↑E↓)</option>
-                    <option value = '{"speedAdj":-0.09, "foodAdj":0.00}'>ずぶとい (元↑速↓)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":-0.2}'>わんぱく (元↑食↓)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":0.00}'>のうてんき (元↑ス↓)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":0.00}'>のんき (元↑E↓)</option>
-                    <option value = '{"speedAdj":-0.09, "foodAdj":0.2}' >ひかえめ (食↑速↓)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":0.2}' >おっとり (食↑元↓)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":0.2}' >うっかりや (食↑ス↓)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":0.2}' >れいせい (食↑E↓)</option>
-                    <option value = '{"speedAdj":-0.09, "foodAdj":0.0}' >おだやか (ス↑速↓)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >おとなしい (ス↑元↓)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":-0.2}'>しんちょう (ス↑食↓)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >なまいき (ス↑E↓)</option>
-                    <option value = '{"speedAdj":-0.09, "foodAdj":0.0}' >おくびょう (E↑速↓)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >せっかち (E↑元↓)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":-0.2}'>ようき (E↑食↓)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >むじゃき (E↑ス↓)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >がんばりや (無補正)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >すなお (無補正)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >てれや (無補正)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >きまぐれ (無補正)</option>
-                    <option value = '{"speedAdj":0.00,  "foodAdj":0.0}' >まじめ (無補正)</option>
+                <select id="input_mypoke_char" style="width:15.5em; font-size:1em">
+                    <option value = '{"speedAdj": 0.11, "foodAdj": 0.0}' identifier="寂">さみしがり (速↑元↓)</option>
+                    <option value = '{"speedAdj": 0.11, "foodAdj":-0.2}' identifier="い">いじっぱり (速↑食↓)</option>
+                    <option value = '{"speedAdj": 0.11, "foodAdj": 0.0}' identifier="や">やんちゃ (速↑ス↓)</option>
+                    <option value = '{"speedAdj": 0.11, "foodAdj": 0.0}' identifier="勇">ゆうかん (速↑E↓)</option>
+                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.0}' identifier="ず">ずぶとい (元↑速↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj":-0.2}' identifier="わ">わんぱく (元↑食↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="能">のうてんき (元↑ス↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="の">のんき (元↑E↓)</option>
+                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.2}' identifier="ひ">ひかえめ (食↑速↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.2}' identifier="お">おっとり (食↑元↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.2}' identifier="う">うっかりや (食↑ス↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.2}' identifier="冷">れいせい (食↑E↓)</option>
+                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.0}' identifier="穏">おだやか (ス↑速↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="大">おとなしい (ス↑元↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj":-0.2}' identifier="慎">しんちょう (ス↑食↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="な">なまいき (ス↑E↓)</option>
+                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.0}' identifier="臆">おくびょう (E↑速↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="せ">せっかち (E↑元↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj":-0.2}' identifier="陽">ようき (E↑食↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="む">むじゃき (E↑ス↓)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="□">がんばりや (無補正)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="□">すなお (無補正)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="□">てれや (無補正)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="□">きまぐれ (無補正)</option>
+                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' identifier="□">まじめ (無補正)</option>
                 </select>
 
                 <div class="example2">
-                    <input type="checkbox" id="input_mypoke_speeddS"><label for="input_mypoke_speeddS">おてスピS</label>
-                    <input type="checkbox" id="input_mypoke_spdM"><label for="input_mypoke_spdM">おてスピM</label>
+                    <input type="checkbox" id="input_mypoke_speedS"><label for="input_mypoke_speedS">おてスピS</label>
+                    <input type="checkbox" id="input_mypoke_speedM"><label for="input_mypoke_speedM">おてスピM</label>
                     <input type="checkbox" id="input_mypoke_foodS"><label for="input_mypoke_foodS">食材S</label>
                     <input type="checkbox" id="input_mypoke_foodM"><label for="input_mypoke_foodM">食材M</label>
                 </div>
+
+                <button id="input_mypoke_register" style="font-size:0.7em; vertical-align: middle;" onclick="registerMyPoke();">Myポケモンをマイセットに追加</button> 
+                <button id="input_mypoke_reset" style="font-size:0.7em; vertical-align: middle;" onclick="resetInputForm();">リセット</button>
                 
                 <br>
-                <select id="input_mypoke_registered" style="width:15em; font-size:1em">
-                    <option>Temp</option>
+                <select id="input_mypoke_registered" style="width:15em; font-size:1em; vertical-align: middle;">
                 </select>
-                <button id="input_mypoke_delete" onclick="deleteRegisteredMypoke()">削除</button>
+                <button id="input_mypoke_delete" style="font-size:0.7em; vertical-align: middle;" onclick="deleteRegisteredMypoke()">削除</button>
 
 
 
@@ -133,19 +135,170 @@
 
         <!--以下、スクリプト-->
         <script>
+            function addReportOf(el){
+                let foodName = el.name;
+                let min = document.getElementById('food_min').value;
+                let onlyFullyEvolved = document.getElementById('only_fully_evolved').checked;
+                let t = document.getElementById('result_table');
+                t.innerHTML = "";
+                t.appendChild(this.pokeReport.createReport(foodName, min, onlyFullyEvolved));
+                
+                this.insertRegisteredMyPokemons(foodName);
 
-            function deleteRegisteredMypoke(){
-                let list = document.getElementById("input_mypoke_registered");
-                list.removeChild(list.children[list.selectedIndex]);
+                let json = this.createMyPokeJsonFromInputForm();
+                if (json == null) return;
 
+                this.insertMyPokemon(json, foodName, "#FFFF99");
             }
 
-            
+
+            //Myポケモン関連
+            function insertRegisteredMyPokemons(food){
+                let options = document.getElementById("input_mypoke_registered").children;
+                
+                for (let i = 0; i < options.length; i++){
+                    let x = this.cookieItemToJson(options[i].value);
+                    this.insertMyPokemon(x, food);
+                }
+            }
+
+
+            function insertMyPokemon(json, food, colorCode = "#CCDDFF"){
+                let poke = pokedex.getPokemonByName(json.name);
+                let comb = new FoodCombination(poke, json.lv, poke.getOtetsudaiCountDay(json.lv, json.speedAdj, json.subSpeedAdj), json.code, json.foodAdj + json.subFoodAdj);
+                if (!comb.contains(food))   return;
+
+                let tr = document.createElement('tr');
+                tr.style.backgroundColor = colorCode;
+                comb.insertResultTo(tr, food, poke);
+
+                let tb = document.getElementById('result_table').tBodies[0];
+                let rows = tb.children;
+
+                let target = comb.getExpectionOf(food);
+                for (let i = 0; i < rows.length; i++){
+                    let value = rows[i].children[1].getAttribute('value');
+                    if (value <= target){
+                    tb.insertBefore(tr, rows[i]);
+                        break;
+                    }
+                }
+            }
+
+            function createMyPokeJsonFromInputForm(){
+                let name = this.document.getElementById('input_mypoke_name').value;
+                if (name == "") return null;
+
+                return this.createAdjustJson(name);
+            }
+
+
+            function createAdjustJson(name){
+                let charList = document.getElementById("input_mypoke_char");
+                let json = JSON.parse(charList.children[charList.selectedIndex].value);
+                json.subSpeedAdj = (document.getElementById("input_mypoke_speedS").checked) ? 0.07 : 0;
+                json.subSpeedAdj += (document.getElementById("input_mypoke_speedM").checked) ? 0.14 : 0;
+                json.subFoodAdj = (document.getElementById("input_mypoke_foodS").checked) ? 0.18 : 0;
+                json.subFoodAdj += (document.getElementById("input_mypoke_foodM").checked) ? 0.36 : 0; 
+                json.subSpeedAdj = Math.round(json.subSpeedAdj * 100) / 100;
+                json.subFoodAdj = Math.round(json.subFoodAdj * 100) / 100;
+
+                json.identifier = charList.children[charList.selectedIndex].getAttribute("identifier");
+                if (document.getElementById("input_mypoke_speedS").checked) json.identifier += ".";
+                if (document.getElementById("input_mypoke_speedM").checked) json.identifier += ":" ;
+                if (document.getElementById("input_mypoke_foodS").checked)  json.identifier += "f";
+                if (document.getElementById("input_mypoke_foodM").checked)  json.identifier += "F"; 
+
+                json.name = name;
+                json.lv = this.document.getElementById('input_mypoke_lv').value;
+                json.code = this.getMyPokeFoodCode();
+                return json;
+            }
+
+
+            function getMyPokeFoodCode(){
+                return document.getElementById("input_mypoke_food_1").getAttribute("code")
+                     + document.getElementById("input_mypoke_food_2").getAttribute("code")
+                     + document.getElementById("input_mypoke_food_3").getAttribute("code");
+            }
+
+
+
+
+            //クッキー関連(登録)
+            function setMyPokeCookie(){
+                let options= document.getElementById("input_mypoke_registered").children;
+                let values = [];
+                for (let i = 0; i < options.length; i++){
+                    values.push(options[i].value);
+                }
+                setCookie("myPokeList", values.join("/"));
+            }     
+
+
+
+
+
+            //クッキー関連(呼び出し)
+            function setMypokesToListFromCookie(){
+                let jss = cookieItemToJsons(getCookie("myPokeList"));
+                for (let i = 0; i < jss.length; i++){
+                    let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));
+                    if (maxFlag){
+                        alert("限界");
+                        return;
+                    }            
+                }
+            }   
+
+
+            function fff(){//テスト用
+                let jss = cookieItemToJsons('ウツボット,60,ABA,寂F,0.11,0,0,0.36/フシギバナ,50,ABB,寂F,0.11,0,0,0.36');
+                for (let i = 0; i < jss.length; i++){
+                    let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));
+                    if (maxFlag){
+                        alert("限界");
+                        return;
+                    }            
+                }
+            }
+
+            function cookieItemToJsons(c){
+                let ccc = c.split("/");
+                let jss = [];
+
+                for (let i = 0; i < ccc.length; i++){
+                    jss.push(this.cookieItemToJson(ccc[i]));
+                }
+                return jss;
+            }
+
+            function cookieItemToJson(str){
+                let tmp = str.split(",");
+                return{
+                    name: tmp[0],
+                    lv: Number(tmp[1]),
+                    code: tmp[2],
+                    identifier: tmp[3],
+                    speedAdj: Number(tmp[4]),
+                    foodAdj: Number(tmp[5]),
+                    subSpeedAdj: Number(tmp[6]),
+                    subFoodAdj: Number(tmp[7])
+                };
+            }
+
+
+
+
+
+
+
+
+            //ロード時、ボタンなどから直接呼び出される可能性があるもの
             function setFoodImages(el){
-                el = document.getElementById("input_mypoke_name");
                 let poke = pokedex.getPokemonByName(el.value);
                 if (poke == null){
-
+                    return;
                 }
                 
                 let img1 = document.getElementById('input_mypoke_food_1');
@@ -175,83 +328,83 @@
                 
                 el.src = el.getAttribute("dir") + values[next] + ".png";
                 el.setAttribute("value", values[next]);
-                el.setAttribute("code", String.fromCharCode(65 + next));
-               
+                el.setAttribute("code", String.fromCharCode(65 + next));               
+            }
+
+
+            function resetInputForm(){
+                let res = window.confirm("入力情報をリセットしてもよろしいですか？");
+                if (res == false) return;
+
+                document.getElementById('input_mypoke_name').selectedIndex = 0;
+                document.getElementById('input_mypoke_lv').selectedIndex = 29;
+                document.getElementById("input_mypoke_char").selectedIndex = 0;
+                document.getElementById("input_mypoke_speedS").checked = false;
+                document.getElementById("input_mypoke_speedM").checked = false;
+                document.getElementById("input_mypoke_foodS").checked = false;
+                document.getElementById("input_mypoke_foodM").checked = false;
             }
 
 
 
-            function addReportOf(sender){
-                let foodName = sender.name;
-                let min = document.getElementById('food_min').value;
-                let onlyFullyEvolved = document.getElementById('only_fully_evolved').checked;
-                let el = document.getElementById('result_table');
-                el.innerHTML = "";
-                el.appendChild(this.pokeReport.createReport(foodName, min, onlyFullyEvolved));
-
-                let json = this.createMyPokeJsonFromInputForm(foodName);
-                if (json == null) return;
-                this.insertMyPokemon(json);
-                let list = document.getElementById("input_mypoke_registered");
-                list.children[0].value = JSON.stringify(json);
-            }
-
-
-            function createMyPokeJsonFromInputForm(foodName){
-                let name = this.document.getElementById('input_mypoke_name').value;
-                if (name == "") return null;
-
-                return this.createAdjustJson(name, foodName);
-            }
-
-
-            function insertMyPokemon(json){
-                let poke = pokedex.getPokemonByName(json.name);
-                let comb = new FoodCombination(poke, json.lv, poke.getOtetsudaiCountDay(json.lv, json.speedAdj, json.subSpeedAdj), json.code, json.foodAdj + json.subFoodAdj);
-                if (!comb.contains(json.food))   return;
-
-                let tr = document.createElement('tr');
-                tr.style.backgroundColor = '#CCDDFF';
-                comb.insertResultTo(tr, json.food, poke);
-
-                let tb = document.getElementById('result_table').tBodies[0];
-                let rows = tb.children;
-
-                let target = comb.getExpectionOf(json.food);
-                for (let i = 0; i < rows.length; i++){
-                    let value = rows[i].children[1].getAttribute('value');
-                    if (value <= target){
-                    tb.insertBefore(tr, rows[i]);
-                        break;
-                    }
+            function registerMyPoke(){
+                let json = this.createMyPokeJsonFromInputForm();
+                if (json == null){
+                    alert("登録情報が足りていません。")
+                    return;
                 }
+
+                this.addMyPokeToList(this.createMyPokeOption(json));
+                this.setMyPokeCookie();
             }
 
 
-            function createAdjustJson(name, foodName){
-                let charList = document.getElementById("input_mypoke_char");
-                let json = JSON.parse(charList.children[charList.selectedIndex].value);
-                json.subSpeedAdj = (document.getElementById("input_mypoke_speeddS").checked) ? 0.07 : 0;
-                json.subSpeedAdj += (document.getElementById("input_mypoke_spdM").checked) ? 0.14 : 0;
-                json.subFoodAdj = (document.getElementById("input_mypoke_foodS").checked) ? 0.18 : 0;
-                json.subFoodAdj += (document.getElementById("input_mypoke_foodM").checked) ? 0.36 : 0; 
-                json.subSpeedAdj = Math.round(json.subSpeedAdj * 100) / 100;
-                json.subFoodAdj = Math.round(json.subFoodAdj * 100) / 100;
+            function deleteRegisteredMypoke(){
+                let list = document.getElementById("input_mypoke_registered");
+                if (list.children.length == 0) return;
 
-                json.name = name;
-                json.food = foodName;
-                json.lv = this.document.getElementById('input_mypoke_lv').value;
-                json.code = this.getMyPokeFoodCode();
-                return json;
+                let op = list.children[list.selectedIndex];                
+                let res = window.confirm(op.textContent +  "\nを削除してもよろしいですか？");
+                if (res == false) return;
+
+                list.removeChild(op);
+                this.setMyPokeCookie();
             }
 
 
-
-            function getMyPokeFoodCode(){
-                return document.getElementById("input_mypoke_food_1").getAttribute("code")
-                     + document.getElementById("input_mypoke_food_2").getAttribute("code")
-                     + document.getElementById("input_mypoke_food_3").getAttribute("code");
+            function createMyPokeOption(json){
+                let op = document.createElement("option");
+                op.value = this.jsonToOptionValue(json);
+                op.text = json.name + "Lv" + json.lv + json.code + " " + json.identifier;
+                return op;
             }
+
+            function jsonToOptionValue(json){
+                return [
+                   json.name,
+                   json.lv,
+                   json.code,
+                   json.identifier,
+                   json.speedAdj,
+                   json.foodAdj,
+                   json.subSpeedAdj,
+                   json.subFoodAdj
+                ];
+            }
+
+
+            function addMyPokeToList(op){
+                let myList = document.getElementById("input_mypoke_registered");
+                if (myList.children.length >= 30){
+                    alert("マイポケモンは30体まで登録可能です。");
+                    return;
+                }
+                myList.appendChild(op);
+                return myList.children.length >= 30;
+            }
+
+            
+
 
 
             function initializePokeList(){
@@ -281,12 +434,12 @@
                     op.value = i;   
                     list.appendChild(op);                 
                 }
-                list.selectedIndex = 0;
+                list.selectedIndex = 29;
 
                 this.selectBoxInitialized = true;
             }
 
-
+            //ロード時のイベント
             window.onload = ()=>{
                 this.pokedex = new Pokedex();
                 this.pokemons = pokedex.pokemons;

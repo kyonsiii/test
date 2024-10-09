@@ -2,6 +2,11 @@ html {
     touch-action: manipulation;
 }
 
+#page_link img{
+    width: 1.2em;
+    height: auto;
+    vertical-align: middle;
+}
 button{
     font-size: 1em;
 }
@@ -208,6 +213,7 @@ img.field{
     background-color: yellow;
     color: red;
     font-weight: 700;
+    border: 1px dotted salmon;
 }
 
 .input_short{

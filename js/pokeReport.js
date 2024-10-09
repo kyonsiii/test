@@ -26,7 +26,6 @@ class PokeReport{
             p.foodCombinations.forEach(c => {
                 if (c.contains(foodName, min)){
                     pokeAndComb.push({poke: p, comb: c});
-
                 }                
             });
         }
