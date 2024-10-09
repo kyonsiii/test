@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
     <head>
+        <!--https://csshtml.work/click-button/ 参考にしたボタンの作り方。ありがとう！-->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="style.css" rel="stylesheet"/>
@@ -42,7 +43,7 @@
             </div>
             <input type="text" id="food_min" style="width:3em;" value="0">個以上
             <input type="checkbox" id="only_fully_evolved" checked="true">最終進化のみ(イワーク、ヤルキモノを除く)
-            <div>
+            <div id="input_form">
                 <strong> Myポケモン登録フォームv2:</strong><br>
                 <select id="input_mypoke_name" style="width:10em; font-size:1em" onclick="initializePokeList()" onchange="setFoodImages(this)"></select>
                 Lv<select id="input_mypoke_lv" style="width:4em; font-size:1em" onclick="initializePokeList()"></select>
@@ -79,25 +80,31 @@
                     <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="□">まじめ (無補正)</option>
                 </select>
 
-                <div class="sub_skill_check">
+                <div class="input_subskill_buttons">
                     <input type="checkbox" id="input_mypoke_speedS"><label for="input_mypoke_speedS">おてスピS</label>
                     <input type="checkbox" id="input_mypoke_speedM"><label for="input_mypoke_speedM">おてスピM</label>
                     <input type="checkbox" id="input_mypoke_foodS"><label for="input_mypoke_foodS">食材S</label>
                     <input type="checkbox" id="input_mypoke_foodM"><label for="input_mypoke_foodM">食材M</label>
                 </div>
 
-                <button id="input_mypoke_register" style="font-size:1em; vertical-align: middle;" onclick="registerMyPoke();">Myポケモンをマイセットに追加</button> 
+                <div id="input_color_buttons">
+                    <input type="radio" name="color_picker" value="RD" id="color_pick_RD"><label for="color_pick_RD">□</label>
+                    <input type="radio" name="color_picker" value="PK" id="color_pick_PK"><label for="color_pick_PK">□</label>
+                    <input type="radio" name="color_picker" value="OR" id="color_pick_OR"><label for="color_pick_OR">□</label>
+                    <input type="radio" name="color_picker" value="GD" id="color_pick_GD"><label for="color_pick_GD">□</label>
+                    <input type="radio" name="color_picker" value="GR" id="color_pick_GR"><label for="color_pick_GR">□</label>
+                    <input type="radio" name="color_picker" value="EM" id="color_pick_EM"><label for="color_pick_EM">□</label>
+                    <input type="radio" name="color_picker" value="BL" id="color_pick_BL"><label for="color_pick_BL">□</label>
+                    <input type="radio" name="color_picker" value="SB" id="color_pick_SB" checked><label for="color_pick_SB">□</label>
+                    <input type="radio" name="color_picker" value="SL" id="color_pick_SL"><label for="color_pick_SL">□</label>
+                    <input type="radio" name="color_picker" value="CR" id="color_pick_CR"><label for="color_pick_CR">□</label>
+
+                    
+                </div>
+
+                <button id="input_mypoke_register" style="font-size:1em; vertical-align: middle;" onclick="registerMyPoke();">Myポケモンに追加</button> 
                 <button id="input_mypoke_reset" style="font-size:1em; vertical-align: middle;" onclick="resetInputForm();">リセット</button>
-                
-                <br>
-                <strong>登録済みMyポケモン:</strong>
-                <select id="input_mypoke_registered" style="width:15em; font-size:1em; vertical-align: middle;">
-                </select>
-                <button id="input_mypoke_delete" style="font-size:1em; vertical-align: middle;" onclick="deleteRegisteredMypoke()">削除</button>
-
-
-
-
+            
             </div>
 
             <div>
@@ -109,6 +116,10 @@
 
                 </table>
             </div>
+            <strong>登録済みMyポケモン:</strong><br>
+            <select id="input_mypoke_registered" style="width:15em; font-size:1em; vertical-align: middle;">
+            </select>
+            <button id="input_mypoke_delete" style="font-size:1em; vertical-align: middle;" onclick="deleteRegisteredMypoke()">削除</button>
         </p>
 
 
@@ -138,13 +149,31 @@
                 let options = document.getElementById("input_mypoke_registered").children;
                 
                 for (let i = 0; i < options.length; i++){
-                    let x = this.cookieItemToJson(options[i].value);
-                    this.insertMyPokemon(x, food);
+                    let json = this.cookieItemToJson(options[i].value);
+                    this.insertMyPokemon(json, food, this.convertColorCode(json.color));
                 }
             }
 
 
-            function insertMyPokemon(json, food, colorCode = "#CCDDFF"){
+            function convertColorCode(cd){
+                switch(cd){
+                    case "RD": return "#FF6060"; break;
+                    case "PK": return "#FFDDDD"; break;
+                    case "OR": return "#FFAA00"; break;
+                    case "GD": return "#FFDD44"; break;
+                    case "GR": return "#44FF44"; break;
+                    case "EM": return "#66FFAA"; break;
+                    case "BL": return "#6699FF"; break;
+                    case "SB": return "#CCDDFF"; break;
+                    case "SL": return "#DDDDDD"; break;
+                    case "CR": return "#EEDDAA"; break;
+                    default: return "#FFFFFF"
+                }
+            }
+
+
+
+            function insertMyPokemon(json, food, colorCode = "#000000"){
                 let poke = pokedex.getPokemonByName(json.name);
                 let comb = new FoodCombination(poke, json.lv, poke.getOtetsudaiCountDay(json.lv, json.speedAdj, json.subSpeedAdj), json.code, json.foodAdj + json.subFoodAdj);
                 if (!comb.contains(food))   return;
@@ -170,11 +199,11 @@
                 let name = this.document.getElementById('input_mypoke_name').value;
                 if (name == "") return null;
 
-                return this.createAdjustJson(name);
+                return this.createJsonFromInputForm(name);
             }
 
 
-            function createAdjustJson(name){
+            function createJsonFromInputForm(name){
                 let charList = document.getElementById("input_mypoke_char");
                 let json = JSON.parse(charList.children[charList.selectedIndex].value);
                 json.subSpeedAdj = (document.getElementById("input_mypoke_speedS").checked) ? 0.07 : 0;
@@ -194,6 +223,7 @@
                 json.name = name;
                 json.lv = this.document.getElementById('input_mypoke_lv').value;
                 json.code = this.getMyPokeFoodCode();
+                json.color = document.querySelector("#input_color_buttons input:checked").value;
                 return json;
             }
 
@@ -240,7 +270,7 @@
 
 
             function fff(){//テスト用
-                let jss = cookieItemToJsons('738,30,AAA,yn,.:,0.11,0,0.21,0/9,60,ABA,yu,F,0.11,0,0,0.36/910,30,AAA,sb,F,0.11,0,0,0.36');
+                let jss = cookieItemToJsons('736,30,AAA,ij,,0.11,-0.2,0,0,PK/359,30,AAA,hk,.,-0.09,0.2,0.07,0,GR/736,30,AAA,ij,F,0.11,-0.2,0,0.36,BL');
                 for (let i = 0; i < jss.length; i++){
                     let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));
                     if (maxFlag){
@@ -262,6 +292,7 @@
 
             function cookieItemToJson(str){
                 let tmp = str.split(",");
+                if (tmp.length == 9) tmp.push("SB")
                 
                 return{
                     name: this.pokedex.getPokemonByNo(Number(tmp[0])).name,
@@ -272,7 +303,8 @@
                     speedAdj: Number(tmp[5]),
                     foodAdj: Number(tmp[6]),
                     subSpeedAdj: Number(tmp[7]),
-                    subFoodAdj: Number(tmp[8])
+                    subFoodAdj: Number(tmp[8]),
+                    color: tmp[9]
                 };
             }
 
@@ -394,7 +426,8 @@
                    json.speedAdj,
                    json.foodAdj,
                    json.subSpeedAdj,
-                   json.subFoodAdj
+                   json.subFoodAdj,
+                   json.color
                 ];
             }
 

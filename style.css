@@ -25,10 +25,18 @@ html {
     border: 1px dotted salmon;
 }
 
-.sub_skill_check{
+#input_form{
+    background-color: #FFFFDD;
+}
+
+
+#input_color_buttons,
+.input_subskill_buttons{
     display: flex;
 }
-.sub_skill_check label{
+
+#input_color_buttons label,
+.input_subskill_buttons label{
     background: #DDDDDD;
     color: #666666;
     padding: 1px;
@@ -37,13 +45,64 @@ html {
     border-radius: 5px;
     cursor: pointer;
 }
-.sub_skill_check input:checked+label{
+
+#input_color_buttons input[value="RD"]:checked + label {
+    background: #FF6060;
+    color: black;
+}
+#input_color_buttons input[value="PK"]:checked + label {
+    background: #FFDDDD;
+    color: black;
+}
+#input_color_buttons input[value="OR"]:checked + label {
+    background: #FFAA00;
+    color: black;
+}
+#input_color_buttons input[value="GD"]:checked + label {
+    background: #FFDD44;
+    color: black;
+}
+#input_color_buttons input[value="GR"]:checked + label {
+    background: #44FF44;
+    color: black;
+}
+#input_color_buttons input[value="EM"]:checked + label {
+    background: #66FFAA;
+    color: black;
+}
+#input_color_buttons input[value="BL"]:checked + label {
+    background: #6699FF;
+    color: black;
+}
+#input_color_buttons input[value="SB"]:checked + label {
+    background: #CCDDFF;
+    color: black;
+}
+#input_color_buttons input[value="SL"]:checked + label {
+    background: #DDDDDD;
+    color: black;
+}
+#input_color_buttons input[value="CR"]:checked + label {
+    background: #EEDDAA;
+    color: black;
+}
+
+#input_color_buttons input,
+.input_subskill_buttons input{
+    display: none;
+}
+
+.input_subskill_buttons input:checked+label{
     background: #60ffca;
     color: #000000;
 }
-.sub_skill_check input{
-    display: none;
-}
+
+
+
+
+
+
+
 
 button{
     font-size: 1em;
