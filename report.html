@@ -8,7 +8,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.0.4ttt</title>
+        <title>レポート(仮)v0.0.4tttt</title>
         <style>
             .example2{
                 display: flex;
@@ -232,12 +232,15 @@
                 for (let i = 0; i < options.length; i++){
                     values.push(options[i].value);
                 }
-                console.log(values.join("/"));
+
+            
                 setCookie("myPokeList", values.join("/"), 30);
                 setCookie("test", values[0], 30);
                 alert(getCookie("test"));
                 setCookie("test2", "/", 30);
                 alert(getCookie("test2"));
+                setCookie("test3", value[0], 30);
+                alert(getCookie("test3"));
             }     
 
 
@@ -354,7 +357,6 @@
 
 
             function registerMyPoke(){
-                alert(getCookie("myPokeList"));
                 let json = this.createMyPokeJsonFromInputForm();
                 if (json == null){
                     alert("登録情報が足りていません。")
