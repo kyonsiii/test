@@ -2,11 +2,28 @@ html {
     touch-action: manipulation;
 }
 
+#page_link div{
+    display: inline-block;;
+    height: 3em;
+    width: 3em;
+    margin-bottom: 1em;
+}
+
 #page_link img{
-    width: 1.2em;
+    width: 3em;
     height: auto;
+    margin-right: 1em;
     vertical-align: middle;
 }
+
+
+.current{
+    background-color: yellow;
+    font-weight: 700;
+    border: 1px dotted salmon;
+}
+
+
 button{
     font-size: 1em;
 }
@@ -209,12 +226,6 @@ img.field{
     max-width: 10em;
 }
 
-.current{
-    background-color: yellow;
-    color: red;
-    font-weight: 700;
-    border: 1px dotted salmon;
-}
 
 .input_short{
     width: 12em;
