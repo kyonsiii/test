@@ -349,6 +349,7 @@
 
 
             function registerMyPoke(){
+                alert(getCookie("myPokeList"));
                 let json = this.createMyPokeJsonFromInputForm();
                 if (json == null){
                     alert("登録情報が足りていません。")
