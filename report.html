@@ -135,11 +135,6 @@
 
         <!--以下、スクリプト-->
         <script>
-
-            function initializeMyPokeList(){
-                setMypokesToListFromCookie();
-            }
-
             function addReportOf(el){
                 let foodName = el.name;
                 let min = document.getElementById('food_min').value;
@@ -237,7 +232,7 @@
                 for (let i = 0; i < options.length; i++){
                     values.push(options[i].value);
                 }
-                setCookie("myPokeList", values.join("/"));
+                setCookie("myPokeList", values.join("/"), 30);
             }     
 
 
@@ -454,7 +449,7 @@
                 this.pokeReport = new PokeReport(this.pokedex);
                 this.pokeReport.initialize();
                 this.selectBoxInitialized = false;
-                
+                setMypokesToListFromCookie();
             }
         </script>
     </body>
