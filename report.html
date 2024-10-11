@@ -53,51 +53,56 @@
                 <img id="input_mypoke_food_3" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
                 <br>
                 <select id="input_mypoke_char" style="width:15.5em; font-size:1em">
-                    <option value = '{"speedAdj": 0.11, "foodAdj": 0.0}' characteristic="寂">さみしがり (速↑元↓)</option>
-                    <option value = '{"speedAdj": 0.11, "foodAdj":-0.2}' characteristic="い">いじっぱり (速↑食↓)</option>
-                    <option value = '{"speedAdj": 0.11, "foodAdj": 0.0}' characteristic="や">やんちゃ (速↑ス↓)</option>
-                    <option value = '{"speedAdj": 0.11, "foodAdj": 0.0}' characteristic="勇">ゆうかん (速↑E↓)</option>
-                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.0}' characteristic="ず">ずぶとい (元↑速↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj":-0.2}' characteristic="わ">わんぱく (元↑食↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="能">のうてんき (元↑ス↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="の">のんき (元↑E↓)</option>
-                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.2}' characteristic="ひ">ひかえめ (食↑速↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.2}' characteristic="お">おっとり (食↑元↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.2}' characteristic="う">うっかりや (食↑ス↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.2}' characteristic="冷">れいせい (食↑E↓)</option>
-                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.0}' characteristic="穏">おだやか (ス↑速↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="大">おとなしい (ス↑元↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj":-0.2}' characteristic="慎">しんちょう (ス↑食↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="な">なまいき (ス↑E↓)</option>
-                    <option value = '{"speedAdj":-0.09, "foodAdj": 0.0}' characteristic="臆">おくびょう (E↑速↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="せ">せっかち (E↑元↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj":-0.2}' characteristic="陽">ようき (E↑食↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="む">むじゃき (E↑ス↓)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="□">がんばりや (無補正)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="□">すなお (無補正)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="□">てれや (無補正)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="□">きまぐれ (無補正)</option>
-                    <option value = '{"speedAdj": 0.00, "foodAdj": 0.0}' characteristic="□">まじめ (無補正)</option>
+                    <option value="寂">さみしがり (速↑元↓)</option>
+                    <option value="い">いじっぱり (速↑食↓)</option>
+                    <option value="や">やんちゃ (速↑ス↓)</option>
+                    <option value="勇">ゆうかん (速↑E↓)</option>
+                    <option value="ず">ずぶとい (元↑速↓)</option>
+                    <option value="わ">わんぱく (元↑食↓)</option>
+                    <option value="能">のうてんき (元↑ス↓)</option>
+                    <option value="の">のんき (元↑E↓)</option>
+                    <option value="ひ">ひかえめ (食↑速↓)</option>
+                    <option value="お">おっとり (食↑元↓)</option>
+                    <option value="う">うっかりや (食↑ス↓)</option>
+                    <option value="冷">れいせい (食↑E↓)</option>
+                    <option value="穏">おだやか (ス↑速↓)</option>
+                    <option value="大">おとなしい (ス↑元↓)</option>
+                    <option value="慎">しんちょう (ス↑食↓)</option>
+                    <option value="な">なまいき (ス↑E↓)</option>
+                    <option value="臆">おくびょう (E↑速↓)</option>
+                    <option value="せ">せっかち (E↑元↓)</option>
+                    <option value="陽">ようき (E↑食↓)</option>
+                    <option value="む">むじゃき (E↑ス↓)</option>
+                    <option value="□">がんばりや (無補正)</option>
+                    <option value="□">すなお (無補正)</option>
+                    <option value="□">てれや (無補正)</option>
+                    <option value="□">きまぐれ (無補正)</option>
+                    <option value="□">まじめ (無補正)</option>
                 </select>
+                <button onclick="cherry()">🍒</button>
 
                 <div class="input_subskill_buttons">
                     <input type="checkbox" id="input_mypoke_speedS"><label for="input_mypoke_speedS">おてスピS</label>
                     <input type="checkbox" id="input_mypoke_speedM"><label for="input_mypoke_speedM">おてスピM</label>
                     <input type="checkbox" id="input_mypoke_foodS"><label for="input_mypoke_foodS">食材S</label>
                     <input type="checkbox" id="input_mypoke_foodM"><label for="input_mypoke_foodM">食材M</label>
+                    <input type="checkbox" id="input_mypoke_skillS"><label for="input_mypoke_skillS">スキルS</label>
+                    <input type="checkbox" id="input_mypoke_skillM"><label for="input_mypoke_skillM">スキルM</label>
+                    <input type="checkbox" id="input_mypoke_berryS"><label for="input_mypoke_berryS">きのみS</label>
                 </div>
 
                 <div id="input_color_buttons">
-                    <input type="radio" name="color_picker" value="RD" id="color_pick_RD"><label for="color_pick_RD">□</label>
-                    <input type="radio" name="color_picker" value="PK" id="color_pick_PK"><label for="color_pick_PK">□</label>
-                    <input type="radio" name="color_picker" value="OR" id="color_pick_OR"><label for="color_pick_OR">□</label>
-                    <input type="radio" name="color_picker" value="GD" id="color_pick_GD"><label for="color_pick_GD">□</label>
-                    <input type="radio" name="color_picker" value="GR" id="color_pick_GR"><label for="color_pick_GR">□</label>
-                    <input type="radio" name="color_picker" value="EM" id="color_pick_EM"><label for="color_pick_EM">□</label>
-                    <input type="radio" name="color_picker" value="BL" id="color_pick_BL"><label for="color_pick_BL">□</label>
-                    <input type="radio" name="color_picker" value="SB" id="color_pick_SB" checked><label for="color_pick_SB">□</label>
-                    <input type="radio" name="color_picker" value="SL" id="color_pick_SL"><label for="color_pick_SL">□</label>
-                    <input type="radio" name="color_picker" value="CR" id="color_pick_CR"><label for="color_pick_CR">□</label>
+                    <input type="radio" name="color_picker" value="0" id="color_pick_SB" checked><label for="color_pick_SB">□</label>
+                    <input type="radio" name="color_picker" value="1" id="color_pick_BL"><label for="color_pick_BL">□</label>  
+                    <input type="radio" name="color_picker" value="2" id="color_pick_SL"><label for="color_pick_SL">□</label>
+                    <input type="radio" name="color_picker" value="3" id="color_pick_PK"><label for="color_pick_PK">□</label>
+                    <input type="radio" name="color_picker" value="4" id="color_pick_OR"><label for="color_pick_OR">□</label>
+                    <input type="radio" name="color_picker" value="5" id="color_pick_RD"><label for="color_pick_RD">□</label>
+                    <input type="radio" name="color_picker" value="6" id="color_pick_GR"><label for="color_pick_GR">□</label>                   
+                    <input type="radio" name="color_picker" value="7" id="color_pick_GD"><label for="color_pick_GD">□</label>
+                    
+                                     
+                    
 
                     
                 </div>
@@ -131,85 +136,97 @@
 
         <!--以下、スクリプト-->
         <script>
-            function addReportOf(el){
-                let foodName = el.name;
-                let min = document.getElementById('food_min').value;
-                let onlyFullyEvolved = document.getElementById('only_fully_evolved').checked;
-                let t = document.getElementById('result_table');
-                t.innerHTML = "";
-                t.appendChild(this.pokeReport.createReport(foodName, min, onlyFullyEvolved));
+
+
+            //berry機能つくろう
+
+               
+            function registerMyPoke(){
+                let json = this.createJsonFromInputForm2(this.document.getElementById('input_mypoke_name').value);
+                if (json == null){
+                    alert("登録情報が足りていません。")
+                    return;
+                }
+
+                let res = window.confirm(json.name +  "\nを登録してもよろしいですか？");
+                if (res == false) return;
+
+                this.addMyPokeToList(this.createMyPokeOption(json));
+                this.setMyPokeCookie();
+            }
+
+
+
+            function createMyPokeOption(json){
+                let op = document.createElement("option");
+                op.value = this.jsonToOptionValue(json);
+                op.text = json.name + "Lv" + json.lv + json.foodCode + " " + getMyPokeIdentifier(json);
+                return op;
+            }
+
+            function getMyPokeIdentifier(j){
+                return j.char
+                     + (j.subBerryS ? "s" : "")
+                     + (j.subSpeedS ? "." : "")
+                     + (j.subSpeedM ? ":" : "")
+                     + (j.subFoodS ? "f" : "")
+                     + (j.subFoodM ? "F" : "")
+                     + (j.subSkillS ? "-" : "")
+                     + (j.subSkillM ? "+" : "");
+            }
+
+                   
+
+            function jsonToOptionValue(json){
+                return json.no + ":" + pokeReport.createCookieValueFromJson(json);
+            }
+            
+            function addMyPokeToList(op){
+                let myList = document.getElementById("input_mypoke_registered");
+                let max = 70;
+                if (myList.children.length >= max){
+                    alert("Myポケモンは70体まで登録可能です。");
+                    return false;
+                }
+                myList.appendChild(op);
+                return myList.children.length >= max;
+            }
+            
+
+
+            function createJsonFromInputForm2(name){
+                if (name == "") return null;       
+                let j = {};
                 
-                this.insertRegisteredMyPokemons(foodName);
+                j.no = pokedex.getNoByName(name);
+                j.name = name;
+                j.backgroundColor = Number(document.querySelector("#input_color_buttons input:checked").value);
+                j.lv = Number(this.document.getElementById('input_mypoke_lv').value);
+                j.foodCode = this.getMyPokeFoodCode();                
+                j.char = document.getElementById("input_mypoke_char").value;
+                j.subBerryS = document.getElementById("input_mypoke_berryS").checked;
+                j.subSpeedS = document.getElementById("input_mypoke_speedS").checked;
+                j.subSpeedM = document.getElementById("input_mypoke_speedM").checked;
+                j.subFoodS = document.getElementById("input_mypoke_foodS").checked;
+                j.subFoodM = document.getElementById("input_mypoke_foodM").checked;
 
-                let json = this.createMyPokeJsonFromInputForm();
-                if (json == null) return;
+                j.subSkillS = document.getElementById("input_mypoke_skillS").checked;
+                j.subSkillM = document.getElementById("input_mypoke_skillM").checked;
 
-                this.insertMyPokemon(json, foodName, "#FFFF99");
+                let charBit = this.pokeReport.getCharacteristicNumOf(j.char);
+                pokeReport.setAdjustValues(j);
+                return j;  
             }
 
 
-            //Myポケモン関連
-            function insertRegisteredMyPokemons(food){
-                let options = document.getElementById("input_mypoke_registered").children;
-                
-                for (let i = 0; i < options.length; i++){
-                    let json = this.cookieItemToJson(options[i].value);
-                    this.insertMyPokemon(json, food, this.convertColorCode(json.color));
-                }
-            }
-
-
-            function convertColorCode(cd){
-                switch(cd){
-                    case "RD": return "#FF6060"; break;
-                    case "PK": return "#FFDDDD"; break;
-                    case "OR": return "#FFAA00"; break;
-                    case "GD": return "#FFDD44"; break;
-                    case "GR": return "#44FF44"; break;
-                    case "EM": return "#66FFAA"; break;
-                    case "BL": return "#6699FF"; break;
-                    case "SB": return "#CCDDFF"; break;
-                    case "SL": return "#DDDDDD"; break;
-                    case "CR": return "#EEDDAA"; break;
-                    default: return "#FFFFFF"
-                }
-            }
-
-
-
-            function insertMyPokemon(json, food, colorCode = "#000000"){
-                let poke = pokedex.getPokemonByName(json.name);
-                let comb = new FoodCombination(poke, json.lv, poke.getOtetsudaiCountDay(json.lv, json.speedAdj, json.subSpeedAdj), json.code, json.foodAdj + json.subFoodAdj);
-                if (!comb.contains(food))   return;
-
-                let tr = document.createElement('tr');
-                tr.style.backgroundColor = colorCode;
-                comb.insertResultTo(tr, food, poke);
-
-                let tb = document.getElementById('result_table').tBodies[0];
-                let rows = tb.children;
-
-                let target = comb.getExpectionOf(food);
-                for (let i = 0; i < rows.length; i++){
-                    let value = rows[i].children[1].getAttribute('value');
-                    if (value <= target){
-                    tb.insertBefore(tr, rows[i]);
-                        break;
-                    }
-                }
-            }
-
-            function createMyPokeJsonFromInputForm(){
-                let name = this.document.getElementById('input_mypoke_name').value;
-                if (name == "") return null;
-
-                return this.createJsonFromInputForm(name);
-            }
 
 
             function createJsonFromInputForm(name){
+                if (name == "") return null;
+                
                 let charList = document.getElementById("input_mypoke_char");
                 let json = JSON.parse(charList.children[charList.selectedIndex].value);
+
                 json.subSpeedAdj = (document.getElementById("input_mypoke_speedS").checked) ? 0.07 : 0;
                 json.subSpeedAdj += (document.getElementById("input_mypoke_speedM").checked) ? 0.14 : 0;
                 json.subFoodAdj = (document.getElementById("input_mypoke_foodS").checked) ? 0.18 : 0;
@@ -232,6 +249,96 @@
             }
 
 
+
+
+
+    
+            //実際のレポートはここから作られる
+            function addReportOf(el){
+                let foodName = el.name;
+                let min = document.getElementById('food_min').value;
+                let onlyFullyEvolved = document.getElementById('only_fully_evolved').checked;
+                let t = document.getElementById('result_table');
+                t.innerHTML = "";
+                t.appendChild(this.pokeReport.createReport(foodName, min, onlyFullyEvolved));
+                
+                this.insertRegisteredMyPokemons(foodName);
+                
+                let json = this.createJsonFromInputForm2(this.document.getElementById('input_mypoke_name').value);
+                if (json == null) return;            
+                json.backgroundColor = 7;
+                this.insertMyPokemon(json, foodName);
+            }
+
+
+            //Myポケモン関連
+            function insertRegisteredMyPokemons(food){
+                let options = document.getElementById("input_mypoke_registered").children;
+
+                for (let i = 0; i < options.length; i++){
+                    let json = this.cookieValueToJson(options[i].value);
+                    this.insertMyPokemon(json, food);
+                }
+            }
+
+
+            function cookieValueToJsonList(c){
+                let ccc = c.split("/");
+                let jss = [];
+
+                for (let i = 0; i < ccc.length; i++){
+                    jss.push(this.cookieValueToJson(ccc[i]));
+                }
+                return jss;
+            }
+
+            function cookieValueToJson(str){
+                return pokeReport.createJsonFromCookieValue(str);
+            }
+
+
+            function insertMyPokemon(json, food){
+                let poke = pokedex.getPokemonByName(json.name);                
+                let comb = new FoodCombination(poke, json.lv, poke.getOtetsudaiCountDay(json.lv, json.speedCharAdj, json.speedSubAdj), json.foodCode, json.foodCharAdj + json.foodSubAdj);
+                if (!comb.contains(food))   return;
+
+
+                let tr = document.createElement('tr');
+                tr.style.backgroundColor = numToColorCode(json.backgroundColor);
+                comb.insertResultTo(tr, food, poke);
+
+                let tb = document.getElementById('result_table').tBodies[0];
+                let rows = tb.children;
+
+                let target = comb.getExpectionOf(food);
+                for (let i = 0; i < rows.length; i++){
+                    let value = rows[i].children[1].getAttribute('value');
+                    if (value <= target){
+                    tb.insertBefore(tr, rows[i]);
+                        break;
+                    }
+                }
+            }
+
+
+            function numToColorCode(n){
+                switch(n){
+                    case 0: return "#CCDDFF"; break;
+                    case 1: return "#77AAFF"; break;
+                    case 2: return "#DDDDDD"; break;
+                    case 3: return "#FFDDDD"; break;                    
+                    case 4: return "#FFBB77"; break;                    
+                    case 5: return "#FF6060"; break;
+                    case 6: return "#BBFFBB"; break;
+                    case 7: return "#FFFFCC"; break;                    
+                    default: return "#FF4444"
+                }
+            }
+
+
+
+
+
             function getMyPokeFoodCode(){
                 return document.getElementById("input_mypoke_food_1").getAttribute("code")
                      + document.getElementById("input_mypoke_food_2").getAttribute("code")
@@ -248,7 +355,7 @@
                 for (let i = 0; i < options.length; i++){
                     values.push(options[i].value);
                 }
-            
+
                 setCookie("myPokeList", values.join("/"), 30);
             }     
 
@@ -261,7 +368,7 @@
                 let c = getCookie("myPokeList")
                 if (c == null) return; 
 
-                let jss = cookieItemToJsons(c);
+                let jss = cookieValueToJsonList(c);
                 if (jss == null) return;
                 for (let i = 0; i < jss.length; i++){
                     let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));
@@ -273,46 +380,7 @@
             }   
 
 
-            /*
-            function fff(){//テスト用
-                let jss = cookieItemToJsons('736,30,AAA,ij,,0.11,-0.2,0,0,PK/359,30,AAA,hk,.,-0.09,0.2,0.07,0,GR/736,30,AAA,ij,F,0.11,-0.2,0,0.36,BL');
-                for (let i = 0; i < jss.length; i++){
-                    let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));
-                    if (maxFlag){
-                        alert("限界");
-                        return;
-                    }            
-                }
-            }
-            */
 
-            function cookieItemToJsons(c){
-                let ccc = c.split("/");
-                let jss = [];
-
-                for (let i = 0; i < ccc.length; i++){
-                    jss.push(this.cookieItemToJson(ccc[i]));
-                }
-                return jss;
-            }
-
-            function cookieItemToJson(str){
-                let tmp = str.split(",");
-                if (tmp.length == 9) tmp.push("SB")
-                
-                return{
-                    name: this.pokedex.getPokemonByNo(Number(tmp[0])).name,
-                    lv: Number(tmp[1]),
-                    code: tmp[2],
-                    characteristic: this.characteristicConv(tmp[3]),
-                    identifier: tmp[4],
-                    speedAdj: Number(tmp[5]),
-                    foodAdj: Number(tmp[6]),
-                    subSpeedAdj: Number(tmp[7]),
-                    subFoodAdj: Number(tmp[8]),
-                    color: tmp[9]
-                };
-            }
 
 
 
@@ -375,32 +443,6 @@
 
 
 
-            function registerMyPoke(){
-                let json = this.createMyPokeJsonFromInputForm();
-                if (json == null){
-                    alert("登録情報が足りていません。")
-                    return;
-                }
-
-                let res = window.confirm(json.name +  "\nを登録してもよろしいですか？");
-                if (res == false) return;
-
-                this.addMyPokeToList(this.createMyPokeOption(json));
-                this.setMyPokeCookie();
-            }
-
-
-            function addMyPokeToList(op){
-                let myList = document.getElementById("input_mypoke_registered");
-                let max = 70;
-                if (myList.children.length >= max){
-                    alert("Myポケモンは70体まで登録可能です。");
-                    return false;
-                }
-                myList.appendChild(op);
-                return myList.children.length >= max;
-            }
-
 
             function deleteRegisteredMypoke(){
                 let list = document.getElementById("input_mypoke_registered");
@@ -415,28 +457,7 @@
             }
 
 
-            function createMyPokeOption(json){
-                let op = document.createElement("option");
-                op.value = this.jsonToOptionValue(json);
-                op.text = json.name + "Lv" + json.lv + json.code + " " + json.characteristic + json.identifier;
-                return op;
-            }
 
-
-            function jsonToOptionValue(json){
-                return [
-                   this.pokedex.getNoByName(json.name),
-                   json.lv,
-                   json.code,
-                   this.characteristicConv(json.characteristic),
-                   json.identifier,
-                   json.speedAdj,
-                   json.foodAdj,
-                   json.subSpeedAdj,
-                   json.subFoodAdj,
-                   json.color
-                ];
-            }
 
             function characteristicConv(v){
                 switch(v){

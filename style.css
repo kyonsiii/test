@@ -50,46 +50,44 @@ html {
     cursor: pointer;
 }
 
-#input_color_buttons input[value="RD"]:checked + label {
-    background: #FF6060;
-    color: black;
+#input_color_buttons label{
+    background: #FFFFFF;
 }
-#input_color_buttons input[value="PK"]:checked + label {
-    background: #FFDDDD;
-    color: black;
-}
-#input_color_buttons input[value="OR"]:checked + label {
-    background: #FFAA00;
-    color: black;
-}
-#input_color_buttons input[value="GD"]:checked + label {
-    background: #FFDD44;
-    color: black;
-}
-#input_color_buttons input[value="GR"]:checked + label {
-    background: #44FF44;
-    color: black;
-}
-#input_color_buttons input[value="EM"]:checked + label {
-    background: #66FFAA;
-    color: black;
-}
-#input_color_buttons input[value="BL"]:checked + label {
-    background: #6699FF;
-    color: black;
-}
-#input_color_buttons input[value="SB"]:checked + label {
+
+#input_color_buttons #color_pick_SB:checked + label {
     background: #CCDDFF;
     color: black;
 }
-#input_color_buttons input[value="SL"]:checked + label {
+#input_color_buttons #color_pick_RD:checked + label {
+    background: #FF6060;
+    color: black;
+}
+#input_color_buttons #color_pick_PK:checked + label {
+    background: #FFDDDD;
+    color: black;
+}
+#input_color_buttons #color_pick_OR:checked + label {
+    background: #FFBB77;
+    color: black;
+}
+#input_color_buttons #color_pick_GD:checked + label {
+    background: #FFFFCC;
+    color: black;
+}
+#input_color_buttons #color_pick_GR:checked + label {
+    background: #BBFFBB;
+    color: black;
+}
+
+#input_color_buttons #color_pick_BL:checked + label {
+    background: #77AAFF;
+    color: black;
+}
+#input_color_buttons #color_pick_SL:checked + label {
     background: #DDDDDD;
     color: black;
 }
-#input_color_buttons input[value="CR"]:checked + label {
-    background: #EEDDAA;
-    color: black;
-}
+
 
 #input_color_buttons input,
 .input_subskill_buttons input{
@@ -298,7 +296,9 @@ img.ex-tiny{
 }
 
 img.disabled{
-    filter:grayscale(80%);
+    filter:grayscale(100%);
+    width: 1em;
+    height: auto;
 }
 
 img.normal{
