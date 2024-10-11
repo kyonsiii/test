@@ -3,7 +3,6 @@ cd git\xxx
 
 ◆ファイル名の大文字小文字変更をgitに反映する
 git mv -f .\js\pokesleeping.js .\js\pokeSleeping.js
-
 git mv -f pokeCook.js .\js\pokeCook.js
 
 
@@ -17,6 +16,7 @@ git branch
  main
   ┗ *ttt
       ┗
+◆リポジトリにローカルデータを反映させる
 //変更を確認
 git status
 
@@ -29,14 +29,8 @@ git commit -m "-m is an option for adding messages"
 //***をmainにプッシュ ここでアップロードされる
 git push *** main
 
-//ログを確認
-git log
 
-
-//リモートの確認
-git remote -v
-
-
+◆ブランチ関連
 //ブランチの作成
 git branch new-branch-name
 
@@ -45,6 +39,18 @@ git checkout new-branch-name
 
 //ブランチの作成&切り替え
 git checkout -b new-branch-name
+
+
+
+◆その他
+//ログを確認
+git log
+
+
+//リモートの確認
+git remote -v
+
+
 
 git add .
 git push origin new-branch-name
