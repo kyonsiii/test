@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.1.0c</title>
+        <title>レポート(仮)v0.1.1</title>
 
     </head>
 
@@ -93,6 +93,11 @@
                     <input type="checkbox" id="input_mypoke_skillS"><label for="input_mypoke_skillS">スキルS</label>
                     <input type="checkbox" id="input_mypoke_skillM"><label for="input_mypoke_skillM">スキルM</label>
                     <input type="checkbox" id="input_mypoke_berryS"><label for="input_mypoke_berryS">きのみS</label>
+                </div>
+
+                <div id="input_option_buttons">
+                    <input type="checkbox" id="input_potential_30" checked><label for="input_potential_30">Lv30ポテ</label>
+                    <input type="checkbox" id="input_potential_60" checked><label for="input_potential_60">Lv60ポテ</label>
                 </div>
 
                 <div id="input_color_buttons">
@@ -270,7 +275,7 @@
                 let json = this.createJsonFromInputForm2(this.document.getElementById('input_mypoke_name').value);
                 if (json == null) return;            
                 json.backgroundColor = 7;
-                this.insertMyPokemon(json, foodName);
+                this.insertMyPokemon(json, foodName, document.getElementById("input_potential_30").checked, document.getElementById("input_potential_60").checked);
             }
 
 
@@ -280,7 +285,7 @@
 
                 for (let i = 0; i < options.length; i++){
                     let json = this.cookieValueToJson(options[i].value);
-                    this.insertMyPokemon(json, food);
+                    this.insertMyPokemon(json, food, document.getElementById("input_potential_30").checked, document.getElementById("input_potential_60").checked);
                 }
             }
 
@@ -300,14 +305,28 @@
             }
 
 
-            function insertMyPokemon(json, food){
-                let poke = pokedex.getPokemonByName(json.name);                
+            function insertMyPokemon(json, food, showPotential30 = false, showPotential60 = false){
+                let poke = pokedex.getPokemonByName(json.name);        
+
+                if (json.lv < 30 && showPotential30){
+                    let p30comb = new FoodCombination(poke, 30, poke.getOtetsudaiCountDay(30, json.speedCharAdj, json.speedSubAdj), json.foodCode, json.foodCharAdj + json.foodSubAdj);
+
+                    if (p30comb.contains(food)) this.addMyPokemonRow(poke, food, p30comb, this.numToColorCode(4));
+                }
+                if (json.lv < 60 && showPotential60){
+                    let p60comb = new FoodCombination(poke, 60, poke.getOtetsudaiCountDay(60, json.speedCharAdj, json.speedSubAdj), json.foodCode, json.foodCharAdj + json.foodSubAdj);
+                    if (p60comb.contains(food)) this.addMyPokemonRow(poke, food, p60comb, this.numToColorCode(5));                    
+                }
+
                 let comb = new FoodCombination(poke, json.lv, poke.getOtetsudaiCountDay(json.lv, json.speedCharAdj, json.speedSubAdj), json.foodCode, json.foodCharAdj + json.foodSubAdj);
                 if (!comb.contains(food))   return;
+                this.addMyPokemonRow(poke, food, comb, this.numToColorCode(json.backgroundColor));
+            }
 
 
+            function addMyPokemonRow(poke, food, comb, backgroundColor){
                 let tr = document.createElement('tr');
-                tr.style.backgroundColor = numToColorCode(json.backgroundColor);
+                tr.style.backgroundColor = backgroundColor;
                 comb.insertResultTo(tr, food, poke);
 
                 let tb = document.getElementById('result_table').tBodies[0];
