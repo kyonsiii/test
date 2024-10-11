@@ -137,7 +137,7 @@
 
             <div id="mypoke_list">
                 <strong>登録済みMyポケモン:</strong><br>
-                <select id="input_mypoke_registered" style="width:15em; font-size:1em; vertical-align: middle;" size="10">
+                <select id="input_mypoke_registered" style="width:15em; font-size:1em; vertical-align: middle;" multiple size="10">
                 </select>
                 <button id="input_mypoke_delete" style="font-size:1em; vertical-align: middle;" onclick="deleteRegisteredMypoke()">削除</button>
             </div>
@@ -467,6 +467,10 @@
             function deleteRegisteredMypoke(){
                 let list = document.getElementById("input_mypoke_registered");
                 if (list.children.length == 0) return;
+                if (list.selectedOptions.length != 1){
+                    alert("項目は一つだけえらんでください。");
+                    return;
+                }
 
                 let op = list.children[list.selectedIndex];                
                 let res = window.confirm(op.textContent +  "\nを削除してもよろしいですか？");
