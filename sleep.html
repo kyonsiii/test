@@ -4,16 +4,20 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="style.css" rel="stylesheet"/>
-        <title>睡眠計算</title>
+        <script src="js/main.js"></script>
+        <script src="js/pokeSleeping.js"></script>  
+        <script src="js/pokeSleepingCalc.js"></script>
+        <title>睡眠計算v1.0.0</title>
     </head>
 
 
     <body>
-        <p>
-            <a href = "./index.html">ポケモン</a>
-            <a href = "./sleep.html" class="current">睡眠計算</a>
-            <a href = "./cook.html">料理</a>
-        </p>
+        <div id="page_link">
+            <a href = "./index.html"><img src="img/pages/pokedex.png"></a>
+            <a href = "./sleep.html" class ="current"><img src="img/pages/sleep.png"></a>
+            <a href = "./cook.html"><img src="img/pages/cook.png"></a>            
+            <a href = "./report.html"><img src="img/pages/report.png"></a>
+        </div>
 
 
         <p>
@@ -24,12 +28,13 @@
         </p>
 
         <p id="field_filter">
-            <input type="radio" name="field_filter" onchange="filterField(this)" value="wakakusa">ワカクサ
-            <input type="radio" name="field_filter" onchange="filterField(this)" value="cyan">シアン
-            <input type="radio" name="field_filter" onchange="filterField(this)" value="taupe">トープ
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="wakakusa">ワカクサ
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="cyan">シアン
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="taupe">トープ
             <br>
-            <input type="radio" name="field_filter" onchange="filterField(this)" value="uno">ウノハナ
-            <input type="radio" name="field_filter" onchange="filterField(this)" value="rapiz">ラピス
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="uno">ウノハナ
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="rapiz">ラピス
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="gold">ゴールド
         </p>
 
         <!--ボタンはJavascriptで後から追加-->
@@ -49,22 +54,27 @@
                         <tr>
                             <td>9万～</td>
                             <td>4</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>208万～</td>
                             <td>5</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>463万～</td>
                             <td>6</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>834万～</td>
                             <td>7</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>1957万～</td>
                             <td>8</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
         
                     </tbody>
@@ -86,22 +96,27 @@
                         <tr>
                             <td>158万～</td>
                             <td>4</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>352万～</td>
                             <td>5</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>717万～</td>
                             <td>6</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>1349万～</td>
                             <td>7</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>3050万～</td>
                             <td>8</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
         
                     </tbody>
@@ -123,22 +138,27 @@
                         <tr>
                             <td>183万～</td>
                             <td>4</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>463万～</td>
                             <td>5</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>994万～</td>
                             <td>6</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>1957万～</td>
                             <td>7</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>4371万～</td>
                             <td>8</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
         
                     </tbody>
@@ -159,22 +179,27 @@
                         <tr>
                             <td>283万～</td>
                             <td>4</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>717万～</td>
                             <td>5</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>1547万～</td>
                             <td>6</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>2878万～</td>
                             <td>7</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>6570万～</td>
                             <td>8</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
         
                     </tbody>
@@ -196,22 +221,69 @@
                         <tr>
                             <td>316万～</td>
                             <td>4</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>774万～</td>
                             <td>5</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>1666万～</td>
                             <td>6</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>3050万～</td>
                             <td>7</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
                         <tr>
                             <td>6867万～</td>
                             <td>8</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
+                        </tr>
+        
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div id="gold">
+                ゴールド旧発電所<br>
+                <table class="table_sleep">
+                    <thead>
+                        <tr>
+                            <th>得点</th>
+                            <th>出現</th>
+                            <th>ボタン</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>606万～</td>
+                            <td>4</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
+                        </tr>
+                        <tr>
+                            <td>1437万～</td>
+                            <td>5</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
+                        </tr>
+                        <tr>
+                            <td>3050万～</td>
+                            <td>6</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
+                        </tr>
+                        <tr>
+                            <td>4994万～</td>
+                            <td>7</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
+                        </tr>
+                        <tr>
+                            <td>9740万～</td>
+                            <td>8</td>
+                            <td><button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button> </td>
                         </tr>
         
                     </tbody>
@@ -234,7 +306,7 @@
                     <tr>
                         <td>狙い値</td>
                         <td><input type="text" id="calc_target" class="calc_sleep_input" /></td>
-                        <td><button onclick="showRatioCalcResult();" class="smaller">計算</button></td>
+                        <td><button onclick="calc.showRatioCalcResult();" class="smaller">計算</button></td>
                     </tr>
     
                 </tbody>
@@ -254,310 +326,22 @@
             </table>
             <input id="import_text" type="text" />
             <br>
-            <button class="smaller" onclick="getSleepRecordsToClipboard();">情報をコピー</button>
-            <button class="smaller" onclick="setSleepRecordsFromTextBox();">インポート</button>
+            <button class="smaller" onclick="calc.getSleepRecordsToClipboard();">情報をコピー</button>
+            <button class="smaller" onclick="calc.setSleepRecordsFromTextBox();">インポート</button>
         </div>
           
 
         <!--以下、スクリプト-->
         <script>
-            //Initialize
-            const input_current = document.getElementById('current_power');
-            const input_target = document.getElementById('target_power');
-            const button_calc =  document.getElementById('button_calc');
-
-            button_calc.addEventListener("click", () =>{calc()});
-
-            addButtonIntoTr();
-
-
-            //関数宣言
-            function calc(){
-                let powerNum = Number(input_current.value.replace(/,/g, ""));
-                if (isNaN(powerNum) || powerNum == ""){
-                    alert("\"" + input_current.value + "\"" + "を数値に変換できません");
-                    return;
-                }
-
-                let targetNum = Number(input_target.value.replace(/,/g, ""));
-                if (isNaN(targetNum) || targetNum == ""){
-                    alert("\"" + input_target.value + "\"" + "を数値に変換できません");
-                    return;
-                }
-
-                let maxPower = powerNum * 100;
-                let powerPerMinute = maxPower / 510;
-                let sleepMinutes = Math.ceil(targetNum / powerPerMinute);
-
-                let hour = Math.floor(sleepMinutes / 60);
-                let minutes = Math.ceil(sleepMinutes % 60);
-                let finalScore = Math.floor((hour*60 + minutes) * powerPerMinute);
-
-                let resStr = "<span class=\"target_highlight\">時間: " + String(hour).padStart(2, "0") + ":" + String(minutes).padStart(2, "0") + "(" + finalScore.toLocaleString() + ")</span>";
-
-                let remain = (sleepMinutes > 510 || sleepMinutes < 0) ? 0 : 510 - sleepMinutes; 
-                if (sleepMinutes > 510){
-                    resStr += "<br><span class=\"result_alert\">8時間半を超えています</span>";
-                }
-                else if (sleepMinutes < 90){
-                    resStr += "<br><span class=\"result_alert\">1時間半未満です</span>";
-                }
-                else{
-                    let remHour = Math.floor(remain / 60);
-                    let remMinutes = Math.ceil(remain % 60);
-                    let remFinal = Math.floor((remHour*60 + remMinutes) * powerPerMinute);
-                    resStr += "<br>残り: " + String(remHour).padStart(2, "0") + ":" + String(remMinutes).padStart(2, "0") + "(" + remFinal.toLocaleString() + ")";
-                    resStr += "<br>元気 +" + Math.floor(sleepMinutes / 510 * 100);
-                }
-                document.getElementById('calc_result').innerHTML= resStr;
-                
-                setCookie("currentPower", powerNum.toString(), 30);
-                setCookie("targetPower", targetNum.toString(), 30);
-            }
             
-
-            function setTarget(button){
-                let row = button.parentElement.parentElement;
-                let num = Number(row.children[0].textContent.replace("万～", "0000")).toLocaleString();
-                input_target.value = num;
-                highlightRow(row);
-            }
-
-
-            function highlightRow(row){
-                let allRows = document.querySelectorAll('.table_sleep tr');
-                allRows.forEach((r)=>{
-                    r.classList.remove('target_highlight');
-                });
-                
-                row.classList.add('target_highlight');
-            }
-
-
-            function addButtonIntoTr(){
-                let allRows = document.querySelectorAll('.table_sleep tbody > tr');
-                allRows.forEach((r)=>{                    
-                    let b = document.createElement('button');
-                    b.textContent = "目標にセット";
-                    b.classList.add('button_set');
-                    b.setAttribute('onclick', 'setTarget(this)');
-                    let td = r.insertCell();
-                    td.appendChild(b);
-                });
-            }
-
-
-            function filterField(rb){
-                let el = document.getElementById(rb.value);
-                let tables = document.getElementById('field_tables').children;
-
-                for (let t of tables) {
-                    t.style.display = (t == el) ? "" : "none";
-                }
-
-                this.setCookie("myField", rb.value, 7);
-            }
-
-
-
-
-            //睡眠記録関連(初期化用)
-            function setSleepCalcRows(){
-                let calcTableEl = document.getElementById('calc_table');
-                let tbody = calcTableEl.tBodies[0];
-
-                for (let i = 1; i <= 30; i++){
-                    let r = tbody.insertRow();
-                    r.id = "calc_row_" + i;
-                    let c1 = r.insertCell();
-                    c1.textContent = i + "回前";
-
-                    let c2 = r.insertCell();
-                    c2.innerHTML = '<input type="text" class="calc_sleep_input" />';
-                    
-                    let c3 = r.insertCell();
-                    c3.innerHTML = '<button tabindex="-1" onclick="offsetCalcRowValue(false);" class="smaller">↓</button> <button tabindex="-1" onclick="offsetCalcRowValue(true);"  class="smaller">↑</button>'
-                }
-            }
-
-
-            //睡眠記録関連(ボタンで呼び出すもの)
-            function showRatioCalcResult(){
-                let targTb = document.getElementById('calc_target');
-                if (targTb.value == "") {
-                    this.showCurrentRatio();
-                    return;
-                }
-
-                this.recalcRatioOf(targTb);
-                let values = targTb.value.split('-').map(v => parseInt(v, 10));
-                let ratios = this.getCurrentRatio();
-                
-                let uto_diff  = Math.round((values[0] - ratios[0]) * 10) / 10;
-                let suya_diff = Math.round((values[1] - ratios[1]) * 10) / 10;
-                let gusu_diff = Math.round((values[2] - ratios[2]) * 10) / 10;
-                let diff_max = Math.max(uto_diff, suya_diff, gusu_diff);
-                let maxType = (diff_max == uto_diff)  ? "「うとうと」 になる可能性が高い"
-                             : (diff_max == suya_diff) ? "「すやすや」 になる可能性が高い"
-                                                        : "「ぐっすり」 になる可能性が高い";
-                let mes = values[0] + "(" + this.numberToSignedNumber(uto_diff) + ") - "
-                         + values[1] + "(" + this.numberToSignedNumber(suya_diff) + ") - "
-                          + values[2] + "(" + this.numberToSignedNumber(gusu_diff) + ")"
-                           + "\n" + maxType;  
-
-                this.setCookie("calcRecords", this.createRecords().join(","), 30);
-                alert(mes);
-            }
-
-
-            function showCurrentRatio(){
-                let x = this.getCurrentRatio();
-                this.setCookie("calcRecords", this.createRecords().join(","), 30);
-                alert(x[0] + "-" + x[1] + "-" + x[2]);
-            }
-
-
-            function numberToSignedNumber(num){
-                return (num >= 0) ? "+" + num : num.toString();
-            }
-
-
-            function offsetCalcRowValue(reverseMode){
-                let iStart = (reverseMode) ?  1 : 30;
-                let iEnd   = (reverseMode) ? 30 :  1;
-                let iStep  = (reverseMode) ? +1 : -1;
-
-                for (let i = iStart; i != iEnd; i += iStep){
-                    let row = document.getElementById('calc_row_'+ i);
-                    let prevRow = document.getElementById('calc_row_'+ (i + iStep));
-
-                    row.getElementsByTagName('input')[0].value = prevRow.getElementsByTagName('input')[0].value;      
-                }
-                
-                document.getElementById('calc_row_'+ iEnd).getElementsByTagName('input')[0].value = '';
-            }
-
-
-            function getSleepRecordsToClipboard(){
-                navigator.clipboard.writeText(this.createRecords().join(","));
-            }
-
-
-            function setSleepRecordsFromTextBox(){
-                let tb = document.getElementById('import_text');
-                this.setSleepRecords(tb.value);
-                tb.value = "";
-            }
-
-
-            function setSleepRecords(csvData){
-                let values = csvData.split(',');
-                if (values.length != 30){
-                    alert("30個のデータの場合のみ取り込めます。");
-                    return;
-                }
-
-                for (let i = 0; i < 30; i++){
-                    document.getElementById('calc_row_' + (i + 1)).getElementsByTagName('input')[0].value = values[i];
-                }
-            }    
-
-
-            //睡眠記録関連(その他)
-            function createRecords(){
-                this.recalcSleepRecords();
-                let values = [];
-                for (let i = 1; i <= 30; i++){
-                    let r = document.getElementById('calc_row_' + i);
-                    let tmp = r.getElementsByTagName('input')[0].value.replace(/[ _-]/g, "-");
-                    
-                    values.push(tmp);
-                }
-                return values;
-            }
-
-
-            function recalcSleepRecords(){
-                for (let i = 1; i <= 30; i++){
-                    let r = document.getElementById('calc_row_' + i);
-                    let tb = r.getElementsByTagName('input')[0];
-                    if (tb.value != "") this.recalcRatioOf(tb);
-                }
-            }
-
-
-            function recalcRatioOf(tb){           
-                let tmp = tb.value.replace(/[ _-]/g, "-");
-                let numbers = tmp.split('-').map(n => parseInt(n, 10));
-                let uto = numbers[0];
-                let suya = numbers[1];
-                let gusu = 100 - uto - suya;
-                if (gusu < 0) gusu = NaN;
-                tb.value = uto + "-" + suya + "-" + gusu;     
-            }
-
-
-            function getCurrentRatio(){
-                this.recalcSleepRecords();
-                let cnt  = 0;
-                let uto  = 0;
-                let suya = 0;
-                let gusu = 0;
-
-                for (let i = 1; i <= 30; i++){
-                    let r = document.getElementById('calc_row_' + (i));
-                    let tb = r.getElementsByTagName('input')[0];
-                    
-                    if (tb.value == ""){
-
-                    }
-                    else {
-                        let values = tb.value.split('-').map(v => parseInt(v, 10));
-                        uto  += values[0];
-                        suya += values[1];
-                        gusu += values[2];
-                        cnt++;
-                    }
-                }
-
-                uto  = Math.round((uto  / cnt) * 10) / 10;
-                suya = Math.round((suya / cnt) * 10) / 10;
-                gusu = Math.round((100 - uto - suya) * 10) / 10;
-
-                return [uto, suya, gusu];
-            }
-
-
-            //Cookie関連
-            function setCookie(key, value, days){
-                let expires = new Date();
-                expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-                document.cookie = `${key}=${value};expires=${expires.toUTCString()};path=/`;
-            }
-
-
-            function getCookie(key){
-                let keyEQ = key + "=";
-                return document.cookie.split(';')
-                        .map(a => a.trim())
-                         .find(c => c.startsWith(keyEQ))
-                          ?.substring(keyEQ.length) || null;
-            }
-
-            /* どっちや・・・？
-            function getCookie(name){
-                let cookies = document.cookie.split(';');
-                for (let i; i < cookies.length ; i++){
-                    if (cookie[i].indexOf(name) == 0){
-                        return cookie[i].split('=')[1];
-                    }
-                }
-                return null;
-            }
-            */
 
             //ロード時の処理
             window.onload = ()=>{
+                this.pokesleeping = new PokeSleeping();
+                this.calc = new PokeSleepingCalc();
+
+                this.calc.addInputRowsToTable();
+                
                 let field = this.getCookie("myField");
                 if (field != null){
                     let buttons = Array.from(document.getElementById('field_filter').children);
@@ -566,19 +350,19 @@
                 
                 let curPower = this.getCookie("currentPower");
                 if (curPower != null){
-                    input_current.value = curPower;
+                    this.pokesleeping.input_current.value = curPower;
                 }
                 
                 let target = this.getCookie("targetPower");
                 if (target != null){
-                    input_target.value = target;
+                    this.pokesleeping.input_target.value = target;
                 }
 
-                this.setSleepCalcRows();
                 let records = this.getCookie("calcRecords");
                 if (records != null){
-                    this.setSleepRecords(records);
+                    this.calc.setRecordsToInputBoxes(records);
                 }
+            
             }
         </script>
     </body>

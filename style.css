@@ -2,6 +2,118 @@ html {
     touch-action: manipulation;
 }
 
+
+#mypoke_list{
+    padding-bottom: 5em;
+}
+
+#page_link a{
+    display: inline-block;
+    height: 3em;
+    width: 3em;
+    margin-bottom: 1em;
+
+}
+
+#page_link img{
+    width: 3em;
+    height: auto;
+    margin: auto;
+    vertical-align: middle;
+}
+
+
+.current{
+    background-color: yellow;
+    font-weight: 700;
+    border: 1px dotted salmon;
+}
+
+#input_form{
+    background-color: #FFFFDD;
+}
+
+#input_option_buttons input,
+#input_color_buttons input,
+.input_subskill_buttons input{
+    display: none;
+}
+
+#input_option_buttons,
+#input_color_buttons,
+.input_subskill_buttons{
+    display: flex;
+}
+
+#input_option_buttons label,
+#input_color_buttons label,
+.input_subskill_buttons label{
+    background: #DDDDDD;
+    color: #666666;
+    padding: 1px;
+    margin: 3px;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#input_option_buttons input:checked+label{
+    background: #fca966;
+    color: #000000;
+}
+.input_subskill_buttons input:checked+label{
+    background: #60ffca;
+    color: #000000;
+}
+
+
+#input_color_buttons label{
+    background: #FFFFFF;
+}
+
+#input_color_buttons #color_pick_SB:checked + label {
+    background: #CCDDFF;
+    color: black;
+}
+#input_color_buttons #color_pick_RD:checked + label {
+    background: #FF6060;
+    color: black;
+}
+#input_color_buttons #color_pick_PK:checked + label {
+    background: #FFDDDD;
+    color: black;
+}
+#input_color_buttons #color_pick_OR:checked + label {
+    background: #FFBB77;
+    color: black;
+}
+#input_color_buttons #color_pick_GD:checked + label {
+    background: #FFFFCC;
+    color: black;
+}
+#input_color_buttons #color_pick_GR:checked + label {
+    background: #BBFFBB;
+    color: black;
+}
+
+#input_color_buttons #color_pick_BL:checked + label {
+    background: #77AAFF;
+    color: black;
+}
+#input_color_buttons #color_pick_SL:checked + label {
+    background: #DDDDDD;
+    color: black;
+}
+
+
+
+
+
+
+
+
+
+
 button{
     font-size: 1em;
 }
@@ -23,6 +135,11 @@ select{
 #select_food_cook{
     font-size: 1em;
 }
+
+.pokedex_list{
+    font-size: 0.75em;
+}
+
 
 /*Span*/
 span.indicator_text{
@@ -184,7 +301,12 @@ img.tiny{
 img.ex-tiny{
     width: 1.5em;
     height: auto;
+}
 
+img.disabled{
+    filter:grayscale(100%);
+    width: 1em;
+    height: auto;
 }
 
 img.normal{
@@ -199,11 +321,6 @@ img.field{
     max-width: 10em;
 }
 
-.current{
-    background-color: yellow;
-    color: red;
-    font-weight: 700;
-}
 
 .input_short{
     width: 12em;
