@@ -76,7 +76,7 @@ html {
     color: black;
 }
 #input_color_buttons #color_pick_RD:checked + label {
-    background: #FF6060;
+    background: #FFA0A0;
     color: black;
 }
 #input_color_buttons #color_pick_PK:checked + label {

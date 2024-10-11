@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.1.1</title>
+        <title>レポート(仮)v0.1.2</title>
 
     </head>
 
@@ -41,8 +41,10 @@
                 <img name="ワカクサコーン" src="img/food/ワカクサコーン.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
                 <img name="めざましコーヒー" src="img/food/めざましコーヒー.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
             </div>
+
             <input type="text" id="food_min" style="width:3em;" value="0">個以上
             <input type="checkbox" id="only_fully_evolved" checked="true">最終進化のみ(イワーク、ヤルキモノを除く)
+
             <div id="input_form">
                 <strong> Myポケモン登録フォームv2:</strong><br>
                 <select id="input_mypoke_name" style="width:10em; font-size:1em" onclick="initializePokeList()" onchange="setFoodImages(this)"></select>
@@ -53,6 +55,7 @@
                 <img id="input_mypoke_food_3" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
                 <br>
                 <select id="input_mypoke_char" style="width:15.5em; font-size:1em">
+                    <option value="">--せいかくを選択--</option>
                     <option value="寂">さみしがり (速↑元↓)</option>
                     <option value="い">いじっぱり (速↑食↓)</option>
                     <option value="や">やんちゃ (速↑ス↓)</option>
@@ -79,7 +82,8 @@
                     <option value="□">きまぐれ (無補正)</option>
                     <option value="□">まじめ (無補正)</option>
                 </select>
-                <button onclick="cherry()">🍒</button>
+
+                <button onclick="showBerryPower()">🍒</button>
 
                 <div class="input_subskill_buttons">
                     <input type="checkbox" id="input_mypoke_speedS"><label for="input_mypoke_speedS">おてスピS</label>
@@ -97,7 +101,7 @@
 
                 <div id="input_option_buttons">
                     <input type="checkbox" id="input_potential_30" checked><label for="input_potential_30">Lv30ポテ</label>
-                    <input type="checkbox" id="input_potential_60" checked><label for="input_potential_60">Lv60ポテ</label>
+                    <input type="checkbox" id="input_potential_60"><label for="input_potential_60">Lv60ポテ</label>
                 </div>
 
                 <div id="input_color_buttons">
@@ -133,7 +137,7 @@
 
             <div id="mypoke_list">
                 <strong>登録済みMyポケモン:</strong><br>
-                <select id="input_mypoke_registered" style="width:15em; font-size:1em; vertical-align: middle;">
+                <select id="input_mypoke_registered" style="width:15em; font-size:1em; vertical-align: middle;" size="10">
                 </select>
                 <button id="input_mypoke_delete" style="font-size:1em; vertical-align: middle;" onclick="deleteRegisteredMypoke()">削除</button>
             </div>
@@ -148,6 +152,24 @@
             const cookie_mypoke_max = 151;
 
             //berry機能つくろう
+            function showBerryPower(){
+                let json = this.createJsonFromInputForm2(this.document.getElementById('input_mypoke_name').value);
+                if (json == null) return;
+
+                let poke = pokedex.getPokemonByName(json.name);
+                let oteCount = Math.round(poke.getOtetsudaiCountDay(json.lv, json.speedCharAdj, json.speedSubAdj));                
+                let foodOteCount =  Math.round(oteCount *  (poke.foodRate * (1 + json.foodCharAdj + json.foodSubAdj)));
+                let berryOteCount = oteCount - foodOteCount;
+                let berryPower = pokedex.getBerryPowerOf(poke.berry, json.lv);
+                let berryPowerDay = Math.round(berryPower * poke.getBerryNum(json.subBerryS) * berryOteCount);
+
+                let mes = poke.name + " Lv" + json.lv
+                        + "\nきのみおてつだい: " + berryOteCount + "/" + oteCount
+                        + "\nきのみパワー: " + berryPower
+                        + "\n1日: " + berryPowerDay;
+
+                alert(mes);
+            }
 
                
             function registerMyPoke(){
@@ -212,6 +234,8 @@
                 j.lv = Number(this.document.getElementById('input_mypoke_lv').value);
                 j.foodCode = this.getMyPokeFoodCode();                
                 j.char = document.getElementById("input_mypoke_char").value;
+                if (j.char == "") return null;
+
                 j.subBerryS = document.getElementById("input_mypoke_berryS").checked;
                 j.subSpeedS = document.getElementById("input_mypoke_speedS").checked;
                 j.subSpeedM = document.getElementById("input_mypoke_speedM").checked;
@@ -226,35 +250,6 @@
                 return j;  
             }
 
-
-
-
-            function createJsonFromInputForm(name){
-                if (name == "") return null;
-                
-                let charList = document.getElementById("input_mypoke_char");
-                let json = JSON.parse(charList.children[charList.selectedIndex].value);
-
-                json.subSpeedAdj = (document.getElementById("input_mypoke_speedS").checked) ? 0.07 : 0;
-                json.subSpeedAdj += (document.getElementById("input_mypoke_speedM").checked) ? 0.14 : 0;
-                json.subFoodAdj = (document.getElementById("input_mypoke_foodS").checked) ? 0.18 : 0;
-                json.subFoodAdj += (document.getElementById("input_mypoke_foodM").checked) ? 0.36 : 0; 
-                json.subSpeedAdj = Math.round(json.subSpeedAdj * 100) / 100;
-                json.subFoodAdj = Math.round(json.subFoodAdj * 100) / 100;
-
-                json.characteristic = charList.children[charList.selectedIndex].getAttribute("characteristic");
-                json.identifier = "";
-                if (document.getElementById("input_mypoke_speedS").checked) json.identifier += ".";
-                if (document.getElementById("input_mypoke_speedM").checked) json.identifier += ":" ;
-                if (document.getElementById("input_mypoke_foodS").checked)  json.identifier += "f";
-                if (document.getElementById("input_mypoke_foodM").checked)  json.identifier += "F"; 
-
-                json.name = name;
-                json.lv = this.document.getElementById('input_mypoke_lv').value;
-                json.code = this.getMyPokeFoodCode();
-                json.color = document.querySelector("#input_color_buttons input:checked").value;
-                return json;
-            }
 
 
 
@@ -350,7 +345,7 @@
                     case 2: return "#DDDDDD"; break;
                     case 3: return "#FFDDDD"; break;                    
                     case 4: return "#FFBB77"; break;                    
-                    case 5: return "#FF6060"; break;
+                    case 5: return "#FFA0A0"; break;
                     case 6: return "#BBFFBB"; break;
                     case 7: return "#FFFFCC"; break;                    
                     default: return "#FF4444"
@@ -461,6 +456,9 @@
                 document.getElementById("input_mypoke_speedM").checked = false;
                 document.getElementById("input_mypoke_foodS").checked = false;
                 document.getElementById("input_mypoke_foodM").checked = false;
+                document.getElementById("input_mypoke_skillS").checked = false;
+                document.getElementById("input_mypoke_skillM").checked = false;
+                document.getElementById("input_mypoke_berryS").checked = false;
             }
 
 

@@ -286,6 +286,9 @@ class Pokemon{
         return 86400 / (adjSec * genkiAdj);
     }
 
+    getBerryNum(subBerryS = false){
+        return (this.specialty == "きのみ" ? 2 : 1) + (subBerryS ? 1 : 0);
+    }
 }
 
 
