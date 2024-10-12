@@ -7,7 +7,7 @@
         <script src="js/main.js"></script>
         <script src="js/pokeSleeping.js"></script>  
         <script src="js/pokeSleepingCalc.js"></script>
-        <title>睡眠計算v1.0.1</title>
+        <title>睡眠計算v1.0.1b</title>
     </head>
 
 
@@ -308,6 +308,10 @@
                         <td><input type="text" id="calc_target" class="calc_sleep_input" /></td>
                         <td><button onclick="calc.showRatioCalcResult();" class="smaller">計算</button></td>
                     </tr>
+                    <tr>
+                        <td>現在値</td>
+                        <td id ="calc_current_ratio" colspan="2"></td>
+                    </tr>
     
                 </tbody>
             </table>
@@ -361,6 +365,7 @@
                 let records = this.getCookie("calcRecords");
                 if (records != null){
                     this.calc.setRecordsToInputBoxesFromCookieValue(records);
+                    document.getElementById("calc_current_ratio").textContent = this.calc.getCurrentRatio().join("-");
                 }
             
             }
