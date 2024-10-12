@@ -16,9 +16,7 @@ class PokeCook{
         n += numToBit(this.getCurrentMaxIndex(), mask_recipe_max);
         n += numToBit(this.getMoreLessIndex(), mask_recipe_moreless);
         n += numToBit(this.getFoodListIndex(), mask_recipe_food);        
-        console.log(n.toString(16));
         setCookie("myrecipe", n.toString(16));
-        //document.querySelectorAll("#recipe_limit input")[1].checked = true;
     }
 
     getFoodListIndex(){
@@ -56,8 +54,8 @@ class PokeCook{
     setOptionsFromCookie(){
         let c = getCookie("myrecipe");
         if (c == null) return;
-        
-        let n = parseInt(str, 16);
+
+        let n = parseInt(c, 16);
         document.querySelectorAll("#current_recipe_type input")[bitToNum(n, mask_recipe_type_select)].checked = true;
         
         let tmp = bitToNum(n, mask_recipe_advanced);
@@ -195,8 +193,9 @@ class PokeCook{
                 r.style.display = (ingredients.includes(this.selectBox_food.value)) ? "" : "none";
             }
         }
+
+        this.setCookieValue();
         return;
-        
     }
 
 

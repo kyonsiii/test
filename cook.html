@@ -90,7 +90,8 @@
             window.onload = ()=>{
                 this.recipedb = new RecipeDB();
                 this.pokeCook = new PokeCook(this.recipedb.recipes);
-                this.pokeCook.setTableRows();                
+                this.pokeCook.setTableRows();  
+                this.pokeCook.setOptionsFromCookie();              
             }
         </script>
 
