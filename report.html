@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.1.3</title>
+        <title>レポート(仮)v0.1.4</title>
 
     </head>
 
@@ -148,10 +148,22 @@
                 <select id="input_mypoke_registered" style="width:15em; font-size:1em; vertical-align: middle;">
                 </select>
                 <button id="input_mypoke_delete" style="font-size:1em; vertical-align: middle;" onclick="deleteRegisteredMypoke()">削除</button>
-            </div>
-           
-        </p>
+                <div>
+                    <table id="mypoke_quick_check">
+                        <thead>
+                            <tr>
+                                <th style="width: 20em;">Myポケモン</th>
+                                <th style="width:  9em;">きのみパワー</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+  
 
 
 
@@ -164,19 +176,31 @@
                 let json = this.createJsonFromInputForm2(this.document.getElementById('input_mypoke_name').value);
                 if (json == null) return;
 
+                let res = this.createBerryPowerInfo(json);
+                alert(res.mes);
+            }
+
+
+
+
+            function createBerryPowerInfo(json){
+                berryInfoResult = {};
                 let poke = pokedex.getPokemonByName(json.name);
                 let oteCount = Math.round(poke.getOtetsudaiCountDay(json.lv, json.speedCharAdj, json.speedSubAdj));                
-                let foodOteCount =  Math.round(oteCount *  (poke.foodRate * (1 + json.foodCharAdj + json.foodSubAdj)));
+                let foodOteCount =  Math.round(oteCount * (poke.foodRate * (1 + json.foodCharAdj + json.foodSubAdj)));
                 let berryOteCount = oteCount - foodOteCount;
                 let berryPower = pokedex.getBerryPowerOf(poke.berry, json.lv);
                 let berryPowerDay = Math.round(berryPower * poke.getBerryNum(json.subBerryS) * berryOteCount);
-
-                let mes = poke.name + " Lv" + json.lv
-                        + "\nきのみおてつだい: " + berryOteCount + "/" + oteCount
-                        + "\nきのみパワー: " + berryPower
-                        + "\n1日: " + berryPowerDay;
-
-                alert(mes);
+                berryInfoResult.oteCount = oteCount;
+                berryInfoResult.foodOteCount = foodOteCount;
+                berryInfoResult.berryOteCount = berryOteCount;
+                berryInfoResult.berryPower = berryPower;
+                berryInfoResult.berryPowerDay = berryPowerDay;
+                berryInfoResult.mes =  poke.name + " Lv" + json.lv
+                                    + "\nきのみおてつだい: " + berryOteCount + "/" + oteCount
+                                    + "\nきのみパワー: " + berryPower
+                                    + "\n1日: " + berryPowerDay;
+                return berryInfoResult;
             }
 
                
@@ -191,7 +215,20 @@
                 if (res == false) return;
 
                 this.addMyPokeToList(this.createMyPokeOption(json));
+                this.listupMyPokeInfo(json);
                 this.setMyPokeCookie();
+            }
+
+
+            function listupMyPokeInfo(j){
+                let body = document.getElementById("mypoke_quick_check").tBodies[0];
+                let result = this.createBerryPowerInfo(j);
+
+                let tr = document.createElement("tr");
+                tr.insertCell().textContent = j.name + "Lv" + j.lv + j.foodCode + " " + getMyPokeIdentifier(j);
+                tr.insertCell().textContent = result.berryPowerDay + "(" + result.berryOteCount + "/" + result.oteCount + ")";
+                
+                body.appendChild(tr);
             }
 
 
@@ -223,14 +260,13 @@
             function addMyPokeToList(op){
                 let myList = document.getElementById("input_mypoke_registered");
                 if (myList.children.length >= cookie_mypoke_max){
-                    alert("Myポケモンは70体まで登録可能です。");
+                    alert("Myポケモンは" + cookie_mypoke_max + "体まで登録可能です。");
                     return false;
                 }
                 myList.appendChild(op);
                 return myList.children.length >= cookie_mypoke_max;
             }
             
-
 
             function createJsonFromInputForm2(name){
                 if (name == "") return null;       
@@ -289,6 +325,7 @@
                 for (let i = 0; i < options.length; i++){
                     let json = this.cookieValueToJson(options[i].value);
                     this.insertMyPokemon(json, food, document.getElementById("input_potential_30").checked, document.getElementById("input_potential_60").checked);
+                    this.listupMyPokeInfo(json);
                 }
             }
 
