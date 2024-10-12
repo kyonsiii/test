@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.1.4b</title>
+        <title>レポート(仮)v0.1.4c</title>
 
     </head>
 
@@ -225,10 +225,25 @@
                 let result = this.createBerryPowerInfo(j);
 
                 let tr = document.createElement("tr");
+                tr.setAttribute("value", result.berryPowerDay);
                 tr.insertCell().textContent = j.name + "Lv" + j.lv + j.foodCode + " " + getMyPokeIdentifier(j);
                 tr.insertCell().textContent = result.berryPowerDay + "(" + result.berryOteCount + "/" + result.oteCount + ")";
                 
-                body.appendChild(tr);
+                let rows = body.children;
+                if (rows.length == 0){
+                    body.appendChild(tr);
+                    return;
+                } else {                    
+                    for (let i = 0; i < rows.length; i++){
+                        let value = rows[i].getAttribute('value');
+                        if (value <= result.berryPowerDay){
+                            body.insertBefore(tr, rows[i])  ;
+                            return;;                      
+                        }
+                    }
+                    body.appendChild(tr);
+                }
+                
             }
 
 
