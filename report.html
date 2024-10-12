@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.1.4</title>
+        <title>レポート(仮)v0.1.4b</title>
 
     </head>
 
@@ -325,7 +325,6 @@
                 for (let i = 0; i < options.length; i++){
                     let json = this.cookieValueToJson(options[i].value);
                     this.insertMyPokemon(json, food, document.getElementById("input_potential_30").checked, document.getElementById("input_potential_60").checked);
-                    this.listupMyPokeInfo(json);
                 }
             }
 
@@ -432,7 +431,9 @@
 
                 let jss = cookieValueToJsonList(c);
                 if (jss == null) return;
+
                 for (let i = 0; i < jss.length; i++){
+                    this.listupMyPokeInfo(jss[i]);
                     let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));
                     if (maxFlag){
                         alert("限界");
