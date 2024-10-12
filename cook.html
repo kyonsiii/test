@@ -7,7 +7,7 @@
         <script src="js/main.js"></script>
         <script src="js/recipedb.js"></script>
         <script src="js/pokeCook.js"></script>
-        <title>料理v1.0.0</title>
+        <title>料理v1.0.1</title>
     </head>
 
 
@@ -19,28 +19,32 @@
             <a href = "./report.html"><img src="img/pages/report.png"></a>
         </div>
 
-        <p id="current_recipe_type">
-            レシピの種類:<br>
-            <input type="radio" name="recipe_type" onclick="pokeCook.setTarget(this, this)" value="all" checked="true">ALL
-            <input type="radio" name="recipe_type" onclick="pokeCook.setTarget(this, this)" value="カレー・シチュー">カレー・シチュー
-            <input type="radio" name="recipe_type" onclick="pokeCook.setTarget(this, this)" value="サラダ">サラダ
-            <input type="radio" name="recipe_type" onclick="pokeCook.setTarget(this, this)" value="デザート・ドリンク">デザート・ドリンク
+        <div id="recipe_filter">
+            <div id="current_recipe_type" class="select_button_area">             
+                <input type="radio" name="recipe_type" onclick="pokeCook.setTarget(this, this)" id="filter_all" value="all" checked><label for="filter_all">ALL</label>
+                <input type="radio" name="recipe_type" onclick="pokeCook.setTarget(this, this)" id="filter_cur" value="カレー・シチュー"><label for="filter_cur"><img src="img/recipe/curry.png"></label>
+                <input type="radio" name="recipe_type" onclick="pokeCook.setTarget(this, this)" id="filter_sal" value="サラダ"><label for="filter_sal"><img src="img/recipe/salad.png"></label>
+                <input type="radio" name="recipe_type" onclick="pokeCook.setTarget(this, this)" id="filter_des" value="デザート・ドリンク"><label for="filter_des"><img src="img/recipe/sweet.png"></label>               
+            </div>
             <br>
+            
+            <div id="current_advanced_filter">
+                <input type="checkbox" onchange="pokeCook.setTarget(this, null)" id="without_advanced" value="1">上位素材を除く
+                <input type="checkbox" onchange="pokeCook.setTarget(this, null)" id="only_advanced" value="2">上位素材使用のみ
+            </div>
 
-            <input type="checkbox" onchange="pokeCook.setTarget(this, null)" id="without_advanced">上位素材を除く
-            <input type="checkbox" onchange="pokeCook.setTarget(this, null)" id="only_advanced">上位素材使用のみ
-            <br>
+
             <div id="recipe_limit">
-                <input type="radio" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" value="9999" checked="true">制限なし
+                <input type="radio" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" value="9999" checked>制限なし
                 <input type="radio" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" value="30">30         
                 <input type="radio" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" value="40">40 
                 <input type="radio" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" value="57">57 
                 <input type="radio" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" value="63">63 
                 <input type="radio" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" value="69">69 
             </div>   
-            <div id="recipe_limit_type">
-                <input type="radio" name="recipe_limit_type" onchange="pokeCook.setTarget(this, null)" value="more" checked="true">以上
-                <input type="radio" name="recipe_limit_type" onchange="pokeCook.setTarget(this, null)" value="less">以下  
+            <div id="recipe_more_less">
+                <input type="radio" name="recipe_more_less" onchange="pokeCook.setTarget(this, null)" value="more" checked>以上
+                <input type="radio" name="recipe_more_less" onchange="pokeCook.setTarget(this, null)" value="less">以下  
             </div>
 
             <select id="select_food" onchange="pokeCook.setTarget(this, null)">
@@ -63,21 +67,11 @@
                 <option value="ワカクサコーン">ワカクサコーン</option>
                 <option value="ワカクサ大豆">ワカクサ大豆</option>
             </select>
-        </p>
+        </div>
 
 
-        <!--
-        <p id="filter_ingredient">
-            <select id="select_ingredient">
-                <option value = "----">----</option>
-                <option value = "モーモーミルク">モーモーミルク</option>
-            </select>
-        </p>
-        -->
-
-
-        <p>
-            <button onclick="pokeCook.showWeekendSchedule();">料理の材料一覧を表示</button>
+        <div>
+            <button onclick="pokeCook.showWeekendSchedule();">料理の材料一覧を表示</button>           
             <table id="weekend">
                 <tbody>
                 </tbody>
@@ -88,7 +82,7 @@
                 <tbody>
                 </tbody>
             </table>
-        </p>
+        </div>
 
 
         <!--以下、スクリプト-->

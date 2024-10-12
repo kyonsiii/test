@@ -1,5 +1,80 @@
+//クッキー用
+//          mask_template     = 0b0000000000000000;
+const mask_recipe_type_select = 0b1100000000000000;
+const mask_recipe_advanced    = 0b0011000000000000;
+const mask_recipe_max         = 0b0000111000000000; //インデックスで
+const mask_recipe_moreless    = 0b0000000100000000;
+const mask_recipe_food        = 0b0000000011111100;
+
 class PokeCook{
     //Initialize
+
+    setCookieValue(){
+        let n = 0;        
+        n += numToBit(this.getCurrentRecipeTypeNum(), mask_recipe_type_select);
+        n += numToBit(this.getAdvancedFoodSelectNum(), mask_recipe_advanced);
+        n += numToBit(this.getCurrentMaxIndex(), mask_recipe_max);
+        n += numToBit(this.getMoreLessIndex(), mask_recipe_moreless);
+        n += numToBit(this.getFoodListIndex(), mask_recipe_food);        
+        console.log(n.toString(16));
+        setCookie("myrecipe", n.toString(16));
+        //document.querySelectorAll("#recipe_limit input")[1].checked = true;
+    }
+
+    getFoodListIndex(){
+        return document.getElementById("select_food").selectedIndex;
+    }
+
+    getMoreLessIndex(){
+        return this.getIndexIn("#recipe_more_less input", "#recipe_more_less input:checked");
+    }
+
+    getCurrentMaxIndex(){
+        return this.getIndexIn("#recipe_limit input", "#recipe_limit input:checked");
+    }
+
+    getCurrentRecipeTypeNum(){    
+        return this.getIndexIn("#current_recipe_type input", "#current_recipe_type input:checked");
+    }
+
+    getIndexIn(areaSelector, targetSelector){
+        let area = document.querySelectorAll(areaSelector);
+        let target = document.querySelector(targetSelector);
+        return Array.from(area).indexOf(target);
+    }
+
+    getAdvancedFoodSelectNum(){
+        let advFoodCheck = document.querySelectorAll("#current_advanced_filter input:checked");
+        return (advFoodCheck.length == 0) ? 0 : advFoodCheck[0].value;
+    }
+
+
+
+
+
+
+    setOptionsFromCookie(){
+        let c = getCookie("myrecipe");
+        if (c == null) return;
+        
+        let n = parseInt(str, 16);
+        document.querySelectorAll("#current_recipe_type input")[bitToNum(n, mask_recipe_type_select)].checked = true;
+        
+        let tmp = bitToNum(n, mask_recipe_advanced);
+        if (tmp != 0){
+            console.log(tmp);
+            document.querySelectorAll("#current_advanced_filter input")[bitToNum(n, mask_recipe_advanced) - 1].checked = true;
+        }
+
+        document.querySelectorAll("#recipe_limit input")[bitToNum(n, mask_recipe_max)].checked = true;
+        document.querySelectorAll("#recipe_more_less input")[bitToNum(n, mask_recipe_moreless)].checked = true;
+        document.getElementById("select_food").selectedIndex = bitToNum(n, mask_recipe_food);
+        this.setTarget(null, null)        
+    }
+
+ 
+
+    
     constructor(recipes){
         this.recipes = recipes;
         this.recipe_table = document.getElementById('recipe_table');
@@ -101,7 +176,7 @@ class PokeCook{
 
 
         //なべの数のフィルター
-        let moreThanMode = this.getCheckedRadioButtonOf(document.getElementById('recipe_limit_type')).value == "more";
+        let moreThanMode = this.getCheckedRadioButtonOf(document.getElementById('recipe_more_less')).value == "more";
         visibleRows = visibleRows.filter(r => r.style.display == "");
         let nabeNum = this.getCheckedRadioButtonOf(document.getElementById('recipe_limit')).value;
         for (let r of visibleRows){

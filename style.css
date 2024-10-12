@@ -35,33 +35,40 @@ html {
 
 #input_option_buttons input,
 #input_color_buttons input,
-.input_subskill_buttons input{
+.select_button_area input{
     display: none;
 }
 
 #input_option_buttons,
 #input_color_buttons,
-.input_subskill_buttons{
+.select_button_area{
     display: flex;
 }
 
 #input_option_buttons label,
 #input_color_buttons label,
-.input_subskill_buttons label{
+.select_button_area label{
     background: #DDDDDD;
     color: #666666;
     padding: 1px;
     margin: 3px;
     text-align: center;
+    align-content: center;
     border-radius: 5px;
     cursor: pointer;
 }
+
+#current_recipe_type img{
+    width: 3em;
+    vertical-align: sub;
+}
+
 
 #input_option_buttons input:checked+label{
     background: #fca966;
     color: #000000;
 }
-.input_subskill_buttons input:checked+label{
+.select_button_area input:checked+label{
     background: #60ffca;
     color: #000000;
 }
@@ -293,6 +300,10 @@ table thead tr th {
     margin: 4px;
 }
 
+img.small{
+    width: 3em;
+    height: auto;   
+}
 img.tiny{
     width: 2em;
     height: auto;
