@@ -1,3 +1,6 @@
+const mask_left  = 0b1111111100000000;
+const mask_right = 0b0000000011111111;
+
 class PokeSleepingCalc{
     //WEBページで初期化時にcalcでインスタンスが作成されることを前提にしています。
     constructor(){
@@ -20,7 +23,8 @@ class PokeSleepingCalc{
             c2.innerHTML = '<input type="text" class="calc_sleep_input" />';
             
             let c3 = r.insertCell();
-            c3.innerHTML = '<button tabindex="-1" onclick="calc.offsetCalcRowValue(false);" class="smaller">↓</button> <button tabindex="-1" onclick="calc.offsetCalcRowValue(true);"  class="smaller">↑</button>'
+            c3.innerHTML = (i == 1) ? '<button tabindex="-1" onclick="calc.offsetCalcRowValue(false);" class="smaller">↓</button> <button tabindex="-1" onclick="calc.offsetCalcRowValue(true);"  class="smaller">↑</button>'
+                                     : "";
         }
     }
 
@@ -49,14 +53,14 @@ class PokeSleepingCalc{
                 + values[2] + "(" + this.numberToSignedNumber(gusu_diff) + ")"
                 + "\n" + maxType;  
 
-        setCookie("calcRecords", this.createRecords().join(","), 30);
+        setCookie("calcRecords", this.recordsToCookieValue(), 30);
         alert(mes);
     }
 
 
     showCurrentRatio(){
         let x = this.getCurrentRatio();
-        setCookie("calcRecords", this.createRecords().join(","), 30);
+        setCookie("calcRecords", this.recordsToCookieValue(), 30);
         alert(x[0] + "-" + x[1] + "-" + x[2]);
     }
 
@@ -89,12 +93,12 @@ class PokeSleepingCalc{
 
     setSleepRecordsFromTextBox(){
         let tb = document.getElementById('import_text');
-        this.setRecordsToInputBoxes(tb.value);
+        this.setHyphenJoinedCsvRecordsToInputBoxes(tb.value);
         tb.value = "";
     }
 
 
-    setRecordsToInputBoxes(csvData){
+    setHyphenJoinedCsvRecordsToInputBoxes(csvData){
         let values = csvData.split(',');
         if (values.length != 30){
             alert("30個のデータの場合のみ取り込めます。");
@@ -104,8 +108,36 @@ class PokeSleepingCalc{
         for (let i = 0; i < 30; i++){
             document.getElementById('calc_row_' + (i + 1)).getElementsByTagName('input')[0].value = values[i];
         }
-    }    
+    }
 
+
+    setRecordsToInputBoxesFromCookieValue(c){
+        let recordNums = c.split(",").map(s => parseInt(s, 16)).map(n => [bitToNum(n, mask_left), bitToNum(n, mask_right)]);
+        let hypenJointedCsvRecords = recordNums.map(n => n[0] + "-" + n[1] + "-" + (100 - n[0] - n[1])).join(",");
+        this.setHyphenJoinedCsvRecordsToInputBoxes(hypenJointedCsvRecords);
+    }
+
+          
+    recordsToCookieValue(){
+        let records = this.createRecords();
+        let tmpCookie = [];
+        for (let i = 0; i < records.length; i++){
+            if (records[i] == ""){
+                tmpCookie.push("0");
+            }
+            else{
+                let nums = records[i].split("-").map(n => Number(n));
+                let n = numToBit(nums[0], mask_left);
+                n += numToBit(nums[1], mask_right);
+                tmpCookie.push(n.toString(16));
+            }
+        }
+        return tmpCookie.join(",");
+    }
+
+
+
+    
 
     //睡眠記録関連(その他)
     createRecords(){
