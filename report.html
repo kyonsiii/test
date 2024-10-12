@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.1.2bb</title>
+        <title>レポート(仮)v0.1.3</title>
 
     </head>
 
@@ -131,6 +131,14 @@
 
             <div id="result">
                 <table id="result_table">
+                    <thead>
+                        <tr>
+                            <th>ポケモン</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
 
                 </table>
             </div>
@@ -262,7 +270,7 @@
                 let min = document.getElementById('food_min').value;
                 let onlyFullyEvolved = document.getElementById('only_fully_evolved').checked;
                 let t = document.getElementById('result_table');
-                t.innerHTML = "";
+                t.querySelectorAll("tbody").forEach(b => b.remove());
                 t.appendChild(this.pokeReport.createReport(foodName, min, onlyFullyEvolved));
                 
                 this.insertRegisteredMyPokemons(foodName);

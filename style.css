@@ -167,22 +167,30 @@ span.indicator_text{
     width: 9em;
 }
 #result_table th:not(:first-child){
-    width: 3em;
+    width: 2.5em;
 }
 #result_table td:not(:first-child) strong, #result_table td:not(:first-child) span{
     position: absolute;
     bottom: 0;
     left: 1em;
-    color: #f7ffd2;
+    color: black;
     text-shadow: 
-       1px  1px 1px #003366,
-      -1px  1px 1px #003366,
-       1px -1px 1px #003366,
-      -1px -1px 1px #003366,
-       1px  0px 1px #003366,
-       0px  1px 1px #003366,
-      -1px  0px 1px #003366,
-       0px -1px 1px #003366
+       1px  1px 1px #FFFFFF,
+      -1px  1px 1px #FFFFFF,
+       1px -1px 1px #FFFFFF,
+      -1px -1px 1px #FFFFFF,
+       1px  0px 1px #FFFFFF,
+       0px  1px 1px #FFFFFF,
+      -1px  0px 1px #FFFFFF,
+       0px -1px 1px #FFFFFF,
+       2px  2px 1px #FFFFFF,
+      -2px  2px 1px #FFFFFF,
+       2px -2px 1px #FFFFFF,
+      -2px -2px 1px #FFFFFF,
+       2px  0px 1px #FFFFFF,
+       0px  2px 1px #FFFFFF,
+      -2px  0px 1px #FFFFFF,
+       0px -2px 1px #FFFFFF; 
     ;
 }
 

@@ -269,8 +269,7 @@
                 let foodName = el.name;
                 let min = document.getElementById('food_min').value;
                 let onlyFullyEvolved = document.getElementById('only_fully_evolved').checked;
-                let t = document.getElementById('result_table');
-                
+                let t = document.getElementById('result_table');                
                 t.querySelectorAll("tbody").forEach(b => b.remove());
                 t.appendChild(this.pokeReport.createReport(foodName, min, onlyFullyEvolved));
                 
