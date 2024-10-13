@@ -30,7 +30,7 @@ class PokeReport{
     }
 
 
-    createReport(foodName, min = 0, onlyFullyEvolved = false){
+    createReport(foodName, min = 0, onlyFullyEvolved = false, showLv30 = true, showLv60 = true){
         if (!this.combinationsInitialized){
             alert("食べ物組み合わせが生成されていません。初期化をしてから実行してください。")
             return null;
@@ -45,7 +45,7 @@ class PokeReport{
         for (let i = 0; i < targetPokemons.length; i++){
             let p = targetPokemons[i]
             p.foodCombinations.forEach(c => {
-                if (c.contains(foodName, min)){
+                if (c.contains(foodName, min) && (c.lv != 30 || showLv30) && (c.lv != 60 || showLv60)){
                     pokeAndComb.push({poke: p, comb: c});
                 }                
             });

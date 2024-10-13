@@ -31,6 +31,7 @@ html {
 
 #input_form{
     background-color: #FFFFDD;
+    margin-bottom: 1em;
 }
 
 #input_option_buttons input,
@@ -43,6 +44,7 @@ html {
 #input_color_buttons,
 .select_button_area{
     display: flex;
+    align-items: center;
 }
 
 #input_option_buttons label,

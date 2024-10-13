@@ -365,21 +365,22 @@ class FoodCombination{
     setCombinationResultTo(row, targetFoodName){
         for (let i = 0; i < 3; i++){
             if (this.foods[i].name == targetFoodName){
-                row.appendChild(this.getResultCell(i, true));
+                row.appendChild(this.getResultCell(i));
                 break;
             }
         }
 
         for (let i = 0; i < 3; i++){
             if (i >= this.foods.length) {  
-                row.appendChild(this.getResultCell(i, false));
+                row.appendChild(this.getResultCell(i));
             } else if (this.foods[i].name != targetFoodName){
-                row.appendChild(this.getResultCell(i, false));
+                row.appendChild(this.getResultCell(i));
             }
         }
     }
-
-    getResultCell(index, isTarget = false){
+    
+    
+    getResultCell(index){
         let c = document.createElement("td");
         if (index >= this.foods.length){
             c.setAttribute('value', 0);
@@ -391,13 +392,7 @@ class FoodCombination{
         img.src = "img/food/" + this.foods[index].name + ".png";        
         c.appendChild(img);
 
-        let numEl;
-        if (isTarget){
-            numEl = document.createElement('strong');
-        }
-        else{
-            numEl = document.createElement('span');
-        }
+        let numEl = document.createElement('strong');
         numEl.textContent = this.foods[index].expection;
         c.appendChild(numEl);
         c.setAttribute('name', this.foods[index].name);

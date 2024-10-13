@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.1.4c</title>
+        <title>レポート(仮)v0.1.5</title>
 
     </head>
 
@@ -22,147 +22,242 @@
             <a href = "./report.html" class ="current"><img src="img/pages/report.png"></a>
         </div>
 
-            <div id="food_buttons">
-                <img name="とくせんリンゴ" src="img/food/とくせんリンゴ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="モーモーミルク" src="img/food/モーモーミルク.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="ワカクサ大豆" src="img/food/ワカクサ大豆.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="あまいミツ" src="img/food/あまいミツ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="マメミート" src="img/food/マメミート.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="あったかジンジャー" src="img/food/あったかジンジャー.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="あんみんトマト" src="img/food/あんみんトマト.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="とくせんエッグ" src="img/food/とくせんエッグ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="ピュアなオイル" src="img/food/ピュアなオイル.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="ほっこりポテト" src="img/food/ほっこりポテト.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="げきからハーブ" src="img/food/げきからハーブ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="リラックスカカオ" src="img/food/リラックスカカオ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="あじわいキノコ" src="img/food/あじわいキノコ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="ふといながねぎ" src="img/food/ふといながねぎ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="おいしいシッポ" src="img/food/おいしいシッポ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="ワカクサコーン" src="img/food/ワカクサコーン.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-                <img name="めざましコーヒー" src="img/food/めざましコーヒー.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+        <div id="input_form">
+            <strong> Myポケモン登録フォームv2:</strong><br>
+            <select id="input_mypoke_name" style="width:10em; font-size:1em" onclick="initializePokeList()" onchange="setFoodImages(this)"></select>
+            Lv<select id="input_mypoke_lv" style="width:4em; font-size:1em" onclick="initializePokeList()"></select>
+
+            <img id="input_mypoke_food_1" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
+            <img id="input_mypoke_food_2" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
+            <img id="input_mypoke_food_3" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
+            <br>
+            <select id="input_mypoke_char" style="width:15.5em; font-size:1em">
+                <option value="">--せいかくを選択--</option>
+                <option value="寂">さみしがり (速↑元↓)</option>
+                <option value="い">いじっぱり (速↑食↓)</option>
+                <option value="や">やんちゃ (速↑ス↓)</option>
+                <option value="勇">ゆうかん (速↑E↓)</option>
+                <option value="ず">ずぶとい (元↑速↓)</option>
+                <option value="わ">わんぱく (元↑食↓)</option>
+                <option value="能">のうてんき (元↑ス↓)</option>
+                <option value="の">のんき (元↑E↓)</option>
+                <option value="ひ">ひかえめ (食↑速↓)</option>
+                <option value="お">おっとり (食↑元↓)</option>
+                <option value="う">うっかりや (食↑ス↓)</option>
+                <option value="冷">れいせい (食↑E↓)</option>
+                <option value="穏">おだやか (ス↑速↓)</option>
+                <option value="大">おとなしい (ス↑元↓)</option>
+                <option value="慎">しんちょう (ス↑食↓)</option>
+                <option value="な">なまいき (ス↑E↓)</option>
+                <option value="臆">おくびょう (E↑速↓)</option>
+                <option value="せ">せっかち (E↑元↓)</option>
+                <option value="陽">ようき (E↑食↓)</option>
+                <option value="む">むじゃき (E↑ス↓)</option>
+                <option value="□">がんばりや (無補正)</option>
+                <option value="□">すなお (無補正)</option>
+                <option value="□">てれや (無補正)</option>
+                <option value="□">きまぐれ (無補正)</option>
+                <option value="□">まじめ (無補正)</option>
+            </select>
+
+            <button onclick="showBerryPower()">🍒</button>
+
+            <div class="select_button_area">
+                <input type="checkbox" id="input_mypoke_speedS"><label for="input_mypoke_speedS">おてスピS</label>
+                <input type="checkbox" id="input_mypoke_speedM"><label for="input_mypoke_speedM">おてスピM</label>
+                <input type="checkbox" id="input_mypoke_foodS"><label for="input_mypoke_foodS">食材S</label>
+                <input type="checkbox" id="input_mypoke_foodM"><label for="input_mypoke_foodM">食材M</label>
             </div>
 
-            <input type="text" id="food_min" style="width:3em;" value="0">個以上
-            <input type="checkbox" id="only_fully_evolved" checked="true">最終進化のみ(イワーク、ヤルキモノを除く)
+            <div class="select_button_area">
+                <input type="checkbox" id="input_mypoke_skillS"><label for="input_mypoke_skillS">スキルS</label>
+                <input type="checkbox" id="input_mypoke_skillM"><label for="input_mypoke_skillM">スキルM</label>
+                <input type="checkbox" id="input_mypoke_berryS"><label for="input_mypoke_berryS">きのみS</label>
+            </div>
 
-            <div id="input_form">
-                <strong> Myポケモン登録フォームv2:</strong><br>
-                <select id="input_mypoke_name" style="width:10em; font-size:1em" onclick="initializePokeList()" onchange="setFoodImages(this)"></select>
-                Lv<select id="input_mypoke_lv" style="width:4em; font-size:1em" onclick="initializePokeList()"></select>
+            <div id="input_color_buttons">
+                <input type="radio" name="color_picker" value="0" id="color_pick_SB" checked><label for="color_pick_SB">□</label>
+                <input type="radio" name="color_picker" value="1" id="color_pick_BL"><label for="color_pick_BL">□</label>  
+                <input type="radio" name="color_picker" value="2" id="color_pick_SL"><label for="color_pick_SL">□</label>
+                <input type="radio" name="color_picker" value="3" id="color_pick_PK"><label for="color_pick_PK">□</label>
+                <input type="radio" name="color_picker" value="4" id="color_pick_OR"><label for="color_pick_OR">□</label>
+                <input type="radio" name="color_picker" value="5" id="color_pick_RD"><label for="color_pick_RD">□</label>
+                <input type="radio" name="color_picker" value="6" id="color_pick_GR"><label for="color_pick_GR">□</label>                   
+                <input type="radio" name="color_picker" value="7" id="color_pick_GD"><label for="color_pick_GD">□</label>                    
+            </div>
 
-                <img id="input_mypoke_food_1" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
-                <img id="input_mypoke_food_2" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
-                <img id="input_mypoke_food_3" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
-                <br>
-                <select id="input_mypoke_char" style="width:15.5em; font-size:1em">
-                    <option value="">--せいかくを選択--</option>
-                    <option value="寂">さみしがり (速↑元↓)</option>
-                    <option value="い">いじっぱり (速↑食↓)</option>
-                    <option value="や">やんちゃ (速↑ス↓)</option>
-                    <option value="勇">ゆうかん (速↑E↓)</option>
-                    <option value="ず">ずぶとい (元↑速↓)</option>
-                    <option value="わ">わんぱく (元↑食↓)</option>
-                    <option value="能">のうてんき (元↑ス↓)</option>
-                    <option value="の">のんき (元↑E↓)</option>
-                    <option value="ひ">ひかえめ (食↑速↓)</option>
-                    <option value="お">おっとり (食↑元↓)</option>
-                    <option value="う">うっかりや (食↑ス↓)</option>
-                    <option value="冷">れいせい (食↑E↓)</option>
-                    <option value="穏">おだやか (ス↑速↓)</option>
-                    <option value="大">おとなしい (ス↑元↓)</option>
-                    <option value="慎">しんちょう (ス↑食↓)</option>
-                    <option value="な">なまいき (ス↑E↓)</option>
-                    <option value="臆">おくびょう (E↑速↓)</option>
-                    <option value="せ">せっかち (E↑元↓)</option>
-                    <option value="陽">ようき (E↑食↓)</option>
-                    <option value="む">むじゃき (E↑ス↓)</option>
-                    <option value="□">がんばりや (無補正)</option>
-                    <option value="□">すなお (無補正)</option>
-                    <option value="□">てれや (無補正)</option>
-                    <option value="□">きまぐれ (無補正)</option>
-                    <option value="□">まじめ (無補正)</option>
+            <button id="input_mypoke_register" style="font-size:1em; vertical-align: middle;" onclick="registerMyPoke();">Myポケモンに追加</button> 
+            <button id="input_mypoke_reset" style="font-size:1em; vertical-align: middle;" onclick="resetInputForm();">リセット</button>            
+        </div>
+
+
+
+        <div id="input_filter_option">
+            <div class="select_button_area">
+                <input type="checkbox" id="option_poke_30" checked><label for="option_poke_30">Lv30を表示</label>
+                <input type="checkbox" id="option_poke_60" checked><label for="option_poke_60">Lv60を表示</label>
+            </div>
+
+            <div class="select_button_area">
+                <input type="checkbox" onclick="clickMyPokeVisible(this);" id="option_mypoke_visible" checked><label for="option_mypoke_visible">Myポケ表示</label>
+                <input type="checkbox" onclick="clickMyPokeVisible(this);" id="option_potential_30" checked><label for="option_potential_30">Lv30予定</label>
+                <input type="checkbox" onclick="clickMyPokeVisible(this);" id="option_potential_60"><label for="option_potential_60">Lv60予定</label>                
+            </div>
+
+            <div class="select_button_area">
+                <input type="checkbox" id="only_fully_evolved" checked="true"><label for="only_fully_evolved">最終進化のみ</label>
+           
+                食材数:
+                <select id="food_min2" style="width:8em; font-size:1em">
+                    <option value=  "0">0個以上</option>
+                    <option value= "10">10個以上</option>
+                    <option value= "20">20個以上</option>
+                    <option value= "30">30個以上</option>
+                    <option value= "40">40個以上</option>
+                    <option value= "50">50個以上</option>
+                    <option value= "60">60個以上</option>
+                    <option value= "70">70個以上</option>
+                    <option value= "80">80個以上</option>
+                    <option value= "90">90個以上</option>
+                    <option value="100">100個以上</option>
                 </select>
-
-                <button onclick="showBerryPower()">🍒</button>
-
-                <div class="select_button_area">
-                    <input type="checkbox" id="input_mypoke_speedS"><label for="input_mypoke_speedS">おてスピS</label>
-                    <input type="checkbox" id="input_mypoke_speedM"><label for="input_mypoke_speedM">おてスピM</label>
-                    <input type="checkbox" id="input_mypoke_foodS"><label for="input_mypoke_foodS">食材S</label>
-                    <input type="checkbox" id="input_mypoke_foodM"><label for="input_mypoke_foodM">食材M</label>
-
-                </div>
-
-                <div class="select_button_area">
-                    <input type="checkbox" id="input_mypoke_skillS"><label for="input_mypoke_skillS">スキルS</label>
-                    <input type="checkbox" id="input_mypoke_skillM"><label for="input_mypoke_skillM">スキルM</label>
-                    <input type="checkbox" id="input_mypoke_berryS"><label for="input_mypoke_berryS">きのみS</label>
-                </div>
-
-                <div id="input_option_buttons">
-                    <input type="checkbox" id="input_potential_30" checked><label for="input_potential_30">Lv30ポテ</label>
-                    <input type="checkbox" id="input_potential_60"><label for="input_potential_60">Lv60ポテ</label>
-                </div>
-
-                <div id="input_color_buttons">
-                    <input type="radio" name="color_picker" value="0" id="color_pick_SB" checked><label for="color_pick_SB">□</label>
-                    <input type="radio" name="color_picker" value="1" id="color_pick_BL"><label for="color_pick_BL">□</label>  
-                    <input type="radio" name="color_picker" value="2" id="color_pick_SL"><label for="color_pick_SL">□</label>
-                    <input type="radio" name="color_picker" value="3" id="color_pick_PK"><label for="color_pick_PK">□</label>
-                    <input type="radio" name="color_picker" value="4" id="color_pick_OR"><label for="color_pick_OR">□</label>
-                    <input type="radio" name="color_picker" value="5" id="color_pick_RD"><label for="color_pick_RD">□</label>
-                    <input type="radio" name="color_picker" value="6" id="color_pick_GR"><label for="color_pick_GR">□</label>                   
-                    <input type="radio" name="color_picker" value="7" id="color_pick_GD"><label for="color_pick_GD">□</label>                    
-                </div>
-
-                <button id="input_mypoke_register" style="font-size:1em; vertical-align: middle;" onclick="registerMyPoke();">Myポケモンに追加</button> 
-                <button id="input_mypoke_reset" style="font-size:1em; vertical-align: middle;" onclick="resetInputForm();">リセット</button>            
             </div>
 
+        </div>
+    
+        <div id="food_buttons">
+            <img name="とくせんリンゴ" src="img/food/とくせんリンゴ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="モーモーミルク" src="img/food/モーモーミルク.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="ワカクサ大豆" src="img/food/ワカクサ大豆.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="あまいミツ" src="img/food/あまいミツ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="マメミート" src="img/food/マメミート.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="あったかジンジャー" src="img/food/あったかジンジャー.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="あんみんトマト" src="img/food/あんみんトマト.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="とくせんエッグ" src="img/food/とくせんエッグ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="ピュアなオイル" src="img/food/ピュアなオイル.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="ほっこりポテト" src="img/food/ほっこりポテト.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="げきからハーブ" src="img/food/げきからハーブ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="リラックスカカオ" src="img/food/リラックスカカオ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="あじわいキノコ" src="img/food/あじわいキノコ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="ふといながねぎ" src="img/food/ふといながねぎ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="おいしいシッポ" src="img/food/おいしいシッポ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="ワカクサコーン" src="img/food/ワカクサコーン.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="めざましコーヒー" src="img/food/めざましコーヒー.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+        </div>
 
-            <div id="result">
-                <table id="result_table">
+
+
+        <div id="result">
+            <table id="result_table">
+                <thead>
+                    <tr>
+                        <th>ポケモン</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+
+
+        <div id="mypoke_list">
+            <strong>登録済みMyポケモン:</strong><br>
+            <select id="input_mypoke_registered" style="width:15em; font-size:1em; vertical-align: middle;">
+            </select>
+            <button id="input_mypoke_delete" style="font-size:1em; vertical-align: middle;" onclick="deleteRegisteredMypoke()">削除</button>
+            <div>
+                <table id="mypoke_quick_check">
                     <thead>
                         <tr>
-                            <th>ポケモン</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th style="width: 20em;">Myポケモン</th>
+                            <th style="width:  9em;">きのみパワー</th>
                         </tr>
                     </thead>
+                    <tbody>
+
+                    </tbody>
 
                 </table>
             </div>
+        </div>
 
 
-            <div id="mypoke_list">
-                <strong>登録済みMyポケモン:</strong><br>
-                <select id="input_mypoke_registered" style="width:15em; font-size:1em; vertical-align: middle;">
-                </select>
-                <button id="input_mypoke_delete" style="font-size:1em; vertical-align: middle;" onclick="deleteRegisteredMypoke()">削除</button>
-                <div>
-                    <table id="mypoke_quick_check">
-                        <thead>
-                            <tr>
-                                <th style="width: 20em;">Myポケモン</th>
-                                <th style="width:  9em;">きのみパワー</th>
-                            </tr>
-                        </thead>
-                        <tbody>
 
-                        </tbody>
 
-                    </table>
-                </div>
-            </div>
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         <!--以下、スクリプト-->
         <script>
             const cookie_mypoke_max = 151;
+            let lastClickedFoodIconElement;
 
-            //berry機能つくろう
+
+            function clickMyPokeVisible(el){
+                let opVisible = document.getElementById("option_mypoke_visible");
+                let op30 = document.getElementById("option_potential_30");
+                let op60 = document.getElementById("option_potential_60");
+
+                if ((el == opVisible) && !opVisible.checked){
+                    op30.checked = false;
+                    op60.checked = false                   
+                }
+                else if (!opVisible.checked && el.checked){
+                    opVisible.checked = true;
+                }
+            }
+
+
+            //実際のレポートはここから作られる。食材ボタンで実行される
+            function addReportOf(el = null){
+                if (el == null) el = this.lastClickedFoodIconElement;
+                if (el == null && this.lastClickedFoodIconElement == null) return;
+
+                this.lastClickedFoodIconElement = el;
+
+                let foodName = el.name;
+                let min = document.getElementById('food_min2').value;
+                let onlyFullyEvolved = document.getElementById('only_fully_evolved').checked;
+                let showLv30 = document.getElementById("option_poke_30").checked;
+                let showLv60 = document.getElementById("option_poke_60").checked;
+
+                let t = document.getElementById('result_table');
+                t.querySelectorAll("tbody").forEach(b => b.remove());
+                t.appendChild(this.pokeReport.createReport(foodName, min, onlyFullyEvolved, showLv30, showLv60));
+                
+                this.insertRegisteredMyPokemons(foodName);
+
+                let json = this.createJsonFromInputForm2(this.document.getElementById('input_mypoke_name').value);
+                if (json == null) return;            
+                json.backgroundColor = 7;
+                this.insertMyPokemon(json, foodName, document.getElementById("option_potential_30").checked, document.getElementById("option_potential_60").checked);
+            }
+
+
             function showBerryPower(){
                 let json = this.createJsonFromInputForm2(this.document.getElementById('input_mypoke_name').value);
                 if (json == null) return;
@@ -207,6 +302,7 @@
                 this.addMyPokeToList(this.createMyPokeOption(json));
                 this.listupMyPokeInfo(json);
                 this.setMyPokeCookie();
+                this.resetInputForm();
             }
 
 
@@ -305,31 +401,17 @@
 
 
     
-            //実際のレポートはここから作られる
-            function addReportOf(el){
-                let foodName = el.name;
-                let min = document.getElementById('food_min').value;
-                let onlyFullyEvolved = document.getElementById('only_fully_evolved').checked;
-                let t = document.getElementById('result_table');
-                t.querySelectorAll("tbody").forEach(b => b.remove());
-                t.appendChild(this.pokeReport.createReport(foodName, min, onlyFullyEvolved));
-                
-                this.insertRegisteredMyPokemons(foodName);
-                
-                let json = this.createJsonFromInputForm2(this.document.getElementById('input_mypoke_name').value);
-                if (json == null) return;            
-                json.backgroundColor = 7;
-                this.insertMyPokemon(json, foodName, document.getElementById("input_potential_30").checked, document.getElementById("input_potential_60").checked);
-            }
+
 
 
             //Myポケモン関連
             function insertRegisteredMyPokemons(food){
+                if (!document.getElementById("option_mypoke_visible").checked) return;
                 let options = document.getElementById("input_mypoke_registered").children;
 
                 for (let i = 0; i < options.length; i++){
                     let json = this.cookieValueToJson(options[i].value);
-                    this.insertMyPokemon(json, food, document.getElementById("input_potential_30").checked, document.getElementById("input_potential_60").checked);
+                    this.insertMyPokemon(json, food, document.getElementById("option_potential_30").checked, document.getElementById("option_potential_60").checked);
                 }
             }
 
