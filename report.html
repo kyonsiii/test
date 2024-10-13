@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.2.1</title>
+        <title>レポート(仮)v0.2.1a</title>
 
     </head>
 
@@ -263,7 +263,7 @@
                 if (json == null) return;            
                 json.backgroundColor = 7;
                 //this.insertMyPokemon(json, foodName, document.getElementById("option_potential_30").checked, document.getElementById("option_potential_60").checked);
-                this.insertMyPokemons({json}, foodName, min);
+                this.insertMyPokemons([json], foodName, min);
             }
 
 
@@ -449,7 +449,7 @@
 
 
             function insertMyPokemons(jsonList, food, min){
-                pokeReport.RRRRR_insertMyPokeListInto(
+                pokeReport.insertMyPokeListInto(
                     document.getElementById('result_table').tBodies[0],
                     jsonList,
                     food,

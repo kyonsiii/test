@@ -60,10 +60,12 @@ class PokeReport{
 
 
     //tbのresult_tableはsetResultOfされた時に追加されるので、ない時もあるかも
-    RRRRR_insertMyPokeListInto(tbody, jsonList, foodName, foodMin, showPotential30, showPotential60){
+    insertMyPokeListInto(tbody, jsonList, foodName, foodMin, showPotential30, showPotential60){
+        console.log(jsonList.length);
         for (let i = 0; i < jsonList.length; i++){
             let json = jsonList[i];
             let poke = this.pokedex.getPokemonByName(json.name);
+
             if (!poke.containsFood(foodName)) continue;//そもそも食材含んでなかったら処理いらない
 
             if (json.lv < 30 && showPotential30){
