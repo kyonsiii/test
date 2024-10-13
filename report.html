@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.2.0</title>
+        <title>レポート(仮)v0.2.0a</title>
 
     </head>
 
@@ -633,7 +633,7 @@
                 let pokeList = document.getElementById('input_mypoke_name');
                 pokeList.selectedIndex = iName;
                 pokeList.setAttribute("src", sSrc);
-                pokeList.style.backgroundColor = (edidMode) ? "#FF8899" : "#FFFFFF";
+                pokeList.style.backgroundColor = (edidMode) ? "#FF8899" : "";
                 
                 document.getElementById('input_mypoke_lv').selectedIndex = nLv - 1;
                 document.getElementById("input_mypoke_char").selectedIndex = iChar;
