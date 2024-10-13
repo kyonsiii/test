@@ -109,7 +109,7 @@
                 <input type="checkbox" id="only_fully_evolved" checked="true"><label for="only_fully_evolved">最終進化のみ</label>
            
                 食材数:
-                <select id="food_min2" style="width:8em; font-size:1em">
+                <select id="food_min" style="width:8em; font-size:1em">
                     <option value=  "0">0個以上</option>
                     <option value= "10">10個以上</option>
                     <option value= "20">20個以上</option>
@@ -127,23 +127,23 @@
         </div>
     
         <div id="food_buttons">
-            <img name="とくせんリンゴ" src="img/food/とくせんリンゴ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="モーモーミルク" src="img/food/モーモーミルク.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="ワカクサ大豆" src="img/food/ワカクサ大豆.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="あまいミツ" src="img/food/あまいミツ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="マメミート" src="img/food/マメミート.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="あったかジンジャー" src="img/food/あったかジンジャー.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="あんみんトマト" src="img/food/あんみんトマト.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="とくせんエッグ" src="img/food/とくせんエッグ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="ピュアなオイル" src="img/food/ピュアなオイル.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="ほっこりポテト" src="img/food/ほっこりポテト.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="げきからハーブ" src="img/food/げきからハーブ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="リラックスカカオ" src="img/food/リラックスカカオ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="あじわいキノコ" src="img/food/あじわいキノコ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="ふといながねぎ" src="img/food/ふといながねぎ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="おいしいシッポ" src="img/food/おいしいシッポ.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="ワカクサコーン" src="img/food/ワカクサコーン.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
-            <img name="めざましコーヒー" src="img/food/めざましコーヒー.png" onclick="addReportOf(this);pokeReport.selectIcon(this);">
+            <img name="とくせんリンゴ" src="img/food/とくせんリンゴ.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="モーモーミルク" src="img/food/モーモーミルク.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="ワカクサ大豆" src="img/food/ワカクサ大豆.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="あまいミツ" src="img/food/あまいミツ.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="マメミート" src="img/food/マメミート.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="あったかジンジャー" src="img/food/あったかジンジャー.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="あんみんトマト" src="img/food/あんみんトマト.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="とくせんエッグ" src="img/food/とくせんエッグ.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="ピュアなオイル" src="img/food/ピュアなオイル.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="ほっこりポテト" src="img/food/ほっこりポテト.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="げきからハーブ" src="img/food/げきからハーブ.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="リラックスカカオ" src="img/food/リラックスカカオ.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="あじわいキノコ" src="img/food/あじわいキノコ.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="ふといながねぎ" src="img/food/ふといながねぎ.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="おいしいシッポ" src="img/food/おいしいシッポ.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="ワカクサコーン" src="img/food/ワカクサコーン.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
+            <img name="めざましコーヒー" src="img/food/めざましコーヒー.png" onclick="setResultOf(this);pokeReport.selectIcon(this);">
         </div>
 
 
@@ -241,29 +241,29 @@
 
 
             //実際のレポートはここから作られる。食材ボタンで実行される
-            function addReportOf(el = null){
+            function setResultOf(el = null){
                 if (el == null) el = this.lastClickedFoodIconElement;
                 if (el == null && this.lastClickedFoodIconElement == null) return;
 
                 this.lastClickedFoodIconElement = el;
 
                 let foodName = el.name;
-                let min = document.getElementById('food_min2').value;
+                let min = document.getElementById('food_min').value;
                 let onlyFullyEvolved = document.getElementById('only_fully_evolved').checked;
                 let showLv30 = document.getElementById("option_poke_30").checked;
                 let showLv60 = document.getElementById("option_poke_60").checked;
 
                 let t = document.getElementById('result_table');
                 t.querySelectorAll("tbody").forEach(b => b.remove());
-                t.appendChild(this.pokeReport.createReport(foodName, min, onlyFullyEvolved, showLv30, showLv60));
-                
+                t.appendChild(this.pokeReport.createReport(foodName, min, onlyFullyEvolved, showLv30, showLv60));                
     
-                this.insertRegisteredMyPokemons(foodName);
+                this.insertRegisteredMyPokemons(foodName, min);                
 
                 let json = this.createJsonFromInputForm2(this.document.getElementById('input_mypoke_name').value);
                 if (json == null) return;            
                 json.backgroundColor = 7;
-                this.insertMyPokemon(json, foodName, document.getElementById("option_potential_30").checked, document.getElementById("option_potential_60").checked);
+                //this.insertMyPokemon(json, foodName, document.getElementById("option_potential_30").checked, document.getElementById("option_potential_60").checked);
+                this.insertMyPokemons({json}, foodName, min);
             }
 
 
@@ -324,6 +324,7 @@
                 this.resetInputForm();
             }
 
+            
             function deleteSelectedMyPoke(){
                 let list = document.getElementById("input_mypoke_registered");
                 if (list.children.length == 0) return;
@@ -352,7 +353,7 @@
                 let result = this.createBerryPowerInfo(j);
 
                 let tr = document.createElement("tr");
-                tr.style.backgroundColor = numToColorCode(j.backgroundColor);
+                tr.style.backgroundColor = pokeReport.getColorCodeOf(j.backgroundColor);
                 tr.setAttribute("value", result.berryPowerDay);
                 tr.insertCell().textContent = j.name + "Lv" + j.lv + j.foodCode + " " + getMyPokeIdentifier(j);
                 tr.insertCell().textContent = result.berryPowerDay + "(" + result.berryOteCount + "/" + result.oteCount + ")";
@@ -365,7 +366,7 @@
                     for (let i = 0; i < rows.length; i++){
                         let value = rows[i].getAttribute('value');
                         if (value <= result.berryPowerDay){
-                            body.insertBefore(tr, rows[i])  ;
+                            body.insertBefore(tr, rows[i]);
                             return;;                      
                         }
                     }
@@ -393,8 +394,6 @@
                      + (j.subSkillS ? "-" : "")
                      + (j.subSkillM ? "+" : "");
             }
-
-                   
 
             function jsonToOptionValue(json){
                 return json.no + ":" + pokeReport.createCookieValueFromJson(json);
@@ -441,102 +440,29 @@
 
 
 
-
-
-
-    
-
-
-
-            //Myポケモン関連
-            function insertRegisteredMyPokemons(food){
-                if (!document.getElementById("option_mypoke_visible").checked) return;
-                let options = document.getElementById("input_mypoke_registered").children;
-
-                for (let i = 0; i < options.length; i++){
-                    let json = this.cookieValueToJson(options[i].value);
-                    this.insertMyPokemon(json, food, document.getElementById("option_potential_30").checked, document.getElementById("option_potential_60").checked);
-                }
-            }
-
-
-            function cookieValueToJsonList(c){
-                let ccc = c.split("/");
-                let jss = [];
-
-                for (let i = 0; i < ccc.length; i++){
-                    jss.push(this.cookieValueToJson(ccc[i]));
-                }
-                return jss;
-            }
-
-            function cookieValueToJson(str){
-                return pokeReport.createJsonFromCookieValue(str);
-            }
-
-
-            function insertMyPokemon(json, food, showPotential30 = false, showPotential60 = false){
-                let poke = pokedex.getPokemonByName(json.name);        
-                
-
-                if (json.lv < 30 && showPotential30){
-                    let p30comb = new FoodCombination(poke, 30, poke.getOtetsudaiCountDay(30, json.speedCharAdj, json.speedSubAdj), json.foodCode, json.foodCharAdj + json.foodSubAdj);
-
-                    if (p30comb.contains(food)) this.addMyPokemonRow(poke, food, p30comb, this.numToColorCode(4));
-                }
-                if (json.lv < 60 && showPotential60){
-                    let p60comb = new FoodCombination(poke, 60, poke.getOtetsudaiCountDay(60, json.speedCharAdj, json.speedSubAdj), json.foodCode, json.foodCharAdj + json.foodSubAdj);
-                    if (p60comb.contains(food)) this.addMyPokemonRow(poke, food, p60comb, this.numToColorCode(5));                  
-                }
-
-                let comb = new FoodCombination(poke, json.lv, poke.getOtetsudaiCountDay(json.lv, json.speedCharAdj, json.speedSubAdj), json.foodCode, json.foodCharAdj + json.foodSubAdj);
-                if (!comb.contains(food))   return;
-                this.addMyPokemonRow(poke, food, comb, this.numToColorCode(json.backgroundColor));
-            }
-
-
-            function addMyPokemonRow(poke, food, comb, backgroundColor){
-                let tr = document.createElement('tr');
-                tr.style.backgroundColor = backgroundColor;
-                comb.insertResultTo(tr, food, poke);
-
-                let tb = document.getElementById('result_table').tBodies[0];
-                let rows = tb.children;
-
-                let target = comb.getExpectionOf(food);
-                for (let i = 0; i < rows.length; i++){
-                    let value = rows[i].children[1].getAttribute('value');
-                    if (value <= target){
-                        tb.insertBefore(tr, rows[i]);
-                        return;
-                    }
-                }
-                tb.appendChild(tr);
-            }
-
-
-            function numToColorCode(n){
-                switch(n){
-                    case 0: return "#CCDDFF"; break;
-                    case 1: return "#77AAFF"; break;
-                    case 2: return "#DDDDDD"; break;
-                    case 3: return "#FFDDDD"; break;                    
-                    case 4: return "#FFBB77"; break;                    
-                    case 5: return "#FFA0A0"; break;
-                    case 6: return "#BBFFBB"; break;
-                    case 7: return "#FFFFCC"; break;                    
-                    default: return "#FF4444"
-                }
-            }
-
-
-
-
-
             function getMyPokeFoodCode(){
                 return document.getElementById("input_mypoke_food_1").getAttribute("code")
                      + document.getElementById("input_mypoke_food_2").getAttribute("code")
                      + document.getElementById("input_mypoke_food_3").getAttribute("code");
+            }
+
+
+
+            function insertMyPokemons(jsonList, food, min){
+                pokeReport.RRRRR_insertMyPokeListInto(
+                    document.getElementById('result_table').tBodies[0],
+                    jsonList,
+                    food,
+                    min,
+                    document.getElementById("option_potential_30").checked,
+                    document.getElementById("option_potential_60").checked
+                );
+            }
+
+
+            function insertRegisteredMyPokemons(food, min){
+                let list = Array.from(document.getElementById("input_mypoke_registered").children).map(op => this.cookieValueToJson(op.value));
+                this.insertMyPokemons(list, food, min);
             }
 
 
@@ -552,7 +478,6 @@
 
                 setCookie("myPokeList", values.join("/"), 30);
             }     
-
 
 
 
@@ -576,13 +501,19 @@
             }   
 
 
+            function cookieValueToJsonList(c){
+                let ccc = c.split("/");
+                let jss = [];
 
+                for (let i = 0; i < ccc.length; i++){
+                    jss.push(this.cookieValueToJson(ccc[i]));
+                }
+                return jss;
+            }
 
-
-
-
-
-
+            function cookieValueToJson(str){
+                return pokeReport.createJsonFromCookieValue(str);
+            }
 
 
 
@@ -626,7 +557,7 @@
             }
 
 
-            function resetInputForm(iName = 0, sSrc = "", edidMode = false, nLv = 30, iChar = 0, cOtebo = false, cSpdS = false, cSpdM = false, cFoodS = false, cFoodM = false, cSkillS = false, cSkillM = false, cBerryS = false){
+            function resetInputForm(iName = 0, sSrc = "", edidMode = false, nLv = 30, iChar = 0, cOtebo = false, cSpdS = false, cSpdM = false, cFoodS = false, cFoodM = false, cSkillS = false, cSkillM = false, cBerryS = false, bgIndex = 0){
                 let res = window.confirm("入力情報をリセットしてもよろしいですか？");
                 if (res == false) return;
 
@@ -646,6 +577,7 @@
                 document.getElementById("input_mypoke_skillM").checked = cSkillM;
                 document.getElementById("input_mypoke_berryS").checked = cBerryS;
                 document.getElementById("color_pick_SB").checked = true;
+                document.getElementById("input_color_buttons").querySelectorAll("input")[bgIndex].checked = true;
             }
 
 
@@ -657,6 +589,7 @@
 
                 let j = cookieValueToJson(list.value);
                 this.setJsonToInputFormForReEdit(j);
+                document.getElementById('input_mypoke_name').focus();
             }
 
 
@@ -666,15 +599,14 @@
                 if (pokeList.children.length == 0) initializePokeList(); //初めてリストに触った時に実行されることになっている
            
                 //ポケモン名、せいかくはリストのIndexを探す必要があるため、後で直接入力。
-                this.resetInputForm(0, j.src, true, j.lv, 0, j.subOteBonus, j.subSpeedS, j.subSpeedM, j.subFoodS, j.subFoodM, j.subSkillS, j.subSkillM, j.subBerryS);                
+                console.log(j);
+                this.resetInputForm(0, j.src, true, j.lv, 0, j.subOteBonus, j.subSpeedS, j.subSpeedM, j.subFoodS, j.subFoodM, j.subSkillS, j.subSkillM, j.subBerryS, j.backgroundColor);                
                 document.getElementById("input_mypoke_name").value = j.name;
                 Array.from(document.getElementById("input_mypoke_char").children).find(o => o.value == j.char).selected = true;
                 this.setFoodImages(null, poke, j.foodCode[0], j.foodCode[1], j.foodCode[2]);
             }
 
        
-
-
 
             function initializePokeList(){
                 if (this.selectBoxInitialized) return;
@@ -707,6 +639,7 @@
 
                 this.selectBoxInitialized = true;
             }
+
 
             //ロード時のイベント
             window.onload = ()=>{

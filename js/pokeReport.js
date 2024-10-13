@@ -52,15 +52,63 @@ class PokeReport{
             });
         }
         
-        let sorted = pokeAndComb.sort((a, b) => b.comb.getExpectionOf(foodName) - a.comb.getExpectionOf(foodName));
-        sorted.forEach(x => {
-            let r = document.createElement("tr");
-            x.comb.insertResultTo(r, foodName, x.poke)
-            tbody.appendChild(r);
-        });
+        pokeAndComb.sort((a, b) => b.comb.getExpectionOf(foodName) - a.comb.getExpectionOf(foodName))
+                    .forEach(x => tbody.appendChild(this.createPokemonInfoRow(x.poke, x.comb, foodName)));
         return tbody;
     }
 
+
+
+    //tbのresult_tableはsetResultOfされた時に追加されるので、ない時もあるかも
+    RRRRR_insertMyPokeListInto(tbody, jsonList, foodName, foodMin, showPotential30, showPotential60){
+        for (let i = 0; i < jsonList.length; i++){
+            let json = jsonList[i];
+            let poke = this.pokedex.getPokemonByName(json.name);
+            if (!poke.containsFood(foodName)) continue;//そもそも食材含んでなかったら処理いらない
+
+            if (json.lv < 30 && showPotential30){
+                this.insertMyPokeRowInto(tbody, poke, json, 30, foodName, foodMin, this.getColorCodeOf(4));
+            }
+
+            if (json.lv < 60 && showPotential60){
+                this.insertMyPokeRowInto(tbody, poke, json, 60, foodName, foodMin, this.getColorCodeOf(5));
+            }
+
+            this.insertMyPokeRowInto(tbody, poke, json, json.lv, foodName, foodMin);
+
+            //if (p30comb.contains(food, foodMin)) this.addMyPokemonRow(poke, food, p30comb, this.pokeReport.getColorCodeOf(4));
+        }
+        
+    }
+
+    insertMyPokeRowInto(tbody, poke, json, lv, foodName, foodMin, backgroundColor = null){//自分で登録したものは背景色がjsonに含まれているのでわざわざ指定しない
+        let comb = poke.createFoodCombination(json, lv);
+        if (!comb.contains(foodName, foodMin)) return;
+
+        let tr = this.createPokemonInfoRow(poke, comb, foodName);
+        tr.style.backgroundColor = backgroundColor ?? this.getColorCodeOf(json.backgroundColor);
+
+        let rows = tbody.children;
+        let target = comb.getExpectionOf(foodName);
+
+        for (let i = 0; i < rows.length; i++){
+            let value = rows[i].children[1].getAttribute('value');
+            if (value <= target){
+                tbody.insertBefore(tr, rows[i]);
+                return;
+            }
+        }
+        tbody.appendChild(tr);
+    }
+
+    
+
+
+    createPokemonInfoRow(poke, comb, food){
+        let r = document.createElement("tr");
+        comb.insertResultTo(r, food, poke);
+        return r;
+    }
  
 
     selectIcon(el){
@@ -179,7 +227,20 @@ class PokeReport{
         json.skillSubAdj = Math.round(json.skillSubAdj * 100) / 100;
 
     }
-
+    
+    getColorCodeOf(n){
+        switch(n){
+            case 0: return "#CCDDFF"; break;
+            case 1: return "#77AAFF"; break;
+            case 2: return "#DDDDDD"; break;
+            case 3: return "#FFDDDD"; break;                    
+            case 4: return "#FFBB77"; break;                    
+            case 5: return "#FFA0A0"; break;
+            case 6: return "#BBFFBB"; break;
+            case 7: return "#FFFFCC"; break;                    
+            default: return "#FF4444"
+        }
+    }
 
 
 
