@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.1.5d</title>
+        <title>レポート(仮)v0.2.0</title>
 
     </head>
 
@@ -24,7 +24,7 @@
 
         <div id="input_form">
             <strong> Myポケモン登録フォームv2:</strong><br>
-            <select id="input_mypoke_name" style="width:10em; font-size:1em" onclick="initializePokeList()" onchange="setFoodImages(this)"></select>
+            <select id="input_mypoke_name" style="width:10em; font-size:1em" onclick="initializePokeList()" onchange="setFoodImages(this)" src></select>
             Lv<select id="input_mypoke_lv" style="width:4em; font-size:1em" onclick="initializePokeList()"></select>
 
             <img id="input_mypoke_food_1" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
@@ -63,6 +63,7 @@
             <button onclick="showBerryPower()">🍒</button>
 
             <div class="select_button_area">
+                <input type="checkbox" id="input_mypoke_oteBonus"><label for="input_mypoke_oteBonus">おてボ</label>
                 <input type="checkbox" id="input_mypoke_speedS"><label for="input_mypoke_speedS">おてスピS</label>
                 <input type="checkbox" id="input_mypoke_speedM"><label for="input_mypoke_speedM">おてスピM</label>
                 <input type="checkbox" id="input_mypoke_foodS"><label for="input_mypoke_foodS">食材S</label>
@@ -166,7 +167,9 @@
             <strong>登録済みMyポケモン:</strong><br>
             <select id="input_mypoke_registered" style="width:15em; font-size:1em; vertical-align: middle;">
             </select>
-            <button id="input_mypoke_delete" style="font-size:1em; vertical-align: middle;" onclick="deleteRegisteredMypoke()">削除</button>
+            <button id="input_mypoke_delete" style="font-size:1em; vertical-align: middle;" onclick="deleteSelectedMyPoke();">削除</button>
+            <button id="input_mypoke_reedit" style="font-size:1em; vertical-align: middle;" onclick="reeditMypoke();">編集</button>
+            <button style="font-size:1em; vertical-align: middle;" onclick="copyCookieValue();">getCookie</button>
             <div>
                 <table id="mypoke_quick_check">
                     <thead>
@@ -215,6 +218,11 @@
         <script>
             const cookie_mypoke_max = 151;
             let lastClickedFoodIconElement;
+
+
+            function copyCookieValue(){
+                navigator.clipboard.writeText(getCookie("myPokeList"));
+            }
 
 
             function clickMyPokeVisible(el){
@@ -291,20 +299,52 @@
 
                
             function registerMyPoke(){
-                let json = this.createJsonFromInputForm2(this.document.getElementById('input_mypoke_name').value);
+                let pokeList = this.document.getElementById('input_mypoke_name');
+                let json = this.createJsonFromInputForm2(pokeList.value);
                 if (json == null){
                     alert("登録情報が足りていません。")
                     return;
                 }
+                let src = pokeList.getAttribute("src");
+                if (src == ""){//通常の登録
+                    let res = window.confirm(json.name +  "\nを登録してもよろしいですか？");
+                    if (res == false) return;
 
-                let res = window.confirm(json.name +  "\nを登録してもよろしいですか？");
-                if (res == false) return;
+
+                } else{//再編集
+                    let res = window.confirm(json.name +  "\nの編集を反映してよろしいですか？");
+                    if (res == false) return;
+                    let op = Array.from(document.getElementById("input_mypoke_registered").children).find(op => op.value == src);
+                    this.deleteMypoke(op);
+                }
 
                 this.addMyPokeToList(this.createMyPokeOption(json));
                 this.listupMyPokeInfo(json);
                 this.setMyPokeCookie();
                 this.resetInputForm();
             }
+
+            function deleteSelectedMyPoke(){
+                let list = document.getElementById("input_mypoke_registered");
+                if (list.children.length == 0) return;
+                if (list.selectedOptions.length != 1){
+                    alert("項目は一つだけえらんでください。");
+                    return;
+                }
+
+                let op = list.children[list.selectedIndex];                
+                let res = window.confirm(op.textContent +  "\nを削除してもよろしいですか？");
+                if (res != false) this.deleteMypoke(op);
+
+            }
+
+
+
+            function deleteMypoke(op){
+                document.getElementById("input_mypoke_registered").removeChild(op);
+                this.setMyPokeCookie();
+            }
+
 
 
             function listupMyPokeInfo(j){
@@ -345,6 +385,7 @@
             function getMyPokeIdentifier(j){
                 return j.char
                      + (j.subBerryS ? "s" : "")
+                     + (j.subOteBonus ? "o" : "")
                      + (j.subSpeedS ? "." : "")
                      + (j.subSpeedM ? ":" : "")
                      + (j.subFoodS ? "f" : "")
@@ -384,6 +425,7 @@
                 if (j.char == "") return null;
 
                 j.subBerryS = document.getElementById("input_mypoke_berryS").checked;
+                j.subOteBonus = document.getElementById("input_mypoke_oteBonus").checked;
                 j.subSpeedS = document.getElementById("input_mypoke_speedS").checked;
                 j.subSpeedM = document.getElementById("input_mypoke_speedM").checked;
                 j.subFoodS = document.getElementById("input_mypoke_foodS").checked;
@@ -545,28 +587,30 @@
 
 
             //ロード時、ボタンなどから直接呼び出される可能性があるもの
-            function setFoodImages(el){
-                let poke = pokedex.getPokemonByName(el.value);
-                if (poke == null){
-                    return;
-                }
+            function setFoodImages(el, poke = null, codeFoodA = "A", codeFoodB = "A", codeFoodC = "A"){
+                if (poke == null) poke = pokedex.getPokemonByName(el.value);
+                if (poke == null) return;
                 
                 let img1 = document.getElementById('input_mypoke_food_1');
                 let img2 = document.getElementById('input_mypoke_food_2');
                 let img3 = document.getElementById('input_mypoke_food_3');
-                this.setFoodImageOnImgEl(img1, poke, 1);
-                this.setFoodImageOnImgEl(img2, poke, 2);
-                this.setFoodImageOnImgEl(img3, poke, 3);
+           
+                this.setFoodImageOnImgEl(img1, poke, 1, codeFoodA);
+                this.setFoodImageOnImgEl(img2, poke, 2, codeFoodB);
+                this.setFoodImageOnImgEl(img3, poke, 3, codeFoodC);
             }
 
 
-            function setFoodImageOnImgEl(el, poke, max){
+            function setFoodImageOnImgEl(el, poke, max, foodCode = null){
+                foodCode = foodCode ?? "A";
+                let codeIndex = foodCode.charCodeAt() - 65;
                 let values = poke.getAllFoodNames();
-                let value = values[0];
+                let value = values[codeIndex];
+
                 el.setAttribute("values", values.slice(0, max).join(","));
                 el.setAttribute("value", value);
-                el.setAttribute("code", "A")
-                this.toggleFood(el, 0);
+                el.setAttribute("code", foodCode);
+                this.toggleFood(el, codeIndex);
             }
 
 
@@ -582,92 +626,50 @@
             }
 
 
-            function resetInputForm(){
+            function resetInputForm(iName = 0, sSrc = "", edidMode = false, nLv = 30, iChar = 0, cOtebo = false, cSpdS = false, cSpdM = false, cFoodS = false, cFoodM = false, cSkillS = false, cSkillM = false, cBerryS = false){
                 let res = window.confirm("入力情報をリセットしてもよろしいですか？");
                 if (res == false) return;
 
-                document.getElementById('input_mypoke_name').selectedIndex = 0;
-                document.getElementById('input_mypoke_lv').selectedIndex = 29;
-                document.getElementById("input_mypoke_char").selectedIndex = 0;
-                document.getElementById("input_mypoke_speedS").checked = false;
-                document.getElementById("input_mypoke_speedM").checked = false;
-                document.getElementById("input_mypoke_foodS").checked = false;
-                document.getElementById("input_mypoke_foodM").checked = false;
-                document.getElementById("input_mypoke_skillS").checked = false;
-                document.getElementById("input_mypoke_skillM").checked = false;
-                document.getElementById("input_mypoke_berryS").checked = false;
+                let pokeList = document.getElementById('input_mypoke_name');
+                pokeList.selectedIndex = iName;
+                pokeList.setAttribute("src", sSrc);
+                pokeList.style.backgroundColor = (edidMode) ? "#FF8899" : "#FFFFFF";
+                
+                document.getElementById('input_mypoke_lv').selectedIndex = nLv - 1;
+                document.getElementById("input_mypoke_char").selectedIndex = iChar;
+                document.getElementById("input_mypoke_oteBonus").checked = cOtebo;
+                document.getElementById("input_mypoke_speedS").checked = cSpdS;
+                document.getElementById("input_mypoke_speedM").checked = cSpdM;
+                document.getElementById("input_mypoke_foodS").checked = cFoodS;
+                document.getElementById("input_mypoke_foodM").checked = cFoodM;
+                document.getElementById("input_mypoke_skillS").checked = cSkillS;
+                document.getElementById("input_mypoke_skillM").checked = cSkillM;
+                document.getElementById("input_mypoke_berryS").checked = cBerryS;
                 document.getElementById("color_pick_SB").checked = true;
             }
 
 
 
 
-            function deleteRegisteredMypoke(){
+            function reeditMypoke(){
                 let list = document.getElementById("input_mypoke_registered");
                 if (list.children.length == 0) return;
-                if (list.selectedOptions.length != 1){
-                    alert("項目は一つだけえらんでください。");
-                    return;
-                }
 
-                let op = list.children[list.selectedIndex];                
-                let res = window.confirm(op.textContent +  "\nを削除してもよろしいですか？");
-                if (res == false) return;
-
-                list.removeChild(op);
-                this.setMyPokeCookie();
+                let j = cookieValueToJson(list.value);
+                this.setJsonToInputFormForReEdit(j);
             }
 
 
-
-
-            function characteristicConv(v){
-                switch(v){
-                    case "寂": return "sb"; break;
-                    case "い": return "ij"; break;
-                    case "や": return "yn"; break;
-                    case "勇": return "yu"; break;
-                    case "ず": return "zb"; break;
-                    case "わ": return "wp"; break;
-                    case "能": return "nt"; break;
-                    case "の": return "nn"; break;
-                    case "ひ": return "hk"; break;
-                    case "お": return "or"; break;
-                    case "う": return "uk"; break;
-                    case "冷": return "ri"; break;
-                    case "穏": return "od"; break;
-                    case "大": return "on"; break;
-                    case "慎": return "sn"; break;
-                    case "な": return "nm"; break;
-                    case "臆": return "ok"; break;
-                    case "せ": return "sk"; break;
-                    case "陽": return "yu"; break;
-                    case "む": return "mj"; break;
-                    case "□": return "xx"; break;
-
-                    case "sb": return "寂"; break;
-                    case "ij": return "い"; break;
-                    case "yn": return "や"; break;
-                    case "yu": return "勇"; break;
-                    case "zb": return "ず"; break;
-                    case "wp": return "わ"; break;
-                    case "nt": return "能"; break;
-                    case "nn": return "の"; break;
-                    case "hk": return "ひ"; break;
-                    case "or": return "お"; break;
-                    case "uk": return "う"; break;
-                    case "ri": return "冷"; break;
-                    case "od": return "穏"; break;
-                    case "on": return "大"; break;
-                    case "sn": return "慎"; break;
-                    case "nm": return "な"; break;
-                    case "ok": return "臆"; break;
-                    case "sk": return "せ"; break;
-                    case "yu": return "陽"; break;
-                    case "mj": return "む"; break;
-                    case "xx": return "□"; break;
-                    default: return "--";
-                }                
+            function setJsonToInputFormForReEdit(j){
+                let poke = pokedex.getPokemonByName(j.name);
+                let pokeList = document.getElementById("input_mypoke_name");
+                if (pokeList.children.length == 0) initializePokeList(); //初めてリストに触った時に実行されることになっている
+           
+                //ポケモン名、せいかくはリストのIndexを探す必要があるため、後で直接入力。
+                this.resetInputForm(0, j.src, true, j.lv, 0, j.subOteBonus, j.subSpeedS, j.subSpeedM, j.subFoodS, j.subFoodM, j.subSkillS, j.subSkillM, j.subBerryS);                
+                document.getElementById("input_mypoke_name").value = j.name;
+                Array.from(document.getElementById("input_mypoke_char").children).find(o => o.value == j.char).selected = true;
+                this.setFoodImages(null, poke, j.foodCode[0], j.foodCode[1], j.foodCode[2]);
             }
 
        

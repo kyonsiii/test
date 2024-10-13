@@ -8,13 +8,14 @@ const mask_food_C       = 0b00000000000000011000000000000000;
 const mask_char_all     = 0b00000000000000000111111000000000;
 const mask_char_up      = 0b00000000000000000111000000000000;
 const mask_char_down    = 0b00000000000000000000111000000000;
-const mask_sub_subBerryS= 0b00000000000000000000000100000000;
+const mask_sub_berryS   = 0b00000000000000000000000100000000;
 const mask_sub_speedS   = 0b00000000000000000000000010000000;
 const mask_sub_speedM   = 0b00000000000000000000000001000000;
 const mask_sub_foodS    = 0b00000000000000000000000000100000;
 const mask_sub_foodM    = 0b00000000000000000000000000010000;
 const mask_sub_skillS   = 0b00000000000000000000000000001000;
 const mask_sub_skillM   = 0b00000000000000000000000000000100;
+const mask_sub_otebonus = 0b00000000000000000000000000000010;
 
 class PokeReport{
 
@@ -114,6 +115,7 @@ class PokeReport{
         let x = parseInt(a[1], 16);
                 
         let j = {};
+        j.src = c;
         j.no = no;
         j.name = this.pokedex.getPokemonByNo(j.no).name;
         j.backgroundColor = bitToNum(x, mask_backGround);
@@ -121,13 +123,14 @@ class PokeReport{
         j.foodCode = this.getFoodCodeOf(bitToNum(x, mask_food_A)) + this.getFoodCodeOf(bitToNum(x, mask_food_B)) + this.getFoodCodeOf(bitToNum(x, mask_food_C));
         j.char = this.getCharacteristic(bitToNum(x, mask_char_up), bitToNum(x, mask_char_down));
 
-        j.subBerryS = bitMatch(x, mask_sub_subBerryS);
+        j.subBerryS = bitMatch(x, mask_sub_berryS);
         j.subSpeedS = bitMatch(x, mask_sub_speedS);
         j.subSpeedM = bitMatch(x, mask_sub_speedM);
         j.subFoodS = bitMatch(x, mask_sub_foodS);
         j.subFoodM = bitMatch(x, mask_sub_foodM);
         j.subSkillS = bitMatch(x, mask_sub_skillS);
         j.subSkillM = bitMatch(x, mask_sub_skillM);
+        j.subOteBonus = bitMatch(x, mask_sub_otebonus);
         this.setAdjustValues(j);
 
         return j;
@@ -143,13 +146,14 @@ class PokeReport{
         n += numToBit(this.getFoodNumOf(j.foodCode[1]), mask_food_B);
         n += numToBit(this.getFoodNumOf(j.foodCode[2]), mask_food_C);
         n += numToBit(this.getCharacteristicNumOf(j.char), mask_char_all);
-        n += numToBit(j.subBerryS ? 1 : 0, mask_sub_subBerryS);
+        n += numToBit(j.subBerryS ? 1 : 0, mask_sub_berryS);
         n += numToBit(j.subSpeedS ? 1 : 0, mask_sub_speedS);
         n += numToBit(j.subSpeedM? 1 : 0, mask_sub_speedM);
         n += numToBit(j.subFoodS ? 1 : 0, mask_sub_foodS);
         n += numToBit(j.subFoodM ? 1 : 0, mask_sub_foodM);
         n += numToBit(j.subSkillS ? 1 : 0, mask_sub_skillS);
         n += numToBit(j.subSkillM ? 1: 0, mask_sub_skillM);
+        n += numToBit(j.subOteBonus ? 1 : 0, mask_sub_otebonus);
         return n.toString(16);
     }
 
@@ -162,8 +166,8 @@ class PokeReport{
         json.skillCharAdj = this.getCharacteristicSkillAdjustOf(charBit);
         json.expCharAdj = this.getCharacteristicExpAdjustOf(charBit);
         
-
-        json.speedSubAdj = json.subSpeedS ? 0.07 : 0;
+        json.speedSubAdj = json.subOteBonus ? 0.05 : 0;
+        json.speedSubAdj += json.subSpeedS ? 0.07 : 0;
         json.speedSubAdj += json.subSpeedM ? 0.14 : 0;
         json.foodSubAdj = json.subFoodS ? 0.18 : 0;
         json.foodSubAdj += json.subFoodM ? 0.36 : 0;
