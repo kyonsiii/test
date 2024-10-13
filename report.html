@@ -312,6 +312,7 @@
                 let result = this.createBerryPowerInfo(j);
 
                 let tr = document.createElement("tr");
+                tr.style.backgroundColor = numToColorCode(j.backgroundColor);
                 tr.setAttribute("value", result.berryPowerDay);
                 tr.insertCell().textContent = j.name + "Lv" + j.lv + j.foodCode + " " + getMyPokeIdentifier(j);
                 tr.insertCell().textContent = result.berryPowerDay + "(" + result.berryOteCount + "/" + result.oteCount + ")";
