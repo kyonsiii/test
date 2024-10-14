@@ -182,6 +182,7 @@ class PokeDB{
         let r = document.createElement("tr");
         let c;
 
+        console.log(poke);
         c = r.insertCell();
         c.innerHTML = "<a href=\"https://wikiwiki.jp/poke_sleep/" + poke.name + "\">" + ("No." + poke.no + " ") + poke.name + "</a>" 
         + "<br>" + "<img src=\"img/poke/" + String(poke.no).padStart(3, '0') + ".png\" class=\"normal\">" + poke.sleepType + " - " + poke.specialty
