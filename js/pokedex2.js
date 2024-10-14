@@ -293,7 +293,7 @@ class Pokemon{
 
 
     getIndicatorBarOf(num){
-        num = (num < 0) ? 0 : 0;
+        num = (num < 0) ? 0 : num;
         let left = (num >= 10) ? "" + num + " " : "<font color='white'>_</font>" + num + " ";
         return left + this.indicatorChar.repeat(num);
     }
