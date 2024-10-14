@@ -201,6 +201,10 @@ new Pokemon({no:914,name:"ウェーニバル",sleepType:"ぐっすり",specialty
             {no: 18, name: "モモンのみ", power: 26}
         ];
 
+        this.berryList = this.berries;
+        this.skillList = Array.from((new Set(this.pokemons.map(p => p.skill)))).sort();
+        this.foodList = Array.from((new Set(this.pokemons.map(p => [p.food1, p.food2, p.food3]).flat()))).filter(f => f != "").sort();//本当はこんなのよくないよね・・・
+
     }
 
     getPokemonByName(name){
