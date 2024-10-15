@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.3.2</title>
+        <title>レポート(仮)v0.3.2a</title>
 
     </head>
 
@@ -64,23 +64,25 @@
 
 
             <div id="sub_skill_area">
-                <select id="sub_skill_lv10">
+                <select id="sub_skill_lv10" onchange="changeSubSkill(this);">
                 </select>
 
-                <select id="sub_skill_lv25">
+                <select id="sub_skill_lv25" onchange="changeSubSkill(this);">
                 </select>
                 <br>
 
-                <select id="sub_skill_lv50">
+                <select id="sub_skill_lv50" onchange="changeSubSkill(this);">
                 </select>
                 
-                <select id="sub_skill_lv75">
+                <select id="sub_skill_lv75" onchange="changeSubSkill(this);">
                 </select>
                 <br>
 
-                <select id="sub_skill_lv100">
+                <select id="sub_skill_lv100" onchange="changeSubSkill(this);">
                 </select>
             </div>
+
+
             <div id="input_color_buttons">
                 <input type="radio" name="color_picker" value="0" id="color_pick_SB" checked><label for="color_pick_SB">□</label>
                 <input type="radio" name="color_picker" value="1" id="color_pick_BL"><label for="color_pick_BL">□</label>  
@@ -93,39 +95,6 @@
             </div>
 
 
-
-<!--
-            <div class="select_button_area">
-                <input type="checkbox" id="input_mypoke_oteBonus"><label for="input_mypoke_oteBonus">おてボ</label>
-                <input type="checkbox" id="input_mypoke_speedS"><label for="input_mypoke_speedS">おてスピS</label>
-                <input type="checkbox" id="input_mypoke_speedM"><label for="input_mypoke_speedM">おてスピM</label>
-                <input type="checkbox" id="input_mypoke_foodS"><label for="input_mypoke_foodS">食材S</label>
-                <input type="checkbox" id="input_mypoke_foodM"><label for="input_mypoke_foodM">食材M</label>
-            </div>
-
-            <div class="select_button_area">
-                <input type="checkbox" id="input_mypoke_skillS"><label for="input_mypoke_skillS">スキルS</label>
-                <input type="checkbox" id="input_mypoke_skillM"><label for="input_mypoke_skillM">スキルM</label>
-                <input type="checkbox" id="input_mypoke_skillLvUpS"><label for="input_mypoke_skillLvUpS">スキルLvS</label>
-                <input type="checkbox" id="input_mypoke_skillLvUpM"><label for="input_mypoke_skillLvUpM">スキルLvM</label>
-            </div>
-
-            <div class="select_button_area">
-                <input type="checkbox" id="input_mypoke_berryS"><label for="input_mypoke_berryS">きのみS</label>
-                <input type="checkbox" id="input_mypoke_inventoryS"><label for="input_mypoke_inventoryS">所持S</label>
-                <input type="checkbox" id="input_mypoke_inventoryM"><label for="input_mypoke_inventoryM">所持M</label>
-                <input type="checkbox" id="input_mypoke_inventoryL"><label for="input_mypoke_inventoryL">所持L</label>
-            </div>
-
-            <div class="select_button_area">
-                <input type="checkbox" id="input_mypoke_expBonus"><label for="input_mypoke_expBonus">EXボ</label>
-                <input type="checkbox" id="input_mypoke_genkiBonus"><label for="input_mypoke_genkiBonus">元ボ</label>
-                <input type="checkbox" id="input_mypoke_yumeBonus"><label for="input_mypoke_yumeBonus">ゆめボ</label>
-                <input type="checkbox" id="input_mypoke_researchBonus"><label for="input_mypoke_researchBonus">リサボ</label>                
-            </div>
-
-
-        -->
             <button id="input_mypoke_register" style="font-size:1em; vertical-align: middle;" onclick="registerMyPoke();">Myポケモンに追加</button> 
             <button id="input_mypoke_reset" style="font-size:1em; vertical-align: middle;" onclick="resetInputForm();">リセット</button>            
         </div>
@@ -257,6 +226,11 @@
         <script>
             const cookie_mypoke_max = 151;
             let lastClickedFoodIconElement;
+
+
+            function changeSubSkill(this){
+
+            }
 
             function setSubSkillSelectBox(){
                 let addOp = (listId, skillValue, skillText) => {
@@ -557,8 +531,8 @@
                 let options = document.getElementById("input_mypoke_registered").children;
                 let sorted = Array.from(options).sort((a, b) => a.textContent > b.textContent ? 1 : -1);
                 let values = [];
-                for (let i = 0; i < options.length; i++){
-                    values.push(options[i].value);
+                for (let i = 0; i < sorted.length; i++){
+                    values.push(sorted[i].value);
                 }
 
                 setCookie("rmpl", values.join("/"), 365);
