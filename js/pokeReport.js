@@ -630,7 +630,7 @@ class PokeReport{
             case 4  : return "f";
             case 5  : return "F";
             case 6  : return "-";
-            case 7  : return "";
+            case 7  : return "+";
             case 8  : return "u";
             case 9  : return "U";
             case 10 : return "s";
