@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.3.2a</title>
+        <title>レポート(仮)v0.3.2b</title>
 
     </head>
 
@@ -228,9 +228,12 @@
             let lastClickedFoodIconElement;
 
 
-            function changeSubSkill(this){
-
+            function changeSubSkill(el){
+                let area = document.getElementById("sub_skill_area");
+                let index = area.indexOf(el);
+                console.log(index);
             }
+
 
             function setSubSkillSelectBox(){
                 let addOp = (listId, skillValue, skillText) => {
@@ -690,9 +693,6 @@
                 this.selectBoxInitialized = false;
 
                 if (getCookie("rmpl") == null){
-                    alert("Cookieの値の仕組みが変更されました。");
-                    navigator.clipboard.writeText(getCookie("myPokeList"));
-                    alert("クリップボードの値をどこかで保存してください。");
                     this.convCookie16To32();
                 }                
 
@@ -703,8 +703,7 @@
 
             function convCookie16To32(s = null){
                 let cookies = s ?? getCookie("myPokeList");
-                let res = window.confirm(cookies +  "\nを変換します。");
-                if (res == false) return;
+                if (cookies == null) return;
 
 
                 let jsonList = cookies.split("/").map(c => pokeReport.createJsonFromCookieValue(c));
