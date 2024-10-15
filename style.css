@@ -116,8 +116,8 @@ html {
 
 
 #sub_skill_area select{
-    min-width: 7em;
-    max-width: 40%;
+    min-width: 40%;
+    max-width: 47%;
     font-size: 1em;
 }
 
