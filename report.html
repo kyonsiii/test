@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.3.1g</title>
+        <title>レポート(仮)v0.3.1h</title>
 
     </head>
 
@@ -554,7 +554,8 @@
 
             //クッキー関連(登録)
             function setMyPokeCookie(){
-                let options= document.getElementById("input_mypoke_registered").children;
+                let options = document.getElementById("input_mypoke_registered").children;
+                let sorted = Array.from(options).sort((a, b) => a.textContent.localeCompare(b.textContent));
                 let values = [];
                 for (let i = 0; i < options.length; i++){
                     values.push(options[i].value);
