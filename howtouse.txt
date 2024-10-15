@@ -9,7 +9,6 @@ git mv -f pokeCook.js .\js\pokeCook.js
 
 
 
-
 //ブランチを確認
 git branch
 
