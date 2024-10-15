@@ -303,12 +303,11 @@
                 t.querySelectorAll("tbody").forEach(b => b.remove());
                 t.appendChild(this.pokeReport.createReport(foodName, min, onlyFullyEvolved, showLv30, showLv60));                
     
-                this.insertRegisteredMyPokemons(foodName, min);       
-
-
+                this.insertRegisteredMyPokemons(foodName, min);   
+                
                 let json = this.createJsonFromInputForm32(this.document.getElementById('input_mypoke_name').value);
-
                 if (json == null) return;      
+
                 json.backgroundColor = 7;
                 this.insertMyPokemons([json], foodName, min);
             }
@@ -530,6 +529,7 @@
 
 
             function insertRegisteredMyPokemons(food, min){
+                if (!document.getElementById("option_mypoke_visible").checked) return;
                 let list = Array.from(document.getElementById("input_mypoke_registered").children).map(op => pokeReport.createJsonFromCookieValue32(op.value));
                 this.insertMyPokemons(list, food, min);
             }
