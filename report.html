@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.3.0</title>
+        <title>レポート(仮)v0.3.0a</title>
 
     </head>
 
@@ -652,8 +652,7 @@
                 if (list.children.length == 0) return;
 
                 let j = pokeReport.createJsonFromCookieValue32(list.value);
-                this.setJsonToInputFormForReEdit(j);
-                document.getElementById('input_mypoke_name').focus();
+                if (!this.setJsonToInputFormForReEdit(j)) document.getElementById('input_mypoke_name').focus();
             }
 
 
@@ -662,17 +661,15 @@
                 let pokeList = document.getElementById("input_mypoke_name");
                 if (pokeList.children.length == 0){
                     initializePokeList(); //初めてリストに触った時に実行されることになっている
-                    alert("ポケモン一覧を初期化したのでもう一度操作してください。")
-                    return;
+                    return false;
                 }
-                //resetInputForm(iName = 0, sSrc = "", edidMode = false, nLv = 30, iChar = 0, ilv10skill = 0, ilv25skill = 0, ilv50skill = 0, ilv75skill = 0, ilv100skill = 0, bgIndex = 0){
-            
-                
+
                 //ポケモン名、せいかくはリストのIndexを探す必要があるため、後で直接入力。
                 this.resetInputForm(0, j.src, true, j.lv, 0, j.subSkillList.lv10.value, j.subSkillList.lv25.value, j.subSkillList.lv50.value, j.subSkillList.lv75.value, j.subSkillList.lv100.value, j.backgroundColor);                
                 document.getElementById("input_mypoke_name").value = j.name;
                 Array.from(document.getElementById("input_mypoke_char").children).find(o => o.value == j.char).selected = true;
                 this.setFoodImages(null, poke, j.foodCode[0], j.foodCode[1], j.foodCode[2]);
+                return true;
             }
 
        
