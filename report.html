@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.3.1h</title>
+        <title>レポート(仮)v0.3.2</title>
 
     </head>
 
@@ -23,7 +23,7 @@
         </div>
 
         <div id="input_form">
-            <strong> Myポケモン登録フォームv2:</strong><br>
+            <strong> Myポケモン登録フォームv2.1:</strong><br>
             <select id="input_mypoke_name" style="width:10em; font-size:1em" onclick="initializePokeList()" onchange="setFoodImages(this)" src></select>
             Lv<select id="input_mypoke_lv" style="width:4em; font-size:1em" onclick="initializePokeList()"></select>
 
@@ -555,7 +555,7 @@
             //クッキー関連(登録)
             function setMyPokeCookie(){
                 let options = document.getElementById("input_mypoke_registered").children;
-                let sorted = Array.from(options).sort((a, b) => a.textContent.localeCompare(b.textContent));
+                let sorted = Array.from(options).sort((a, b) => a.textContent > b.textContent ? 1 : -1);
                 let values = [];
                 for (let i = 0; i < options.length; i++){
                     values.push(options[i].value);
