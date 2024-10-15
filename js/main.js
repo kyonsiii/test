@@ -25,7 +25,7 @@ function numToBit(n, mask){
         n = n << 1;
         mask= mask >> 1;
         if (mask == 0b0) return NaN;
-    }
+    }    
     return n;
 }
 

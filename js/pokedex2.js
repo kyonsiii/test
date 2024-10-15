@@ -255,11 +255,9 @@ class Pokemon{
 
         for (let ib = 0; ib < 2; ib++){         //2つ目の食材はAかB
             code = 'A' + String.fromCharCode(65 + ib);
-            //this.foodCombinations.push(new FoodCombination(this, 30, this.getOtetsudaiCountDay(30), code));
             this.foodCombinations.push(this.createFoodCombination(null, 30, code));
             for (let ic = 0; ic < 3; ic++){      //3つ目の食材はAかBかC なお、Cがない場合もある
                 if (this.food3 == "" && ic == 2) continue;
-                //this.foodCombinations.push(new FoodCombination(this, 60, this.getOtetsudaiCountDay(60), code + String.fromCharCode(65 + ic)));
                 this.foodCombinations.push(this.createFoodCombination(null, 60, code + String.fromCharCode(65 + ic)));
             }
         }
@@ -269,14 +267,12 @@ class Pokemon{
     createFoodCombination(json = null, lv = -1, code = null){   //json=nullは無補正の一覧表示の時を想定。 lvとcodeは上書きできるように
         if (json == null){
             json = {};
-            json.speedCharAdj = 0;
-            json.speedSubAdj = 0;
-            json.foodCharAdj = 0;
-            json.foodSubAdj = 0;
-        }
+            json.charAdjusts = {speed: 0, food:0};
+            json.subAdjusts  = {speed: 0, food:0};
+        }                
         lv = (lv != -1) ? lv : json.lv; //lvの入力がなかったらjsonの情報を見る
         code = code ?? json.foodCode;   //foodCodeの入力がなかったらjsonの情報を見る
-        return new FoodCombination(this, lv, this.getOtetsudaiCountDay(lv, json.speedCharAdj, json.speedSubAdj), code, json.foodCharAdj + json.foodSubAdj);
+        return new FoodCombination(this, lv, this.getOtetsudaiCountDay(lv, json.charAdjusts.speed, json.subAdjusts.speed), code, json.charAdjusts.food + json.subAdjusts.food);
     }
 
 
