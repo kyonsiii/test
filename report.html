@@ -110,6 +110,7 @@
             <div class="select_button_area">
                 <input type="checkbox" onclick="clickMyPokeVisible(this);" id="option_mypoke_visible" checked><label for="option_mypoke_visible">Myポケ表示</label>
                 <input type="checkbox" onclick="clickMyPokeVisible(this);" id="option_potential_30" checked><label for="option_potential_30">Lv30予定</label>
+                <input type="checkbox" onclick="clickMyPokeVisible(this);" id="option_potential_50" checked><label for="option_potential_50">Lv50予定</label>
                 <input type="checkbox" onclick="clickMyPokeVisible(this);" id="option_potential_60"><label for="option_potential_60">Lv60予定</label>                
             </div>
 
@@ -274,10 +275,12 @@
             function clickMyPokeVisible(el){
                 let opVisible = document.getElementById("option_mypoke_visible");
                 let op30 = document.getElementById("option_potential_30");
+                let op50 = document.getElementById("option_potential_50");
                 let op60 = document.getElementById("option_potential_60");
 
                 if ((el == opVisible) && !opVisible.checked){
                     op30.checked = false;
+                    op50.checked = false;
                     op60.checked = false                   
                 }
                 else if (!opVisible.checked && el.checked){
@@ -523,6 +526,7 @@
                     food,
                     min,
                     document.getElementById("option_potential_30").checked,
+                    document.getElementById("option_potential_50").checked,
                     document.getElementById("option_potential_60").checked
                 );
             }

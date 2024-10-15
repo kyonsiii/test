@@ -93,7 +93,7 @@ html {
     color: black;
 }
 #input_color_buttons #color_pick_OR:checked + label {
-    background: #FFBB77;
+    background: #FFDD55;
     color: black;
 }
 #input_color_buttons #color_pick_GD:checked + label {

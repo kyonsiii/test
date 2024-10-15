@@ -100,7 +100,7 @@ class PokeReport{
 
 
     //tbのresult_tableはsetResultOfされた時に追加されるので、ない時もあるかも
-    insertMyPokeListInto(tbody, jsonList, foodName, foodMin, showPotential30, showPotential60){
+    insertMyPokeListInto(tbody, jsonList, foodName, foodMin, showPotential30, showPotential50, showPotential60){
         for (let i = 0; i < jsonList.length; i++){
             let json = jsonList[i];
             let poke = this.pokedex.getPokemonByName(json.name);
@@ -112,6 +112,11 @@ class PokeReport{
             if (json.lv < 30 && showPotential30){
                 this.setSubSkillsEnabled(json, 30, true);
                 this.insertMyPokeRowInto(tbody, poke, json, 30, foodName, foodMin, this.getColorCodeOf(4));
+            }
+
+            if (json.lv < 50 && showPotential50){
+                this.setSubSkillsEnabled(json, 50, true);
+                this.insertMyPokeRowInto(tbody, poke, json, 50, foodName, foodMin, this.getColorCodeOf(3));
             }
 
             if (json.lv < 60 && showPotential60){
@@ -475,7 +480,7 @@ class PokeReport{
             case 1: return "#77AAFF"; break;
             case 2: return "#DDDDDD"; break;
             case 3: return "#FFDDDD"; break;                    
-            case 4: return "#FFBB77"; break;                    
+            case 4: return "#FFDD55"; break;                    
             case 5: return "#FFA0A0"; break;
             case 6: return "#BBFFBB"; break;
             case 7: return "#FFFFCC"; break;                    
