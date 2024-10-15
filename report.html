@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.3.1f</title>
+        <title>レポート(仮)v0.3.1g</title>
 
     </head>
 
@@ -726,8 +726,8 @@
             }
 
 
-            function convCookie16To32(){
-                let cookies = getCookie("myPokeList");
+            function convCookie16To32(s = null){
+                let cookies = s ?? getCookie("myPokeList");
                 let res = window.confirm(cookies +  "\nを変換します。");
                 if (res == false) return;
 
@@ -746,7 +746,7 @@
                 if (res == false) return;
 
 
-                setCookie("rmpl", newCookie);
+                setCookie("rmpl", newCookie, 365);
                 setCookie("myPokeList", "", 0);
             }
 
