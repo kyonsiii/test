@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.3.0a</title>
+        <title>レポート(仮)v0.3.0b</title>
 
     </head>
 
@@ -652,17 +652,14 @@
                 if (list.children.length == 0) return;
 
                 let j = pokeReport.createJsonFromCookieValue32(list.value);
-                if (!this.setJsonToInputFormForReEdit(j)) document.getElementById('input_mypoke_name').focus();
+                document.getElementById('input_mypoke_name').focus();
             }
 
 
             function setJsonToInputFormForReEdit(j){
                 let poke = pokedex.getPokemonByName(j.name);
                 let pokeList = document.getElementById("input_mypoke_name");
-                if (pokeList.children.length == 0){
-                    initializePokeList(); //初めてリストに触った時に実行されることになっている
-                    return false;
-                }
+                if (pokeList.children.length == 0) initializePokeList(); //初めてリストに触った時に実行されることになっている
 
                 //ポケモン名、せいかくはリストのIndexを探す必要があるため、後で直接入力。
                 this.resetInputForm(0, j.src, true, j.lv, 0, j.subSkillList.lv10.value, j.subSkillList.lv25.value, j.subSkillList.lv50.value, j.subSkillList.lv75.value, j.subSkillList.lv100.value, j.backgroundColor);                
