@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.3.2b</title>
+        <title>レポート(仮)v0.3.2bb</title>
 
     </head>
 
@@ -229,7 +229,15 @@
 
 
             function changeSubSkill(el){
-                let area = document.getElementById("sub_skill_area");
+                return;
+                let boxes = Array.from(document.querySelectorAll("#sub_skill_area select"));
+
+                let resetBoxes = (index) =>{
+                    for (let i = index + 1; i < 5; i++){
+                        boxes[i]
+                    }
+
+                };
                 let index = area.indexOf(el);
                 console.log(index);
             }
