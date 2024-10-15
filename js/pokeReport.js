@@ -107,17 +107,17 @@ class PokeReport{
 
             if (!poke.containsFood(foodName)) continue;//そもそも食材含んでなかったら処理いらない
            
+            this.insertMyPokeRowInto(tbody, poke, json, json.lv, foodName, foodMin);
 
             if (json.lv < 30 && showPotential30){
+                this.setSubSkillsEnabled(json, 30, true);
                 this.insertMyPokeRowInto(tbody, poke, json, 30, foodName, foodMin, this.getColorCodeOf(4));
             }
 
             if (json.lv < 60 && showPotential60){
+                this.setSubSkillsEnabled(json, 60, true);
                 this.insertMyPokeRowInto(tbody, poke, json, 60, foodName, foodMin, this.getColorCodeOf(5));
             }
-
-            this.insertMyPokeRowInto(tbody, poke, json, json.lv, foodName, foodMin);
-            //if (p30comb.contains(food, foodMin)) this.addMyPokemonRow(poke, food, p30comb, this.pokeReport.getColorCodeOf(4));
         }
         
     }
