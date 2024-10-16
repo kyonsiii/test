@@ -87,7 +87,7 @@ class PokeSleepingCalc{
 
 
     getSleepRecordsToClipboard(){
-        navigator.clipboard.writeText(recordsToCookieValue());
+        navigator.clipboard.writeText(this.recordsToCookieValue());
     }
 
 
