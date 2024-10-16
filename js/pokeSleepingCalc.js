@@ -98,6 +98,14 @@ class PokeSleepingCalc{
     }
 
 
+
+/*
+const mask_sleep_inputFlag  = 0b000000010000000000000000;
+const mask_sleep_uto        = 0b000000001111111100000000;
+                                    //'10000000100001001'
+const mask_sleep_suya       = 0b000000000000000011111111;
+*/
+
     setRecordsToInputBoxesFromCookieValue(c){
         let arr = c.match(/.{4}/g).map(s => parseInt(s, 32));
         for (let i = 0; i < 30; i++){
@@ -109,9 +117,10 @@ class PokeSleepingCalc{
             else{
                 let uto  = bitToNum(n, mask_sleep_uto);
                 let suya = bitToNum(n, mask_sleep_suya);
+                
                 uto = (uto > 100) ? 100 : uto;
                 suya = (suya > 100) ? 100 : suya;
-                suya = ((uto + suya) > 100) ? 0 : (100 - uto);
+                suya = ((uto + suya) > 100) ? NaN : 0;
                 let gusu = 100 - uto - suya;
                 value = uto + "-" + suya + "-" + gusu;
             }
