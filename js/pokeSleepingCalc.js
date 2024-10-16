@@ -87,7 +87,7 @@ class PokeSleepingCalc{
 
 
     getSleepRecordsToClipboard(){
-        navigator.clipboard.writeText(this.createRecords().join(","));
+        navigator.clipboard.writeText(recordsToCookieValue());
     }
 
 
@@ -138,7 +138,7 @@ class PokeSleepingCalc{
             }
             valueList.push(n.toString(32).padStart(4, "0"));
         }
-        
+
         return valueList.join("");
     }
 
