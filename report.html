@@ -9,7 +9,7 @@
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>レポート(仮)v0.3.2c</title>
+        <title>レポート(仮)v0.3.2d</title>
 
     </head>
 
@@ -244,7 +244,7 @@
             }
 
 
-            function setSubSkillSelectBox(){
+            function setSubSkillSelectBoxes(){
                 let addOp = (listId, skillValue, skillText) => {
                     let list = document.getElementById(listId);
                     let op = document.createElement("option");
@@ -541,40 +541,6 @@
 
 
 
-            //クッキー関連(登録)
-            function setMyPokeCookie(){
-                let options = document.getElementById("input_mypoke_registered").children;
-                let sorted = Array.from(options).sort((a, b) => a.textContent > b.textContent ? 1 : -1);
-                let values = [];
-                for (let i = 0; i < sorted.length; i++){
-                    values.push(sorted[i].value);
-                }
-
-                setCookie("rmpl", values.join("/"), 365);
-            }     
-
-
-
-
-            //クッキー関連(呼び出し)
-            function setMypokesToListFromCookie(){
-                let c = getCookie("rmpl")
-                if (c == null) return; 
-
-                let jss = c.split("/").map(x => pokeReport.createJsonFromCookieValue32(x));
-
-                for (let i = 0; i < jss.length; i++){
-                    this.listupMyPokeInfo(jss[i]);
-                    let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));
-                    if (maxFlag){
-                        alert("限界");
-                        return;
-                    }            
-                }
-            }   
-
-
-
 
 
             //ロード時、ボタンなどから直接呼び出される可能性があるもの
@@ -704,56 +670,51 @@
                 this.pokeReport.initialize();
                 this.selectBoxInitialized = false;
 
-                if (getCookie("rmpl") == null){
-                    this.convCookie16To32();
-                }                
+                this.setSubSkillSelectBoxes();
 
-                setMypokesToListFromCookie();                
-                this.setSubSkillSelectBox();
-            }
+                setMypokesToListFromCookie();  
 
-
-            function convCookie16To32(s = null){
-                let cookies = s ?? getCookie("myPokeList");
-                if (cookies == null) return;
-
-
-                let jsonList = cookies.split("/").map(c => pokeReport.createJsonFromCookieValue(c));
-                console.log(jsonList[0]);
-                for (let i = 0; i < jsonList.length; i++){
-                    let j = jsonList[i];
-                    let tmp= this.getOldSubSkillList(j);
-                    j.subSkillList = pokeReport.getSubSkillList(tmp[0],tmp[1],tmp[2],tmp[3],tmp[4]);
+                let c = getCookie("ropt");   
+                if (c != null){
+                    this.pokeReport.setOptionsFromCookie(c);
                 }
                 
-                let newCookie = jsonList.map(j => pokeReport.createCookieValueFromJson32(j)).join("/");
-
-                res = window.confirm(newCookie +  "\nを登録します。");
-                if (res == false) return;
-
-
-                setCookie("rmpl", newCookie, 365);
-                setCookie("myPokeList", "", 0);
             }
 
-
-            function getOldSubSkillList(j){
-                let tmp = (j.subOteBonus ? "oteBonus," : "")
-                        + (j.subSpeedS ? "speedS," : "")
-                        + (j.subSpeedM ? "speedM," : "")
-                        + (j.subFoodS ? "foodS," : "")
-                        + (j.subFoodM ? "foodM," : "")
-                        + (j.subSkillS ? "skillS,": "")
-                        + (j.subSkillM ? "skillM," : "")
-                        + (j.subBerryS ? "berryS," : "")
-                        + ",,,,,,,";
-                return tmp.split(",").slice(0, 5);      
-            }
             
-            
-            function f(){
-                pokeReport.createJsonFromCookieValue32("");
-            }
+            //クッキー関連(登録)
+            function setMyPokeCookie(){
+                let options = document.getElementById("input_mypoke_registered").children;
+                let sorted = Array.from(options).sort((a, b) => a.textContent > b.textContent ? 1 : -1);
+                let values = [];
+                for (let i = 0; i < sorted.length; i++){
+                    values.push(sorted[i].value);
+                }
+
+                setCookie("rmpl", values.join("/"), 365);
+            }     
+
+
+
+
+            //クッキー関連(呼び出し)
+            function setMypokesToListFromCookie(){
+                let c = getCookie("rmpl")
+                if (c == null) return; 
+
+                let jss = c.split("/").map(x => pokeReport.createJsonFromCookieValue32(x));
+
+                for (let i = 0; i < jss.length; i++){
+                    this.listupMyPokeInfo(jss[i]);
+                    let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));
+                    if (maxFlag){
+                        alert("限界");
+                        return;
+                    }            
+                }
+            }   
+
+
 
 
         </script>

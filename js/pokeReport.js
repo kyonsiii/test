@@ -56,10 +56,17 @@ const sub_num_yumeBonus     = 0b10000;
 const sub_num_researchBonus = 0b10001;
 const sub_num_ult           = 0b10010;
 
+const mask_result_op_visible_Lv30         = 0b010000000000000;
+const mask_result_op_visible_Lv60         = 0b001000000000000;
+const mask_result_op_visible_MyPoke       = 0b000100000000000;
+const mask_result_op_visible_MyPokeLv30ft = 0b000010000000000;
+const mask_result_op_visible_MyPokeLv50ft = 0b000001000000000;
+const mask_result_op_visible_MyPokeLv60ft = 0b000000100000000;
+const mask_result_op_visible_FullyEvolved = 0b000000010000000;
+const mask_result_op_visible_minNum       = 0b000000001111000;
+                        
 
 class PokeReport{
-
-
     constructor(pokedex){
         this.pokedex = pokedex;
         this.combinationsInitialized = false;
@@ -94,8 +101,39 @@ class PokeReport{
         
         pokeAndComb.sort((a, b) => b.comb.getExpectionOf(foodName) - a.comb.getExpectionOf(foodName))
                     .forEach(x => tbody.appendChild(this.createPokemonInfoRow(x.poke, x.comb, foodName)));
+        this.setCurrentOptionsToCookie();
         return tbody;
     }
+
+
+    setCurrentOptionsToCookie(){
+        let n = 0;
+        n += numToBit(document.getElementById("option_poke_30").checked, mask_result_op_visible_Lv30);    
+        n += numToBit(document.getElementById("option_poke_60").checked, mask_result_op_visible_Lv60);  
+
+        n += numToBit(document.getElementById("option_mypoke_visible").checked, mask_result_op_visible_MyPoke); 
+        n += numToBit(document.getElementById("option_potential_30").checked, mask_result_op_visible_MyPokeLv30ft); 
+        n += numToBit(document.getElementById("option_potential_50").checked, mask_result_op_visible_MyPokeLv50ft); 
+        n += numToBit(document.getElementById("option_potential_60").checked, mask_result_op_visible_MyPokeLv60ft);
+        n += numToBit(document.getElementById("only_fully_evolved").checked, mask_result_op_visible_FullyEvolved);
+        n += numToBit(document.getElementById("food_min").selectedIndex, mask_result_op_visible_minNum);
+        setCookie("ropt", n.toString(32), 30);
+    }
+
+
+    setOptionsFromCookie(c){
+        let n = parseInt(c, 32);
+        document.getElementById("option_poke_30").checked = bitToNum(n, mask_result_op_visible_Lv30);    
+        document.getElementById("option_poke_60").checked = bitToNum(n, mask_result_op_visible_Lv60);  
+
+        document.getElementById("option_mypoke_visible").checked = bitToNum(n, mask_result_op_visible_MyPoke); 
+        document.getElementById("option_potential_30").checked = bitToNum(n, mask_result_op_visible_MyPokeLv30ft); 
+        document.getElementById("option_potential_50").checked = bitToNum(n, mask_result_op_visible_MyPokeLv50ft); 
+        document.getElementById("option_potential_60").checked = bitToNum(n, mask_result_op_visible_MyPokeLv60ft);
+        document.getElementById("only_fully_evolved").checked = bitToNum(n, mask_result_op_visible_FullyEvolved);
+        document.getElementById("food_min").selectedIndex = bitToNum(n,mask_result_op_visible_minNum);
+    }
+
 
 
 
