@@ -1,6 +1,6 @@
-const mask_left  = 0b1111111100000000;
-const mask_right = 0b0000000011111111;
-
+const mask_sleep_inputFlag  = 0b000000010000000000000000;
+const mask_sleep_uto        = 0b000000001111111100000000;
+const mask_sleep_suya       = 0b000000000000000011111111;
 class PokeSleepingCalc{
     //WEBページで初期化時にcalcでインスタンスが作成されることを前提にしています。
     constructor(){
@@ -53,14 +53,14 @@ class PokeSleepingCalc{
                 + values[2] + "(" + this.numberToSignedNumber(gusu_diff) + ")"
                 + "\n" + maxType;  
 
-        setCookie("calcRecords", this.recordsToCookieValue(), 30);
+        setCookie("srcd", this.recordsToCookieValue(), 30);
         alert(mes);
     }
 
 
     showCurrentRatio(){
         let x = this.getCurrentRatio();
-        setCookie("calcRecords", this.recordsToCookieValue(), 30);
+        setCookie("srcd", this.recordsToCookieValue(), 30);
         alert(x[0] + "-" + x[1] + "-" + x[2]);
     }
 
@@ -93,46 +93,53 @@ class PokeSleepingCalc{
 
     setSleepRecordsFromTextBox(){
         let tb = document.getElementById('import_text');
-        this.setHyphenJoinedCsvRecordsToInputBoxes(tb.value);
+        this.setRecordsToInputBoxesFromCookieValue(tb.value);
         tb.value = "";
     }
 
 
-    setHyphenJoinedCsvRecordsToInputBoxes(csvData){
-        let values = csvData.split(',');
-        if (values.length != 30){
-            alert("30個のデータの場合のみ取り込めます。");
-            return;
-        }
-
-        for (let i = 0; i < 30; i++){
-            document.getElementById('calc_row_' + (i + 1)).getElementsByTagName('input')[0].value = values[i];
-        }
-    }
-
-
     setRecordsToInputBoxesFromCookieValue(c){
-        let recordNums = c.split(",").map(s => parseInt(s, 16)).map(n => [bitToNum(n, mask_left), bitToNum(n, mask_right)]);
-        let hypenJointedCsvRecords = recordNums.map(n => n[0] + "-" + n[1] + "-" + (100 - n[0] - n[1])).join(",");
-        this.setHyphenJoinedCsvRecordsToInputBoxes(hypenJointedCsvRecords);
+        let arr = c.match(/.{4}/g).map(s => parseInt(s, 32));
+        for (let i = 0; i < 30; i++){
+            let n = arr[i];
+            let value = "";
+            if (bitToNum(n, mask_sleep_inputFlag) == 0){
+                //何もしない
+            }
+            else{
+                let uto  = bitToNum(n, mask_sleep_uto);
+                let suya = bitToNum(n, mask_sleep_suya);
+                uto = (uto > 100) ? 100 : uto;
+                suya = (suya > 100) ? 100 : suya;
+                suya = ((uto + suya) > 100) ? 0 : (100 - uto);
+                let gusu = 100 - uto - suya;
+                value = uto + "-" + suya + "-" + gusu;
+            }
+            let tb = document.getElementById("calc_row_" + (i + 1)).getElementsByTagName("input")[0];
+            tb.value = value;
+        }
     }
 
-          
+
     recordsToCookieValue(){
         let records = this.createRecords();
-        let tmpCookie = [];
+        let valueList = [];
+        let n = 0;
         for (let i = 0; i < records.length; i++){
+            n = 0;
             if (records[i] == ""){
-                tmpCookie.push("0");
+                //何もしない
             }
             else{
                 let nums = records[i].split("-").map(n => Number(n));
-                let n = numToBit(nums[0], mask_left);
-                n += numToBit(nums[1], mask_right);
-                tmpCookie.push(n.toString(16));
+                n += numToBit(1, mask_sleep_inputFlag);
+                n += numToBit(nums[0], mask_sleep_uto);
+                n += numToBit(nums[1], mask_sleep_suya);
             }
+            valueList.push(n.toString(32).padStart(4, "0"));
         }
-        return tmpCookie.join(",");
+        
+        return valueList.join("");
     }
 
 
@@ -145,8 +152,7 @@ class PokeSleepingCalc{
         let values = [];
         for (let i = 1; i <= 30; i++){
             let r = document.getElementById('calc_row_' + i);
-            let tmp = r.getElementsByTagName('input')[0].value.replace(/[ _-]/g, "-");
-            
+            let tmp = r.getElementsByTagName('input')[0].value;
             values.push(tmp);
         }
         return values;
@@ -163,7 +169,7 @@ class PokeSleepingCalc{
 
 
     recalcRatioOf(tb){           
-        let tmp = tb.value.replace(/[ _-]/g, "-");
+        let tmp = tb.value.replace(/[ \._-]/g, "-");
         let numbers = tmp.split('-').map(n => parseInt(n, 10));
         let uto = numbers[0];
         let suya = numbers[1];

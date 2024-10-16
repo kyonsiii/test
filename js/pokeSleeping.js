@@ -62,9 +62,12 @@ class PokeSleeping{
         }
         document.getElementById('calc_result').innerHTML= resStr;
         
-        setCookie("currentPower", powerNum.toString(), 30);
-        setCookie("targetPower", targetNum.toString(), 30);
+        powerNum = (powerNum > 200000000000) ? 200000000000 : powerNum;
+        targetNum = (targetNum > 200000000000) ? 200000000000 : targetNum;
+        let c = powerNum.toString(32) + "," + targetNum.toString(32);
+        setCookie("spow", c, 30);
     }
+
 
     
 
@@ -76,7 +79,7 @@ class PokeSleeping{
             t.style.display = (t == el) ? "" : "none";
         }
 
-        setCookie("myField", rb.value, 7);
+        setCookie("sfld", rb.value, 7);
     }
 
 
