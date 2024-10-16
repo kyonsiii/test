@@ -120,7 +120,7 @@ const mask_sleep_suya       = 0b000000000000000011111111;
                 
                 uto = (uto > 100) ? 100 : uto;
                 suya = (suya > 100) ? 100 : suya;
-                suya = ((uto + suya) > 100) ? NaN : 0;
+                suya = ((uto + suya) > 100) ? NaN : suya;
                 let gusu = 100 - uto - suya;
                 value = uto + "-" + suya + "-" + gusu;
             }
