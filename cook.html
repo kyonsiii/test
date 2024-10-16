@@ -7,7 +7,7 @@
         <script src="js/main.js"></script>
         <script src="js/recipedb.js"></script>
         <script src="js/pokeCook.js"></script>
-        <title>料理v1.0.2</title>
+        <title>料理v1.0.2a</title>
     </head>
 
 
@@ -36,7 +36,7 @@
 
             <div id="recipe_limit">
                 <input type="radio" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" value="9999" checked>制限なし
-                <input type="radio" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" value="-1">制限:
+                <input type="radio" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" onclick="pokeCook.setTarget(this, null)" value="-1">制限:
                 <input type="text" id="recipe_limit_manual" style="width:10em;">                       
             </div>   
 
