@@ -169,7 +169,7 @@ class PokeReport{
         let comb = poke.createFoodCombination(json, lv);
         if (!comb.contains(foodName, foodMin)) return;
 
-        let tr = this.createPokemonInfoRow(poke, comb, foodName);
+        let tr = this.createMyPokemonInfoRow(poke, comb, foodName, json);
         tr.style.backgroundColor = backgroundColor ?? this.getColorCodeOf(json.backgroundColor);
 
         let rows = tbody.children;
@@ -188,9 +188,15 @@ class PokeReport{
     
 
 
-    createPokemonInfoRow(poke, comb, food){
+    createPokemonInfoRow(poke, comb, food, json = null){
         let r = document.createElement("tr");
         comb.insertResultTo(r, food, poke);
+        return r;
+    }
+
+    createMyPokemonInfoRow(poke, comb, food, json){
+        let r = document.createElement("tr");
+        comb.insertResultTo(r, food, poke, this.createIdentifierOf(json));
         return r;
     }
  

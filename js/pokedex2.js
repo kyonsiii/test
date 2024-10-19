@@ -352,12 +352,18 @@ class FoodCombination{
     }
 
 
-    insertResultTo(tr, foodName, poke){
+    insertResultTo(tr, foodName, poke, identifier = null){
         let cell = tr.insertCell();
         let img = document.createElement("img");
         img.src = "img/poke/" + String(poke.no).padStart(3, '0') + ".png"
         img.classList.add("tiny");
         cell.appendChild(img);
+        if (identifier != null){
+            let id = document.createElement("span");
+            id.classList.add("mypoke_identifier");
+            id.textContent = identifier;
+            cell.appendChild(id);
+        }
 
         let lv = document.createElement("span");
         lv.textContent = "Lv" + this.lv;
