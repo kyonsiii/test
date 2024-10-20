@@ -147,23 +147,27 @@ class PokeReport{
 
 
         let tmp = [];
-            tmp.push({あじわいキノコ: []});
-            tmp.push({あったかジンジャー: []});
-            tmp.push({あまいミツ: []});
-            tmp.push({あんみんトマト: []});
-            tmp.push({おいしいシッポ: []});
-            tmp.push({げきからハーブ: []});
-            tmp.push({とくせんエッグ: []});
-            tmp.push({とくせんリンゴ: []});
-            tmp.push({ピュアなオイル: []});
-            tmp.push({ふといながねぎ: []});
-            tmp.push({ほっこりポテト: []});
-            tmp.push({マメミート: []});
-            tmp.push({めざましコーヒー: []});
-            tmp.push({モーモーミルク: []});
-            tmp.push({リラックスカカオ: []});
-            tmp.push({ワカクサ大豆: []});
-            tmp.push({ワカクサコーン: []});
+        tmp.push({とくせんリンゴ: []});
+        tmp.push({モーモーミルク: []});
+        tmp.push({ワカクサ大豆: []});
+        tmp.push({あまいミツ: []});
+        tmp.push({マメミート: []});
+        tmp.push({あったかジンジャー: []});
+        tmp.push({あんみんトマト: []});
+        tmp.push({とくせんエッグ: []});
+        tmp.push({ピュアなオイル: []});
+        tmp.push({ほっこりポテト: []});
+        tmp.push({げきからハーブ: []});
+        tmp.push({リラックスカカオ: []});
+        tmp.push({あじわいキノコ: []});
+        tmp.push({ふといながねぎ: []});
+        tmp.push({おいしいシッポ: []});
+        tmp.push({ワカクサコーン: []});
+        tmp.push({めざましコーヒー: []});
+
+      
+
+      
 
         //MyPokeを食材ごとに割り振る（重複あり）
         tmp.forEach(f => {
