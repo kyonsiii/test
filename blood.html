@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <!--https://csshtml.work/click-button/ 参考にしたボタンの作り方。ありがとう！-->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="style.css" rel="stylesheet"/>
+        <script src="js/main.js"></script>
+
+
+        <title>血圧</title>
+
+        <style>
+            #save + table{
+                margin-top: 1em;
+            }
+            #records input{
+                width: 4em;
+            }
+        </style>
+    </head>
+
+
+    <body style="max-width: 30em;">
+        <button id="save" onclick="save();">save</button>
+        <table>
+            <thead>
+                <th>回目</th>
+                <th>最高血圧</th>
+                <th>最低血圧</th>
+            </thead>
+
+            <tbody id="records">
+
+            </tbody>
+        </table>
+
+        <script>
+            const mask_blood_max = 0b1111111100000000;
+            const mask_blood_min = 0b0000000011111111;     
+                
+            window.onload = () =>{
+                this.initialize();
+                load();
+            };
+
+
+            function initialize(){
+                let tbody = document.getElementById("records");
+                for (let i = 1; i <= 50; i++){
+
+                    let max = document.createElement("input");
+                    max.type = "text";
+                    max.id = "max_row_" + i;
+
+                    let min = document.createElement("input");
+                    min.type ="text";
+                    min.id = "min_row_" + i;
+
+                    let r = tbody.insertRow();
+                    r.insertCell().textContent = i + "回目";
+              
+                    r.insertCell().appendChild(max);
+                    r.insertCell().appendChild(min);
+                }
+            }
+
+            function save(){
+                let rows =  document.getElementById("records").children;
+                let records = [];
+                for (let i = 1; i <= 50; i++){                   
+                    let max = document.getElementById("max_row_" + i);
+                    let min = document.getElementById("min_row_" + i);
+                    minNum = Math.abs(Number(min.value));
+                    maxNum = Math.abs(Number(max.value));
+                    let n = numToBit(maxNum< 256 ? maxNum : 255, mask_blood_max);
+                    n += numToBit(minNum < 256 ? minNum : 255, mask_blood_min);
+
+                    records.push(n.toString(32).padStart(4, "0"));                  
+                }
+                setCookie("bld", records.join(""));               
+            }
+
+
+            function load(){
+                let rows =  document.getElementById("records").children;
+                let c = getCookie("bld");
+                if (c == null) return;
+                
+                let records = c.match(/.{4}/g);
+                for (let i = 1; i <= 50; i++){     
+                                 
+                    let max = document.getElementById("max_row_" + i);
+                    let min = document.getElementById("min_row_" + i);
+                    let n = parseInt(records[i - 1], 32);
+                    if (n != 0) {
+                        max.value = bitToNum(n, mask_blood_max);
+                        min.value = bitToNum(n, mask_blood_min);
+                    }
+                }  
+            }
+
+
+
+        </script>
+    </body>
+
+</html>
