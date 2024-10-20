@@ -175,12 +175,8 @@ class PokeReport{
         });
 
 
-        console.log(pokeAndComb);
-
-
         let createRow = (food, pacList) => {
-            let sorted = pacList.sort((a, b) => b.comb.getExpectionOf(food) - a.comb.getExpectionOf(food));
-            
+            let sorted = pacList.sort((a, b) => b.comb.getExpectionOf(food) - a.comb.getExpectionOf(food));            
             let tr1 = tbody.insertRow();            
             let fImg = document.createElement("img");
             fImg.src = "img/food/" + food + ".png";
@@ -194,7 +190,7 @@ class PokeReport{
            
             let insertInfo = (pac, rank, tr = null) => {
                 tr = tr ?? tbody.insertRow();
-                pac.comb.insertResultTo(tr, food, pac.poke, this.createIdentifierOf(pac.json), true);
+                pac.comb.insertResultTo(tr, food, pac.poke, this.createIdentifierOf(pac.json));
                 foodImgCell.rowSpan = rank;
             };
             
