@@ -1,3 +1,6 @@
+const mask_sleep_inputFlag  = 0b000000010000000000000000;
+const mask_sleep_uto        = 0b000000001111111100000000;
+const mask_sleep_suya       = 0b000000000000000011111111;
 class PokeSleepingCalc{
     //WEBページで初期化時にcalcでインスタンスが作成されることを前提にしています。
     constructor(){
@@ -13,16 +16,30 @@ class PokeSleepingCalc{
         for (let i = 1; i <= 30; i++){
             let r = tbody.insertRow();
             r.id = "calc_row_" + i;
+
             let c1 = r.insertCell();
             c1.textContent = i + "回前";
 
             let c2 = r.insertCell();
-            c2.innerHTML = '<input type="text" class="calc_sleep_input" />';
+            let atr = "calc_row_" + ( i == 30 ? 1 : i + 1);
+
+            c2.innerHTML = '<input type="text" class="calc_sleep_input" next_row_id="'+ atr + '" onkeydown="calc.textBoxKeyPress(this, event);"/>';
             
             let c3 = r.insertCell();
-            c3.innerHTML = '<button tabindex="-1" onclick="calc.offsetCalcRowValue(false);" class="smaller">↓</button> <button tabindex="-1" onclick="calc.offsetCalcRowValue(true);"  class="smaller">↑</button>'
+            c3.innerHTML = (i == 1) ? '<button tabindex="-1" onclick="calc.offsetCalcRowValue(false);" class="smaller">↓</button> <button tabindex="-1" onclick="calc.offsetCalcRowValue(true);"  class="smaller">↑</button>'
+                                     : "";
         }
     }
+
+    textBoxKeyPress(sender, event){
+        if (event.key === "Enter"){
+            let nextRow = document.getElementById(sender.getAttribute("next_row_id"));
+            nextRow.querySelector("input").focus();
+            console.log(nextRow);
+        }
+
+    }
+
 
 
     //睡眠記録関連(ボタンで呼び出すもの)
@@ -49,14 +66,14 @@ class PokeSleepingCalc{
                 + values[2] + "(" + this.numberToSignedNumber(gusu_diff) + ")"
                 + "\n" + maxType;  
 
-        setCookie("calcRecords", this.createRecords().join(","), 30);
+        setCookie("srcd", this.recordsToCookieValue(), 30);
         alert(mes);
     }
 
 
     showCurrentRatio(){
         let x = this.getCurrentRatio();
-        setCookie("calcRecords", this.createRecords().join(","), 30);
+        setCookie("srcd", this.recordsToCookieValue(), 30);
         alert(x[0] + "-" + x[1] + "-" + x[2]);
     }
 
@@ -83,29 +100,73 @@ class PokeSleepingCalc{
 
 
     getSleepRecordsToClipboard(){
-        navigator.clipboard.writeText(this.createRecords().join(","));
+        navigator.clipboard.writeText(this.recordsToCookieValue());
     }
 
 
     setSleepRecordsFromTextBox(){
         let tb = document.getElementById('import_text');
-        this.setRecordsToInputBoxes(tb.value);
+        this.setRecordsToInputBoxesFromCookieValue(tb.value);
         tb.value = "";
     }
 
 
-    setRecordsToInputBoxes(csvData){
-        let values = csvData.split(',');
-        if (values.length != 30){
-            alert("30個のデータの場合のみ取り込めます。");
-            return;
-        }
 
+/*
+const mask_sleep_inputFlag  = 0b000000010000000000000000;
+const mask_sleep_uto        = 0b000000001111111100000000;
+                                    //'10000000100001001'
+const mask_sleep_suya       = 0b000000000000000011111111;
+*/
+
+    setRecordsToInputBoxesFromCookieValue(c){
+        let arr = c.match(/.{4}/g).map(s => parseInt(s, 32));
         for (let i = 0; i < 30; i++){
-            document.getElementById('calc_row_' + (i + 1)).getElementsByTagName('input')[0].value = values[i];
+            let n = arr[i];
+            let value = "";
+            if (bitToNum(n, mask_sleep_inputFlag) == 0){
+                //何もしない
+            }
+            else{
+                let uto  = bitToNum(n, mask_sleep_uto);
+                let suya = bitToNum(n, mask_sleep_suya);
+                
+                uto = (uto > 100) ? 100 : uto;
+                suya = (suya > 100) ? 100 : suya;
+                suya = ((uto + suya) > 100) ? NaN : suya;
+                let gusu = 100 - uto - suya;
+                value = uto + "-" + suya + "-" + gusu;
+            }
+            let tb = document.getElementById("calc_row_" + (i + 1)).getElementsByTagName("input")[0];
+            tb.value = value;
         }
-    }    
+    }
 
+
+    recordsToCookieValue(){
+        let records = this.createRecords();
+        let valueList = [];
+        let n = 0;
+        for (let i = 0; i < records.length; i++){
+            n = 0;
+            if (records[i] == ""){
+                //何もしない
+            }
+            else{
+                let nums = records[i].split("-").map(n => Number(n));
+                n += numToBit(1, mask_sleep_inputFlag);
+                n += numToBit(nums[0], mask_sleep_uto);
+                n += numToBit(nums[1], mask_sleep_suya);
+            }
+            valueList.push(n.toString(32).padStart(4, "0"));
+        }
+
+        return valueList.join("");
+    }
+
+
+
+    
 
     //睡眠記録関連(その他)
     createRecords(){
@@ -113,8 +174,7 @@ class PokeSleepingCalc{
         let values = [];
         for (let i = 1; i <= 30; i++){
             let r = document.getElementById('calc_row_' + i);
-            let tmp = r.getElementsByTagName('input')[0].value.replace(/[ _-]/g, "-");
-            
+            let tmp = r.getElementsByTagName('input')[0].value;
             values.push(tmp);
         }
         return values;
@@ -131,7 +191,7 @@ class PokeSleepingCalc{
 
 
     recalcRatioOf(tb){           
-        let tmp = tb.value.replace(/[ _-]/g, "-");
+        let tmp = tb.value.replace(/[ \._-]/g, "-");
         let numbers = tmp.split('-').map(n => parseInt(n, 10));
         let uto = numbers[0];
         let suya = numbers[1];

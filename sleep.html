@@ -7,7 +7,7 @@
         <script src="js/main.js"></script>
         <script src="js/pokeSleeping.js"></script>  
         <script src="js/pokeSleepingCalc.js"></script>
-        <title>睡眠計算v1.0.0</title>
+        <title>睡眠計算v1.0.3</title>
     </head>
 
 
@@ -28,19 +28,19 @@
         </p>
 
         <p id="field_filter">
-            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="wakakusa">ワカクサ
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="waka">ワカクサ
             <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="cyan">シアン
-            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="taupe">トープ
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="taup">トープ
             <br>
             <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="uno">ウノハナ
-            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="rapiz">ラピス
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="rapi">ラピス
             <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="gold">ゴールド
         </p>
 
         <!--ボタンはJavascriptで後から追加-->
 
         <div id="field_tables">
-            <div id="wakakusa">
+            <div id="waka">
                 ワカクサ<br>
                 <table class="table_sleep">
                     <thead>
@@ -124,7 +124,7 @@
             </div>
     
     
-            <div id="taupe">
+            <div id="taup">
                 トープ<br>
                 <table class="table_sleep">
                     <thead>
@@ -207,7 +207,7 @@
             </div>
             
     
-            <div id="rapiz">
+            <div id="rapi">
                 ラピスラズリ湖畔<br>
                 <table class="table_sleep">
                     <thead>
@@ -308,6 +308,10 @@
                         <td><input type="text" id="calc_target" class="calc_sleep_input" /></td>
                         <td><button onclick="calc.showRatioCalcResult();" class="smaller">計算</button></td>
                     </tr>
+                    <tr>
+                        <td>現在値</td>
+                        <td id ="calc_current_ratio" colspan="2"></td>
+                    </tr>
     
                 </tbody>
             </table>
@@ -342,26 +346,32 @@
 
                 this.calc.addInputRowsToTable();
                 
-                let field = this.getCookie("myField");
+
+                let field = this.getCookie("sfld");
                 if (field != null){
-                    let buttons = Array.from(document.getElementById('field_filter').children);
-                    buttons.find(rb => rb.value == field).click();
-                }
-                
-                let curPower = this.getCookie("currentPower");
-                if (curPower != null){
-                    this.pokesleeping.input_current.value = curPower;
-                }
-                
-                let target = this.getCookie("targetPower");
-                if (target != null){
-                    this.pokesleeping.input_target.value = target;
+                    let buttons = Array.from(document.getElementById('field_filter').children).find(rb => rb.value == field).click();
                 }
 
-                let records = this.getCookie("calcRecords");
-                if (records != null){
-                    this.calc.setRecordsToInputBoxes(records);
+                let spow = getCookie("spow");
+                if (spow != null){
+                    let pows = spow.split(",").map(s => parseInt(s, 32));
+                    document.getElementById("current_power").value = pows[0];
+                    document.getElementById("target_power").value = pows[1];
                 }
+
+
+                let records = this.getCookie("srcd");
+                if (records != null){
+                    this.calc.setRecordsToInputBoxesFromCookieValue(records);
+                    document.getElementById("calc_current_ratio").textContent = this.calc.getCurrentRatio().join("-");
+                }
+
+                
+                //そのうち下のやつ消す
+                setCookie("currentPower", "", 0);
+                setCookie("targetPower", "", 0);
+                setCookie("myField", "", 0)
+                setCookie("calcRecords", "", 0);
             
             }
         </script>

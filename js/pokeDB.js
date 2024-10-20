@@ -9,7 +9,10 @@ class PokeDB{
     }
 
     
-    initialize(pokemons){
+    initialize(pokedex){
+        this.pokedex = pokedex;
+        this.pokemons = this.pokedex.pokemons;
+        
         this.resultTable = document.getElementById("result");
         this.resultTBody = this.resultTable.tBodies[0];
         this.button_reset =  document.getElementById('button_reset');
@@ -17,12 +20,57 @@ class PokeDB{
         this.box_skill = document.getElementById('select_skill');
     
         this.button_reset.addEventListener("click", () =>{this.reset();});
-        this.box_specialty.addEventListener("change", ()=>{this.setResult();});
-    
+        this.box_specialty.addEventListener("change", ()=>{this.setResult();});    
         this.box_skill.addEventListener("change", ()=>{this.setResult();});
-        this.pokemons = pokemons
+        
+
     }
-    
+
+    setFoodImgListTo(listEl){        
+        for (let i = 0; i < this.pokedex.foodList.length; i++){
+            let img = this.getFoodImgElementOf(this.pokedex.foodList[i]);
+            img.setAttribute("onclick", "pokedb.selectIcon(this)");
+            listEl.appendChild(img);
+        }
+    }
+
+
+    setBerryImgListTo(listEl){
+        for (let i = 0; i < this.pokedex.berryList.length; i++){
+            let img = this.getBerryImgElementOf(this.pokedex.berryList[i].name);
+            img.setAttribute("onclick", "pokedb.selectIcon(this)");
+            listEl.appendChild(img);
+        }
+    }
+
+    getBerryImgElementOf(berry){
+        let el = document.createElement("img");
+        el.name = berry;
+        el.src = "img/berry/" + el.name + ".png";
+        return el;
+    }
+
+    getFoodImgElementOf(food){
+        let el = document.createElement("img");
+        el.name = food;
+        el.src = "img/food/" + el.name + ".png";
+        return el;
+    }
+
+
+    setSkillListTo(listEl){
+        let op1 = document.createElement("option");
+        op1.value = "----"
+        op1.textContent = op1.value;
+        listEl.appendChild(op1)
+
+        for (let i = 0; i < this.pokedex.skillList.length; i++){
+            let op = document.createElement("option");
+            op.value = this.pokedex.skillList[i];
+            op.textContent = op.value;
+            listEl.appendChild(op);
+        }
+    }
     
     
     reset(onlyTBody, ignoreSetResult = false, ignoreSpecialtySelection = false, ignoreSkillSelection = false){
@@ -117,7 +165,6 @@ class PokeDB{
         let ignoreBerry = (selectedBerries == "");
         let ignoreFood = (selectedFoods == "");
         let ignoreSkill = (this.box_skill.value == "----");
-    
         let results = this.pokemons.filter(p => (ignoreSpecialty || p.specialty == this.box_specialty.value)
                                              && (ignoreBerry || selectedBerries.includes(p.berry))
                                              && (ignoreFood || p.containsFood(selectedFoods))
@@ -136,17 +183,24 @@ class PokeDB{
         let c;
 
         c = r.insertCell();
-        c.innerHTML = "<a href=\"https://wikiwiki.jp/poke_sleep/" + poke.name + "\">" + ("No." + poke.no + " ") + poke.name + "</a>" + "<br>" + "<img src=\"img/poke/" + String(poke.no).padStart(3, '0') + ".png\" class=\"normal\">" + poke.sleepType + " - " + poke.specialty + "<br>" + poke.skill + "<br>" + poke.sec + "<p>" + poke.indicator + "<br><span class=\"indicator_text\">きのみRank</span> " + poke.getIndicatorBarOf(poke.berryIndicator)//poke.indicatorChar.repeat(poke.berryIndicator)
-        + "<br><span class=\"indicator_text\">食材Rank</span> " + poke.getIndicatorBarOf(poke.foodIndicator)//poke.indicatorChar.repeat(poke.foodIndicator)
-        + "<br><span class=\"indicator_text\">スキルRank</span> " + poke.getIndicatorBarOf(poke.skillIndicator)//poke.indicatorChar.repeat(poke.skillIndicator)
+        c.innerHTML = "<a href=\"https://wikiwiki.jp/poke_sleep/" + poke.name + "\">" + ("No." + poke.no + " ") + poke.name + "</a>" 
+        + "<br>" + "<img src=\"img/poke/" + String(poke.no).padStart(3, '0') + ".png\" class=\"normal\">" + poke.sleepType + " - " + poke.specialty
+        + "<br>" + poke.skill + "<br>"
+        + poke.sec 
+        + "<p>"
+        + "<br><span class=\"indicator_text\">きのみRank</span> " + poke.getIndicatorBarOf(poke.rankOfBerry)//poke.indicatorChar.repeat(poke.berryIndicator)
+        + "<br><span class=\"indicator_text\">食材Rank</span> " + poke.getIndicatorBarOf(poke.rankOfFood)//poke.indicatorChar.repeat(poke.foodIndicator)
+        + "<br><span class=\"indicator_text\">スキルRank</span> " + poke.getIndicatorBarOf(poke.rankOfSkill)//poke.indicatorChar.repeat(poke.skillIndicator)
         + "</p>";
 
         c = r.insertCell();
-        c.innerHTML = "<img src=\"img/berry/" + poke.berry + ".png\" class=\"tiny\">" + poke.berry + "<br><br>" + "<img src=\"img/food/" + poke.food1 + ".png\" class=\"tiny\"><b>" + "(確定)</b>" + "<br>" + "<img src=\"img/food/" + poke.food2 + ".png\" class=\"tiny\">" + "<br>" + "<img src=\"img/food/" + poke.food3 + ".png\" class=\"tiny\">";
+        c.innerHTML = "<img src=\"img/berry/" + poke.berry + ".png\" class=\"tiny\">" + poke.berry 
+                    + "<br><br>" + "<img src=\"img/food/" + poke.food1 + ".png\" class=\"tiny\"><b>" + "(確定)</b>" 
+                    + "<br>" + "<img src=\"img/food/" + poke.food2 + ".png\" class=\"tiny\">" 
+                    + (poke.food3 == "" ? "" : "<br>" + "<img src=\"img/food/" + poke.food3 + ".png\" class=\"tiny\">");
 
         return r;
     }
-        
 }
 
   

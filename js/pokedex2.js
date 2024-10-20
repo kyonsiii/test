@@ -201,6 +201,10 @@ new Pokemon({no:914,name:"ウェーニバル",sleepType:"ぐっすり",specialty
             {no: 18, name: "モモンのみ", power: 26}
         ];
 
+        this.berryList = this.berries;
+        this.skillList = Array.from((new Set(this.pokemons.map(p => p.skill)))).sort();
+        this.foodList = Array.from((new Set(this.pokemons.map(p => [p.food1, p.food2, p.food3]).flat()))).filter(f => f != "").sort();//本当はこんなのよくないよね・・・
+
     }
 
     getPokemonByName(name){
@@ -251,14 +255,26 @@ class Pokemon{
 
         for (let ib = 0; ib < 2; ib++){         //2つ目の食材はAかB
             code = 'A' + String.fromCharCode(65 + ib);
-            this.foodCombinations.push(new FoodCombination(this, 30, this.getOtetsudaiCountDay(30), code));
-
+            this.foodCombinations.push(this.createFoodCombination(null, 30, code));
             for (let ic = 0; ic < 3; ic++){      //3つ目の食材はAかBかC なお、Cがない場合もある
                 if (this.food3 == "" && ic == 2) continue;
-                this.foodCombinations.push(new FoodCombination(this, 60, this.getOtetsudaiCountDay(60), code + String.fromCharCode(65 + ic)));
+                this.foodCombinations.push(this.createFoodCombination(null, 60, code + String.fromCharCode(65 + ic)));
             }
         }
     }
+
+
+    createFoodCombination(json = null, lv = -1, code = null){   //json=nullは無補正の一覧表示の時を想定。 lvとcodeは上書きできるように
+        if (json == null){
+            json = {};
+            json.charAdjusts = {speed: 0, food:0};
+            json.subAdjusts  = {speed: 0, food:0};
+        }                
+        lv = (lv != -1) ? lv : json.lv; //lvの入力がなかったらjsonの情報を見る
+        code = code ?? json.foodCode;   //foodCodeの入力がなかったらjsonの情報を見る
+        return new FoodCombination(this, lv, this.getOtetsudaiCountDay(lv, json.charAdjusts.speed, json.subAdjusts.speed), code, json.charAdjusts.food + json.subAdjusts.food);
+    }
+
 
     containsFood(foods){
         return (foods.includes(this.food1) || foods.includes(this.food2) || (this.food3 == "" ? false : foods.includes(this.food3)) );
@@ -273,6 +289,7 @@ class Pokemon{
 
 
     getIndicatorBarOf(num){
+        num = (num < 0) ? 0 : num;
         let left = (num >= 10) ? "" + num + " " : "<font color='white'>_</font>" + num + " ";
         return left + this.indicatorChar.repeat(num);
     }
@@ -335,12 +352,18 @@ class FoodCombination{
     }
 
 
-    insertResultTo(tr, foodName, poke){
+    insertResultTo(tr, foodName, poke, identifier = null){
         let cell = tr.insertCell();
         let img = document.createElement("img");
         img.src = "img/poke/" + String(poke.no).padStart(3, '0') + ".png"
         img.classList.add("tiny");
         cell.appendChild(img);
+        if (identifier != null){
+            let id = document.createElement("span");
+            id.classList.add("mypoke_identifier");
+            id.textContent = identifier;
+            cell.appendChild(id);
+        }
 
         let lv = document.createElement("span");
         lv.textContent = "Lv" + this.lv;
@@ -365,21 +388,22 @@ class FoodCombination{
     setCombinationResultTo(row, targetFoodName){
         for (let i = 0; i < 3; i++){
             if (this.foods[i].name == targetFoodName){
-                row.appendChild(this.getResultCell(i, true));
+                row.appendChild(this.getResultCell(i));
                 break;
             }
         }
 
         for (let i = 0; i < 3; i++){
             if (i >= this.foods.length) {  
-                row.appendChild(this.getResultCell(i, false));
+                row.appendChild(this.getResultCell(i));
             } else if (this.foods[i].name != targetFoodName){
-                row.appendChild(this.getResultCell(i, false));
+                row.appendChild(this.getResultCell(i));
             }
         }
     }
-
-    getResultCell(index, isTarget = false){
+    
+    
+    getResultCell(index){
         let c = document.createElement("td");
         if (index >= this.foods.length){
             c.setAttribute('value', 0);
@@ -391,13 +415,7 @@ class FoodCombination{
         img.src = "img/food/" + this.foods[index].name + ".png";        
         c.appendChild(img);
 
-        let numEl;
-        if (isTarget){
-            numEl = document.createElement('strong');
-        }
-        else{
-            numEl = document.createElement('span');
-        }
+        let numEl = document.createElement('strong');
         numEl.textContent = this.foods[index].expection;
         c.appendChild(numEl);
         c.setAttribute('name', this.foods[index].name);
