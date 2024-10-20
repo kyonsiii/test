@@ -9,6 +9,11 @@ git mv -f pokeCook.js .\js\pokeCook.js
 25.1:3ca96f0/910:78a94c2/26:78b9902/736:33ca9ac2/159:33ca98c0/317:4ca9ac0
 
 
+◆現在の状況を保持し、別のブランチを作ってからそちらに適用する
+git stash
+git checkout -b c
+git stash apply
+なんかうまくいってなかった気がするけど・・・？普通にコミットしたような
 
 //ブランチを確認
 git branch

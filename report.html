@@ -10,7 +10,7 @@
         <script src="js/pokedex2.js"></script>
         <script src="js/recipedb.js"></script>
 
-        <title>レポート(仮)v0.3.4test</title>
+        <title>レポート(仮)v0.3.4b</title>
 
     </head>
 
@@ -696,7 +696,8 @@
                 if (c == null) return; 
 
                 let jss = c.split("/").map(x => pokeReport.createJsonFromCookieValue32(x));
-
+                pokeReport.setMyPokeFoodListInfo(document.getElementById("mypoke_quick_check_food").tBodies[0], jss);
+                
                 for (let i = 0; i < jss.length; i++){
                     this.listupMyPokeInfo(jss[i]);
                     let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));

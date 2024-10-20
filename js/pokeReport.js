@@ -138,18 +138,11 @@ class PokeReport{
 
 
     setMyPokeFoodListInfo(tbody, jsonList){
-        let c = getCookie("rmpl");
-        tbody = document.getElementById("mypoke_quick_check").tBodies[0];
-        let jss = c.split("/").map(x => pokeReport.createJsonFromCookieValue32(x));
-        jsonList = jss;
-
-
         let pokeAndComb = [];
         for (let i = 0; i < jsonList.length; i++){
             let j = jsonList[i];
             let p = this.pokedex.getPokemonByNo(j.no);
-            pokeAndComb.push({poke: p, json: j, comb:p.createFoodCombination(j, j.lv, j.foodCode)});
-            
+            pokeAndComb.push({poke: p, json: j, comb:p.createFoodCombination(j, j.lv, j.foodCode)});            
         }
 
 
