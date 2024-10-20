@@ -144,8 +144,7 @@ class PokeReport{
             let p = this.pokedex.getPokemonByNo(j.no);
             pokeAndComb.push({poke: p, json: j, comb:p.createFoodCombination(j, j.lv, j.foodCode)});            
         }
-
-
+        
         let tmp = [];
         tmp.push({とくせんリンゴ: []});
         tmp.push({モーモーミルク: []});
@@ -164,9 +163,6 @@ class PokeReport{
         tmp.push({おいしいシッポ: []});
         tmp.push({ワカクサコーン: []});
         tmp.push({めざましコーヒー: []});
-
-      
-
       
 
         //MyPokeを食材ごとに割り振る（重複あり）
