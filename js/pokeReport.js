@@ -189,20 +189,25 @@ class PokeReport{
             foodImgCell.appendChild(fImg);
             if (sorted.length == 0){
                 tr1.insertCell();
+                tr1.insertCell();
+                tr1.insertCell();
+                tr1.insertCell();
                 return;
             }
            
+            let selector = "td.mypoke_outline, td.mypoke_outline~td";            
             let insertInfo = (pac, rank, tr = null) => {
                 tr = tr ?? tbody.insertRow();
                 pac.comb.insertResultTo(tr, food, pac.poke, this.createIdentifierOf(pac.json));
+                tr.querySelectorAll(selector).forEach(el => {
+                    el.style.backgroundColor = this.getColorCodeOf(pac.json.backgroundColor);
+                });
                 foodImgCell.rowSpan = rank;
-            };
-            
+            };            
         
             for (let i = 0; i < (sorted.length <= 3 ? sorted.length : 3); i++){
                 insertInfo(sorted[i], i + 1, (i == 0) ? tr1 : null);
             }    
-
         };
 
         tmp.forEach(f => {

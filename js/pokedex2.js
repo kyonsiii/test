@@ -354,6 +354,7 @@ class FoodCombination{
 
     insertResultTo(tr, foodName, poke, identifier = null, noSetCombinationResult = false){
         let cell = tr.insertCell();
+        cell.classList.add("mypoke_outline");
         let img = document.createElement("img");
         img.src = "img/poke/" + String(poke.no).padStart(3, '0') + ".png"
         img.classList.add("tiny");
@@ -384,7 +385,7 @@ class FoodCombination{
         if (noSetCombinationResult) return;
         this.setCombinationResultTo(tr, foodName);
     }
-    
+
 
     setCombinationResultTo(row, targetFoodName){
         for (let i = 0; i < 3; i++){
