@@ -10,7 +10,7 @@
         <script src="js/pokedex2.js"></script>
         <script src="js/recipedb.js"></script>
 
-        <title>レポート(仮)v0.3.6c</title>
+        <title>レポート(仮)v0.3.6d</title>
 
     </head>
 
@@ -175,11 +175,15 @@
 
         <div id="mypoke_list">
             <strong>登録済みMyポケモン:</strong><br>
-            <select id="input_mypoke_registered" style="min-width:20em; max-width: 95%; font-size:1em; vertical-align: middle;">
-            </select><br>
+            <div>
+
+            </div>
+            <select id="input_mypoke_registered" style="min-width:20em; max-width: 95%; font-size:1em; vertical-align: middle;"></select>
             <button id="input_mypoke_reedit" style="font-size:1em; vertical-align: middle;" onclick="reeditMypoke();">編集</button>
+            <br>
+            
             <button id="input_mypoke_delete" style="font-size:1em; vertical-align: middle;" onclick="deleteSelectedMyPoke();">削除</button>            
-            <button style="font-size:1em; vertical-align: middle;" onclick="copyCookieValue();">get　Cookie</button>
+            <button style="font-size:1em; vertical-align: middle;" onclick="copyCookieValue();">cookie</button>
             <div>
                 <table id="mypoke_quick_check">
                     <thead>
@@ -261,27 +265,7 @@
             }
 
 
-            function setSubSkillSelectBoxes(){
-                let addOp = (listId, skillValue, skillText) => {
-                    let list = document.getElementById(listId);
-                    let op = document.createElement("option");
-                    op.value = skillValue;
-                    op.textContent = skillText;
-                    list.appendChild(op);
-                };
 
-                let subSkillList = [
-                    ["",""],["oteBonus", "おてボ"],["speedS", "おてスピS"],["speedM", "おてスピM"],["foodS", "食材確率S"],["foodM", "食材確率M"],["skillS", "スキル確率S"],["skillM", "スキル確率M"],
-                    ["skillLvUpS", "スキルLvS"],["skillLvUpM", "スキルLvM"],["berryS", "きのみS"],["inventoryS", "所持S"],["inventoryM", "所持M"],["inventoryL", "所持L"],
-                    ["expBonus", "EXPボ"],["genkiBonus", "げんきボ"],["yumeBonus", "ゆめボ"],["researchBonus", "リサーチボ"]
-                ];
-
-                subSkillList.forEach(s => addOp("sub_skill_lv10", s[0], s[1]));
-                subSkillList.forEach(s => addOp("sub_skill_lv25", s[0], s[1]));
-                subSkillList.forEach(s => addOp("sub_skill_lv50", s[0], s[1]));
-                subSkillList.forEach(s => addOp("sub_skill_lv75", s[0], s[1]));
-                subSkillList.forEach(s => addOp("sub_skill_lv100", s[0], s[1]));
-            }
 
 
             function copyCookieValue(){
@@ -678,8 +662,33 @@
                 this.selectBoxInitialized = true;
             }
 
-       //クッキー関連(登録)
-       function setMyPokeCookie(){
+
+
+            //初期化関連
+            function setSubSkillSelectBoxes(){
+                let addOp = (listId, skillValue, skillText) => {
+                    let list = document.getElementById(listId);
+                    let op = document.createElement("option");
+                    op.value = skillValue;
+                    op.textContent = skillText;
+                    list.appendChild(op);
+                };
+
+                let subSkillList = [
+                    ["",""],["oteBonus", "おてボ"],["speedS", "おてスピS"],["speedM", "おてスピM"],["foodS", "食材確率S"],["foodM", "食材確率M"],["skillS", "スキル確率S"],["skillM", "スキル確率M"],
+                    ["skillLvUpS", "スキルLvS"],["skillLvUpM", "スキルLvM"],["berryS", "きのみS"],["inventoryS", "所持S"],["inventoryM", "所持M"],["inventoryL", "所持L"],
+                    ["expBonus", "EXPボ"],["genkiBonus", "げんきボ"],["yumeBonus", "ゆめボ"],["researchBonus", "リサーチボ"]
+                ];
+
+                subSkillList.forEach(s => addOp("sub_skill_lv10", s[0], s[1]));
+                subSkillList.forEach(s => addOp("sub_skill_lv25", s[0], s[1]));
+                subSkillList.forEach(s => addOp("sub_skill_lv50", s[0], s[1]));
+                subSkillList.forEach(s => addOp("sub_skill_lv75", s[0], s[1]));
+                subSkillList.forEach(s => addOp("sub_skill_lv100", s[0], s[1]));
+            }
+
+            //クッキー関連(登録)
+            function setMyPokeCookie(){
                 let options = document.getElementById("input_mypoke_registered").children;
                 let sorted = Array.from(options).sort((a, b) => a.textContent > b.textContent ? 1 : -1);
                 let values = [];
@@ -689,9 +698,6 @@
 
                 setCookie("rmpl", values.join("/"), 365);
             }     
-
-
-
 
             //クッキー関連(呼び出し)
             function setMypokesToListFromCookie(){
