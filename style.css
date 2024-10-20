@@ -199,14 +199,24 @@ table thead tr th {
 #result_table th:not(:first-child){
     width: 2.5em;
 }
+#mypoke_quick_check_food img{
+    vertical-align: sub;    
+}
 
+
+
+#mypoke_quick_check_food img.ex-tiny:not(:first-child),
 #result_table td:first-child img.ex-tiny:not(:first-child){
     margin-left: -0.4em;
     vertical-align: sub;    
 }
+
+
+#mypoke_quick_check_food span,
 #result_table td:first-child span{
     margin-right: 0.3em;
 }
+
 
 #result_table td:not(:first-child) strong, #result_table td:not(:first-child) span{
     position: absolute;

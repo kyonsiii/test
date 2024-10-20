@@ -382,10 +382,9 @@ class FoodCombination{
         }
 
         if (noSetCombinationResult) return;
-        console.log("AAA");
         this.setCombinationResultTo(tr, foodName);
-
     }
+    
 
     setCombinationResultTo(row, targetFoodName){
         for (let i = 0; i < 3; i++){
