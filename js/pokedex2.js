@@ -352,7 +352,7 @@ class FoodCombination{
     }
 
 
-    insertResultTo(tr, foodName, poke, identifier = null){
+    insertResultTo(tr, foodName, poke, identifier = null, noSetCombinationResult = false){
         let cell = tr.insertCell();
         let img = document.createElement("img");
         img.src = "img/poke/" + String(poke.no).padStart(3, '0') + ".png"
@@ -381,6 +381,8 @@ class FoodCombination{
             cell.appendChild(fImg);
         }
 
+        if (noSetCombinationResult) return;
+        console.log("AAA");
         this.setCombinationResultTo(tr, foodName);
 
     }

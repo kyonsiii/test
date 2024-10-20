@@ -86,18 +86,19 @@ class RecipeDB{
         ];
 
         this.foods = [
-            {name: "あじわいキノコ", power: 167, advanced: false},
+            {name: "あじわいキノコ", power: 167, advanced: true},
             {name: "あったかジンジャー", power: 109, advanced: false},
             {name: "あまいミツ", power: 101, advanced: false},
             {name: "あんみんトマト", power: 110, advanced: false},
-            {name: "おいしいシッポ", power: 342, advanced: false},
+            {name: "おいしいシッポ", power: 342, advanced: true},
             {name: "げきからハーブ", power: 130, advanced: false},
             {name: "とくせんエッグ", power: 115, advanced: false},
             {name: "とくせんリンゴ", power: 90, advanced: false},
             {name: "ピュアなオイル", power: 121, advanced: false},
-            {name: "ふといながねぎ", power: 185, advanced: false},
+            {name: "ふといながねぎ", power: 185, advanced: true},
             {name: "ほっこりポテト", power: 124, advanced: false},
             {name: "マメミート", power: 103, advanced: false},
+            {name: "めざましコーヒー", power: 153, advanced: false},
             {name: "モーモーミルク", power: 98, advanced: false},
             {name: "リラックスカカオ", power: 151, advanced: false},
             {name: "ワカクサ大豆", power: 100, advanced: false},

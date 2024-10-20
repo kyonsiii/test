@@ -67,8 +67,9 @@ const mask_result_op_visible_minNum       = 0b000000001111000;
                         
 
 class PokeReport{
-    constructor(pokedex){
+    constructor(pokedex, recipedb){
         this.pokedex = pokedex;
+        this.recipedb = recipedb;
         this.combinationsInitialized = false;
     }
 
@@ -133,6 +134,92 @@ class PokeReport{
         document.getElementById("only_fully_evolved").checked = bitToNum(n, mask_result_op_visible_FullyEvolved);
         document.getElementById("food_min").selectedIndex = bitToNum(n,mask_result_op_visible_minNum);
     }
+
+
+
+    setMyPokeFoodListInfo(tbody, jsonList){
+        let c = getCookie("rmpl");
+        tbody = document.getElementById("mypoke_quick_check").tBodies[0];
+        let jss = c.split("/").map(x => pokeReport.createJsonFromCookieValue32(x));
+        jsonList = jss;
+
+
+        let pokeAndComb = [];
+        for (let i = 0; i < jsonList.length; i++){
+            let j = jsonList[i];
+            let p = this.pokedex.getPokemonByNo(j.no);
+            pokeAndComb.push({poke: p, json: j, comb:p.createFoodCombination(j, j.lv, j.foodCode)});
+            
+        }
+
+
+        let tmp = [];
+            tmp.push({あじわいキノコ: []});
+            tmp.push({あったかジンジャー: []});
+            tmp.push({あまいミツ: []});
+            tmp.push({あんみんトマト: []});
+            tmp.push({おいしいシッポ: []});
+            tmp.push({げきからハーブ: []});
+            tmp.push({とくせんエッグ: []});
+            tmp.push({とくせんリンゴ: []});
+            tmp.push({ピュアなオイル: []});
+            tmp.push({ふといながねぎ: []});
+            tmp.push({ほっこりポテト: []});
+            tmp.push({マメミート: []});
+            tmp.push({めざましコーヒー: []});
+            tmp.push({モーモーミルク: []});
+            tmp.push({リラックスカカオ: []});
+            tmp.push({ワカクサ大豆: []});
+            tmp.push({ワカクサコーン: []});
+
+        //MyPokeを食材ごとに割り振る（重複あり）
+        tmp.forEach(f => {
+            let foodName = Object.keys(f)[0];
+            for (let i = 0; i < pokeAndComb.length; i++){
+                let pac = pokeAndComb[i];
+                if (pac.comb.foods.some(x => x.name == foodName)) f[foodName].push(pac);
+            }
+        });
+
+
+        console.log(pokeAndComb);
+
+
+        let createRow = (food, pacList) => {
+            let sorted = pacList.sort((a, b) => b.comb.getExpectionOf(food) - a.comb.getExpectionOf(food));
+            
+            let tr1 = tbody.insertRow();            
+            let fImg = document.createElement("img");
+            fImg.src = "img/food/" + food + ".png";
+            fImg.classList.add("ex-tiny");
+            let foodImgCell = tr1.insertCell();
+            foodImgCell.appendChild(fImg);
+            if (sorted.length == 0){
+                tr1.insertCell();
+                return;
+            }
+           
+            let insertInfo = (pac, rank, tr = null) => {
+                tr = tr ?? tbody.insertRow();
+                pac.comb.insertResultTo(tr, food, pac.poke, this.createIdentifierOf(pac.json), true);
+                foodImgCell.rowSpan = rank;
+            };
+            
+        
+            for (let i = 0; i < sorted.length; i++){
+                insertInfo(sorted[i], i + 1, (i == 0) ? tr1 : null);
+            }    
+
+        };
+
+        tmp.forEach(f => {
+            let foodName = Object.keys(f)[0];
+            createRow(foodName, f[foodName]);
+        });
+    }
+
+
+
 
 
 

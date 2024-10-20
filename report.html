@@ -8,8 +8,9 @@
         <script src="js/main.js"></script>
         <script src="js/pokeReport.js"></script>
         <script src="js/pokedex2.js"></script>
+        <script src="js/recipedb.js"></script>
 
-        <title>レポート(仮)v0.3.2d</title>
+        <title>レポート(仮)v0.3.4test</title>
 
     </head>
 
@@ -185,6 +186,19 @@
                         <tr>
                             <th style="width: 20em;">Myポケモン</th>
                             <th style="width:  9em;">きのみパワー</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+
+                </table>
+
+                <table id="mypoke_quick_check_food">
+                    <thead>
+                        <tr>
+                            <th style="width: 2em;">食材</th>
+                            <th style="width: 9em;">MyPokemon</th>                            
                         </tr>
                     </thead>
                     <tbody>
@@ -661,29 +675,8 @@
                 this.selectBoxInitialized = true;
             }
 
-
-            //ロード時のイベント
-            window.onload = ()=>{
-                this.pokedex = new Pokedex();
-                this.pokemons = pokedex.pokemons;
-                this.pokeReport = new PokeReport(this.pokedex);
-                this.pokeReport.initialize();
-                this.selectBoxInitialized = false;
-
-                this.setSubSkillSelectBoxes();
-
-                setMypokesToListFromCookie();  
-
-                let c = getCookie("ropt");   
-                if (c != null){
-                    this.pokeReport.setOptionsFromCookie(c);
-                }
-                
-            }
-
-            
-            //クッキー関連(登録)
-            function setMyPokeCookie(){
+       //クッキー関連(登録)
+       function setMyPokeCookie(){
                 let options = document.getElementById("input_mypoke_registered").children;
                 let sorted = Array.from(options).sort((a, b) => a.textContent > b.textContent ? 1 : -1);
                 let values = [];
@@ -699,7 +692,7 @@
 
             //クッキー関連(呼び出し)
             function setMypokesToListFromCookie(){
-                let c = getCookie("rmpl")
+                let c = getCookie("rmpl");
                 if (c == null) return; 
 
                 let jss = c.split("/").map(x => pokeReport.createJsonFromCookieValue32(x));
@@ -714,6 +707,29 @@
                 }
             }   
 
+            
+
+            //ロード時のイベント
+            window.onload = ()=>{
+                this.pokedex = new Pokedex();
+                this.pokemons = pokedex.pokemons;
+                this.recipedb = new RecipeDB();
+                this.pokeReport = new PokeReport(this.pokedex, this.recipedb);
+                this.pokeReport.initialize();
+                this.selectBoxInitialized = false;
+
+                this.setSubSkillSelectBoxes();
+                this.setMypokesToListFromCookie();  
+
+                let c = getCookie("ropt");   
+                if (c != null){
+                    this.pokeReport.setOptionsFromCookie(c);
+                }
+                
+            }
+
+            
+     
 
 
 
