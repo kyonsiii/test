@@ -66,6 +66,7 @@
                     pls.type = "text";
                     pls.id = "pls_row_" + i;
                     pls.inputMode = "numeric";
+                    pls.setAttribute("onblur", "save();");
 
                     let r = tbody.insertRow();
                     r.insertCell().textContent = i + "回前";
