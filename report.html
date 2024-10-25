@@ -10,7 +10,7 @@
         <script src="js/pokedex2.js"></script>
         <script src="js/recipedb.js"></script>
 
-        <title>レポート(仮)v0.3.8</title>
+        <title>レポート(仮)v0.3.8a</title>
 
     </head>
 
@@ -82,7 +82,7 @@
                 <select id="sub_skill_lv100" onchange="changeSubSkill(this);">
                 </select>
 
-                <input type="text" oninput="setInfoFromClipboard(this);">
+                <input id="sub_skill_import" type="text" oninput="setInfoFromClipboard(this);">
             </div>
 
 
@@ -645,6 +645,7 @@
                 document.getElementById("sub_skill_lv50").selectedIndex  = ilv50skill;
                 document.getElementById("sub_skill_lv75").selectedIndex  = ilv75skill;
                 document.getElementById("sub_skill_lv100").selectedIndex = ilv100skill;
+                document.getElementById("sub_skill_import").value = "";
                 document.getElementById("input_color_buttons").querySelectorAll("input")[bgIndex].checked = true;
             }
 
