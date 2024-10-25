@@ -126,7 +126,11 @@ html {
     max-width: 47%;
     font-size: 1em;
 }
-
+#sub_skill_area input{
+    background-color: lightgrey;
+    max-width: 38%;
+    font-size: 1em;
+}
 
 
 

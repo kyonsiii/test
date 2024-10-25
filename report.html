@@ -10,7 +10,7 @@
         <script src="js/pokedex2.js"></script>
         <script src="js/recipedb.js"></script>
 
-        <title>レポート(仮)v0.3.7a</title>
+        <title>レポート(仮)v0.3.8</title>
 
     </head>
 
@@ -61,7 +61,7 @@
                 <option value="□">まじめ (無補正)</option>
             </select>
 
-            <button onclick="showBerryPower()">🍒</button>
+            <button onclick="showBerryPower();">🍒</button>
 
 
             <div id="sub_skill_area">
@@ -81,6 +81,8 @@
 
                 <select id="sub_skill_lv100" onchange="changeSubSkill(this);">
                 </select>
+
+                <input type="text" oninput="setInfoFromClipboard(this);">
             </div>
 
 
@@ -247,6 +249,50 @@
         <script>
             const cookie_mypoke_max = 151;
             let lastClickedFoodIconElement;
+
+
+            function setInfoFromClipboard(el){
+                // toggleFood(el, setIndex = -1){
+                // let a = document.getElementById("input_mypoke_food_1")
+                // let a = document.getElementById("input_mypoke_food_2")
+                // let a = document.getElementById("input_mypoke_food_3")
+                let s = el.value;
+
+                for (let i = 0; i < el.value.length; i++){
+                    switch(i){
+                        case 0: this.toggleFood(document.getElementById("input_mypoke_food_1"), s[0].charCodeAt() - 65); break;
+                        case 1: this.toggleFood(document.getElementById("input_mypoke_food_2"), s[1].charCodeAt() - 65); break;
+                        case 2: this.toggleFood(document.getElementById("input_mypoke_food_3"), s[2].charCodeAt() - 65); break;
+                        case 3: setCharacteristicFromCode(s[3]); break;
+                        case 4: setSkillFromCode(s[4],  10); break;
+                        case 5: setSkillFromCode(s[5],  25); break;
+                        case 6: setSkillFromCode(s[6],  50); break;
+                        case 7: setSkillFromCode(s[7],  75); break;
+                        case 8: setSkillFromCode(s[8], 100); break;
+                        default: break;
+                    }
+                }
+
+                function setCharacteristicFromCode(c){
+                    var list = document.getElementById("input_mypoke_char");
+                    var options = Array.from(list.children);
+                    var el = options.find(op => op.value == c);
+                    if (el == null) return;
+
+                    list.selectedIndex = options.indexOf(el);
+                }
+
+                function setSkillFromCode(c, skillLv){
+                    var elId = "sub_skill_lv" + skillLv;
+                    var list = document.getElementById(elId);
+                    var options = Array.from(list.children);
+                    var el = options.find(op => op.getAttribute("identifier") == c);
+                    if (el == null) return;
+
+                    list.selectedIndex = options.indexOf(el);
+                }
+
+            }
 
 
             function changeSubSkill(el){
@@ -574,9 +620,9 @@
             function toggleFood(el, setIndex = -1){
                 let values = el.getAttribute("values").split(",");
                 let index = values.indexOf(el.getAttribute("value"));
-                let next = (setIndex != -1) ? setIndex
-                          : ((index + 1) >= values.length) ? 0 : index + 1;
-                
+                let next = (setIndex != -1) ? setIndex : index + 1;
+                if (next >= values.length) next = 0;
+                                
                 el.src = el.getAttribute("dir") + values[next] + ".png";
                 el.setAttribute("value", values[next]);
                 el.setAttribute("code", String.fromCharCode(65 + next));               
@@ -665,25 +711,26 @@
 
             //初期化関連
             function setSubSkillSelectBoxes(){
-                let addOp = (listId, skillValue, skillText) => {
+                let addOp = (listId, skillValue, skillText, idChar) => {
                     let list = document.getElementById(listId);
                     let op = document.createElement("option");
                     op.value = skillValue;
                     op.textContent = skillText;
+                    op.setAttribute("identifier", idChar);
                     list.appendChild(op);
                 };
 
                 let subSkillList = [
-                    ["",""],["oteBonus", "おてボ"],["speedS", "おてスピS"],["speedM", "おてスピM"],["foodS", "食材確率S"],["foodM", "食材確率M"],["skillS", "スキル確率S"],["skillM", "スキル確率M"],
-                    ["skillLvUpS", "スキルLvS"],["skillLvUpM", "スキルLvM"],["berryS", "きのみS"],["inventoryS", "所持S"],["inventoryM", "所持M"],["inventoryL", "所持L"],
-                    ["expBonus", "EXPボ"],["genkiBonus", "げんきボ"],["yumeBonus", "ゆめボ"],["researchBonus", "リサーチボ"]
+                    ["","",""],["oteBonus", "おてボ","o"],["speedS", "おてスピS","."],["speedM", "おてスピM",":"],["foodS", "食材確率S","f"],["foodM", "食材確率M","F"],["skillS", "スキル確率S","-"],["skillM", "スキル確率M","+"],
+                    ["skillLvUpS", "スキルLvS","u"],["skillLvUpM", "スキルLvM","U"],["berryS", "きのみS","s"],["inventoryS", "所持S","'"],["inventoryM", "所持M", '"'],["inventoryL", "所持L","*"],
+                    ["expBonus", "EXPボ","e"],["genkiBonus", "げんきボ","g"],["yumeBonus", "ゆめボ","y"],["researchBonus", "リサーチボ","r"]
                 ];
 
-                subSkillList.forEach(s => addOp("sub_skill_lv10", s[0], s[1]));
-                subSkillList.forEach(s => addOp("sub_skill_lv25", s[0], s[1]));
-                subSkillList.forEach(s => addOp("sub_skill_lv50", s[0], s[1]));
-                subSkillList.forEach(s => addOp("sub_skill_lv75", s[0], s[1]));
-                subSkillList.forEach(s => addOp("sub_skill_lv100", s[0], s[1]));
+                subSkillList.forEach(s => addOp("sub_skill_lv10", s[0], s[1], s[2]));
+                subSkillList.forEach(s => addOp("sub_skill_lv25", s[0], s[1], s[2]));
+                subSkillList.forEach(s => addOp("sub_skill_lv50", s[0], s[1], s[2]));
+                subSkillList.forEach(s => addOp("sub_skill_lv75", s[0], s[1], s[2]));
+                subSkillList.forEach(s => addOp("sub_skill_lv100", s[0], s[1], s[2]));
             }
 
             //クッキー関連(登録)
