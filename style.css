@@ -256,6 +256,10 @@ table thead tr th {
     text-overflow: ellipsis;
 }
 
+#mypoke_quick_check_food .first-row{
+    border-top: 2px solid orange;
+}
+
 /*テーブル - クラスセレクタ*/
 .table_sleep th{
     text-align: center;

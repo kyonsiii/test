@@ -177,7 +177,8 @@ class PokeReport{
 
         let createRow = (food, pacList) => {
             let sorted = pacList.sort((a, b) => b.comb.getExpectionOf(food) - a.comb.getExpectionOf(food));            
-            let tr1 = tbody.insertRow();            
+            let tr1 = tbody.insertRow();
+            tr1.classList.add("first-row");
             let fImg = document.createElement("img");
             fImg.src = "img/food/" + food + ".png";
             fImg.classList.add("ex-tiny");
