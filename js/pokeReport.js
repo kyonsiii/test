@@ -1,22 +1,4 @@
 //クッキー用
-const mask_template     = 0b00000000000000000000000000000000;
-const mask_backGround   = 0b11110000000000000000000000000000;
-const mask_lv           = 0b00001111111000000000000000000000;
-const mask_food_A       = 0b00000000000110000000000000000000;
-const mask_food_B       = 0b00000000000001100000000000000000;
-const mask_food_C       = 0b00000000000000011000000000000000;
-const mask_char_all     = 0b00000000000000000111111000000000;
-const mask_char_up      = 0b00000000000000000111000000000000;
-const mask_char_down    = 0b00000000000000000000111000000000;
-const mask_sub_berryS   = 0b00000000000000000000000100000000;
-const mask_sub_speedS   = 0b00000000000000000000000010000000;
-const mask_sub_speedM   = 0b00000000000000000000000001000000;
-const mask_sub_foodS    = 0b00000000000000000000000000100000;
-const mask_sub_foodM    = 0b00000000000000000000000000010000;
-const mask_sub_skillS   = 0b00000000000000000000000000001000;
-const mask_sub_skillM   = 0b00000000000000000000000000000100;
-const mask_sub_otebonus = 0b00000000000000000000000000000010;
-
 const mask32a_nodp       = 0b00001111000000000000000000000000;
 const mask32a_no         = 0b00000000111111111110000000000000;
 const mask32a_lv         = 0b00000000000000000001111111000000;    
@@ -321,50 +303,6 @@ class PokeReport{
     }
  
     /*
-        サンプル:  71:278c9420    //コロンの後ろは16進数
-        ウツボットLv60 ABA 寂しがり サブスキル 食材M
-        テンプレート: 0000111111122334455566678899aaxx 
-                nn.n:0000 1111111 22 33 44 555 666 7 88 99 aa xx                 
-                    0010 0111100 01 10 01 001 010 0 00 01 00 00
-                    0010 0111100 01 10 01 001 010 0 00 00 00 00
-                    ^^^^ ------- .. ** @@ ### +++ % ^^ -- .. xx
-                    背景BL Lv60   A  B  A    寂*1 *2*3 *4 *5  *6
-
-                    *1 △おてスピ補正 ▽元気補正
-                    *2 きのみSなし
-                    *3 おてスピ補正なし
-                    *4 食材補正 M補正のみあり
-                    *5 スキル補正なし
-                    *6 未使用ビット
-    */
-    createJsonFromCookieValue(c){
-        let a = c.split(":");    
-        let no = Number(a[0]);
-        let x = parseInt(a[1], 16);
-                
-        let j = {};
-        j.src = c;
-        j.no = no;
-        j.name = this.pokedex.getPokemonByNo(j.no).name;
-        j.backgroundColor = bitToNum(x, mask_backGround);
-        j.lv = bitToNum(x, mask_lv);
-        j.foodCode = this.getFoodCodeOf(bitToNum(x, mask_food_A)) + this.getFoodCodeOf(bitToNum(x, mask_food_B)) + this.getFoodCodeOf(bitToNum(x, mask_food_C));
-        j.char = this.getCharacteristic(bitToNum(x, mask_char_up), bitToNum(x, mask_char_down));
-
-        j.subBerryS = bitMatch(x, mask_sub_berryS);
-        j.subSpeedS = bitMatch(x, mask_sub_speedS);
-        j.subSpeedM = bitMatch(x, mask_sub_speedM);
-        j.subFoodS = bitMatch(x, mask_sub_foodS);
-        j.subFoodM = bitMatch(x, mask_sub_foodM);
-        j.subSkillS = bitMatch(x, mask_sub_skillS);
-        j.subSkillM = bitMatch(x, mask_sub_skillM);
-        j.subOteBonus = bitMatch(x, mask_sub_otebonus);
-        this.setAdjustValues(j);
-
-        return j;
-    }
-
-    /*
     ※32進数は54bit以降が失われるらしい
     |基本情報(4Byte)                       |補助情報(4Byte)                        |サブスキル情報(4Byte)
     |      2Byte*1             2Byte       |        2Byte      |        2Byte      |       2Byte       |        2Byte      |
@@ -406,7 +344,6 @@ class PokeReport{
 
 
     createJsonFromCookieValue32(ck){
-        //ck = "hrop-50g-dc592";      //あとでc = ""を消す  constに移動してからmask32a を mask32aに変える
         let valueArr = ck.split("-");
         let n = 0; //parseInt(valueArr[], 32)で使いまわす
        
@@ -426,8 +363,6 @@ class PokeReport{
         j.backgroundColor = bitToNum(n, mask32b_backGround);
 
         n = parseInt(valueArr[2], 32);
-
-
         j.subSkillList = this.getSubSkillListByNum(bitToNum(n, mask32c_sub1),
                                                    bitToNum(n, mask32c_sub2),
                                                    bitToNum(n, mask32c_sub3),
@@ -495,25 +430,7 @@ class PokeReport{
     }
 
 
-    createCookieValueFromJson(j){
-        let n = 0;
-        n += numToBit(j.backgroundColor, mask_backGround);//一番左のbitを1にしてしまうと、マイナスの整数になり狂うので注意
-        n += numToBit(j.lv, mask_lv);
-        n += numToBit(this.getFoodNumOf(j.foodCode[0]), mask_food_A);
-        n += numToBit(this.getFoodNumOf(j.foodCode[1]), mask_food_B);
-        n += numToBit(this.getFoodNumOf(j.foodCode[2]), mask_food_C);
-        n += numToBit(this.getCharacteristicNumOf(j.char), mask_char_all);
-        n += numToBit(j.subBerryS ? 1 : 0, mask_sub_berryS);
-        n += numToBit(j.subSpeedS ? 1 : 0, mask_sub_speedS);
-        n += numToBit(j.subSpeedM? 1 : 0, mask_sub_speedM);
-        n += numToBit(j.subFoodS ? 1 : 0, mask_sub_foodS);
-        n += numToBit(j.subFoodM ? 1 : 0, mask_sub_foodM);
-        n += numToBit(j.subSkillS ? 1 : 0, mask_sub_skillS);
-        n += numToBit(j.subSkillM ? 1: 0, mask_sub_skillM);
-        n += numToBit(j.subOteBonus ? 1 : 0, mask_sub_otebonus);
 
-        return n.toString(16);
-    }
 
     createCookieValueFromJson32(j){
         let abc = [];
