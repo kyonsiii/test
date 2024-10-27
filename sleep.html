@@ -7,7 +7,7 @@
         <script src="js/main.js"></script>
         <script src="js/pokeSleeping.js"></script>  
         <script src="js/pokeSleepingCalc.js"></script>
-        <title>睡眠計算v1.0.4</title>
+        <title>睡眠計算v1.0.4b</title>
     </head>
 
 
@@ -37,12 +37,8 @@
             <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="gold">ゴールド
         </p>
 
-        <!--ボタンはJavascriptで後から追加-->
-
         <div id="field_tables">
         </div>
-
-
 
         <div id ="calc">
             <table class="table_calc">
@@ -56,7 +52,7 @@
                 <tbody>
                     <tr>
                         <td>狙い値</td>
-                        <td><input type="text" id="calc_target" class="calc_sleep_input" /></td>
+                        <td><input type="text" id="calc_target" class="calc_sleep_input" inputmode="decimal"/></td>
                         <td><button onclick="calc.showRatioCalcResult();" class="smaller">計算</button></td>
                     </tr>
                     <tr>
