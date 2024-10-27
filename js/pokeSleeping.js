@@ -5,7 +5,7 @@ class PokeSleeping{
         this.input_target = document.getElementById('target_power');
         this.button_calc =  document.getElementById('button_calc');
 
-        this.button_calc.addEventListener("click", () =>{this.calc()});
+
 
     }
 
