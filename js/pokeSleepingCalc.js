@@ -23,7 +23,7 @@ class PokeSleepingCalc{
             let c2 = r.insertCell();
             let atr = "calc_row_" + ( i == 30 ? 1 : i + 1);
 
-            c2.innerHTML = '<input type="text" inputmode="numeric" class="calc_sleep_input" next_row_id="'+ atr + '" onkeydown="calc.textBoxKeyPress(this, event);"/>';
+            c2.innerHTML = '<input type="text" inputmode="decimal" class="calc_sleep_input" next_row_id="'+ atr + '" onkeydown="calc.textBoxKeyPress(this, event);"/>';
             
             let c3 = r.insertCell();
             c3.innerHTML = (i == 1) ? '<button tabindex="-1" onclick="calc.offsetCalcRowValue(false);" class="smaller">↓</button> <button tabindex="-1" onclick="calc.offsetCalcRowValue(true);"  class="smaller">↑</button>'

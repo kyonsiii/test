@@ -9,6 +9,53 @@ class PokeSleeping{
 
     }
 
+    setFields(el){
+
+        el.appendChild(createField("waka", "ワカクサ本島", "9万～", "208万～", "463万～", "834万～", "1957万～"));
+        el.appendChild(createField("cyan", "シアンの砂浜", "158万～", "352万～", "717万～", "1349万～", "3050万～"));        
+        el.appendChild(createField("taup", "トープ洞窟", "183万～", "463万～", "994万～", "1957万～", "4371万～	"));
+        el.appendChild(createField("uno", "ウノハナ雪原", "283万～", "717万～", "1547万～", "2878万～", "6570万～"));
+        el.appendChild(createField("rapi", "ラピスラズリ湖畔", "316万～", "774万～", "1666万～", "3050万～", "6867万～"));
+        el.appendChild(createField("gold", "ゴールド旧発電所", "602万～", "1436万～", "3050万～	", "4992万～", "9740万～	"));
+        //el.appendChild(createField("", "", "", "", "", ""));
+        //el.appendChild(createField("", "", "", "", "", ""));
+
+        function createField(idName, fieldName, poke4, poke5, poke6, poke7, poke8){
+
+
+            let thead = document.createElement("thead");
+            thead.insertRow().insertCell().outerHTML = "<th>得点</th><th>出現</th><th>ボタン</th>"
+
+            let tbody = document.createElement("tbody");
+            insertTargetRow(tbody, 4, poke4);
+            insertTargetRow(tbody, 5, poke5);
+            insertTargetRow(tbody, 6, poke6);
+            insertTargetRow(tbody, 7, poke7);
+            insertTargetRow(tbody, 8, poke8);
+
+            let t = document.createElement("table");
+            t.classList.add("table_sleep");
+            t.appendChild(thead);
+            t.appendChild(tbody);
+
+            let div = document.createElement("div");
+            div.textContent = fieldName;
+            div.id = idName;
+            div.appendChild(t);
+            return div;
+
+
+            function insertTargetRow(tb, pokeNum, targ){
+                let tr = tb.insertRow();
+                tr.insertCell().textContent = targ;
+                tr.insertCell().textContent = pokeNum;
+                tr.insertCell().innerHTML = '<button class="button_set" onclick="pokesleeping.setTarget(this)">目標にセット</button>';
+            }
+
+        }
+        return;
+    }
+
 
     addButtonIntoTr(){
         let allRows = document.querySelectorAll('.table_sleep tbody > tr');
