@@ -349,7 +349,7 @@ class PokeReport{
        
         let j = {};
         j.src = ck;
-
+        
         n = parseInt(valueArr[0], 32);        
         j.no = Math.round((bitToNum(n, mask32a_no) * 10) + bitToNum(n,mask32a_nodp)) / 10;
         j.name = pokedex.getPokemonByNo(j.no).name;

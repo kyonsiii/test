@@ -33,7 +33,7 @@ git commit -m "-m is an option for adding messages"
 
 //***をmainにプッシュ ここでアップロードされる
 git push *** main
-
+git push origin HEAD でもいいらしい まだ試していない
 
 ◆ブランチ関連
 //ブランチの作成
