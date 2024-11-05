@@ -193,6 +193,7 @@ table thead tr th {
 #result{
     margin-top: 1em;
 }
+#mypoke_quick_check_food td,
 #result_table td{
     position: relative;
 }
@@ -200,13 +201,14 @@ table thead tr th {
 #result_table th:first-child{
     width: 9em;
 }
-#result_table th:not(:first-child){
+
+#result_table th:not(:first-child),
+#mypoke_quick_check_food th:nth-child(n+3){
     width: 2.5em;
 }
 #mypoke_quick_check_food img{
     vertical-align: sub;    
 }
-
 
 
 #mypoke_quick_check_food img.ex-tiny:not(:first-child),
@@ -221,11 +223,11 @@ table thead tr th {
     margin-right: 0.3em;
 }
 
-
-#result_table td:not(:first-child) strong, #result_table td:not(:first-child) span{
+.food_num strong{
     position: absolute;
     bottom: 0;
     left: 1em;
+
     color: black;
     text-shadow: 
        1px  1px 1px #FFFFFF,
@@ -244,7 +246,6 @@ table thead tr th {
        0px  2px 1px #FFFFFF,
       -2px  0px 1px #FFFFFF,
        0px -2px 1px #FFFFFF; 
-    ;
 }
 
 #mypoke_quick_check{

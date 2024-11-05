@@ -429,6 +429,7 @@ class FoodCombination{
         c.appendChild(numEl);
         c.setAttribute('name', this.foods[index].name);
         c.setAttribute('value', this.foods[index].expection);
+        c.classList.add('food_num');
         return c;
     }
 

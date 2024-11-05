@@ -186,6 +186,7 @@ class PokeReport{
         
             for (let i = 0; i < (sorted.length <= 3 ? sorted.length : 3); i++){
                 insertInfo(sorted[i], i + 1, (i == 0) ? tr1 : null);
+                //insertInfo(sorted[i], i + 1,  null);
             }    
         };
 
