@@ -61,60 +61,33 @@ class PokeReport{
     }
 
 
-    createReport(foodName, min = 0, onlyFullyEvolved = false, showLv30 = true, showLv60 = true){
+    createReport(foods, reportCountMax, min = 0, onlyFullyEvolved = false, showLv30 = true, showLv60 = true){
         if (!this.combinationsInitialized){
             alert("食べ物組み合わせが生成されていません。初期化をしてから実行してください。")
             return null;
         }
 
-        let targetPokemons = this.pokedex.pokemons.filter(p => (!onlyFullyEvolved || p.fullyEvolved) && p.containsFood(foodName));
-
+        let targetPokemons = this.pokedex.pokemons.filter(p => (!onlyFullyEvolved || p.fullyEvolved) && p.existAnyInFoodList(foods));
         let tbody = document.createElement("tbody");
         tbody.id = "report_result";
 
         let pokeAndComb = [];
+        let foodName = foods[0];
+
         for (let i = 0; i < targetPokemons.length; i++){
             let p = targetPokemons[i];
             p.foodCombinations.forEach(c => {
-                if (c.contains(foodName, min) && (c.lv != 30 || showLv30) && (c.lv != 60 || showLv60)){
-                    pokeAndComb.push({poke: p, comb: c});
-                }                
+                if (c.containsFoodsAtLeast(foods, min) && (c.lv != 30 || showLv30) && (c.lv != 60 || showLv60)){
+                    pokeAndComb.push({poke: p, comb: c});         
+                }      
             });
         }
-        
-        pokeAndComb.sort((a, b) => b.comb.getExpectionOf(foodName) - a.comb.getExpectionOf(foodName))
+        pokeAndComb.sort((a, b) => b.comb.totalExpectionFinally - a.comb.totalExpectionFinally).slice(0, reportCountMax)
                     .forEach(x => tbody.appendChild(this.createPokemonInfoRow(x.poke, x.comb, foodName)));
         this.setCurrentOptionsToCookie();
         return tbody;
     }
 
-    
-    createReportMulti(foodNames, min = 0, onlyFullyEvolved = false, showLv30 = true, showLv60 = true){
-        if (!this.combinationsInitialized){
-            alert("食べ物組み合わせが生成されていません。初期化をしてから実行してください。")
-            return null;
-        }
-        //一応トップ50だけ表示にしようかな？
-        let targetPokemons = this.pokedex.pokemons.filter(p => (!onlyFullyEvolved || p.fullyEvolved) && foodNames.some(f => p.containsFood(f)));
-        let tbody = document.createElement("tbody");
-        tbody.id = "report_result";
-
-        let pokeAndComb = [];
-        for (let i = 0; i < targetPokemons.length; i++){
-            let p = targetPokemons[i];
-            
-            p.foodCombinations.forEach(c => {
-                if (c.containsFoodsAtLeast(foodNames, min) && (c.lv != 30 || showLv30) && (c.lv != 60 || showLv60)){
-                    pokeAndComb.push({poke: p, comb: c});
-                }                
-            });
-        }
-        
-        pokeAndComb.sort((a, b) => b.comb.getExpectionOf(foodName) - a.comb.getExpectionOf(foodName))
-                    .forEach(x => tbody.appendChild(this.createPokemonInfoRow(x.poke, x.comb, foodName)));
-        this.setCurrentOptionsToCookie();
-        return tbody;
-    }
 
     setCurrentOptionsToCookie(){
         let n = 0;
@@ -230,45 +203,46 @@ class PokeReport{
 
 
     //tbのresult_tableはsetResultOfされた時に追加されるので、ない時もあるかも
-    insertMyPokeListInto(tbody, jsonList, foodName, foodMin, showPotential30, showPotential50, showPotential60){
+    insertMyPokeListInto(tbody, jsonList, foods, foodMin, showPotential30, showPotential50, showPotential60){
         for (let i = 0; i < jsonList.length; i++){
             let json = jsonList[i];
             let poke = this.pokedex.getPokemonByName(json.name);
 
-            if (!poke.containsFood(foodName)) continue;//そもそも食材含んでなかったら処理いらない
-           
-            this.insertMyPokeRowInto(tbody, poke, json, json.lv, foodName, foodMin);
+     
+            if (!poke.existAnyInFoodList(foods)) continue;//そもそも食材含んでなかったら処理いらない
+
+            this.insertMyPokeRowInto(tbody, poke, json, json.lv, foods, foodMin);
 
             if (json.lv < 30 && showPotential30){
                 this.setSubSkillsEnabled(json, 30, true);
-                this.insertMyPokeRowInto(tbody, poke, json, 30, foodName, foodMin, this.getColorCodeOf(4));
+                this.insertMyPokeRowInto(tbody, poke, json, 30, foods, foodMin, this.getColorCodeOf(4));
             }
 
             if (json.lv < 50 && showPotential50){
                 this.setSubSkillsEnabled(json, 50, true);
-                this.insertMyPokeRowInto(tbody, poke, json, 50, foodName, foodMin, this.getColorCodeOf(3));
+                this.insertMyPokeRowInto(tbody, poke, json, 50, foods, foodMin, this.getColorCodeOf(3));
             }
 
             if (json.lv < 60 && showPotential60){
                 this.setSubSkillsEnabled(json, 60, true);
-                this.insertMyPokeRowInto(tbody, poke, json, 60, foodName, foodMin, this.getColorCodeOf(5));
+                this.insertMyPokeRowInto(tbody, poke, json, 60, foods, foodMin, this.getColorCodeOf(5));
             }
         }
         
     }
 
-    insertMyPokeRowInto(tbody, poke, json, lv, foodName, foodMin, backgroundColor = null){//自分で登録したものは背景色がjsonに含まれているのでわざわざ指定しない
+    insertMyPokeRowInto(tbody, poke, json, lv, foods, foodMin, backgroundColor = null){//自分で登録したものは背景色がjsonに含まれているのでわざわざ指定しない
         let comb = poke.createFoodCombination(json, lv);
-        if (!comb.contains(foodName, foodMin)) return;
+        if (!comb.containsFoodsAtLeast(foods, foodMin)) return;
 
-        let tr = this.createMyPokemonInfoRow(poke, comb, foodName, json);
+        let tr = this.createMyPokemonInfoRow(poke, comb, foods[0], json);
         tr.style.backgroundColor = backgroundColor ?? this.getColorCodeOf(json.backgroundColor);
 
         let rows = tbody.children;
-        let target = comb.getExpectionOf(foodName);
+        let target = comb.getExpectionOf(foods);
 
         for (let i = 0; i < rows.length; i++){
-            let value = rows[i].children[1].getAttribute('value');
+            let value = rows[i].getAttribute('expection_total');
             if (value <= target){
                 tbody.insertBefore(tr, rows[i]);
                 return;
@@ -292,34 +266,6 @@ class PokeReport{
         return r;
     }
  
-
-    selectIcon(el){
-        Array.from(document.getElementById('food_buttons').children).forEach(c => this.changeIconStyle(c, false));
-        if (el.style.margin == "" || el.style.margin == "4px"){
-            el.style.margin = "0px";
-            el.style.border = "4px solid blue";
-            el.value = "ON";
-        }
-        else{
-            el.style.margin = "4px";
-            el.style.border = "";
-            el.value = "";
-        }
-    }
-
-
-    changeIconStyle(el, turnOn){
-        if (turnOn){
-            el.style.margin = "0px";
-            el.style.border = "4px solid blue";
-            el.value = "ON";
-        }
-        else{
-            el.style.margin = "4px";
-            el.style.border = "";
-            el.value = "";
-        }
-    }
 
     createIdentifierOf(j){
         let x = j.char;

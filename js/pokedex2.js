@@ -283,7 +283,7 @@ class Pokemon{
     }
 
 
-    containsFood(foods){
+    existAnyInFoodList(foods){
         return (foods.includes(this.food1) || foods.includes(this.food2) || (this.food3 == "" ? false : foods.includes(this.food3)) );
     }
 
@@ -320,7 +320,7 @@ class FoodCombination{
     constructor(poke, lv, otetudaiCount, code, foodRateAdjust = 0){
         this.code = code;
         this.lv = lv;
-        this.foods = [];        
+        this.foods = [];
         let codeForCalc = (lv < 30) ? code.substring(0, 1)
                          : (lv < 60) ? code.substring(0, 2) : code; //lvが60未満の時は3つ目の食材は取れない
         let foodName = -1;
@@ -360,6 +360,7 @@ class FoodCombination{
 
 
     insertResultTo(tr, foodName, poke, identifier = null, noSetCombinationResult = false){
+        tr.setAttribute("expection_total", this.totalExpectionFinally);
         let cell = tr.insertCell();
         cell.classList.add("mypoke_outline");
         let img = document.createElement("img");
@@ -395,20 +396,31 @@ class FoodCombination{
 
 
     setCombinationResultTo(row, targetFoodName){
-        for (let i = 0; i < 3; i++){
-            if (this.foods[i].name == targetFoodName){
-                row.appendChild(this.getResultCell(i));
-                break;
+        if (this.containsFoodsAtLeast(targetFoodName, 1)){
+            for (let i = 0; i < 3; i++){
+                if (this.foods[i].name == targetFoodName){
+                    row.appendChild(this.getResultCell(i));
+                    break;
+                }
+            }
+    
+            for (let i = 0; i < 3; i++){
+                if (i >= this.foods.length) {  
+                    row.appendChild(this.getResultCell(i));
+                } else if (this.foods[i].name != targetFoodName){
+                    row.appendChild(this.getResultCell(i));
+                }
+            }
+        } else {
+            for (let i = 0; i < 3; i++){            
+                if (i >= this.foods.length) {  
+                    row.appendChild(this.getResultCell(i));
+                } else {
+                    row.appendChild(this.getResultCell(i));
+                }
             }
         }
-
-        for (let i = 0; i < 3; i++){
-            if (i >= this.foods.length) {  
-                row.appendChild(this.getResultCell(i));
-            } else if (this.foods[i].name != targetFoodName){
-                row.appendChild(this.getResultCell(i));
-            }
-        }
+       
     }
     
     
@@ -434,14 +446,14 @@ class FoodCombination{
     }
 
 
-
-    contains(foodName, min = 0){
+/*
+    containsFoodAtLeast(foodName, min = 0){
         for (let i = 0; i < this.foods.length; i++){
             if (this.foods[i].name == foodName && this.foods[i].expection >= min) return true;
         }
         return false;
     }
-
+*/
     containsFoodsAtLeast(foodNames, min = 0){
         let sum = 0;
         for (let i = 0; i < this.foods.length; i++){
@@ -449,16 +461,13 @@ class FoodCombination{
                 if (this.foods[i].name == foodNames[j]) sum += this.foods[i].expection;
             }            
         }
-        return sum >= min;
+        return this.getExpectionOf(foodNames) >= min;
     }
 
-    getExpectionOf(foodName){
-        for (let i = 0; i < this.foods.length; i++){
-            if (this.foods[i].name == foodName){
-                return this.foods[i].expection;
-            }
-        }
-        return 0;
+
+    getExpectionOf(foodNames){
+        this.totalExpectionFinally = this.foods.filter(f => foodNames.includes(f.name)).map(f => f.expection).reduce((p, c) => p + c, 0);
+        return this.totalExpectionFinally;
     }
 
 }
