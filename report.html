@@ -10,7 +10,7 @@
         <script src="js/pokedex2.js"></script>
         <script src="js/recipedb.js"></script>
 
-        <title>レポート(仮)v0.3.9a</title>
+        <title>レポート(仮)v0.4.0xxx</title>
 
     </head>
 
@@ -780,7 +780,13 @@
             }   
 
             
+            function f(){
 
+                let a = ["あんみんトマト", "ピュアなオイル"];
+                let t = document.getElementById('result_table');
+                t.querySelectorAll("tbody").forEach(b => b.remove());
+                t.appendChild(this.pokeReport.createReportMulti(a, 20, true, true, true));      
+            }
             
 
             //ロード時のイベント

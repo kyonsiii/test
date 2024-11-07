@@ -320,7 +320,7 @@ class FoodCombination{
     constructor(poke, lv, otetudaiCount, code, foodRateAdjust = 0){
         this.code = code;
         this.lv = lv;
-        this.foods = [];
+        this.foods = [];        
         let codeForCalc = (lv < 30) ? code.substring(0, 1)
                          : (lv < 60) ? code.substring(0, 2) : code; //lvが60未満の時は3つ目の食材は取れない
         let foodName = -1;
@@ -442,6 +442,16 @@ class FoodCombination{
         return false;
     }
 
+    containsFoodsAtLeast(foodNames, min = 0){
+        let sum = 0;
+        for (let i = 0; i < this.foods.length; i++){
+            for (let j = 0; j < foodNames.length; j++){
+                if (this.foods[i].name == foodNames[j]) sum += this.foods[i].expection;
+            }            
+        }
+        return sum >= min;
+    }
+
     getExpectionOf(foodName){
         for (let i = 0; i < this.foods.length; i++){
             if (this.foods[i].name == foodName){
@@ -450,6 +460,7 @@ class FoodCombination{
         }
         return 0;
     }
+
 }
 
 

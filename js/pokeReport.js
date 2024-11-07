@@ -74,7 +74,7 @@ class PokeReport{
 
         let pokeAndComb = [];
         for (let i = 0; i < targetPokemons.length; i++){
-            let p = targetPokemons[i]
+            let p = targetPokemons[i];
             p.foodCombinations.forEach(c => {
                 if (c.contains(foodName, min) && (c.lv != 30 || showLv30) && (c.lv != 60 || showLv60)){
                     pokeAndComb.push({poke: p, comb: c});
@@ -88,6 +88,33 @@ class PokeReport{
         return tbody;
     }
 
+    
+    createReportMulti(foodNames, min = 0, onlyFullyEvolved = false, showLv30 = true, showLv60 = true){
+        if (!this.combinationsInitialized){
+            alert("食べ物組み合わせが生成されていません。初期化をしてから実行してください。")
+            return null;
+        }
+        //一応トップ50だけ表示にしようかな？
+        let targetPokemons = this.pokedex.pokemons.filter(p => (!onlyFullyEvolved || p.fullyEvolved) && foodNames.some(f => p.containsFood(f)));
+        let tbody = document.createElement("tbody");
+        tbody.id = "report_result";
+
+        let pokeAndComb = [];
+        for (let i = 0; i < targetPokemons.length; i++){
+            let p = targetPokemons[i];
+            
+            p.foodCombinations.forEach(c => {
+                if (c.containsFoodsAtLeast(foodNames, min) && (c.lv != 30 || showLv30) && (c.lv != 60 || showLv60)){
+                    pokeAndComb.push({poke: p, comb: c});
+                }                
+            });
+        }
+        
+        pokeAndComb.sort((a, b) => b.comb.getExpectionOf(foodName) - a.comb.getExpectionOf(foodName))
+                    .forEach(x => tbody.appendChild(this.createPokemonInfoRow(x.poke, x.comb, foodName)));
+        this.setCurrentOptionsToCookie();
+        return tbody;
+    }
 
     setCurrentOptionsToCookie(){
         let n = 0;
