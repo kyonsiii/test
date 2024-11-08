@@ -96,8 +96,8 @@ class PokeReport{
 
     setCurrentOptionsToCookie(){
         let n = 0;
-        n += numToBit(document.getElementById("select_recipe_category").selectedIndex, mask_op_recipe_category_index);
-        n += numToBit(document.getElementById("select_recipe").selectedIndex, mask_op_recipe_name_index);
+        //n += numToBit(document.getElementById("select_recipe_category").selectedIndex, mask_op_recipe_category_index);
+        //n += numToBit(document.getElementById("select_recipe").selectedIndex, mask_op_recipe_name_index);
         n += numToBit(document.getElementById("option_poke_30").checked, mask_result_op_visible_Lv30);    
         n += numToBit(document.getElementById("option_poke_60").checked, mask_result_op_visible_Lv60);  
 
