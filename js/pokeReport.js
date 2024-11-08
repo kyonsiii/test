@@ -40,6 +40,7 @@ const sub_num_ult           = 0b10010;
 
 const mask_op_recipe_category_index       = 0b000001110000000000000000000000;
 const mask_op_recipe_name_index           = 0b000000001111111100000000000000; 
+                                                  //'10000000111111010000000'
 const mask_result_op_visible_Lv30         = 0b000000000000000010000000000000;
 const mask_result_op_visible_Lv60         = 0b000000000000000001000000000000;
 const mask_result_op_visible_MyPoke       = 0b000000000000000000100000000000;
@@ -123,16 +124,14 @@ class PokeReport{
         document.getElementById("only_fully_evolved").checked = bitToNum(n, mask_result_op_visible_FullyEvolved);
         document.getElementById("food_min").selectedIndex = bitToNum(n, mask_result_op_visible_minNum);
 
+        return;
         let sb_cat = document.getElementById("select_recipe_category");        
         sb_cat.selectedIndex = bitToNum(n, mask_op_recipe_category_index);        
         selectRecipeCategory(sb_cat);
 
         let sb_recipe = document.getElementById("select_recipe");
         sb_recipe.selectedIndex = bitToNum(n, mask_op_recipe_name_index);
-        console.log(sb_recipe);
-        selectFoodsByRecipe(sb_recipe)
-
-        
+        selectFoodsByRecipe(sb_recipe);
     }
 
 
