@@ -1,5 +1,6 @@
 
 class RecipeDB{
+    
     constructor(){
         this.recipes = [
             new Recipe({no:1, category: "カレー・シチュー", name: "とくせんリンゴカレー", energy:2266, food1:"とくせんリンゴ", food1Num:7, food2:"", food2Num:0, food3:"", food3Num:0, food4:"", food4Num:0, food5:"", food5Num:0}),
@@ -105,6 +106,23 @@ class RecipeDB{
             {name: "ワカクサコーン", power: 140, advanced: false}
         ];
     }
+
+    getAllCurryRecipes(){
+        return this.getRecipesOf("カレー・シチュー");      
+    }
+
+    getAllSaladRecipes(){
+        return this.getRecipesOf("サラダ");      
+    }
+
+    getAllSweetRecipes(){
+        return this.getRecipesOf("デザート・ドリンク");      
+    }
+
+    getRecipesOf(category){        
+        return (category == "") ? this.recipes : this.recipes.filter(r => r.category == category);
+    }
+   
 }
 
 
