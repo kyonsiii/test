@@ -10,7 +10,7 @@
         <script src="js/pokedex2.js"></script>
         <script src="js/recipedb.js"></script>
 
-        <title>レポート(仮)v0.4.2c</title>
+        <title>レポート(仮)v0.4.2d</title>
 
     </head>
 
@@ -261,8 +261,10 @@
 
             function selectFoodsByRecipe(el){
                 Array.from(document.querySelectorAll("#food_buttons img")).forEach(c => this.changeIconStyle(c, false));
-                console.log("A");
                 let foods = el.value.split(',');
+                if (foods[0] == ""){    //----がえらばれた時
+                    this.setResultOf(document.querySelector('#food_buttons img'));
+                }
                 for (let i = 0; i < foods.length; i++){
                     let b = document.querySelector('#food_buttons img[name="' + foods[i] + '"]');
                     if (b != null){
@@ -286,6 +288,7 @@
                     op.textContent = x.name;
                     sb.appendChild(op);
                 })
+                this.selectFoodsByRecipe(sb);
             }
 
 
@@ -434,10 +437,9 @@
                 if (el == null) el = this.lastClickedFoodIconElement;
                 if (el == null && this.lastClickedFoodIconElement == null) return;
 
-                this.lastClickedFoodIconElement = el;
+                this.lastClickedFoodIconElement = el;//これ何につかってんの？
 
                 //作成中
-                
                 let selectedFoods = Array.from(document.getElementById('food_buttons').children).filter(el => el.value =="ON").map(el => el.name);
            
                 let foods = (selectedFoods.includes(el.name)) ? [el.name] : [];
