@@ -10,7 +10,7 @@
         <script src="js/pokedex2.js"></script>
         <script src="js/recipedb.js"></script>
 
-        <title>レポート(仮)v0.4.2f</title>
+        <title>レポート(仮)v0.4.2g</title>
 
     </head>
 
@@ -274,7 +274,7 @@
                 }
             }
 
-            function selectRecipeCategory(el){
+            function selectRecipeCategory(el, onlySetItems = false){
                 let sb = document.getElementById("select_recipe");
                 sb.innerHTML = "";
                 let op = document.createElement('option');
@@ -287,7 +287,9 @@
                     op.value = x.ingredients.map(a => a.name).join(",");
                     op.textContent = x.name;
                     sb.appendChild(op);
-                })
+                });
+                if (onlySetItems) return;
+
                 this.selectFoodsByRecipe(sb);
             }
 
@@ -884,12 +886,15 @@
 
                 this.setSubSkillSelectBoxes();
                 this.setMypokesToListFromCookie();  
-                this.selectRecipeCategory(document.getElementById("select_recipe_category"));
+                
 
                 let c = getCookie("ropt");   
                 if (c != null){
                     this.pokeReport.setOptionsFromCookie(c);
                 }
+
+                let sb_recipe = document.getElementById("select_recipe");
+                if (sb_recipe.children.length == 0) this.selectRecipeCategory(document.getElementById("select_recipe_category"), true);
                 
             }
 
