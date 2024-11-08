@@ -18,7 +18,7 @@ const mask32c_sub2       = 0b00000000000011111000000000000000;
 const mask32c_sub3       = 0b00000000000000000111110000000000;
 const mask32c_sub4       = 0b00000000000000000000001111100000;
 const mask32c_sub5       = 0b00000000000000000000000000011111;
-
+                           
 const sub_num_oteBonus      = 0b00001;
 const sub_num_speedS        = 0b00010;
 const sub_num_speedM        = 0b00011;
@@ -38,14 +38,18 @@ const sub_num_yumeBonus     = 0b10000;
 const sub_num_researchBonus = 0b10001;
 const sub_num_ult           = 0b10010;
 
-const mask_result_op_visible_Lv30         = 0b010000000000000;
-const mask_result_op_visible_Lv60         = 0b001000000000000;
-const mask_result_op_visible_MyPoke       = 0b000100000000000;
-const mask_result_op_visible_MyPokeLv30ft = 0b000010000000000;
-const mask_result_op_visible_MyPokeLv50ft = 0b000001000000000;
-const mask_result_op_visible_MyPokeLv60ft = 0b000000100000000;
-const mask_result_op_visible_FullyEvolved = 0b000000010000000;
-const mask_result_op_visible_minNum       = 0b000000001111000;
+const mask_op_recipe_category_index       = 0b000001110000000000000000000000;
+const mask_op_recipe_name_index           = 0b000000001111111100000000000000; 
+const mask_result_op_visible_Lv30         = 0b000000000000000010000000000000;
+const mask_result_op_visible_Lv60         = 0b000000000000000001000000000000;
+const mask_result_op_visible_MyPoke       = 0b000000000000000000100000000000;
+const mask_result_op_visible_MyPokeLv30ft = 0b000000000000000000010000000000;
+const mask_result_op_visible_MyPokeLv50ft = 0b000000000000000000001000000000;
+const mask_result_op_visible_MyPokeLv60ft = 0b000000000000000000000100000000;
+const mask_result_op_visible_FullyEvolved = 0b000000000000000000000010000000;
+const mask_result_op_visible_minNum       = 0b000000000000000000000001111000;
+
+
                         
 
 class PokeReport{
@@ -91,6 +95,8 @@ class PokeReport{
 
     setCurrentOptionsToCookie(){
         let n = 0;
+        n += numToBit(document.getElementById("select_recipe_category").selectedIndex, mask_op_recipe_category_index);
+        n += numToBit(document.getElementById("select_recipe").selectedIndex, mask_op_recipe_name_index);
         n += numToBit(document.getElementById("option_poke_30").checked, mask_result_op_visible_Lv30);    
         n += numToBit(document.getElementById("option_poke_60").checked, mask_result_op_visible_Lv60);  
 
@@ -106,6 +112,7 @@ class PokeReport{
 
     setOptionsFromCookie(c){
         let n = parseInt(c, 32);
+
         document.getElementById("option_poke_30").checked = bitToNum(n, mask_result_op_visible_Lv30);    
         document.getElementById("option_poke_60").checked = bitToNum(n, mask_result_op_visible_Lv60);  
 
@@ -114,7 +121,18 @@ class PokeReport{
         document.getElementById("option_potential_50").checked = bitToNum(n, mask_result_op_visible_MyPokeLv50ft); 
         document.getElementById("option_potential_60").checked = bitToNum(n, mask_result_op_visible_MyPokeLv60ft);
         document.getElementById("only_fully_evolved").checked = bitToNum(n, mask_result_op_visible_FullyEvolved);
-        document.getElementById("food_min").selectedIndex = bitToNum(n,mask_result_op_visible_minNum);
+        document.getElementById("food_min").selectedIndex = bitToNum(n, mask_result_op_visible_minNum);
+
+        let sb_cat = document.getElementById("select_recipe_category");        
+        sb_cat.selectedIndex = bitToNum(n, mask_op_recipe_category_index);        
+        selectRecipeCategory(sb_cat);
+
+        let sb_recipe = document.getElementById("select_recipe");
+        sb_recipe.selectedIndex = bitToNum(n, mask_op_recipe_name_index);
+        console.log(sb_recipe);
+        selectFoodsByRecipe(sb_recipe)
+
+        
     }
 
 

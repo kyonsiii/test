@@ -10,7 +10,7 @@
         <script src="js/pokedex2.js"></script>
         <script src="js/recipedb.js"></script>
 
-        <title>レポート(仮)v0.4.2b</title>
+        <title>レポート(仮)v0.4.2c</title>
 
     </head>
 
@@ -261,12 +261,14 @@
 
             function selectFoodsByRecipe(el){
                 Array.from(document.querySelectorAll("#food_buttons img")).forEach(c => this.changeIconStyle(c, false));
+                console.log("A");
                 let foods = el.value.split(',');
                 for (let i = 0; i < foods.length; i++){
                     let b = document.querySelector('#food_buttons img[name="' + foods[i] + '"]');
-                    this.selectIcon(b);
+                    if (b != null){
+                        this.selectIcon(b);
                     if (i == (foods.length - 1)) this.setResultOf(b);
-
+                    }
                 }
             }
 
