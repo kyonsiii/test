@@ -10,7 +10,7 @@
         <script src="js/pokedex2.js"></script>
         <script src="js/recipedb.js"></script>
 
-        <title>レポート(仮)v0.4.2g</title>
+        <title>レポート(仮)v0.4.2h</title>
 
     </head>
 
@@ -218,7 +218,7 @@
             </div>
 
             <div class="area_another_option" style="background-color: gainsboro;">
-                レシピ結果表示最大数:
+                レポート表示最大数:
                 <select id="recipe_max_count" style="width:6em; font-size:1em">
                     <option value= "50">50個</option>
                     <option value= "70">70個</option>
@@ -229,6 +229,7 @@
                     <option value="500">500個</option>
                     <option value="99999999">無制限</option>
                 </select><br>
+
                 レシピリスト最低数:
                 <select id="ingredient_min_count" style="width:6em; font-size:1em">
                     <option value= "10">10個</option>
@@ -882,7 +883,6 @@
                 for (let i = 0; i < sorted.length; i++){
                     values.push(sorted[i].value);
                 }
-
                 setCookie("rmpl", values.join("/"), 365);
             }
 
@@ -921,8 +921,6 @@
 
                 this.setSubSkillSelectBoxes();
                 this.setMypokesToListFromCookie();
-
-
                 let c = getCookie("ropt");
                 if (c != null){
                     this.pokeReport.setOptionsFromCookie(c);
@@ -930,11 +928,7 @@
 
                 let sb_recipe = document.getElementById("select_recipe");
                 if (sb_recipe.children.length == 0) this.selectRecipeCategory(document.getElementById("select_recipe_category"), true);
-
             }
-
-
-
 
 
 
