@@ -38,9 +38,9 @@ const sub_num_yumeBonus     = 0b10000;
 const sub_num_researchBonus = 0b10001;
 const sub_num_ult           = 0b10010;
 
+const mask_op_recipe_list_min_index       = 0b011110000000000000000000000000;
 const mask_op_recipe_category_index       = 0b000001110000000000000000000000;
 const mask_op_recipe_name_index           = 0b000000001111111100000000000000; 
-                                                  //'10000000111111010000000'
 const mask_result_op_visible_Lv30         = 0b000000000000000010000000000000;
 const mask_result_op_visible_Lv60         = 0b000000000000000001000000000000;
 const mask_result_op_visible_MyPoke       = 0b000000000000000000100000000000;
@@ -96,6 +96,7 @@ class PokeReport{
 
     setCurrentOptionsToCookie(){
         let n = 0;
+        n += numToBit(document.getElementById("ingredient_min_count").selectedIndex, mask_op_recipe_list_min_index );
         n += numToBit(document.getElementById("select_recipe_category").selectedIndex, mask_op_recipe_category_index);
         n += numToBit(document.getElementById("select_recipe").selectedIndex, mask_op_recipe_name_index);
         n += numToBit(document.getElementById("option_poke_30").checked, mask_result_op_visible_Lv30);    
@@ -124,6 +125,9 @@ class PokeReport{
         document.getElementById("only_fully_evolved").checked = bitToNum(n, mask_result_op_visible_FullyEvolved);
         document.getElementById("food_min").selectedIndex = bitToNum(n, mask_result_op_visible_minNum);
 
+        let sb_recipe_min = document.getElementById("ingredient_min_count");
+        sb_recipe_min.selectedIndex = bitToNum(n, mask_op_recipe_list_min_index);
+            
         let sb_cat = document.getElementById("select_recipe_category");        
         sb_cat.selectedIndex = bitToNum(n, mask_op_recipe_category_index);        
         selectRecipeCategory(sb_cat);
@@ -143,7 +147,7 @@ class PokeReport{
             pokeAndComb.push({poke: p, json: j, comb:p.createFoodCombination(j, j.lv, j.foodCode)});            
         }
         
-        let tmp = [];
+        let tmp = [];//ここ将来食材追加されたときやばそう。どうすんの？
         tmp.push({とくせんリンゴ: []});
         tmp.push({モーモーミルク: []});
         tmp.push({ワカクサ大豆: []});
@@ -223,7 +227,6 @@ class PokeReport{
         for (let i = 0; i < jsonList.length; i++){
             let json = jsonList[i];
             let poke = this.pokedex.getPokemonByName(json.name);
-
      
             if (!poke.existAnyInFoodList(foods)) continue;//そもそも食材含んでなかったら処理いらない
 
@@ -243,9 +246,9 @@ class PokeReport{
                 this.setSubSkillsEnabled(json, 60, true);
                 this.insertMyPokeRowInto(tbody, poke, json, 60, foods, foodMin, this.getColorCodeOf(5));
             }
-        }
-        
+        }        
     }
+
 
     insertMyPokeRowInto(tbody, poke, json, lv, foods, foodMin, backgroundColor = null){//自分で登録したものは背景色がjsonに含まれているのでわざわざ指定しない
         let comb = poke.createFoodCombination(json, lv);

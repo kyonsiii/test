@@ -183,9 +183,7 @@ class Pokedex{
         
         
         ];
-
         
-
         this.berries =
         [
             {no: 1, name: "キーのみ", power: 28},
@@ -211,7 +209,6 @@ class Pokedex{
         this.berryList = this.berries;
         this.skillList = Array.from((new Set(this.pokemons.map(p => p.skill)))).sort();
         this.foodList = Array.from((new Set(this.pokemons.map(p => [p.food1, p.food2, p.food3]).flat()))).filter(f => f != "").sort();//本当はこんなのよくないよね・・・
-
     }
 
     getPokemonByName(name){
