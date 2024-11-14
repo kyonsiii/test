@@ -89,7 +89,16 @@
                 </div>
 
                 <button id="input_mypoke_register" style="font-size:1em; vertical-align: middle;" onclick="registerMyPoke();">Myポケモンに追加</button>
-                <button id="input_mypoke_reset" style="font-size:1em; vertical-align: middle;" onclick="resetInputForm();">リセット</button>
+                <button id="input_mypoke_reset" style="font-size:1em; vertical-align: middle;" onclick="resetInputForm();">リセット</button><br><br>
+
+                <strong>登録済みMyポケモン:</strong><br>
+                <div style="display: flex;">
+                    <select id="input_mypoke_registered" style="flex:1; font-size:1em; vertical-align: middle;"></select>
+                    <button id="input_mypoke_reedit" style="font-size:1em; vertical-align: middle; white-space: nowrap;" onclick="reeditMypoke();">編集</button>
+                    <br>
+                </div>
+    
+                <button id="input_mypoke_delete" style="font-size:1em; vertical-align: middle;" onclick="deleteSelectedMyPoke();">削除</button>
             </div>
         </div>
 
@@ -179,14 +188,7 @@
 
 
         <div id="mypoke_list">
-            <strong>登録済みMyポケモン:</strong><br>
-            <div style="display: flex;">
-                <select id="input_mypoke_registered" style="flex:1; font-size:1em; vertical-align: middle;"></select>
-                <button id="input_mypoke_reedit" style="font-size:1em; vertical-align: middle; white-space: nowrap;" onclick="reeditMypoke();">編集</button>
-                <br>
-            </div>
 
-            <button id="input_mypoke_delete" style="font-size:1em; vertical-align: middle;" onclick="deleteSelectedMyPoke();">削除</button>
             <div>
                 <table id="mypoke_quick_check_food">
                     <thead>
