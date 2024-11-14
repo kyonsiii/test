@@ -41,20 +41,20 @@ html {
 }
 
 #input_option_buttons input,
-#input_color_buttons input,
+.area_color_buttons input,
 .select_button_area input{
     display: none;
 }
 
 #input_option_buttons,
-#input_color_buttons,
+.area_color_buttons,
 .select_button_area{
     display: flex;
     align-items: center;
 }
 
 #input_option_buttons label,
-#input_color_buttons label,
+.area_color_buttons label,
 .select_button_area label{
     background: #DDDDDD;
     color: #666666;
@@ -82,40 +82,48 @@ html {
 }
 
 
-#input_color_buttons label{
+.area_color_buttons label{
     background: #FFFFFF;
 }
 
-#input_color_buttons #color_pick_SB:checked + label {
+.area_color_buttons #color_pick_SB:checked + label ,
+.area_color_buttons #option_color_pick_SB:checked + label {
     background: #CCDDFF;
     color: black;
 }
-#input_color_buttons #color_pick_RD:checked + label {
+.area_color_buttons #color_pick_RD:checked + label ,
+.area_color_buttons #option_color_pick_RD:checked + label {
     background: #FFA0A0;
     color: black;
 }
-#input_color_buttons #color_pick_PK:checked + label {
+.area_color_buttons #color_pick_PK:checked + label, 
+.area_color_buttons #option_color_pick_PK:checked + label {
     background: #FFDDDD;
     color: black;
 }
-#input_color_buttons #color_pick_OR:checked + label {
+.area_color_buttons #color_pick_OR:checked + label,
+.area_color_buttons #option_color_pick_OR:checked + label  {
     background: #FFDD55;
     color: black;
 }
-#input_color_buttons #color_pick_GD:checked + label {
+.area_color_buttons #color_pick_GD:checked + label,
+.area_color_buttons #option_color_pick_GD:checked + label   {
     background: #FFFFCC;
     color: black;
 }
-#input_color_buttons #color_pick_GR:checked + label {
+.area_color_buttons #color_pick_GR:checked + label,
+.area_color_buttons #option_color_pick_GR:checked + label   {
     background: #BBFFBB;
     color: black;
 }
 
-#input_color_buttons #color_pick_BL:checked + label {
+.area_color_buttons #color_pick_BL:checked + label,
+.area_color_buttons #option_color_pick_BL:checked + label   {
     background: #77AAFF;
     color: black;
 }
-#input_color_buttons #color_pick_SL:checked + label {
+.area_color_buttons #color_pick_SL:checked + label,
+.area_color_buttons #option_color_pick_SL:checked + label   {
     background: #DDDDDD;
     color: black;
 }

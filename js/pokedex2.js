@@ -452,12 +452,14 @@ class FoodCombination{
     }
 */
     containsFoodsAtLeast(foodNames, min = 0){
+        /*
         let sum = 0;
         for (let i = 0; i < this.foods.length; i++){
             for (let j = 0; j < foodNames.length; j++){
                 if (this.foods[i].name == foodNames[j]) sum += this.foods[i].expection;
             }            
         }
+        */
         return this.getExpectionOf(foodNames) >= min;
     }
 

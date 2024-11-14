@@ -96,7 +96,7 @@ class PokeReport{
 
     setCurrentOptionsToCookie(){
         let n = 0;
-        n += numToBit(document.getElementById("ingredient_min_count").selectedIndex, mask_op_recipe_list_min_index );
+        n += numToBit(document.getElementById("option_ingredient_min_count").selectedIndex, mask_op_recipe_list_min_index );
         n += numToBit(document.getElementById("select_recipe_category").selectedIndex, mask_op_recipe_category_index);
         n += numToBit(document.getElementById("select_recipe").selectedIndex, mask_op_recipe_name_index);
         n += numToBit(document.getElementById("option_poke_30").checked, mask_result_op_visible_Lv30);    
@@ -125,7 +125,7 @@ class PokeReport{
         document.getElementById("only_fully_evolved").checked = bitToNum(n, mask_result_op_visible_FullyEvolved);
         document.getElementById("food_min").selectedIndex = bitToNum(n, mask_result_op_visible_minNum);
 
-        let sb_recipe_min = document.getElementById("ingredient_min_count");
+        let sb_recipe_min = document.getElementById("option_ingredient_min_count");
         sb_recipe_min.selectedIndex = bitToNum(n, mask_op_recipe_list_min_index);
             
         let sb_cat = document.getElementById("select_recipe_category");        

@@ -26,7 +26,7 @@
         <div class="input_form_area">
             <div style="display: flex; justify-content: space-between; background-color: beige;">
                 <strong id="page_title"> Myポケモン登録:</strong>
-                <span visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this);">　表示▼</span>
+                <span id="input_mypoke_form_visible" visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this);">　表示▼</span>
             </div>
             <div id="input_form" style="display: none;">
                 <select id="input_mypoke_name" style="width:10em; font-size:1em" onclick="initializePokeList()" onchange="setFoodImages(this)" src></select>
@@ -77,7 +77,7 @@
                     <input id="sub_skill_import" type="text" oninput="setInfoFromClipboard(this);">
                 </div>
 
-                <div id="input_color_buttons">
+                <div id="input_color_buttons" class="area_color_buttons">
                     <input type="radio" name="color_picker" value="0" id="color_pick_SB" checked><label for="color_pick_SB">□</label>
                     <input type="radio" name="color_picker" value="1" id="color_pick_BL"><label for="color_pick_BL">□</label>
                     <input type="radio" name="color_picker" value="2" id="color_pick_SL"><label for="color_pick_SL">□</label>
@@ -219,7 +219,7 @@
 
             <div class="area_another_option" style="background-color: gainsboro;">
                 レポート表示最大数:
-                <select id="recipe_max_count" style="width:6em; font-size:1em">
+                <select id="option_recipe_max_count" style="width:6em; font-size:1em">
                     <option value= "50">50個</option>
                     <option value= "70">70個</option>
                     <option value="100">100個</option>
@@ -231,7 +231,7 @@
                 </select><br>
 
                 レシピリスト最低数:
-                <select id="ingredient_min_count" style="width:6em; font-size:1em">
+                <select id="option_ingredient_min_count" style="width:6em; font-size:1em">
                     <option value= "10">10個</option>
                     <option value= "20">20個</option>
                     <option value= "30">30個</option>
@@ -241,8 +241,18 @@
                     <option value= "70">70個</option>
                     <option value="0">無制限</option>
                 </select><br>
-                背景色表示
-
+                背景色表示(未実装)
+                <div id="test" class="area_color_buttons">
+                    <input type="radio" name="option_color_picker" value="0" id="option_color_pick_SB" checked><label for="option_color_pick_SB">□</label>
+                    <input type="radio" name="option_color_picker" value="1" id="option_color_pick_BL"><label for="option_color_pick_BL">□</label>
+                    <input type="radio" name="option_color_picker" value="2" id="option_color_pick_SL"><label for="option_color_pick_SL">□</label>
+                    <input type="radio" name="option_color_picker" value="3" id="option_color_pick_PK"><label for="option_color_pick_PK">□</label>
+                    <input type="radio" name="option_color_picker" value="4" id="option_color_pick_OR"><label for="option_color_pick_OR">□</label>
+                    <input type="radio" name="option_color_picker" value="5" id="option_color_pick_RD"><label for="option_color_pick_RD">□</label>
+                    <input type="radio" name="option_color_picker" value="6" id="option_color_pick_GR"><label for="option_color_pick_GR">□</label>
+                    <input type="radio" name="option_color_picker" value="7" id="option_color_pick_GD"><label for="option_color_pick_GD">□</label>
+                </div>
+                
                 <button style="font-size:1em; vertical-align: middle;" onclick="copyCookieValue();">Cookieを取得</button>
                 <button style="font-size:1em; vertical-align: middle;" onclick="importCookieValue();">復元</button><br>
                 <input id="mypoke_import_cookie" type="text">
@@ -309,7 +319,7 @@
                 op.setAttribute("total", 0);
                 sb.appendChild(op);
 
-                let min = Number(document.getElementById("ingredient_min_count").value);
+                let min = Number(document.getElementById("option_ingredient_min_count").value);
 
                 this.recipedb.getRecipesOf(el.value).forEach(x => {
                     if (x.totalFoodsCount >= min){
@@ -326,8 +336,11 @@
             }
 
 
-            function showHideInputForm(el){
-                var visible = el.getAttribute("visible") === "true";
+            //再編集の時にel=nullで呼び出したいので
+            function showHideInputForm(el){                
+                var visible = (el == null) ? false : el.getAttribute("visible") === "true" ;//反転前なのでfalse
+                el = el ?? document.getElementById("input_mypoke_form_visible");
+                
                 if (visible){
                     el.textContent = "　表示▼";
                     el.setAttribute("visible", "false");
@@ -485,7 +498,7 @@
                 let onlyFullyEvolved = document.getElementById('only_fully_evolved').checked;
                 let showLv30 = document.getElementById("option_poke_30").checked;
                 let showLv60 = document.getElementById("option_poke_60").checked;
-                let reportMax = Number(document.getElementById("recipe_max_count").value);
+                let reportMax = Number(document.getElementById("option_recipe_max_count").value);
                 let t = document.getElementById('result_table');
                 t.querySelectorAll("tbody").forEach(b => b.remove());
                 //t.appendChild(this.pokeReport.createReport(foodName, 500, min, onlyFullyEvolved, showLv30, showLv60));
@@ -795,6 +808,7 @@
                 let list = document.getElementById("input_mypoke_registered");
                 if (list.children.length == 0) return;
 
+                this.showHideInputForm(null);
                 let j = pokeReport.createJsonFromCookieValue32(list.value);
                 this.setJsonToInputFormForReEdit(j);
                 document.getElementById('input_mypoke_name').focus();
@@ -890,9 +904,14 @@
 
             //クッキー関連(呼び出し)
             function setMypokesToListFromCookie(c = null){
-                c = c ?? getCookie("rmpl");
-                //↓テスト用
-                //c = "5o3or-505-0/2ppsn-cg0-9aed3/74gqq-a01-965f7/74h8l-eg1-173d8/74hsl-1-c85d3/6j9sp-lg1-3d547/hoqn-d02-14fgb/hrop-500-dc592/1t28q-ag0-13b64/183oq-600-a3be6/15b4l-a00-g5726/vpsl-l00-db000/vpsp-500-dg000/29sq-1-8426b/2a2p-0-28400/2bop-6g0-af519/spir-1-2d1cb/5u16r-e00-354b6/5u20q-e00-c2d48/5u3ol-m00-1d578/9jal-5g0-af4b2/5v1sp-m00-2c000/5v1sq-ag1-86000/5v1sr-d00-46000/5ohsl-600-3286g/nhul-e00-b6000/niqq-m00-a54bc/nj8q-600-376hb/j0ql-e01-7b000/j1sn-d00-34000/j1sr-m00-32000/26jmq-6g0-1d745/3jj2l-5g0-a9h16/cp6m-e00-5d400/cq6q-e00-526b3/1o9sm-gg1-42b6g/1oa2q-0-9248c/2rbem-e00-hab72/2rbol-a02-a3600/2rbol-lg2-fa600/3hhul-m00-cae00/3hi8l-0-25bch/1gpsm-eg1-14ab6/17bop-ig0-23a68/1u1sp-2-15a82/puq-h00-d3500/r4l-ag0-ae5g2/a3eq-0-ab71e/2cgum-ig1-b1346/2cguq-a01-49136/731sl-e00-97d3b/16joq-9g0-a7623/3j1sp-1-31d00/3j1sr-eg1-b4900/1sq4l-0-da423/6iqr-1-1acf4/6jaq-gg0-9a45b/6jon-600-1a7f2/73r4l-l00-b74c2/1gql-501-ead78/1gqn-1-f243b/1i6q-ig0-168h4";
+                
+    
+                if (window.location.protocol == "file:"){            //↓テスト用
+                    c = "5o3or-505-0/2ppsn-cg0-9aed3/74gqq-a01-965f7/74h8l-eg1-173d8/74hsl-1-c85d3/6j9sp-lg1-3d547/hoqn-d02-14fgb/hrop-500-dc592/1t28q-ag0-13b64/183oq-600-a3be6/15b4l-a00-g5726/vpsl-l00-db000/vpsp-500-dg000/29sq-1-8426b/2a2p-0-28400/2bop-6g0-af519/spir-1-2d1cb/5u16r-e00-354b6/5u20q-e00-c2d48/5u3ol-m00-1d578/9jal-5g0-af4b2/5v1sp-m00-2c000/5v1sq-ag1-86000/5v1sr-d00-46000/5ohsl-600-3286g/nhul-e00-b6000/niqq-m00-a54bc/nj8q-600-376hb/j0ql-e01-7b000/j1sn-d00-34000/j1sr-m00-32000/26jmq-6g0-1d745/3jj2l-5g0-a9h16/cp6m-e00-5d400/cq6q-e00-526b3/1o9sm-gg1-42b6g/1oa2q-0-9248c/2rbem-e00-hab72/2rbol-a02-a3600/2rbol-lg2-fa600/3hhul-m00-cae00/3hi8l-0-25bch/1gpsm-eg1-14ab6/17bop-ig0-23a68/1u1sp-2-15a82/puq-h00-d3500/r4l-ag0-ae5g2/a3eq-0-ab71e/2cgum-ig1-b1346/2cguq-a01-49136/731sl-e00-97d3b/16joq-9g0-a7623/3j1sp-1-31d00/3j1sr-eg1-b4900/1sq4l-0-da423/6iqr-1-1acf4/6jaq-gg0-9a45b/6jon-600-1a7f2/73r4l-l00-b74c2/1gql-501-ead78/1gqn-1-f243b/1i6q-ig0-168h4";
+                }
+                else{
+                    c = c ?? getCookie("rmpl");
+                }
                 if (c == null) return;
 
                 let jss = c.split("/").map(x => pokeReport.createJsonFromCookieValue32(x));
