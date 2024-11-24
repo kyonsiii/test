@@ -10,7 +10,7 @@
         <script src="js/pokedex2.js"></script>
         <script src="js/recipedb.js"></script>
 
-        <title>レポート(仮)v0.4.2h</title>
+        <title>レポート(仮)v0.5</title>
 
     </head>
 
@@ -946,9 +946,9 @@
                 this.pokeReport.initialize();
                 this.selectBoxInitialized = false;
                 this.setSubSkillSelectBoxes();
-                this.pokeReport.setOptionsFromCookie(getCookie("ropt"));
                 this.setMypokesToListFromCookie();
-                let sb_recipe = document.getElementById("select_recipe");
+                this.pokeReport.setOptionsFromCookie(getCookie("ropt"));
+                let sb_recipe = document.getElementById("select_recipe");              
                 if (sb_recipe.children.length == 0) this.selectRecipeCategory(document.getElementById("select_recipe_category"), true);
             }
 
