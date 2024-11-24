@@ -128,7 +128,7 @@ class RecipeDB{
 
 class Recipe{
     constructor(json){
-        this.advancedFoods = ["あじわいキノコ", "おいしいシッポ", "ふといながねぎ"];
+        this.advancedFoods = ["おいしいシッポ", "ふといながねぎ"];
         this.no = json.no;
         this.category = json.category;
         this.name = json.name;

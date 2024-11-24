@@ -243,7 +243,13 @@
                     <option value= "70">70個</option>
                     <option value="0">無制限</option>
                 </select><br>
-                背景色表示(未実装)
+                
+                背景色表示(色単位は未実装)
+                <div class="select_button_area">
+                    <input type="checkbox" id="option_mypoke_listup_backcolor" checked><label for="option_mypoke_listup_backcolor">水色だけ食材ランキング一覧に表示</label>
+                </div>
+
+                
                 <div id="test" class="area_color_buttons">
                     <input type="radio" name="option_color_picker" value="0" id="option_color_pick_SB" checked><label for="option_color_pick_SB">□</label>
                     <input type="radio" name="option_color_picker" value="1" id="option_color_pick_BL"><label for="option_color_pick_BL">□</label>
@@ -906,8 +912,6 @@
 
             //クッキー関連(呼び出し)
             function setMypokesToListFromCookie(c = null){
-                
-    
                 if (window.location.protocol == "file:"){            //↓テスト用
                     c = "5o3or-505-0/2ppsn-cg0-9aed3/74gqq-a01-965f7/74h8l-eg1-173d8/74hsl-1-c85d3/6j9sp-lg1-3d547/hoqn-d02-14fgb/hrop-500-dc592/1t28q-ag0-13b64/183oq-600-a3be6/15b4l-a00-g5726/vpsl-l00-db000/vpsp-500-dg000/29sq-1-8426b/2a2p-0-28400/2bop-6g0-af519/spir-1-2d1cb/5u16r-e00-354b6/5u20q-e00-c2d48/5u3ol-m00-1d578/9jal-5g0-af4b2/5v1sp-m00-2c000/5v1sq-ag1-86000/5v1sr-d00-46000/5ohsl-600-3286g/nhul-e00-b6000/niqq-m00-a54bc/nj8q-600-376hb/j0ql-e01-7b000/j1sn-d00-34000/j1sr-m00-32000/26jmq-6g0-1d745/3jj2l-5g0-a9h16/cp6m-e00-5d400/cq6q-e00-526b3/1o9sm-gg1-42b6g/1oa2q-0-9248c/2rbem-e00-hab72/2rbol-a02-a3600/2rbol-lg2-fa600/3hhul-m00-cae00/3hi8l-0-25bch/1gpsm-eg1-14ab6/17bop-ig0-23a68/1u1sp-2-15a82/puq-h00-d3500/r4l-ag0-ae5g2/a3eq-0-ab71e/2cgum-ig1-b1346/2cguq-a01-49136/731sl-e00-97d3b/16joq-9g0-a7623/3j1sp-1-31d00/3j1sr-eg1-b4900/1sq4l-0-da423/6iqr-1-1acf4/6jaq-gg0-9a45b/6jon-600-1a7f2/73r4l-l00-b74c2/1gql-501-ead78/1gqn-1-f243b/1i6q-ig0-168h4";
                 }
@@ -917,7 +921,9 @@
                 if (c == null) return;
 
                 let jss = c.split("/").map(x => pokeReport.createJsonFromCookieValue32(x));
-                pokeReport.setMyPokeFoodListInfo(document.getElementById("mypoke_quick_check_food").tBodies[0], jss);
+                var tb = document.getElementById("mypoke_quick_check_food").tBodies[0];
+                var onlySkyBlue = document.getElementById("option_mypoke_listup_backcolor").checked;
+                pokeReport.setMyPokeFoodListInfo(tb, jss, onlySkyBlue);
 
                 for (let i = 0; i < jss.length; i++){
                     this.listupMyPokeInfo(jss[i]);
@@ -939,14 +945,9 @@
                 this.pokeReport = new PokeReport(this.pokedex, this.recipedb);
                 this.pokeReport.initialize();
                 this.selectBoxInitialized = false;
-
                 this.setSubSkillSelectBoxes();
+                this.pokeReport.setOptionsFromCookie(getCookie("ropt"));
                 this.setMypokesToListFromCookie();
-                let c = getCookie("ropt");
-                if (c != null){
-                    this.pokeReport.setOptionsFromCookie(c);
-                }
-
                 let sb_recipe = document.getElementById("select_recipe");
                 if (sb_recipe.children.length == 0) this.selectRecipeCategory(document.getElementById("select_recipe_category"), true);
             }

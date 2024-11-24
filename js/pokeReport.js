@@ -49,7 +49,7 @@ const mask_result_op_visible_MyPokeLv50ft = 0b000000000000000000001000000000;
 const mask_result_op_visible_MyPokeLv60ft = 0b000000000000000000000100000000;
 const mask_result_op_visible_FullyEvolved = 0b000000000000000000000010000000;
 const mask_result_op_visible_minNum       = 0b000000000000000000000001111000;
-
+const mask_mypoke_op_food_ranking_skyBlue = 0b000000000000000000000001111100;
 
                         
 
@@ -108,6 +108,7 @@ class PokeReport{
         n += numToBit(document.getElementById("option_potential_60").checked, mask_result_op_visible_MyPokeLv60ft);
         n += numToBit(document.getElementById("only_fully_evolved").checked, mask_result_op_visible_FullyEvolved);
         n += numToBit(document.getElementById("food_min").selectedIndex, mask_result_op_visible_minNum);
+        n += numToBit(document.getElementById("option_mypoke_listup_backcolor").checked, mask_mypoke_op_food_ranking_skyBlue);
         setCookie("ropt", n.toString(32), 30);
     }
 
@@ -124,7 +125,8 @@ class PokeReport{
         document.getElementById("option_potential_60").checked = bitToNum(n, mask_result_op_visible_MyPokeLv60ft);
         document.getElementById("only_fully_evolved").checked = bitToNum(n, mask_result_op_visible_FullyEvolved);
         document.getElementById("food_min").selectedIndex = bitToNum(n, mask_result_op_visible_minNum);
-
+        document.getElementById("option_mypoke_listup_backcolor").checked = bitToNum(n, mask_mypoke_op_food_ranking_skyBlue);
+        
         let sb_recipe_min = document.getElementById("option_ingredient_min_count");
         sb_recipe_min.selectedIndex = bitToNum(n, mask_op_recipe_list_min_index);
             
@@ -139,11 +141,12 @@ class PokeReport{
 
 
 
-    setMyPokeFoodListInfo(tbody, jsonList){
+    setMyPokeFoodListInfo(tbody, jsonList, onlySkyBlue = false){
         let pokeAndComb = [];
         for (let i = 0; i < jsonList.length; i++){
             let j = jsonList[i];
             let p = this.pokedex.getPokemonByNo(j.no);
+            if (onlySkyBlue && j.backgroundColor != 0) continue;
             pokeAndComb.push({poke: p, json: j, comb:p.createFoodCombination(j, j.lv, j.foodCode)});            
         }
         
@@ -337,6 +340,11 @@ class PokeReport{
 
 
     createJsonFromCookieValue32(ck){
+        if (ck == null){
+            console.log("Cookie is Null.")
+            return;
+        }
+
         let valueArr = ck.split("-");
         let n = 0; //parseInt(valueArr[], 32)で使いまわす
        
