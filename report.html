@@ -10,7 +10,7 @@
         <script src="js/pokedex2.js"></script>
         <script src="js/recipedb.js"></script>
 
-        <title>レポート(仮)v0.5</title>
+        <title>レポート(仮)v0.5b</title>
 
     </head>
 
@@ -946,8 +946,15 @@
                 this.pokeReport.initialize();
                 this.selectBoxInitialized = false;
                 this.setSubSkillSelectBoxes();
+
+                let cookieOpt = getCookie("ropt", "");
+                if (cookieOpt != ""){
+                    document.getElementById("option_mypoke_listup_backcolor").checked = bitToNum(parseInt(cookieOpt,32), mask_mypoke_op_food_ranking_skyBlue);
+                }
+                
                 this.setMypokesToListFromCookie();
-                this.pokeReport.setOptionsFromCookie(getCookie("ropt"));
+                this.pokeReport.setOptionsFromCookie(cookieOpt);
+
                 let sb_recipe = document.getElementById("select_recipe");              
                 if (sb_recipe.children.length == 0) this.selectRecipeCategory(document.getElementById("select_recipe_category"), true);
             }

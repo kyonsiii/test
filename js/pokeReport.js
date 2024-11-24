@@ -49,7 +49,7 @@ const mask_result_op_visible_MyPokeLv50ft = 0b000000000000000000001000000000;
 const mask_result_op_visible_MyPokeLv60ft = 0b000000000000000000000100000000;
 const mask_result_op_visible_FullyEvolved = 0b000000000000000000000010000000;
 const mask_result_op_visible_minNum       = 0b000000000000000000000001111000;
-const mask_mypoke_op_food_ranking_skyBlue = 0b000000000000000000000001111100;
+const mask_mypoke_op_food_ranking_skyBlue = 0b000000000000000000000000000100;
 
                         
 
@@ -114,6 +114,8 @@ class PokeReport{
 
 
     setOptionsFromCookie(c){
+        if (c == null || c == "") return;
+        
         let n = parseInt(c, 32);
 
         document.getElementById("option_poke_30").checked = bitToNum(n, mask_result_op_visible_Lv30);    
@@ -125,8 +127,7 @@ class PokeReport{
         document.getElementById("option_potential_60").checked = bitToNum(n, mask_result_op_visible_MyPokeLv60ft);
         document.getElementById("only_fully_evolved").checked = bitToNum(n, mask_result_op_visible_FullyEvolved);
         document.getElementById("food_min").selectedIndex = bitToNum(n, mask_result_op_visible_minNum);
-        document.getElementById("option_mypoke_listup_backcolor").checked = bitToNum(n, mask_mypoke_op_food_ranking_skyBlue);
-        
+        console.log( bitToNum(n, mask_mypoke_op_food_ranking_skyBlue));
         let sb_recipe_min = document.getElementById("option_ingredient_min_count");
         sb_recipe_min.selectedIndex = bitToNum(n, mask_op_recipe_list_min_index);
             
