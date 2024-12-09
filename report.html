@@ -791,7 +791,7 @@
 
             function resetInputForm(iName = 0, sSrc = "", edidMode = false, nLv = 30, iChar = 0, ilv10skill = 0, ilv25skill = 0, ilv50skill = 0, ilv75skill = 0, ilv100skill = 0, bgIndex = 0){
                 let res = window.confirm("入力情報をリセットしてもよろしいですか？");
-                if (res == false) return;
+                if (res == false) return false;
 
                 let pokeList = document.getElementById('input_mypoke_name');
                 pokeList.selectedIndex = iName;
@@ -807,6 +807,8 @@
                 document.getElementById("sub_skill_lv100").selectedIndex = ilv100skill;
                 document.getElementById("sub_skill_import").value = "";
                 document.getElementById("input_color_buttons").querySelectorAll("input")[bgIndex].checked = true;
+
+                return true;
             }
 
 
@@ -818,8 +820,7 @@
 
                 this.showHideInputForm(null);
                 let j = pokeReport.createJsonFromCookieValue32(list.value);
-                this.setJsonToInputFormForReEdit(j);
-                document.getElementById('input_mypoke_name').focus();
+                if (this.setJsonToInputFormForReEdit(j)) document.getElementById('page_title').scrollIntoView();
             }
 
 
@@ -829,10 +830,17 @@
                 if (pokeList.children.length == 0) this.initializePokeList(); //初めてリストに触った時に実行されることになっている
 
                 //ポケモン名、せいかくはリストのIndexを探す必要があるため、後で直接入力。
-                this.resetInputForm(0, j.src, true, j.lv, 0, j.subSkillList.lv10.value, j.subSkillList.lv25.value, j.subSkillList.lv50.value, j.subSkillList.lv75.value, j.subSkillList.lv100.value, j.backgroundColor);
-                document.getElementById("input_mypoke_name").value = j.name;
+                let res = this.resetInputForm(0, j.src, true, j.lv, 0, j.subSkillList.lv10.value, j.subSkillList.lv25.value, j.subSkillList.lv50.value, j.subSkillList.lv75.value, j.subSkillList.lv100.value, j.backgroundColor);
+                if (res == false){
+                    alert("中断");
+                    return false;
+                }
+
+                pokeList.value = j.name;
                 Array.from(document.getElementById("input_mypoke_char").children).find(o => o.value == j.char).selected = true;
                 this.setFoodImages(null, poke, j.foodCode[0], j.foodCode[1], j.foodCode[2]);
+
+                return true;
             }
 
 
