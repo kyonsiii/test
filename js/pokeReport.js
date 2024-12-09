@@ -127,7 +127,7 @@ class PokeReport{
         document.getElementById("option_potential_60").checked = bitToNum(n, mask_result_op_visible_MyPokeLv60ft);
         document.getElementById("only_fully_evolved").checked = bitToNum(n, mask_result_op_visible_FullyEvolved);
         document.getElementById("food_min").selectedIndex = bitToNum(n, mask_result_op_visible_minNum);
-        console.log( bitToNum(n, mask_mypoke_op_food_ranking_skyBlue));
+
         let sb_recipe_min = document.getElementById("option_ingredient_min_count");
         sb_recipe_min.selectedIndex = bitToNum(n, mask_op_recipe_list_min_index);
             
@@ -352,7 +352,7 @@ class PokeReport{
         let j = {};
         j.src = ck;
         
-        n = parseInt(valueArr[0], 32);        
+        n = parseInt(valueArr[0], 32);     
         j.no = Math.round((bitToNum(n, mask32a_no) * 10) + bitToNum(n,mask32a_nodp)) / 10;
         j.name = pokedex.getPokemonByNo(j.no).name;
         j.lv = bitToNum(n, mask32a_lv);
