@@ -10,7 +10,7 @@
         <script src="js/pokedex2.js"></script>
         <script src="js/recipedb.js"></script>
 
-        <title>レポート(仮)v0.5b</title>
+        <title>レポート(仮)</title>
 
     </head>
 
@@ -25,7 +25,7 @@
 
         <div class="input_form_area">
             <div style="display: flex; justify-content: space-between; background-color: beige;">
-                <strong id="page_title"> Myポケモン登録:</strong>
+                <strong id="page_title"> Myポケモン登録v0.6:</strong>
                 <span id="input_mypoke_form_visible" visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this);">　表示▼</span>
             </div>
             <div id="input_form" style="display: none;">
@@ -74,7 +74,7 @@
                     <select id="sub_skill_lv75" onchange="changeSubSkill(this);"></select><br>
                     <select id="sub_skill_lv100" onchange="changeSubSkill(this);"></select>
 
-                    <input id="sub_skill_import" type="text" oninput="setInfoFromClipboard(this);">
+                    <input id="sub_skill_import" type="text" oninput="setSubSkillsFromIdentifier(this);">
                 </div>
 
                 <div id="input_color_buttons" class="area_color_buttons">
@@ -391,7 +391,7 @@
 
 
 
-            function setInfoFromClipboard(el){
+            function setSubSkillsFromIdentifier(el){
                 // toggleFood(el, setIndex = -1){
                 // let a = document.getElementById("input_mypoke_food_1")
                 // let a = document.getElementById("input_mypoke_food_2")
@@ -651,43 +651,6 @@
             }
 
 
-            function createJsonFromInputForm(name){
-                if (name == "") return null;
-                let j = {};
-
-                j.no = pokedex.getNoByName(name);
-                j.name = name;
-                j.backgroundColor = Number(document.querySelector("#input_color_buttons input:checked").value);
-                j.lv = Number(this.document.getElementById('input_mypoke_lv').value);
-                j.foodCode = this.getMyPokeFoodCode();
-                j.char = document.getElementById("input_mypoke_char").value;
-                if (j.char == "") return null;
-
-                j.subBerryS = document.getElementById("input_mypoke_berryS").checked;
-                j.subOteBonus = document.getElementById("input_mypoke_oteBonus").checked;
-                j.subSpeedS = document.getElementById("input_mypoke_speedS").checked;
-                j.subSpeedM = document.getElementById("input_mypoke_speedM").checked;
-                j.subFoodS = document.getElementById("input_mypoke_foodS").checked;
-                j.subFoodM = document.getElementById("input_mypoke_foodM").checked;
-                j.subSkillS = document.getElementById("input_mypoke_skillS").checked;
-                j.subSkillM = document.getElementById("input_mypoke_skillM").checked;
-                j.subSkillLvUpS = document.getElementById("input_mypoke_skillLvUpS").checked;
-                j.subSkillLvUpM = document.getElementById("input_mypoke_skillLvUpM").checked;
-                j.subInventoryS = document.getElementById("input_mypoke_inventoryS").checked;
-                j.subInventoryM = document.getElementById("input_mypoke_inventoryM").checked;
-                j.subInventoryL = document.getElementById("input_mypoke_inventoryL").checked;
-                j.subExpBonus = document.getElementById("input_mypoke_expBonus").checked;
-                j.subGenkiBonus = document.getElementById("input_mypoke_genkiBonus").checked;
-                j.subYumeBonus = document.getElementById("input_mypoke_yumeBonus").checked;
-                j.researchBonus = document.getElementById("input_mypoke_researchBonus").checked;
-
-
-                let charBit = this.pokeReport.getCharacteristicNumOf(j.char);
-                pokeReport.setAdjustValues(j);
-                return j;
-            }
-
-
 
             function createJsonFromInputForm32(name){
                 if (name == "") return null;
@@ -753,14 +716,23 @@
             function setFoodImages(el, poke = null, codeFoodA = "A", codeFoodB = "A", codeFoodC = "A"){
                 if (poke == null) poke = pokedex.getPokemonByName(el.value);
                 if (poke == null) return;
-
+             
                 let img1 = document.getElementById('input_mypoke_food_1');
                 let img2 = document.getElementById('input_mypoke_food_2');
                 let img3 = document.getElementById('input_mypoke_food_3');
 
-                this.setFoodImageOnImgEl(img1, poke, 1, codeFoodA);
-                this.setFoodImageOnImgEl(img2, poke, 2, codeFoodB);
-                this.setFoodImageOnImgEl(img3, poke, 3, codeFoodC);
+                let list_poke = document.getElementById("input_mypoke_name");
+                if (list_poke.getAttribute("src") != ""){
+                    let identifier = document.getElementById("sub_skill_import").value;
+                    this.setFoodImageOnImgEl(img1, poke, 1, identifier[0]);
+                    this.setFoodImageOnImgEl(img2, poke, 2, identifier[1]);
+                    this.setFoodImageOnImgEl(img3, poke, 3, identifier[2]);
+                }
+                else{
+                    this.setFoodImageOnImgEl(img1, poke, 1, codeFoodA);
+                    this.setFoodImageOnImgEl(img2, poke, 2, codeFoodB);
+                    this.setFoodImageOnImgEl(img3, poke, 3, codeFoodC);
+                }
             }
 
 
@@ -789,25 +761,34 @@
             }
 
 
-            function resetInputForm(iName = 0, sSrc = "", edidMode = false, nLv = 30, iChar = 0, ilv10skill = 0, ilv25skill = 0, ilv50skill = 0, ilv75skill = 0, ilv100skill = 0, bgIndex = 0){
+           // function resetInputForm(iName = 0, sSrc = "", edidMode = false, nLv = 30, iChar = 0, ilv10skill = 0, ilv25skill = 0, ilv50skill = 0, ilv75skill = 0, ilv100skill = 0, bgIndex = 0){
+            function resetInputForm(json = null){
                 let res = window.confirm("入力情報をリセットしてもよろしいですか？");
-                if (res == false) return false;
+                if (!res) return false;
 
                 let pokeList = document.getElementById('input_mypoke_name');
-                pokeList.selectedIndex = iName;
-                pokeList.setAttribute("src", sSrc);
-                pokeList.style.backgroundColor = (edidMode) ? "#FF8899" : "";
+                console.log(json);
+                pokeList.value = (json == null) ? "" : json.name;
+                pokeList.setAttribute("src", (json == null) ? "" : json.src);
+                pokeList.style.backgroundColor = (json == null) ? "" : "#FF8899";
 
-                document.getElementById('input_mypoke_lv').selectedIndex = nLv - 1;
-                document.getElementById("input_mypoke_char").selectedIndex = iChar;
-                document.getElementById("sub_skill_lv10").selectedIndex  = ilv10skill;
-                document.getElementById("sub_skill_lv25").selectedIndex  = ilv25skill;
-                document.getElementById("sub_skill_lv50").selectedIndex  = ilv50skill;
-                document.getElementById("sub_skill_lv75").selectedIndex  = ilv75skill;
-                document.getElementById("sub_skill_lv100").selectedIndex = ilv100skill;
-                document.getElementById("sub_skill_import").value = "";
+                document.getElementById('input_mypoke_lv').selectedIndex   = (json == null) ? 29 : json.lv - 1;
+                document.getElementById("input_mypoke_char").selectedIndex = 0;
+                document.getElementById("sub_skill_lv10").selectedIndex    = 0;
+                document.getElementById("sub_skill_lv25").selectedIndex    = 0;
+                document.getElementById("sub_skill_lv50").selectedIndex    = 0;
+                document.getElementById("sub_skill_lv75").selectedIndex    = 0;
+                document.getElementById("sub_skill_lv100").selectedIndex   = 0;
+                document.getElementById("sub_skill_import").value          = (json == null) ? "" : json.foodCode + pokeReport.createIdentifierOf(json);
+
+                let bgIndex = (json == null) ? 0 : json.backgroundColor;
                 document.getElementById("input_color_buttons").querySelectorAll("input")[bgIndex].checked = true;
+                if (json != null){
+                    this.setFoodImages(null, pokedex.getPokemonByName(json.name), json.foodCode[0], json.foodCode[1], json.foodCode[2]);
+                    setSubSkillsFromIdentifier(document.getElementById("sub_skill_import"));
+                }
 
+               
                 return true;
             }
 
@@ -830,13 +811,14 @@
                 if (pokeList.children.length == 0) this.initializePokeList(); //初めてリストに触った時に実行されることになっている
 
                 //ポケモン名、せいかくはリストのIndexを探す必要があるため、後で直接入力。
-                let res = this.resetInputForm(0, j.src, true, j.lv, 0, j.subSkillList.lv10.value, j.subSkillList.lv25.value, j.subSkillList.lv50.value, j.subSkillList.lv75.value, j.subSkillList.lv100.value, j.backgroundColor);
+                //let res = this.resetInputForm(0, j.src, true, j.lv, 0, j.subSkillList.lv10.value, j.subSkillList.lv25.value, j.subSkillList.lv50.value, j.subSkillList.lv75.value, j.subSkillList.lv100.value, j.backgroundColor);
+                let res = this.resetInputForm(j);
                 if (res == false){
                     alert("中断");
                     return false;
                 }
 
-                pokeList.value = j.name;
+                
                 Array.from(document.getElementById("input_mypoke_char").children).find(o => o.value == j.char).selected = true;
                 this.setFoodImages(null, poke, j.foodCode[0], j.foodCode[1], j.foodCode[2]);
 
