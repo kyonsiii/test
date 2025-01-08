@@ -86,48 +86,58 @@ html {
     background: #FFFFFF;
 }
 
-.area_color_buttons #color_pick_SB:checked + label ,
+
+
+
+
+
+.def_color_SB,
+.area_color_buttons #color_pick_SB:checked + label,
 .area_color_buttons #option_color_pick_SB:checked + label {
     background: #CCDDFF;
-    color: black;
-}
-.area_color_buttons #color_pick_RD:checked + label ,
-.area_color_buttons #option_color_pick_RD:checked + label {
-    background: #FFA0A0;
-    color: black;
-}
-.area_color_buttons #color_pick_PK:checked + label, 
-.area_color_buttons #option_color_pick_PK:checked + label {
-    background: #FFDDDD;
-    color: black;
-}
-.area_color_buttons #color_pick_OR:checked + label,
-.area_color_buttons #option_color_pick_OR:checked + label  {
-    background: #FFDD55;
-    color: black;
-}
-.area_color_buttons #color_pick_GD:checked + label,
-.area_color_buttons #option_color_pick_GD:checked + label   {
-    background: #FFFFCC;
-    color: black;
-}
-.area_color_buttons #color_pick_GR:checked + label,
-.area_color_buttons #option_color_pick_GR:checked + label   {
-    background: #BBFFBB;
-    color: black;
 }
 
+.def_color_BL,
 .area_color_buttons #color_pick_BL:checked + label,
-.area_color_buttons #option_color_pick_BL:checked + label   {
+.area_color_buttons #option_color_pick_BL:checked + label{
     background: #77AAFF;
-    color: black;
-}
-.area_color_buttons #color_pick_SL:checked + label,
-.area_color_buttons #option_color_pick_SL:checked + label   {
-    background: #DDDDDD;
-    color: black;
 }
 
+.def_color_SL,
+.area_color_buttons #color_pick_SL:checked + label,
+.area_color_buttons #option_color_pick_SL:checked + label{
+    background: #DDDDDD;
+}
+
+.def_color_PK,
+.area_color_buttons #color_pick_PK:checked + label, 
+.area_color_buttons #option_color_pick_PK:checked + label{
+    background: #FFDDDD;
+}
+
+.def_color_OR,
+.area_color_buttons #color_pick_OR:checked + label,
+.area_color_buttons #option_color_pick_OR:checked + label{
+    background: #FFDDAA;
+}
+
+.def_color_RD,
+.area_color_buttons #color_pick_RD:checked + label ,
+.area_color_buttons #option_color_pick_RD:checked + label{
+    background: #FFA0A0;
+}
+
+.def_color_GR,
+.area_color_buttons #color_pick_GR:checked + label,
+.area_color_buttons #option_color_pick_GR:checked + label{
+    background: #BBFFBB;
+}
+
+.def_color_GD,
+.area_color_buttons #color_pick_GD:checked + label,
+.area_color_buttons #option_color_pick_GD:checked + label{
+    background: #FFFFCC;
+}
 
 #sub_skill_area select{
     min-width: 40%;

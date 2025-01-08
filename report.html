@@ -25,7 +25,7 @@
 
         <div class="input_form_area">
             <div style="display: flex; justify-content: space-between; background-color: beige;">
-                <strong id="page_title"> Myポケモン登録v0.6:</strong>
+                <strong id="page_title"> Myポケモン登録v0.6b:</strong>
                 <span id="input_mypoke_form_visible" visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this);">　表示▼</span>
             </div>
             <div id="input_form" style="display: none;">
@@ -81,12 +81,17 @@
                     <input type="radio" name="color_picker" value="0" id="color_pick_SB" checked><label for="color_pick_SB">□</label>
                     <input type="radio" name="color_picker" value="1" id="color_pick_BL"><label for="color_pick_BL">□</label>
                     <input type="radio" name="color_picker" value="2" id="color_pick_SL"><label for="color_pick_SL">□</label>
-                    <input type="radio" name="color_picker" value="3" id="color_pick_PK"><label for="color_pick_PK">□</label>
-                    <input type="radio" name="color_picker" value="4" id="color_pick_OR"><label for="color_pick_OR">□</label>
+                    <input type="radio" name="color_picker" value="3" id="color_pick_OR"><label for="color_pick_OR">□</label>
+                    <input type="radio" name="color_picker" value="4" id="color_pick_PK"><label for="color_pick_PK">□</label>
                     <input type="radio" name="color_picker" value="5" id="color_pick_RD"><label for="color_pick_RD">□</label>
                     <input type="radio" name="color_picker" value="6" id="color_pick_GR"><label for="color_pick_GR">□</label>
                     <input type="radio" name="color_picker" value="7" id="color_pick_GD"><label for="color_pick_GD">□</label>
                 </div>
+
+
+
+
+
 
                 <button id="input_mypoke_register" style="font-size:1em; vertical-align: middle;" onclick="registerMyPoke();">Myポケモンに追加</button>
                 <button id="input_mypoke_reset" style="font-size:1em; vertical-align: middle;" onclick="resetInputForm();">リセット</button><br><br>
@@ -608,7 +613,9 @@
                 let result = this.createBerryPowerInfo(j);
 
                 let tr = document.createElement("tr");
-                tr.style.backgroundColor = pokeReport.getColorCodeOf(j.backgroundColor);
+                //tr.style.backgroundColor = pokeReport.getColorCodeOf(j.backgroundColor);
+                pokeReport.setColorClassTo(tr, j.backgroundColor);
+                
                 tr.setAttribute("value", result.berryPowerDay);
                 tr.insertCell().textContent = j.name + "Lv" + j.lv + j.foodCode + " " + pokeReport.createIdentifierOf(j);
                 tr.insertCell().textContent = result.berryPowerDay + "(" + result.berryOteCount + "/" + result.oteCount + ")";

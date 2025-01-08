@@ -203,14 +203,14 @@ class PokeReport{
                 tr = tr ?? tbody.insertRow();
                 pac.comb.insertResultTo(tr, food, pac.poke, this.createIdentifierOf(pac.json));
                 tr.querySelectorAll(selector).forEach(el => {
-                    el.style.backgroundColor = this.getColorCodeOf(pac.json.backgroundColor);
+                   //el.style.backgroundColor = this.getColorCodeOf(pac.json.backgroundColor);
+                    this.setColorClassTo(el, pac.json.backgroundColor);
                 });
                 foodImgCell.rowSpan = rank;
             };            
         
             for (let i = 0; i < (sorted.length <= 3 ? sorted.length : 3); i++){
                 insertInfo(sorted[i], i + 1, (i == 0) ? tr1 : null);
-                //insertInfo(sorted[i], i + 1,  null);
             }    
         };
 
@@ -238,28 +238,29 @@ class PokeReport{
 
             if (json.lv < 30 && showPotential30){
                 this.setSubSkillsEnabled(json, 30, true);
-                this.insertMyPokeRowInto(tbody, poke, json, 30, foods, foodMin, this.getColorCodeOf(4));
+                this.insertMyPokeRowInto(tbody, poke, json, 30, foods, foodMin, 3);
             }
 
             if (json.lv < 50 && showPotential50){
                 this.setSubSkillsEnabled(json, 50, true);
-                this.insertMyPokeRowInto(tbody, poke, json, 50, foods, foodMin, this.getColorCodeOf(3));
+                this.insertMyPokeRowInto(tbody, poke, json, 50, foods, foodMin, 4);
             }
 
             if (json.lv < 60 && showPotential60){
                 this.setSubSkillsEnabled(json, 60, true);
-                this.insertMyPokeRowInto(tbody, poke, json, 60, foods, foodMin, this.getColorCodeOf(5));
+                this.insertMyPokeRowInto(tbody, poke, json, 60, foods, foodMin, 5);
             }
         }        
     }
 
 
-    insertMyPokeRowInto(tbody, poke, json, lv, foods, foodMin, backgroundColor = null){//自分で登録したものは背景色がjsonに含まれているのでわざわざ指定しない
+    insertMyPokeRowInto(tbody, poke, json, lv, foods, foodMin, backgroundColorIndex = -1){//自分で登録したものは背景色がjsonに含まれているのでわざわざ指定しない
         let comb = poke.createFoodCombination(json, lv);
         if (!comb.containsFoodsAtLeast(foods, foodMin)) return;
 
         let tr = this.createMyPokemonInfoRow(poke, comb, foods[0], json);
-        tr.style.backgroundColor = backgroundColor ?? this.getColorCodeOf(json.backgroundColor);
+        backgroundColorIndex = (backgroundColorIndex == -1) ? 0 : backgroundColorIndex;
+        this.setColorClassTo(tr, backgroundColorIndex)
 
         let rows = tbody.children;
         let target = comb.getExpectionOf(foods);
@@ -518,19 +519,37 @@ class PokeReport{
 
 
 
-    
+    /*
     getColorCodeOf(n){
         switch(n){
             case 0: return "#CCDDFF"; break;
             case 1: return "#77AAFF"; break;
             case 2: return "#DDDDDD"; break;
             case 3: return "#FFDDDD"; break;                    
-            case 4: return "#FFDD55"; break;                    
+            case 4: return "#FFDDAA"; break;                    
             case 5: return "#FFA0A0"; break;
             case 6: return "#BBFFBB"; break;
             case 7: return "#FFFFCC"; break;                    
             default: return "#FF4444"
         }
+    }
+    */
+
+    setColorClassTo(el, n){
+        let className = "";
+        switch(n){
+            case 0: className = "def_color_SB"; break;
+            case 1: className = "def_color_BL"; break;
+            case 2: className = "def_color_SL"; break;
+            case 3: className = "def_color_OR"; break;                    
+            case 4: className = "def_color_PK"; break;                    
+            case 5: className = "def_color_RD"; break;
+            case 6: className = "def_color_GR"; break;
+            case 7: className = "def_color_GD"; break;                    
+            default: className = "def_color_XX"
+        }
+
+        el.classList.add(className);
     }
 
 
