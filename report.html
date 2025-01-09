@@ -25,7 +25,7 @@
 
         <div class="input_form_area">
             <div style="display: flex; justify-content: space-between; background-color: beige;">
-                <strong id="page_title"> Myポケモン登録v0.6b:</strong>
+                <strong id="page_title"> Myポケモン登録v0.6c:</strong>
                 <span id="input_mypoke_form_visible" visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this);">　表示▼</span>
             </div>
             <div id="input_form" style="display: none;">
@@ -514,7 +514,6 @@
                 let reportMax = Number(document.getElementById("option_recipe_max_count").value);
                 let t = document.getElementById('result_table');
                 t.querySelectorAll("tbody").forEach(b => b.remove());
-                //t.appendChild(this.pokeReport.createReport(foodName, 500, min, onlyFullyEvolved, showLv30, showLv60));
                 t.appendChild(this.pokeReport.createReport(foods, reportMax, min, onlyFullyEvolved, showLv30, showLv60));
 
                 this.insertRegisteredMyPokemons(foods, min);
@@ -522,8 +521,9 @@
                 let json = this.createJsonFromInputForm32(this.document.getElementById('input_mypoke_name').value);
                 if (json == null) return;
 
-                json.backgroundColor = 7;
-                this.insertMyPokemons([json], foodName, min);//現在入力中のキャラ
+                json.backgroundColor = 6;
+                console.log(json);
+                this.insertMyPokemons([json], foodName, min, true);//現在入力中のキャラ
             }
 
 
@@ -695,15 +695,15 @@
 
 
 
-            function insertMyPokemons(jsonList, food, min){
+            function insertMyPokemons(jsonList, food, min, ignorePotentialChecks = false){
                 pokeReport.insertMyPokeListInto(
                     document.getElementById('result_table').tBodies[0],
                     jsonList,
                     food,
                     min,
-                    document.getElementById("option_potential_30").checked,
-                    document.getElementById("option_potential_50").checked,
-                    document.getElementById("option_potential_60").checked
+                    !ignorePotentialChecks && document.getElementById("option_potential_30").checked,
+                    !ignorePotentialChecks && document.getElementById("option_potential_50").checked,
+                    !ignorePotentialChecks && document.getElementById("option_potential_60").checked
                 );
             }
 

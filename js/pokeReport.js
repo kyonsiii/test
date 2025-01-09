@@ -234,7 +234,7 @@ class PokeReport{
      
             if (!poke.existAnyInFoodList(foods)) continue;//そもそも食材含んでなかったら処理いらない
 
-            this.insertMyPokeRowInto(tbody, poke, json, json.lv, foods, foodMin);
+            this.insertMyPokeRowInto(tbody, poke, json, json.lv, foods, foodMin, json.backgroundColor);
 
             if (json.lv < 30 && showPotential30){
                 this.setSubSkillsEnabled(json, 30, true);
