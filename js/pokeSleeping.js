@@ -120,11 +120,13 @@ class PokeSleeping{
 
     filterField(rb){
         let el = document.getElementById(rb.value);
-        let tables = document.getElementById('field_tables').children;
+        let fieldTablesEl = document.getElementById('field_tables');
+        let tables = fieldTablesEl.children;
 
         for (let t of tables) {
             t.style.display = (t == el) ? "" : "none";
         }
+        fieldTablesEl.style.display = "";
 
         setCookie("sfld", rb.value, 7);
     }
