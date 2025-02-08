@@ -85,7 +85,7 @@ class RecipeDB{
             new Recipe({no:80, category: "デザート・ドリンク", name: "おちゃかいコーンスコーン", energy:33102, food1:"とくせんリンゴ", food1Num:20, food2:"あったかジンジャー", food2Num:20, food3:"ワカクサコーン", food3Num:18, food4:"モーモーミルク", food4Num:9, food5:"", food5Num:0}),
             new Recipe({no:81, category: "デザート・ドリンク", name: "フラワーギフトマカロン", energy:41917, food1:"リラックスカカオ", food1Num:25, food2:"とくせんエッグ", food2Num:25, food3:"あまいミツ", food3Num:17, food4:"モーモーミルク", food4Num:10, food5:"", food5Num:0}),
             new Recipe({no:82, category: "デザート・ドリンク", name: "スパークスパイスコーラ", energy:53006, food1:"とくせんリンゴ", food1Num:35, food2:"あったかジンジャー", food2Num:20, food3:"ふといながねぎ", food3Num:20, food4:"めざましコーヒー", food4Num:12, food5:"", food5Num:0}),
-            new Recipe({no:83, category: "デザート・ドリンク", name: "ドオーのエクレア", energy:63282, food1:"リラックスカカオ", food1Num:30, food2:"モーモーミルク", food2Num:26, food3:"モーモーミルク", food3Num:24, food4:"あまいミツ", food4Num:22, food5:"", food5Num:0}),
+            new Recipe({no:83, category: "デザート・ドリンク", name: "ドオーのエクレア", energy:63282, food1:"リラックスカカオ", food1Num:30, food2:"モーモーミルク", food2Num:26, food3:"めざましコーヒー", food3Num:24, food4:"あまいミツ", food4Num:22, food5:"", food5Num:0}),
             
             
 
