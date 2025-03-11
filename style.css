@@ -261,6 +261,10 @@ table thead tr th {
        0px -2px 1px #FFFFFF; 
 }
 
+.ingredient-container strong{
+    color: rgb(132, 0, 240);
+}
+
 #mypoke_quick_check{
     table-layout: fixed;
 }
@@ -382,7 +386,11 @@ table thead tr th {
     display: flex;
 }
 
-
+/*レポートページ*/
+.ingredient-container{
+    position: relative;
+    display: inline-block;    
+}
 
 
 /*イメージ*/

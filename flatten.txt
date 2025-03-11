@@ -1,21 +1,10 @@
-(?=^(カレー・シチュー|サラダ|デザート・ドリンク))
-"
+var brElements = document.querySelectorAll("br.spacer");
+for (let i = brElements.length -1; i >= 0; i--){
+    brElements[i].parentNode.removeChild(brElements[i]);
+}
 
-(?<=^"(カレー・シチュー|サラダ|デザート・ドリンク))\t
-", "
-
-\t(?=\d)
-", 
-
-
-(?<=x\d+)\t
-, "
-
-(?<=, \d+)\t
-, "
-
-x(?=\d+)
-", 
-
-, "\s*$
-
+//一番左の列を削除する
+var cells = document.querySelectorAll("tr td:first-child");
+for (let i = cells.length -1; i >= 0; i--){
+    cells[i].parentNode.removeChild(cells[i]);
+}

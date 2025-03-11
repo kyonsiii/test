@@ -17,24 +17,24 @@
 
     <body style="max-width: 30em;">
         <div id="page_link">
-            <a href = "./index.html"><img src="img/pages/pokedex.png"></a>
-            <a href = "./sleep.html"><img src="img/pages/sleep.png"></a>
-            <a href = "./cook.html"><img src="img/pages/cook.png"></a>
-            <a href = "./report.html" class ="current"><img src="img/pages/report.png"></a>
+            <a href = "./index.html">	<img src="img/pages/pokedex.png"></a>
+            <a href = "./sleep.html">	<img src="img/pages/sleep.png"></a>
+            <a href = "./cook.html">	<img src="img/pages/cook.png"></a>
+            <a href = "./report.html" class ="current">	<img src="img/pages/report.png"></a>
         </div>
 
         <div class="input_form_area">
             <div style="display: flex; justify-content: space-between; background-color: beige;">
-                <strong id="page_title"> Myポケモン登録v0.6c:</strong>
-                <span id="input_mypoke_form_visible" visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this);">　表示▼</span>
+                <strong id="page_title"> Myポケモン登録v0.6d:</strong>
+                　表示▼
             </div>
             <div id="input_form" style="display: none;">
                 <select id="input_mypoke_name" style="width:10em; font-size:1em" onclick="initializePokeList()" onchange="setFoodImages(this)" src></select>
                 Lv<select id="input_mypoke_lv" style="width:4em; font-size:1em" onclick="initializePokeList()"></select>
 
-                <img id="input_mypoke_food_1" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
-                <img id="input_mypoke_food_2" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
-                <img id="input_mypoke_food_3" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
+                	<img id="input_mypoke_food_1" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
+                	<img id="input_mypoke_food_2" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
+                	<img id="input_mypoke_food_3" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
                 <br>
                 <select id="input_mypoke_char" style="width:15.5em; font-size:1em">
                     <option value="">--せいかくを選択--</option>
@@ -133,7 +133,7 @@
                     <option value= "30">30個以上</option>
                     <option value= "40">40個以上</option>
                     <option value= "50">50個以上</option>
-                    <option value= "60">60個以上</option>
+                    <option value= "60">60個以上</option>(?=>$).
                     <option value= "70">70個以上</option>
                     <option value= "80">80個以上</option>
                     <option value= "90">90個以上</option>
@@ -144,23 +144,91 @@
         </div>
 
         <div id="food_buttons">
-            <img name="とくせんリンゴ" src="img/food/とくせんリンゴ.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="モーモーミルク" src="img/food/モーモーミルク.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="ワカクサ大豆" src="img/food/ワカクサ大豆.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="あまいミツ" src="img/food/あまいミツ.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="マメミート" src="img/food/マメミート.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="あったかジンジャー" src="img/food/あったかジンジャー.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="あんみんトマト" src="img/food/あんみんトマト.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="とくせんエッグ" src="img/food/とくせんエッグ.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="ピュアなオイル" src="img/food/ピュアなオイル.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="ほっこりポテト" src="img/food/ほっこりポテト.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="げきからハーブ" src="img/food/げきからハーブ.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="リラックスカカオ" src="img/food/リラックスカカオ.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="あじわいキノコ" src="img/food/あじわいキノコ.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="ふといながねぎ" src="img/food/ふといながねぎ.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="おいしいシッポ" src="img/food/おいしいシッポ.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="ワカクサコーン" src="img/food/ワカクサコーン.png" onclick="selectIcon(this);setResultOf(this)">
-            <img name="めざましコーヒー" src="img/food/めざましコーヒー.png" onclick="selectIcon(this);setResultOf(this)">
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="とくせんリンゴ" src="img/food/とくせんリンゴ.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="モーモーミルク" src="img/food/モーモーミルク.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="ワカクサ大豆" src="img/food/ワカクサ大豆.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="あまいミツ" src="img/food/あまいミツ.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="マメミート" src="img/food/マメミート.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+            
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="あったかジンジャー" src="img/food/あったかジンジャー.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="あんみんトマト" src="img/food/あんみんトマト.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="とくせんエッグ" src="img/food/とくせんエッグ.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="ピュアなオイル" src="img/food/ピュアなオイル.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="ほっこりポテト" src="img/food/ほっこりポテト.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="げきからハーブ" src="img/food/げきからハーブ.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="リラックスカカオ" src="img/food/リラックスカカオ.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="あじわいキノコ" src="img/food/あじわいキノコ.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="ふといながねぎ" src="img/food/ふといながねぎ.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="おいしいシッポ" src="img/food/おいしいシッポ.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="ワカクサコーン" src="img/food/ワカクサコーン.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+
+            <div class="ingredient-container food_num">
+                <strong></strong>
+            	<img name="めざましコーヒー" src="img/food/めざましコーヒー.png" onclick="selectIcon(this);setResultOf(this)">
+            </div>
+            
 
             <div id="area_of_recipes">
                 <select id="select_recipe_category" style="font-size:1em; width:6em;" onchange="selectRecipeCategory(this);">
@@ -310,15 +378,20 @@
 
             function selectFoodsByRecipe(el){
                 Array.from(document.querySelectorAll("#food_buttons img")).forEach(c => this.changeIconStyle(c, false));
+
+       
                 let foods = el.value.split(',');
+                let op = el.selectedOptions[0];
+                let nums = op.getAttribute("ingredientsNum").split(',');
+
                 if (foods[0] == ""){    //----がえらばれた時
                     this.setResultOf(document.querySelector('#food_buttons img'));
                 }
                 for (let i = 0; i < foods.length; i++){
                     let b = document.querySelector('#food_buttons img[name="' + foods[i] + '"]');
                     if (b != null){
-                        this.selectIcon(b);
-                    if (i == (foods.length - 1)) this.setResultOf(b);
+                        this.selectIcon(b, nums[i]);
+                        if (i == (foods.length - 1)) this.setResultOf(b);
                     }
                 }
             }
@@ -335,9 +408,10 @@
                 let min = Number(document.getElementById("option_ingredient_min_count").value);
 
                 this.recipedb.getRecipesOf(el.value).forEach(x => {
-                    if (x.totalFoodsCount >= min){
+                    if (x.totalFoodsCount >= min){                        
                         let op = document.createElement('option');
                         op.value = x.ingredients.map(a => a.name).join(",");
+                        op.setAttribute("ingredientsNum", x.ingredients.map(a => a.num).join(","));
                         op.textContent = x.name;
                         op.setAttribute("total", x.totalFoodsCount);
                         sb.appendChild(op);
@@ -367,16 +441,18 @@
             }
 
 
-            function selectIcon(el){
+            function selectIcon(el, num = 0){
                 if (el.style.margin == "" || el.style.margin == "4px"){
                     el.style.margin = "0px";
                     el.style.border = "4px solid blue";
                     el.value = "ON";
+                    el.previousElementSibling.textContent = (num == 0) ? "" : num;
                 }
                 else {
                     el.style.margin = "4px";
                     el.style.border = "";
                     el.value = "";
+                    el.previousElementSibling.textContent = "";
                 }
             }
 
@@ -392,6 +468,7 @@
                     el.style.border = "";
                     el.value = "";
                 }
+                el.previousElementSibling.textContent = "";
             }
 
 
@@ -499,7 +576,7 @@
                 this.lastClickedFoodIconElement = el;//これ何につかってんの？
 
                 //作成中
-                let selectedFoods = Array.from(document.getElementById('food_buttons').children).filter(el => el.value =="ON").map(el => el.name);
+                let selectedFoods = Array.from(document.querySelectorAll('#food_buttons img')).filter(el => el.value =="ON").map(el => el.name);
 
                 let foods = (selectedFoods.includes(el.name)) ? [el.name] : [];
                 for (let i = 0; i < selectedFoods.length; i++){

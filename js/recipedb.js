@@ -130,6 +130,14 @@ class RecipeDB{
     getRecipesOf(category){        
         return (category == "") ? this.recipes : this.recipes.filter(r => r.category == category);
     }
+
+    getRecipeOf(recipeName){
+        return this.recipes.find(r => r.name == recipeName);
+    }
+
+    getIngredientsOf(recipeName){
+        return this.getRecipeOf(recipeName).ingredients;        
+    }
    
 }
 
