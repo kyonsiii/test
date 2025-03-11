@@ -69,8 +69,14 @@ class PokeSleeping{
         });
     }
 
+    dotEndToManYen(){
+        if (/\.$/.test(this.input_current.value)){
+            this.input_current.value = this.input_current.value.replace(/\.$/, "0000");
+        }
+    }
 
     calc(){
+        this.dotEndToManYen();
         let powerNum = Number(this.input_current.value.replace(/,/g, ""));
         if (isNaN(powerNum) || powerNum == ""){
             alert("\"" + this.input_current.value + "\"" + "を数値に変換できません");

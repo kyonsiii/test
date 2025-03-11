@@ -7,7 +7,7 @@
         <script src="js/main.js"></script>
         <script src="js/pokeSleeping.js"></script>  
         <script src="js/pokeSleepingCalc.js"></script>
-        <title>睡眠計算v1.0.4b</title>
+        <title>睡眠計算v1.0.5</title>
     </head>
 
 
@@ -21,8 +21,8 @@
 
 
         <p>
-            現在のパワー: <input type="text" id="current_power" class="input_short"><br>
-            目標得点　　: <input type="text" id="target_power" class="input_short"><br>
+            現在のパワー: <input type="text" id="current_power" class="input_short" inputmode="decimal"><br>
+            目標得点　　: <input type="text" id="target_power" class="input_short" inputmode="decimal"><br>
             <button id="button_calc" onclick="pokesleeping.calc(this);">計算</button><br>
             <span id="calc_result"></span>
         </p>
