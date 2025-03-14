@@ -1,3 +1,6 @@
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃リポジトリをファイルごと取り寄せる┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 cd git\xxx
 git clone -b ブランチ名 https://リポジトリのアドレス
 
@@ -21,7 +24,17 @@ git branch
  main
   ┗ *ttt
       ┗
-◆リポジトリにローカルデータを反映させる
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃◆mainブランチに別のブランチを反映させる┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃◆リポジトリにローカルデータを反映させる┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
 //変更を確認
 git status
 
@@ -33,9 +46,12 @@ git commit -m "-m is an option for adding messages"
 
 //***をmainにプッシュ ここでアップロードされる
 git push *** main
-git push origin HEAD でもいいらしい まだ試していない
+git push origin HEAD でもいい
 
-◆ブランチ関連
+
+┏━━━━━━━━━━━━┓
+┃ブランチ関連  ┃
+┗━━━━━━━━━━━━┛
 //ブランチの作成
 git branch new-branch-name
 
@@ -45,6 +61,8 @@ git checkout new-branch-name
 //ブランチの作成&切り替え
 git checkout -b new-branch-name
 
+//ブランチの削除
+git push origin --delete ttt
 
 
 ◆その他
@@ -61,8 +79,6 @@ git add .
 git push origin new-branch-name
 
 
-//ブランチの削除
-git push origin --delete ttt
 
 //公開ページの切り替え
 GitHubのリポジトリへ行き、Setting→Pages→Branchを変更
