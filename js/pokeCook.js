@@ -9,6 +9,16 @@ const mask_recipe_food        = 0b00000000000000000000000111111000;
 
 class PokeCook{
     //Initialize
+    
+    constructor(recipes){
+        this.recipes = recipes;
+        this.recipe_table = document.getElementById('recipe_table');
+        this.checkBox_without_advanced = document.getElementById('without_advanced');
+        this.checkBox_only_advanced = document.getElementById('only_advanced');
+        this.selectBox_food = document.getElementById('select_food');
+    }
+
+
 
     setCookieValue(){
         let n = 0;      
@@ -52,11 +62,6 @@ class PokeCook{
         return (advFoodCheck.length == 0) ? 0 : advFoodCheck[0].value;
     }
 
-
-
-
-
-
     setOptionsFromCookie(c){
         if (c == null) return;
 
@@ -76,17 +81,6 @@ class PokeCook{
     }
 
  
-
-    
-    constructor(recipes){
-        this.recipes = recipes;
-        this.recipe_table = document.getElementById('recipe_table');
-        this.checkBox_without_advanced = document.getElementById('without_advanced');
-        this.checkBox_only_advanced = document.getElementById('only_advanced');
-        this.selectBox_food = document.getElementById('select_food');
-    }
-
-
     setTableRows(){
         for (let r of this.recipes){
             this.recipe_table.tBodies[0].appendChild(this.createTr(r));

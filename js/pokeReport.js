@@ -72,7 +72,9 @@ class PokeReport{
             return null;
         }
 
-        let targetPokemons = this.pokedex.pokemons.filter(p => (!onlyFullyEvolved || p.fullyEvolved) && p.existAnyInFoodList(foods));
+        let targPokemons = (onlyFullyEvolved) ? this.pokedex.fullyEvolvedPokemons : this.pokedex.pokemons;
+
+        let targetPokemons = targPokemons.filter(p => (!onlyFullyEvolved || p.fullyEvolved) && p.existAnyInFoodList(foods));
         let tbody = document.createElement("tbody");
         tbody.id = "report_result";
 
@@ -152,6 +154,11 @@ class PokeReport{
         }
         
         let tmp = [];//ここ将来食材追加されたときやばそう。どうすんの？
+
+        pokeReport.recipedb.foods.sort((a, b) => a.power - b.power).map(f => f.name).forEach(f =>{
+            tmp.push({ [f]: [] });
+        });
+        /*
         tmp.push({とくせんリンゴ: []});
         tmp.push({モーモーミルク: []});
         tmp.push({ワカクサ大豆: []});
@@ -169,7 +176,7 @@ class PokeReport{
         tmp.push({おいしいシッポ: []});
         tmp.push({ワカクサコーン: []});
         tmp.push({めざましコーヒー: []});
-      
+        */
 
         //MyPokeを食材ごとに割り振る（重複あり）
         tmp.forEach(f => {
@@ -487,53 +494,8 @@ class PokeReport{
             food: Math.round(((json.subFoodS ? 0.18 : 0) + (json.subFoodM ? 0.36 : 0)) * 100) / 100,
             skill: Math.round(((json.subSkillS ? 0.18 : 0) +  (json.subSkillM ? 0.36 : 0)) * 100) / 100
         };
-
-        /*
-
-        json.speedCharAdj = (bitToNum(n, 0b111000) == 0b001) ? +0.11
-                          : (bitToNum(n, 0b000111) == 0b001) ? -0.09 : 0;
-        json.genkiCharAdj = (bitToNum(n, 0b111000) == 0b010) ? +0.2
-                          : (bitToNum(n, 0b000111) == 0b010) ? -0.12 : 0;
-        json.foodCharAdj  = (bitToNum(n, 0b111000) == 0b011) ? +0.2
-                          : (bitToNum(n, 0b000111) == 0b011) ? -0.2 : 0;
-        json.skillCharAdj = (bitToNum(n, 0b111000) == 0b100) ? +0.2
-                          : (bitToNum(n, 0b000111) == 0b100) ? -0.2 : 0;
-        json.expCharAdj   = (bitToNum(n, 0b111000) == 0b101) ? +0.18
-                          : (bitToNum(n, 0b000111) == 0b101) ? -0.18 : 0;
-        
-        json.speedSubAdj = json.subOteBonus ? 0.05 : 0;
-        json.speedSubAdj += json.subSpeedS ? 0.07 : 0;
-        json.speedSubAdj += json.subSpeedM ? 0.14 : 0;
-        json.foodSubAdj = json.subFoodS ? 0.18 : 0;
-        json.foodSubAdj += json.subFoodM ? 0.36 : 0;
-        json.skillSubAdj = json.subSkillS ? 0.18 : 0;
-        json.skillSubAdj += json.subSkillM ? 0.36 : 0;
-
-        json.speedSubAdj = Math.round(json.speedSubAdj * 100) / 100;
-        json.foodSubAdj = Math.round(json.foodSubAdj * 100) / 100;
-        json.skillSubAdj = Math.round(json.skillSubAdj * 100) / 100;
-
-        */
     }
 
-
-
-
-    /*
-    getColorCodeOf(n){
-        switch(n){
-            case 0: return "#CCDDFF"; break;
-            case 1: return "#77AAFF"; break;
-            case 2: return "#DDDDDD"; break;
-            case 3: return "#FFDDDD"; break;                    
-            case 4: return "#FFDDAA"; break;                    
-            case 5: return "#FFA0A0"; break;
-            case 6: return "#BBFFBB"; break;
-            case 7: return "#FFFFCC"; break;                    
-            default: return "#FF4444"
-        }
-    }
-    */
 
     setColorClassTo(el, n){
         let className = "";

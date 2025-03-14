@@ -192,6 +192,8 @@ new Pokemon({no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材"
         
         ];
         
+        this.fullyEvolvedPokemons = this.pokemons.filter(p => p.fullyEvolved);
+        
         this.berries =
         [
             {no: 1, name: "キーのみ", power: 28},
@@ -451,26 +453,9 @@ class FoodCombination{
     }
 
 
-/*
-    containsFoodAtLeast(foodName, min = 0){
-        for (let i = 0; i < this.foods.length; i++){
-            if (this.foods[i].name == foodName && this.foods[i].expection >= min) return true;
-        }
-        return false;
-    }
-*/
     containsFoodsAtLeast(foodNames, min = 0){
-        /*
-        let sum = 0;
-        for (let i = 0; i < this.foods.length; i++){
-            for (let j = 0; j < foodNames.length; j++){
-                if (this.foods[i].name == foodNames[j]) sum += this.foods[i].expection;
-            }            
-        }
-        */
         return this.getExpectionOf(foodNames) >= min;
     }
-
 
     getExpectionOf(foodNames){
         this.totalExpectionFinally = this.foods.filter(f => foodNames.includes(f.name)).map(f => f.expection).reduce((p, c) => p + c, 0);
