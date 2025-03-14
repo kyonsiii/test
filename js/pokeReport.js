@@ -1,22 +1,4 @@
 //クッキー用
-const mask_template     = 0b00000000000000000000000000000000;
-const mask_backGround   = 0b11110000000000000000000000000000;
-const mask_lv           = 0b00001111111000000000000000000000;
-const mask_food_A       = 0b00000000000110000000000000000000;
-const mask_food_B       = 0b00000000000001100000000000000000;
-const mask_food_C       = 0b00000000000000011000000000000000;
-const mask_char_all     = 0b00000000000000000111111000000000;
-const mask_char_up      = 0b00000000000000000111000000000000;
-const mask_char_down    = 0b00000000000000000000111000000000;
-const mask_sub_berryS   = 0b00000000000000000000000100000000;
-const mask_sub_speedS   = 0b00000000000000000000000010000000;
-const mask_sub_speedM   = 0b00000000000000000000000001000000;
-const mask_sub_foodS    = 0b00000000000000000000000000100000;
-const mask_sub_foodM    = 0b00000000000000000000000000010000;
-const mask_sub_skillS   = 0b00000000000000000000000000001000;
-const mask_sub_skillM   = 0b00000000000000000000000000000100;
-const mask_sub_otebonus = 0b00000000000000000000000000000010;
-
 const mask32a_nodp       = 0b00001111000000000000000000000000;
 const mask32a_no         = 0b00000000111111111110000000000000;
 const mask32a_lv         = 0b00000000000000000001111111000000;    
@@ -36,7 +18,7 @@ const mask32c_sub2       = 0b00000000000011111000000000000000;
 const mask32c_sub3       = 0b00000000000000000111110000000000;
 const mask32c_sub4       = 0b00000000000000000000001111100000;
 const mask32c_sub5       = 0b00000000000000000000000000011111;
-
+                           
 const sub_num_oteBonus      = 0b00001;
 const sub_num_speedS        = 0b00010;
 const sub_num_speedM        = 0b00011;
@@ -56,19 +38,25 @@ const sub_num_yumeBonus     = 0b10000;
 const sub_num_researchBonus = 0b10001;
 const sub_num_ult           = 0b10010;
 
-const mask_result_op_visible_Lv30         = 0b010000000000000;
-const mask_result_op_visible_Lv60         = 0b001000000000000;
-const mask_result_op_visible_MyPoke       = 0b000100000000000;
-const mask_result_op_visible_MyPokeLv30ft = 0b000010000000000;
-const mask_result_op_visible_MyPokeLv50ft = 0b000001000000000;
-const mask_result_op_visible_MyPokeLv60ft = 0b000000100000000;
-const mask_result_op_visible_FullyEvolved = 0b000000010000000;
-const mask_result_op_visible_minNum       = 0b000000001111000;
+const mask_op_recipe_list_min_index       = 0b011110000000000000000000000000;
+const mask_op_recipe_category_index       = 0b000001110000000000000000000000;
+const mask_op_recipe_name_index           = 0b000000001111111100000000000000; 
+const mask_result_op_visible_Lv30         = 0b000000000000000010000000000000;
+const mask_result_op_visible_Lv60         = 0b000000000000000001000000000000;
+const mask_result_op_visible_MyPoke       = 0b000000000000000000100000000000;
+const mask_result_op_visible_MyPokeLv30ft = 0b000000000000000000010000000000;
+const mask_result_op_visible_MyPokeLv50ft = 0b000000000000000000001000000000;
+const mask_result_op_visible_MyPokeLv60ft = 0b000000000000000000000100000000;
+const mask_result_op_visible_FullyEvolved = 0b000000000000000000000010000000;
+const mask_result_op_visible_minNum       = 0b000000000000000000000001111000;
+const mask_mypoke_op_food_ranking_skyBlue = 0b000000000000000000000000000100;
+
                         
 
 class PokeReport{
-    constructor(pokedex){
+    constructor(pokedex, recipedb){
         this.pokedex = pokedex;
+        this.recipedb = recipedb;
         this.combinationsInitialized = false;
     }
 
@@ -78,28 +66,28 @@ class PokeReport{
     }
 
 
-    createReport(foodName, min = 0, onlyFullyEvolved = false, showLv30 = true, showLv60 = true){
+    createReport(foods, reportCountMax, min = 0, onlyFullyEvolved = false, showLv30 = true, showLv60 = true){
         if (!this.combinationsInitialized){
             alert("食べ物組み合わせが生成されていません。初期化をしてから実行してください。")
             return null;
         }
 
-        let targetPokemons = this.pokedex.pokemons.filter(p => (!onlyFullyEvolved || p.fullyEvolved) && p.containsFood(foodName));
-
+        let targetPokemons = this.pokedex.pokemons.filter(p => (!onlyFullyEvolved || p.fullyEvolved) && p.existAnyInFoodList(foods));
         let tbody = document.createElement("tbody");
         tbody.id = "report_result";
 
         let pokeAndComb = [];
+        let foodName = foods[0];
+
         for (let i = 0; i < targetPokemons.length; i++){
-            let p = targetPokemons[i]
+            let p = targetPokemons[i];
             p.foodCombinations.forEach(c => {
-                if (c.contains(foodName, min) && (c.lv != 30 || showLv30) && (c.lv != 60 || showLv60)){
-                    pokeAndComb.push({poke: p, comb: c});
-                }                
+                if (c.containsFoodsAtLeast(foods, min) && (c.lv != 30 || showLv30) && (c.lv != 60 || showLv60)){
+                    pokeAndComb.push({poke: p, comb: c});         
+                }      
             });
         }
-        
-        pokeAndComb.sort((a, b) => b.comb.getExpectionOf(foodName) - a.comb.getExpectionOf(foodName))
+        pokeAndComb.sort((a, b) => b.comb.totalExpectionFinally - a.comb.totalExpectionFinally).slice(0, reportCountMax)
                     .forEach(x => tbody.appendChild(this.createPokemonInfoRow(x.poke, x.comb, foodName)));
         this.setCurrentOptionsToCookie();
         return tbody;
@@ -108,6 +96,9 @@ class PokeReport{
 
     setCurrentOptionsToCookie(){
         let n = 0;
+        n += numToBit(document.getElementById("option_ingredient_min_count").selectedIndex, mask_op_recipe_list_min_index );
+        n += numToBit(document.getElementById("select_recipe_category").selectedIndex, mask_op_recipe_category_index);
+        n += numToBit(document.getElementById("select_recipe").selectedIndex, mask_op_recipe_name_index);
         n += numToBit(document.getElementById("option_poke_30").checked, mask_result_op_visible_Lv30);    
         n += numToBit(document.getElementById("option_poke_60").checked, mask_result_op_visible_Lv60);  
 
@@ -117,12 +108,16 @@ class PokeReport{
         n += numToBit(document.getElementById("option_potential_60").checked, mask_result_op_visible_MyPokeLv60ft);
         n += numToBit(document.getElementById("only_fully_evolved").checked, mask_result_op_visible_FullyEvolved);
         n += numToBit(document.getElementById("food_min").selectedIndex, mask_result_op_visible_minNum);
+        n += numToBit(document.getElementById("option_mypoke_listup_backcolor").checked, mask_mypoke_op_food_ranking_skyBlue);
         setCookie("ropt", n.toString(32), 30);
     }
 
 
     setOptionsFromCookie(c){
+        if (c == null || c == "") return;
+        
         let n = parseInt(c, 32);
+
         document.getElementById("option_poke_30").checked = bitToNum(n, mask_result_op_visible_Lv30);    
         document.getElementById("option_poke_60").checked = bitToNum(n, mask_result_op_visible_Lv60);  
 
@@ -131,52 +126,147 @@ class PokeReport{
         document.getElementById("option_potential_50").checked = bitToNum(n, mask_result_op_visible_MyPokeLv50ft); 
         document.getElementById("option_potential_60").checked = bitToNum(n, mask_result_op_visible_MyPokeLv60ft);
         document.getElementById("only_fully_evolved").checked = bitToNum(n, mask_result_op_visible_FullyEvolved);
-        document.getElementById("food_min").selectedIndex = bitToNum(n,mask_result_op_visible_minNum);
+        document.getElementById("food_min").selectedIndex = bitToNum(n, mask_result_op_visible_minNum);
+
+        let sb_recipe_min = document.getElementById("option_ingredient_min_count");
+        sb_recipe_min.selectedIndex = bitToNum(n, mask_op_recipe_list_min_index);
+            
+        let sb_cat = document.getElementById("select_recipe_category");        
+        sb_cat.selectedIndex = bitToNum(n, mask_op_recipe_category_index);        
+        selectRecipeCategory(sb_cat);
+
+        let sb_recipe = document.getElementById("select_recipe");
+        sb_recipe.selectedIndex = bitToNum(n, mask_op_recipe_name_index);
+        selectFoodsByRecipe(sb_recipe);
     }
+
+
+
+    setMyPokeFoodListInfo(tbody, jsonList, onlySkyBlue = false){
+        let pokeAndComb = [];
+        for (let i = 0; i < jsonList.length; i++){
+            let j = jsonList[i];
+            let p = this.pokedex.getPokemonByNo(j.no);
+            if (onlySkyBlue && j.backgroundColor != 0) continue;
+            pokeAndComb.push({poke: p, json: j, comb:p.createFoodCombination(j, j.lv, j.foodCode)});            
+        }
+        
+        let tmp = [];//ここ将来食材追加されたときやばそう。どうすんの？
+        tmp.push({とくせんリンゴ: []});
+        tmp.push({モーモーミルク: []});
+        tmp.push({ワカクサ大豆: []});
+        tmp.push({あまいミツ: []});
+        tmp.push({マメミート: []});
+        tmp.push({あったかジンジャー: []});
+        tmp.push({あんみんトマト: []});
+        tmp.push({とくせんエッグ: []});
+        tmp.push({ピュアなオイル: []});
+        tmp.push({ほっこりポテト: []});
+        tmp.push({げきからハーブ: []});
+        tmp.push({リラックスカカオ: []});
+        tmp.push({あじわいキノコ: []});
+        tmp.push({ふといながねぎ: []});
+        tmp.push({おいしいシッポ: []});
+        tmp.push({ワカクサコーン: []});
+        tmp.push({めざましコーヒー: []});
+      
+
+        //MyPokeを食材ごとに割り振る（重複あり）
+        tmp.forEach(f => {
+            let foodName = Object.keys(f)[0];
+            for (let i = 0; i < pokeAndComb.length; i++){
+                let pac = pokeAndComb[i];
+                if (pac.comb.foods.some(x => x.name == foodName)) f[foodName].push(pac);
+            }
+        });
+
+
+        let createRow = (food, pacList) => {
+            let sorted = pacList.sort((a, b) => b.comb.getExpectionOf(food) - a.comb.getExpectionOf(food));            
+            let tr1 = tbody.insertRow();
+            tr1.classList.add("first-row");
+            let fImg = document.createElement("img");
+            fImg.src = "img/food/" + food + ".png";
+            fImg.classList.add("ex-tiny");
+            let foodImgCell = tr1.insertCell();
+            foodImgCell.appendChild(fImg);
+            if (sorted.length == 0){
+                tr1.insertCell();
+                tr1.insertCell();
+                tr1.insertCell();
+                tr1.insertCell();
+                return;
+            }
+           
+            let selector = "td.mypoke_outline, td.mypoke_outline~td";            
+            let insertInfo = (pac, rank, tr = null) => {
+                tr = tr ?? tbody.insertRow();
+                pac.comb.insertResultTo(tr, food, pac.poke, this.createIdentifierOf(pac.json));
+                tr.querySelectorAll(selector).forEach(el => {
+                   //el.style.backgroundColor = this.getColorCodeOf(pac.json.backgroundColor);
+                    this.setColorClassTo(el, pac.json.backgroundColor);
+                });
+                foodImgCell.rowSpan = rank;
+            };            
+        
+            for (let i = 0; i < (sorted.length <= 3 ? sorted.length : 3); i++){
+                insertInfo(sorted[i], i + 1, (i == 0) ? tr1 : null);
+            }    
+        };
+
+        tmp.forEach(f => {
+            let foodName = Object.keys(f)[0];
+            createRow(foodName, f[foodName]);
+        });
+    }
+
+
+
 
 
 
 
     //tbのresult_tableはsetResultOfされた時に追加されるので、ない時もあるかも
-    insertMyPokeListInto(tbody, jsonList, foodName, foodMin, showPotential30, showPotential50, showPotential60){
+    insertMyPokeListInto(tbody, jsonList, foods, foodMin, showPotential30, showPotential50, showPotential60){
         for (let i = 0; i < jsonList.length; i++){
             let json = jsonList[i];
             let poke = this.pokedex.getPokemonByName(json.name);
+     
+            if (!poke.existAnyInFoodList(foods)) continue;//そもそも食材含んでなかったら処理いらない
 
-            if (!poke.containsFood(foodName)) continue;//そもそも食材含んでなかったら処理いらない
-           
-            this.insertMyPokeRowInto(tbody, poke, json, json.lv, foodName, foodMin);
+            this.insertMyPokeRowInto(tbody, poke, json, json.lv, foods, foodMin, json.backgroundColor);
 
             if (json.lv < 30 && showPotential30){
                 this.setSubSkillsEnabled(json, 30, true);
-                this.insertMyPokeRowInto(tbody, poke, json, 30, foodName, foodMin, this.getColorCodeOf(4));
+                this.insertMyPokeRowInto(tbody, poke, json, 30, foods, foodMin, 3);
             }
 
             if (json.lv < 50 && showPotential50){
                 this.setSubSkillsEnabled(json, 50, true);
-                this.insertMyPokeRowInto(tbody, poke, json, 50, foodName, foodMin, this.getColorCodeOf(3));
+                this.insertMyPokeRowInto(tbody, poke, json, 50, foods, foodMin, 4);
             }
 
             if (json.lv < 60 && showPotential60){
                 this.setSubSkillsEnabled(json, 60, true);
-                this.insertMyPokeRowInto(tbody, poke, json, 60, foodName, foodMin, this.getColorCodeOf(5));
+                this.insertMyPokeRowInto(tbody, poke, json, 60, foods, foodMin, 5);
             }
-        }
-        
+        }        
     }
 
-    insertMyPokeRowInto(tbody, poke, json, lv, foodName, foodMin, backgroundColor = null){//自分で登録したものは背景色がjsonに含まれているのでわざわざ指定しない
-        let comb = poke.createFoodCombination(json, lv);
-        if (!comb.contains(foodName, foodMin)) return;
 
-        let tr = this.createMyPokemonInfoRow(poke, comb, foodName, json);
-        tr.style.backgroundColor = backgroundColor ?? this.getColorCodeOf(json.backgroundColor);
+    insertMyPokeRowInto(tbody, poke, json, lv, foods, foodMin, backgroundColorIndex = -1){//自分で登録したものは背景色がjsonに含まれているのでわざわざ指定しない
+        let comb = poke.createFoodCombination(json, lv);
+        if (!comb.containsFoodsAtLeast(foods, foodMin)) return;
+
+        let tr = this.createMyPokemonInfoRow(poke, comb, foods[0], json);
+        backgroundColorIndex = (backgroundColorIndex == -1) ? 0 : backgroundColorIndex;
+        this.setColorClassTo(tr, backgroundColorIndex)
 
         let rows = tbody.children;
-        let target = comb.getExpectionOf(foodName);
+        let target = comb.getExpectionOf(foods);
 
         for (let i = 0; i < rows.length; i++){
-            let value = rows[i].children[1].getAttribute('value');
+            let value = rows[i].getAttribute('expection_total');
             if (value <= target){
                 tbody.insertBefore(tr, rows[i]);
                 return;
@@ -201,34 +291,6 @@ class PokeReport{
     }
  
 
-    selectIcon(el){
-        Array.from(document.getElementById('food_buttons').children).forEach(c => this.changeIconStyle(c, false));
-        if (el.style.margin == "" || el.style.margin == "4px"){
-            el.style.margin = "0px";
-            el.style.border = "4px solid blue";
-            el.value = "ON";
-        }
-        else{
-            el.style.margin = "4px";
-            el.style.border = "";
-            el.value = "";
-        }
-    }
-
-
-    changeIconStyle(el, turnOn){
-        if (turnOn){
-            el.style.margin = "0px";
-            el.style.border = "4px solid blue";
-            el.value = "ON";
-        }
-        else{
-            el.style.margin = "4px";
-            el.style.border = "";
-            el.value = "";
-        }
-    }
-
     createIdentifierOf(j){
         let x = j.char;
         let arr = Object.entries(j.subSkillList).map(([k, v]) => v);
@@ -238,50 +300,6 @@ class PokeReport{
         return x;
     }
  
-    /*
-        サンプル:  71:278c9420    //コロンの後ろは16進数
-        ウツボットLv60 ABA 寂しがり サブスキル 食材M
-        テンプレート: 0000111111122334455566678899aaxx 
-                nn.n:0000 1111111 22 33 44 555 666 7 88 99 aa xx                 
-                    0010 0111100 01 10 01 001 010 0 00 01 00 00
-                    0010 0111100 01 10 01 001 010 0 00 00 00 00
-                    ^^^^ ------- .. ** @@ ### +++ % ^^ -- .. xx
-                    背景BL Lv60   A  B  A    寂*1 *2*3 *4 *5  *6
-
-                    *1 △おてスピ補正 ▽元気補正
-                    *2 きのみSなし
-                    *3 おてスピ補正なし
-                    *4 食材補正 M補正のみあり
-                    *5 スキル補正なし
-                    *6 未使用ビット
-    */
-    createJsonFromCookieValue(c){
-        let a = c.split(":");    
-        let no = Number(a[0]);
-        let x = parseInt(a[1], 16);
-                
-        let j = {};
-        j.src = c;
-        j.no = no;
-        j.name = this.pokedex.getPokemonByNo(j.no).name;
-        j.backgroundColor = bitToNum(x, mask_backGround);
-        j.lv = bitToNum(x, mask_lv);
-        j.foodCode = this.getFoodCodeOf(bitToNum(x, mask_food_A)) + this.getFoodCodeOf(bitToNum(x, mask_food_B)) + this.getFoodCodeOf(bitToNum(x, mask_food_C));
-        j.char = this.getCharacteristic(bitToNum(x, mask_char_up), bitToNum(x, mask_char_down));
-
-        j.subBerryS = bitMatch(x, mask_sub_berryS);
-        j.subSpeedS = bitMatch(x, mask_sub_speedS);
-        j.subSpeedM = bitMatch(x, mask_sub_speedM);
-        j.subFoodS = bitMatch(x, mask_sub_foodS);
-        j.subFoodM = bitMatch(x, mask_sub_foodM);
-        j.subSkillS = bitMatch(x, mask_sub_skillS);
-        j.subSkillM = bitMatch(x, mask_sub_skillM);
-        j.subOteBonus = bitMatch(x, mask_sub_otebonus);
-        this.setAdjustValues(j);
-
-        return j;
-    }
-
     /*
     ※32進数は54bit以降が失われるらしい
     |基本情報(4Byte)                       |補助情報(4Byte)                        |サブスキル情報(4Byte)
@@ -324,14 +342,18 @@ class PokeReport{
 
 
     createJsonFromCookieValue32(ck){
-        //ck = "hrop-50g-dc592";      //あとでc = ""を消す  constに移動してからmask32a を mask32aに変える
+        if (ck == null){
+            console.log("Cookie is Null.")
+            return;
+        }
+
         let valueArr = ck.split("-");
         let n = 0; //parseInt(valueArr[], 32)で使いまわす
        
         let j = {};
         j.src = ck;
-
-        n = parseInt(valueArr[0], 32);        
+        
+        n = parseInt(valueArr[0], 32);     
         j.no = Math.round((bitToNum(n, mask32a_no) * 10) + bitToNum(n,mask32a_nodp)) / 10;
         j.name = pokedex.getPokemonByNo(j.no).name;
         j.lv = bitToNum(n, mask32a_lv);
@@ -344,8 +366,6 @@ class PokeReport{
         j.backgroundColor = bitToNum(n, mask32b_backGround);
 
         n = parseInt(valueArr[2], 32);
-
-
         j.subSkillList = this.getSubSkillListByNum(bitToNum(n, mask32c_sub1),
                                                    bitToNum(n, mask32c_sub2),
                                                    bitToNum(n, mask32c_sub3),
@@ -413,25 +433,7 @@ class PokeReport{
     }
 
 
-    createCookieValueFromJson(j){
-        let n = 0;
-        n += numToBit(j.backgroundColor, mask_backGround);//一番左のbitを1にしてしまうと、マイナスの整数になり狂うので注意
-        n += numToBit(j.lv, mask_lv);
-        n += numToBit(this.getFoodNumOf(j.foodCode[0]), mask_food_A);
-        n += numToBit(this.getFoodNumOf(j.foodCode[1]), mask_food_B);
-        n += numToBit(this.getFoodNumOf(j.foodCode[2]), mask_food_C);
-        n += numToBit(this.getCharacteristicNumOf(j.char), mask_char_all);
-        n += numToBit(j.subBerryS ? 1 : 0, mask_sub_berryS);
-        n += numToBit(j.subSpeedS ? 1 : 0, mask_sub_speedS);
-        n += numToBit(j.subSpeedM? 1 : 0, mask_sub_speedM);
-        n += numToBit(j.subFoodS ? 1 : 0, mask_sub_foodS);
-        n += numToBit(j.subFoodM ? 1 : 0, mask_sub_foodM);
-        n += numToBit(j.subSkillS ? 1 : 0, mask_sub_skillS);
-        n += numToBit(j.subSkillM ? 1: 0, mask_sub_skillM);
-        n += numToBit(j.subOteBonus ? 1 : 0, mask_sub_otebonus);
 
-        return n.toString(16);
-    }
 
     createCookieValueFromJson32(j){
         let abc = [];
@@ -517,19 +519,37 @@ class PokeReport{
 
 
 
-    
+    /*
     getColorCodeOf(n){
         switch(n){
             case 0: return "#CCDDFF"; break;
             case 1: return "#77AAFF"; break;
             case 2: return "#DDDDDD"; break;
             case 3: return "#FFDDDD"; break;                    
-            case 4: return "#FFDD55"; break;                    
+            case 4: return "#FFDDAA"; break;                    
             case 5: return "#FFA0A0"; break;
             case 6: return "#BBFFBB"; break;
             case 7: return "#FFFFCC"; break;                    
             default: return "#FF4444"
         }
+    }
+    */
+
+    setColorClassTo(el, n){
+        let className = "";
+        switch(n){
+            case 0: className = "def_color_SB"; break;
+            case 1: className = "def_color_BL"; break;
+            case 2: className = "def_color_SL"; break;
+            case 3: className = "def_color_OR"; break;                    
+            case 4: className = "def_color_PK"; break;                    
+            case 5: className = "def_color_RD"; break;
+            case 6: className = "def_color_GR"; break;
+            case 7: className = "def_color_GD"; break;                    
+            default: className = "def_color_XX"
+        }
+
+        el.classList.add(className);
     }
 
 

@@ -23,7 +23,7 @@ class PokeSleepingCalc{
             let c2 = r.insertCell();
             let atr = "calc_row_" + ( i == 30 ? 1 : i + 1);
 
-            c2.innerHTML = '<input type="text" class="calc_sleep_input" next_row_id="'+ atr + '" onkeydown="calc.textBoxKeyPress(this, event);"/>';
+            c2.innerHTML = '<input type="text" inputmode="decimal" class="calc_sleep_input" next_row_id="'+ atr + '" onkeydown="calc.textBoxKeyPress(this, event);"/>';
             
             let c3 = r.insertCell();
             c3.innerHTML = (i == 1) ? '<button tabindex="-1" onclick="calc.offsetCalcRowValue(false);" class="smaller">↓</button> <button tabindex="-1" onclick="calc.offsetCalcRowValue(true);"  class="smaller">↑</button>'
@@ -69,6 +69,7 @@ class PokeSleepingCalc{
         setCookie("srcd", this.recordsToCookieValue(), 30);
         alert(mes);
     }
+    
 
 
     showCurrentRatio(){
@@ -227,7 +228,7 @@ const mask_sleep_suya       = 0b000000000000000011111111;
         uto  = Math.round((uto  / cnt) * 10) / 10;
         suya = Math.round((suya / cnt) * 10) / 10;
         gusu = Math.round((100 - uto - suya) * 10) / 10;
-
+        document.getElementById("calc_current_ratio").textContent = uto + "-" + suya + "-" + gusu;
         return [uto, suya, gusu];
     }
 

@@ -167,7 +167,7 @@ class PokeDB{
         let ignoreSkill = (this.box_skill.value == "----");
         let results = this.pokemons.filter(p => (ignoreSpecialty || p.specialty == this.box_specialty.value)
                                              && (ignoreBerry || selectedBerries.includes(p.berry))
-                                             && (ignoreFood || p.containsFood(selectedFoods))
+                                             && (ignoreFood || p.existAnyInFoodList(selectedFoods))
                                              && (ignoreSkill || p.skill.indexOf(this.box_skill.value) > -1));
     
         this.reset(true);

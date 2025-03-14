@@ -9,12 +9,12 @@ function setCookie(key, value, days){
 }
 
 
-function getCookie(key){
+function getCookie(key, valueWhenNotFound = null){
     let keyEQ = key + "=";
     return document.cookie.split(';')
             .map(a => a.trim())
                 .find(c => c.startsWith(keyEQ))
-                ?.substring(keyEQ.length) || null;
+                ?.substring(keyEQ.length) || valueWhenNotFound;
 }
 
 

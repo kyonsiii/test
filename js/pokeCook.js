@@ -1,6 +1,6 @@
 //クッキー用
 //          mask_template     = 0b0000000000000000;
-const mask_recipe_max         = 0b00000011111111110000000000000000;//前はadvancedとmorelessの間のビット使ってた
+const mask_recipe_max         = 0b00000111111111100000000000000000;//前はadvancedとmorelessの間のビット使ってた
 const mask_recipe_type_select = 0b00000000000000011000000000000000;
 const mask_recipe_advanced    = 0b00000000000000000110000000000000;
 const mask_recipe_max_select  = 0b00000000000000000001110000000000;
