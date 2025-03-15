@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="style.css" rel="stylesheet"/>
         <script src="js/main.js"></script>
-        <script src="js/pokeDB.js"></script>
+        <script src="js/pokeSearch.js"></script>
         <script src="js/pokedex2.js"></script>
 
         <title>ポケモンスリープアプリv1.1.0aa</title>
@@ -32,15 +32,16 @@
             <select id="select_skill">
             </select>
     
+            <input type="checkbox" id="option_only_fully_evolved" checked><label for="option_only_fully_evolved">最終進化のみ表示</label>
             <button id="button_reset">リセット</button>
     
 
             <div id="field_buttons">
-                <img name="シアン" src="img/field/シアン.png" class="field" onclick="pokedb.selectField(this)">
-                <img name="トープ" src="img/field/トープ.png" class="field" onclick="pokedb.selectField(this)">
-                <img name="ウノハナ" src="img/field/ウノハナ.png" class="field" onclick="pokedb.selectField(this)">
-                <img name="ラピス" src="img/field/ラピス.png" class="field" onclick="pokedb.selectField(this)">
-                <img name="ゴールド" src="img/field/ゴールド.png" class="field" onclick="pokedb.selectField(this)">
+                <img name="シアン" src="img/field/シアン.png" class="field" onclick="pokesearch.selectField(this)">
+                <img name="トープ" src="img/field/トープ.png" class="field" onclick="pokesearch.selectField(this)">
+                <img name="ウノハナ" src="img/field/ウノハナ.png" class="field" onclick="pokesearch.selectField(this)">
+                <img name="ラピス" src="img/field/ラピス.png" class="field" onclick="pokesearch.selectField(this)">
+                <img name="ゴールド" src="img/field/ゴールド.png" class="field" onclick="pokesearch.selectField(this)">
             </div>
 
 
@@ -72,11 +73,11 @@
         <script>
             window.onload = ()=>{
                 this.pokedex = new Pokedex();
-                this.pokedb = new PokeDB();
-                this.pokedb.initialize(this.pokedex);
-                this.pokedb.setSkillListTo(document.getElementById("select_skill"));
-                this.pokedb.setFoodImgListTo(document.getElementById("food_buttons"));
-                this.pokedb.setBerryImgListTo(document.getElementById("berry_buttons"));
+                this.pokesearch = new PokeSearch();
+                this.pokesearch.initialize(this.pokedex);
+                this.pokesearch.setSkillListTo(document.getElementById("select_skill"));
+                this.pokesearch.setFoodImgListTo(document.getElementById("food_buttons"));
+                this.pokesearch.setBerryImgListTo(document.getElementById("berry_buttons"));
             }
         </script>
     </body>

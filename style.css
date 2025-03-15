@@ -183,6 +183,10 @@ span.indicator_text{
     display: inline-block;
     width: 8em;
 }
+span.detail_info{
+    font-size: 0.8em;
+    display: inline-block;
+}
 
 /*テーブル系*/
 
