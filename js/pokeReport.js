@@ -158,25 +158,6 @@ class PokeReport{
         pokeReport.recipedb.foods.sort((a, b) => a.power - b.power).map(f => f.name).forEach(f =>{
             tmp.push({ [f]: [] });
         });
-        /*
-        tmp.push({とくせんリンゴ: []});
-        tmp.push({モーモーミルク: []});
-        tmp.push({ワカクサ大豆: []});
-        tmp.push({あまいミツ: []});
-        tmp.push({マメミート: []});
-        tmp.push({あったかジンジャー: []});
-        tmp.push({あんみんトマト: []});
-        tmp.push({とくせんエッグ: []});
-        tmp.push({ピュアなオイル: []});
-        tmp.push({ほっこりポテト: []});
-        tmp.push({げきからハーブ: []});
-        tmp.push({リラックスカカオ: []});
-        tmp.push({あじわいキノコ: []});
-        tmp.push({ふといながねぎ: []});
-        tmp.push({おいしいシッポ: []});
-        tmp.push({ワカクサコーン: []});
-        tmp.push({めざましコーヒー: []});
-        */
 
         //MyPokeを食材ごとに割り振る（重複あり）
         tmp.forEach(f => {
@@ -208,9 +189,11 @@ class PokeReport{
             let selector = "td.mypoke_outline, td.mypoke_outline~td";            
             let insertInfo = (pac, rank, tr = null) => {
                 tr = tr ?? tbody.insertRow();
-                pac.comb.insertResultTo(tr, food, pac.poke, this.createIdentifierOf(pac.json));
+                //pac.comb.insertResultTo(tr, food, pac.poke, this.createIdentifierOf(pac.json));
+                //this.createPokemonInfoRow(tr, pac.comb, food, pacjson, this.createIdentifierOf(pac.json));
+                this.insertCombinationResultTo(tr, pac.poke, pac.comb, food, this.createIdentifierOf(pac.json))
+                
                 tr.querySelectorAll(selector).forEach(el => {
-                   //el.style.backgroundColor = this.getColorCodeOf(pac.json.backgroundColor);
                     this.setColorClassTo(el, pac.json.backgroundColor);
                 });
                 foodImgCell.rowSpan = rank;
@@ -285,18 +268,105 @@ class PokeReport{
     
 
 
-    createPokemonInfoRow(poke, comb, food, json = null){
-        let r = document.createElement("tr");
-        comb.insertResultTo(r, food, poke);
-        return r;
+    createPokemonInfoRow(poke, comb, food, json = null, identifier = null){
+        let tr = document.createElement("tr");
+
+        //comb.insertResultTo(r, food, poke);昔のやりかた
+        this.insertCombinationResultTo(tr, poke, comb, food);
+       
+        return tr;
     }
 
     createMyPokemonInfoRow(poke, comb, food, json){
-        let r = document.createElement("tr");
-        comb.insertResultTo(r, food, poke, this.createIdentifierOf(json));
-        return r;
+        let tr = document.createElement("tr");
+        //comb.insertResultTo(r, food, poke, this.createIdentifierOf(json));昔のやりかた
+        //this.createPokemonInfoRow(poke, comb, food, json, this.createIdentifierOf(json));
+        this.insertCombinationResultTo(tr, poke, comb, food, this.createIdentifierOf(json));
+        return tr;
     }
- 
+
+    insertCombinationResultTo(tr, poke, comb, food, identifier = null, noSetCombinationResult = false){
+        tr.setAttribute("expection_total", comb.totalExpectionFinally);
+        let cell = tr.insertCell();
+        cell.classList.add("mypoke_outline");
+        let img = document.createElement("img");
+        img.src = "img/poke/" + String(poke.no).padStart(3, '0') + ".png"
+        img.classList.add("tiny");
+        cell.appendChild(img);
+
+        if (identifier != null){
+            let id = document.createElement("span");
+            id.classList.add("mypoke_identifier");
+            id.textContent = identifier;
+            cell.appendChild(id);
+        }
+
+        let lv = document.createElement("span");
+        lv.textContent = "Lv" + comb.lv;
+        cell.appendChild(lv);
+
+        for (let i = 0; i < comb.code.length; i++){
+            let c = comb.code[i];
+            let fImg = document.createElement("img");
+            let food = (c == "A") ? poke.food1
+                      : (c == "B") ? poke.food2 : poke.food3;
+            fImg.src = "img/food/" + food + ".png";
+            fImg.classList.add("ex-tiny");
+            if (i == 1 && comb.lv < 30) fImg.classList.add("disabled");
+            if (i == 2 && comb.lv < 60) fImg.classList.add("disabled");
+            cell.appendChild(fImg);
+        }
+
+        if (noSetCombinationResult) return;
+        this.setCombinationResultTo(tr, comb, food);
+    } 
+
+    setCombinationResultTo(row, comb, targetFoodName){
+        if (comb.containsFoodsAtLeast(targetFoodName, 1)){
+            for (let i = 0; i < 3; i++){    //多分これはクリックした食材を一番左にしたいんだと思う
+                if (comb.foods[i].name == targetFoodName){
+                    row.appendChild(this.createFoodNumCell(comb, i));
+                    break;
+                }
+            }
+    
+            for (let i = 0; i < 3; i++){            //i=0かつfoods[0].name==targetの場合はどうすんの？ と思ったら最低でもi=1からじゃないと通らない
+                if (i >= comb.foods.length) {       //targetは最初に載せているので、それ以外だったら追加する
+                    row.appendChild(this.createFoodNumCell(comb, i));
+                } else if (comb.foods[i].name != targetFoodName){
+                    row.appendChild(this.createFoodNumCell(comb, i));
+                }
+            }
+            
+        } else {        //食材ターゲットを複数選択した際にターゲットが含まれないポケモンも登場する
+            for (let i = 0; i < 3; i++){                
+                row.appendChild(this.createFoodNumCell(comb, i));
+            }
+        }
+    }
+
+    createFoodNumCell(comb, index){
+        let c = document.createElement("td");
+        if (index >= comb.foods.length){
+            c.setAttribute('value', 0);
+            return c;
+        }
+
+        let img = document.createElement('img');
+        img.classList.add("tiny");
+        img.src = "img/food/" + comb.foods[index].name + ".png";        
+        c.appendChild(img);
+
+        let numEl = document.createElement('strong');
+        numEl.textContent = comb.foods[index].expection;
+        c.appendChild(numEl);
+        c.setAttribute('name', comb.foods[index].name);
+        c.setAttribute('value', comb.foods[index].expection);
+        c.classList.add('food_num');
+        return c;
+    }
+
+
 
     createIdentifierOf(j){
         let x = j.char;

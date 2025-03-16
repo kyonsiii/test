@@ -73,6 +73,44 @@ git checkout -b new-branch-name
 git push origin --delete ttt
 
 
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ブランチの変更を初期化する    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+//1. まだ git add していない場合
+git checkout -- .
+
+//2. git add したが git commit していない場合
+git reset HEAD .
+git checkout -- .
+
+//3. git commit してしまったが git push していない場合
+git reset --soft HEAD~1
+  or
+git reset --hard HEAD~1
+
+//4. git push までしてしまった場合
+git reset --hard origin/現在のブランチ名
+
+//補足:
+//注意点
+//git reset --hard を実行すると、変更は完全に消えるので、慎重に実行してください。
+//もし削除した内容を後で戻す可能性があるなら、git stash を使って一時保存するのもアリです：
+git stash
+
+//そして、後で git stash pop で戻せます。
+//現在の状態に不安がある場合は、git status で確認してから実行すると良いでしょう！
+
+1. git checkout -- . の意味
+通常、git checkout は ブランチを切り替えるコマンドですが、
+特定のファイルやディレクトリを指定した場合は 
+そのファイルを最新のコミット時点の状態に戻す
+という動作をします。
+
+-- の意味は、「これ以降はファイルのパスであり、ブランチ名ではない」
+と Git に明示するためのものです。
+
+
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃mainブランチにdブランチを適用  ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
@@ -110,6 +148,20 @@ git push origin --delete d
 
 //ギットフェッチプルーン（おまじない）
 git fetch --prune
+
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃エイリアス(自作関数含む)を作る  ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+//エディター(VSCodeなどが必要？)でコンフィグファイルを開く
+git config --global --edit
+
+[alias] （なければ自分で書く）の下に
+  edita = "config --global --edit"						//上記のコマンドを"git edita"で実行できる
+  pushx = "!f(){ git add . && git commit -m \"$1\" && git push origin HEAD;}; f"	//メッセージ(引数1)を与えたうえでadd, commit, pushできる
+
+
 
 
 ┏━━━━━━┓

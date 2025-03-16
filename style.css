@@ -188,6 +188,19 @@ span.detail_info{
     display: inline-block;
 }
 
+#result_rows td:first-child{
+    width: 15em;
+}
+
+#result_rows td:nth-child(2){
+    font-size: 0.8em;
+    width: 7em;
+}
+
+#result_rows p{
+    margin-top: 1em;
+    margin-bottom: 0;
+}
 /*テーブル系*/
 
 table{
