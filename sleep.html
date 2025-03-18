@@ -7,7 +7,7 @@
         <script src="js/main.js"></script>
         <script src="js/pokeSleeping.js"></script>  
         <script src="js/pokeSleepingCalc.js"></script>
-        <title>睡眠計算v1.0.5</title>
+        <title>睡眠計算</title>
     </head>
 
 
@@ -19,9 +19,10 @@
             <a href = "./report.html"><img src="img/pages/report.png"></a>
         </div>
 
-
+        
         <p>
-            現在のパワー: <input type="text" id="current_power" class="input_short" inputmode="decimal" onfocus="selectAll(this);" onkeydown="event_target_keydown(event);"><br>
+            <h3 style="margin: 0;">睡眠計算ツールv1.1</h3>
+            現在のパワー: <input type="text" id="current_power" class="input_short" inputmode="decimal" onfocus="selectAll(this);" onkeyup="event_target_keyup(event);"><br>
             目標得点　　: <input type="text" id="target_power" class="input_short" inputmode="decimal"><br>
             <button id="button_calc" onclick="pokesleeping.calc();">計算</button><br>
             <span id="calc_result"></span>
@@ -118,13 +119,21 @@
                     el.select();
             }
 
-            function event_target_keydown(e){
-                if (e.key != "Enter") return;
-
-                var tb = e.target;
+            function event_target_keyup(e){
+                if (e.key == "Enter"){
+                    var tb = e.target;
                     if (tb.value.length <= 4 && !(/\.$/.test(tb.value))){
                         tb.value = tb.value + ".";
                     }
+                }
+                else if (e.key == "."){
+
+                }
+                else{
+                    return;
+                }
+
+
                 pokesleeping.calc();        
             }
         </script>
