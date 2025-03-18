@@ -21,9 +21,9 @@
 
 
         <p>
-            現在のパワー: <input type="text" id="current_power" class="input_short" inputmode="decimal"><br>
+            現在のパワー: <input type="text" id="current_power" class="input_short" inputmode="decimal" onfocus="selectAll(this);" onkeydown="event_target_keydown(event);"><br>
             目標得点　　: <input type="text" id="target_power" class="input_short" inputmode="decimal"><br>
-            <button id="button_calc" onclick="pokesleeping.calc(this);">計算</button><br>
+            <button id="button_calc" onclick="pokesleeping.calc();">計算</button><br>
             <span id="calc_result"></span>
         </p>
   
@@ -112,6 +112,20 @@
                     this.calc.setRecordsToInputBoxesFromCookieValue(records);
                     document.getElementById("calc_current_ratio").textContent = this.calc.getCurrentRatio().join("-");
                 }
+            }
+
+            function selectAll(el){
+                    el.select();
+            }
+
+            function event_target_keydown(e){
+                if (e.key != "Enter") return;
+
+                var tb = e.target;
+                    if (tb.value.length <= 4 && !(/\.$/.test(tb.value))){
+                        tb.value = tb.value + ".";
+                    }
+                pokesleeping.calc();        
             }
         </script>
     </body>

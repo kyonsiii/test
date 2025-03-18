@@ -448,9 +448,6 @@ class PokeReport{
                                                    bitToNum(n, mask32c_sub3),
                                                    bitToNum(n, mask32c_sub4),
                                                    bitToNum(n, mask32c_sub5));
-
-
-
         this.setSubSkillsEnabled(j, -1, true);
         return j;
     }
@@ -465,6 +462,7 @@ class PokeReport{
             lv100: {value: lv100skill, name: this.getSubSkillNameFromNum(lv100skill), lv: 100, enabled: false}
         };
     }
+
 
     getSubSkillList(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill){
         return{
@@ -509,9 +507,7 @@ class PokeReport{
         if (setAdjustValueImmediately) this.setAdjustValues(j);
     }
 
-
-
-
+    
     createCookieValueFromJson32(j){
         let abc = [];
         let n = 0;

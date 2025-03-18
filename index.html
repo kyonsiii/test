@@ -8,7 +8,7 @@
         <script src="js/pokeSearch.js"></script>
         <script src="js/pokedex2.js"></script>
 
-        <title>ポケモンスリープアプリv1.1.0aa</title>
+        <title>ポケモンスリープアプリv1.2</title>
 
     </head>
 
@@ -22,18 +22,28 @@
         </div>
 
         <p>
-            <select id="select_specialty">
-                <option value = "----">----</option>
-                <option value = "スキル">スキル</option>
-                <option value = "きのみ">きのみ</option>
-                <option value = "食材">食材</option>
-            </select>
+            <div id="pokesearch_filter">
+                <select id="select_specialty">
+                    <option value = "----">----</option>
+                    <option value = "スキル">スキル</option>
+                    <option value = "きのみ">きのみ</option>
+                    <option value = "食材">食材</option>
+                </select>
+                <br>
+                    
+                <select id="select_skill">
+                </select>
+                <br>
+
+                <input type="checkbox" id="option_only_fully_evolved" checked><label for="option_only_fully_evolved">最終進化のみ表示</label>
+                <button id="button_reset">リセット</button>
+            </div>
+
+
+
+
     
-            <select id="select_skill">
-            </select>
-    
-            <input type="checkbox" id="option_only_fully_evolved" checked><label for="option_only_fully_evolved">最終進化のみ表示</label>
-            <button id="button_reset">リセット</button>
+
     
 
             <div id="field_buttons">

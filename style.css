@@ -21,6 +21,8 @@ html {
 
 }
 
+
+
 #page_link img{
     width: 3em;
     height: auto;
@@ -415,6 +417,10 @@ table thead tr th {
     border: 2px solid black;
     max-width: 470px;
     margin-top: -2px;
+}
+#pokesearch_filter, #field_buttons{
+    max-width: 470px;
+    margin-bottom: 1em;
 }
 
 #berry_buttons img, #food_buttons img{
