@@ -151,7 +151,6 @@ class PokeSearch{
     
     setResult(){
         let onlyFullyEvolved = this.check_onlyFullyEvolved.checked;
-        console.log(onlyFullyEvolved);
         
         let selectedBerries = Array.from(document.getElementById('berry_buttons').children).filter(c => c.value == "ON").map(c => c.name).join("");
         let selectedFoods = Array.from(document.getElementById('food_buttons').children).filter(c => c.value == "ON").map(c => c.name).join("");    
@@ -185,7 +184,7 @@ class PokeSearch{
         + poke.sec
         + "<p>"
 
-        + "<span class=\"indicator_text\">きのみパワー/日:</span>" + poke.berrySEnergyLv60Day    
+        + "<span class=\"indicator_text\">きのみSPow/日:</span>" + poke.berrySEnergyLv60Day    
         + "<br><span class=\"indicator_text\">食材拾い/日:</span>" + poke.getOtetsudaiCountDay(60, 0, 0, 0.52, true).toFixed(1) + "回"    
         + "<br><span class=\"indicator_text\">スキル発動/日:</span>" + poke.skillExpectionDay.toFixed(1) + "回"
         + "<br><span class=\"indicator_text\">食材確率:</span>"+ (poke.foodRate * 100).toFixed(1) + "%"

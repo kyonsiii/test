@@ -25,7 +25,7 @@
 
         <div class="input_form_area">
             <div style="display: flex; justify-content: space-between; background-color: beige;">
-                <strong id="page_title"> Myポケモン登録v0.6fx:</strong>
+                <strong id="page_title"> Myポケモン登録v0.6fxx:</strong>
                 <span id="input_mypoke_form_visible" visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this);">　表示▼</span>
             </div>
             <div id="input_form" style="display: none;">
@@ -624,20 +624,20 @@
             function createBerryPowerInfo(json){
                 berryInfoResult = {};
                 let poke = pokedex.getPokemonByName(json.name);
-                let oteCount = Math.round(poke.getOtetsudaiCountDay(json.lv, json.charAdjusts.speed, json.subAdjusts.speed));
-                let foodOteCount =  Math.round(oteCount * (poke.foodRate * (1 + json.charAdjusts.food + json.subAdjusts.food)));
+                let oteCount = poke.getOtetsudaiCountDay(json.lv, json.charAdjusts.speed, json.subAdjusts.speed);
+                let foodOteCount =  oteCount * (poke.foodRate * (1 + json.charAdjusts.food + json.subAdjusts.food));
                 let berryOteCount = oteCount - foodOteCount;
-                let berryPower = pokedex.getBerryPowerOf(poke.berry, json.lv);
-                let berryPowerDay = Math.round(berryPower * poke.getBerryNum(json.subBerryS) * berryOteCount);
+                let berryPower = pokedex.getBerryPowerOf(poke.berry, json.lv) ;
+                let berryPowerDay = berryPower * poke.getBerryNum(json.subBerryS) * berryOteCount;
                 berryInfoResult.oteCount = oteCount;
                 berryInfoResult.foodOteCount = foodOteCount;
                 berryInfoResult.berryOteCount = berryOteCount;
                 berryInfoResult.berryPower = berryPower;
                 berryInfoResult.berryPowerDay = berryPowerDay;
                 berryInfoResult.mes =  poke.name + " Lv" + json.lv
-                                    + "\nきのみおてつだい: " + berryOteCount + "/" + oteCount
-                                    + "\nきのみパワー: " + berryPower
-                                    + "\n1日: " + berryPowerDay;
+                                    + "\nきのみおてつだい: " + Math.round(berryOteCount) + "/" + Math.round(oteCount)
+                                    + "\nきのみパワー: " + Math.round(berryPower * 10) / 10
+                                    + "\n1日: " + Math.round(berryPowerDay);
                 return berryInfoResult;
             }
 
@@ -702,7 +702,7 @@
                 
                 tr.setAttribute("value", result.berryPowerDay);
                 tr.insertCell().textContent = j.name + "Lv" + j.lv + j.foodCode + " " + pokeReport.createIdentifierOf(j);
-                tr.insertCell().textContent = result.berryPowerDay + "(" + result.berryOteCount + "/" + result.oteCount + ")";
+                tr.insertCell().textContent = Math.round(result.berryPowerDay) + "(" + Math.round(result.berryOteCount) + "/" + Math.round(result.oteCount) + ")";
 
                 let rows = body.children;
                 if (rows.length == 0){
