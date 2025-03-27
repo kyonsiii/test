@@ -544,7 +544,7 @@ class PokeReport{
 
         json.charAdjusts = {
             speed: (bitToNum(n, 0b111000) == 0b001) ? +0.11
-                 : (bitToNum(n, 0b000111) == 0b001) ? -0.09 : 0,
+                 : (bitToNum(n, 0b000111) == 0b001) ? -0.07 : 0,
             genki: (bitToNum(n, 0b111000) == 0b010) ? +0.2
                  : (bitToNum(n, 0b000111) == 0b010) ? -0.12 : 0,
             food : (bitToNum(n, 0b111000) == 0b011) ? +0.2
