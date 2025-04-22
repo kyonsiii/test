@@ -25,8 +25,8 @@
 
         <div class="input_form_area">
             <div style="display: flex; justify-content: space-between; background-color: beige;">
-                <strong id="page_title"> Myポケモン登録v0.6fxx:</strong>
-                <span id="input_mypoke_form_visible" visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this);">　表示▼</span>
+                <strong id="page_title"> Myポケモン登録v0.7:</strong>
+                <span id="input_mypoke_form_visible" visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this);initializePokeList();">　表示▼</span>
             </div>
             <div id="input_form" style="display: none;">
                 <select id="input_mypoke_name" style="width:10em; font-size:1em" onclick="initializePokeList()" onchange="setFoodImages(this)" src></select>
@@ -297,6 +297,42 @@
                     </tbody>
                 </table>
 
+
+            </div>
+
+            <div id="memo" style="background-color: lightcyan; font-size: 0.7em; margin-bottom: 2em;">
+                <strong>元気補正:</strong>
+                元気81%以上を基準にした時の倍率<br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>元気</th>
+                            <th>倍率 (81%～と比べて)(1個上と比べて)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>81%～</td>
+                            <td>1.000倍 (-0%)(-0%)</td>
+                        </tr>
+                        <tr>
+                            <td>61%～</td>
+                            <td>0.865倍 (-13.5%)(-13.5%)</td>
+                        </tr>
+                        <tr>
+                            <td>41%～</td>
+                            <td>0.776倍 (-22.4%)(-10.3%)</td>
+                        </tr>
+                        <tr>
+                            <td>21%～</td>
+                            <td>0.682倍 (-31.8%)(-12.1%)</td>
+                        </tr>
+                        <tr>
+                            <td>0%</td>
+                            <td>0.450倍 (-55.0%)(-34.0%)</td>
+                        </tr>
+                    </tbody>
+                </table>
 
             </div>
 
