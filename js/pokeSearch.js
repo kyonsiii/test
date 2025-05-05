@@ -196,7 +196,7 @@ class PokeSearch{
         c = r.insertCell();
         c.innerHTML = "<img src=\"img/berry/" + poke.berry + ".png\" class=\"tiny\">" + poke.berry 
                     + "<br><br>" + "<img src=\"img/food/" + poke.food1 + ".png\" class=\"tiny\"><b>" + "(確定)</b>" 
-                    + "<br>" + "<img src=\"img/food/" + poke.food2 + ".png\" class=\"tiny\">" 
+                    + (poke.food2 == "" ? "" : "<br>" + "<img src=\"img/food/" + poke.food2 + ".png\" class=\"tiny\">")
                     + (poke.food3 == "" ? "" : "<br>" + "<img src=\"img/food/" + poke.food3 + ".png\" class=\"tiny\">");
 
         return r;
