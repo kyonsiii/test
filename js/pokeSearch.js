@@ -160,7 +160,7 @@ class PokeSearch{
         let ignoreFood = (selectedFoods == "");
         let ignoreSkill = (this.box_skill.value == "----");
         let results = this.pokemons.filter(p => (!onlyFullyEvolved || (p.fullyEvolved && onlyFullyEvolved))
-                                             && (ignoreSpecialty || p.specialty == this.box_specialty.value)
+                                             && (ignoreSpecialty || p.specialty == this.box_specialty.value || p.specialty == "オール")
                                              && (ignoreBerry || selectedBerries.includes(p.berry))
                                              && (ignoreFood || p.existAnyInFoodList(selectedFoods))
                                              && (ignoreSkill || p.skill.indexOf(this.box_skill.value) > -1));
