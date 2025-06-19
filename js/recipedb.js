@@ -23,7 +23,7 @@ class RecipeDB{
             new Recipe({no:18, category: "カレー・シチュー", name: "ニンジャカレー", energy:28618, food1:"ワカクサ大豆", food1Num:24, food2:"マメミート", food2Num:9, food3:"ふといながねぎ", food3Num:12, food4:"あじわいキノコ", food4Num:5, food5:"", food5Num:0}),
             new Recipe({no:19, category: "カレー・シチュー", name: "れんごくコーンキーマカレー", energy:41480, food1:"げきからハーブ", food1Num:27, food2:"マメミート", food2Num:24, food3:"ワカクサコーン", food3Num:14, food4:"あったかジンジャー", food4Num:12, food5:"", food5Num:0}),
             new Recipe({no:20, category: "カレー・シチュー", name: "めざめるパワーシチュー", energy:57754, food1:"ワカクサ大豆", food1Num:28, food2:"あんみんトマト", food2Num:25, food3:"あじわいキノコ", food3Num:23, food4:"めざましコーヒー", food4Num:16, food5:"", food5Num:0}),
-            
+            new Recipe({no:21, category: "カレー・シチュー", name: "いあいぎりすき焼きカレー", energy:3, food1:"ふといながねぎ", food1Num:27, food2:"マメミート", food2Num:26, food3:"あまいミツ", food3Num:26, food4:"とくせんエッグ", food4Num:22, food5:"", food5Num:0}),
             
             
             
