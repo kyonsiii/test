@@ -588,26 +588,26 @@ event_column:nth-of-type(6) event_panel {
   border: 2px solid bisque;
 }
 
+#event_schedule h3{
+    font-size: 1em;
+    padding: 0;
+    margin:0;
+    margin-bottom:4px;
+}
+
 event_panel ul{
     position: absolute;
-    padding-inline-start: 0.5em;
+    padding-inline-start: 1.5em;
     margin:0;
     margin-bottom: 0.2em;
     margin-block-end: 0em;
 }
 event_panel li{
-    font-size: 0.4em;
+    font-size: 0.8em;
     margin-left: -0.5em;
     padding-bottom: 0.5em;
-    text-indent: 0em;
-    list-style-position: inside;    
 }
 
-#event_schedule h3{
-    font-size:14px;
-    padding: 0;
-    margin:0;
-    margin-bottom:4px;
-}
+
 
 
