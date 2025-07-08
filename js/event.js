@@ -62,7 +62,7 @@ class PokeEvent{
 
                 ]
              },
-            グッドスリープデー : {
+            "グッドスリープデー" : {
                 items: [
                     this.EventItems["pickup_undiscovered"],
                     this.EventItems["pickup_goodsleepday"],
@@ -71,7 +71,7 @@ class PokeEvent{
                     this.EventItems["goodsleepdaypoint_bonus"]
                 ]
             },
-            もうすぐ2周年キャンペーン : {
+            "もうすぐ2周年キャンペーン" : {
                 items: [
                     this.EventItems["pickup_other_sleep_type"],
                     this.EventItems["sleep_yumenokakera_150percent"],
@@ -80,7 +80,7 @@ class PokeEvent{
                 ]
             },
 
-            周年2フェスティバル前半 : {
+            "2周年フェスティバル前半" : {
                 items:[
                     this.EventItems["pickup_other_sleep_type"],
                     this.EventItems["sleep_get_chance"],
@@ -91,7 +91,7 @@ class PokeEvent{
                 ]
             },
 
-            周年2フェスティバル後半 : {
+            "2周年フェスティバル後半" : {
                 items:[
                     this.EventItems["pickup_other_sleep_type"],
                     this.EventItems["cooking_power_150percent"],

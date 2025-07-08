@@ -34,14 +34,14 @@
              
                 this.pokeEvent.setDateCellsToColumn(document.getElementById("event_column_date"), 30, true);
                 //this.pokeEvent.addEntry("2025/07/01 04:00", "2025/07/02 04:00", "", "もう終わったイベント");
-                this.pokeEvent.addEntry("2025/07/07 04:00", "2025/07/14 04:00", "もうすぐ2周年キャンペーン", "もうすぐ2周年キャンペーン");
+                this.pokeEvent.addEntry("2025/07/07 04:00", "2025/07/14 04:00", "もうすぐ2周年キャンペーン", "◆もうすぐ2周年キャンペーン");
                 this.pokeEvent.addEntry("2025/07/10 04:00", "2025/07/13 04:00", "グッドスリープデー", "◆グッドスリープデーVol.24");
-                this.pokeEvent.addEntry("2025/07/14 04:00", "2025/07/21 03:59", "周年2フェスティバル前半", "2周年フェスティバル前半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
-                this.pokeEvent.addEntry("2025/07/21 04:00", "2025/07/28 03:59", "周年2フェスティバル後半", "2周年フェスティバル後半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
+                this.pokeEvent.addEntry("2025/07/14 04:00", "2025/07/21 03:59", "2周年フェスティバル前半", "◆2周年フェスティバル前半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
+                this.pokeEvent.addEntry("2025/07/21 04:00", "2025/07/28 03:59", "2周年フェスティバル後半", "◆2周年フェスティバル後半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
             
                 let columns = document.querySelectorAll("event_column").length - 1;
-                document.body.style.minWidth = (columns * 10 + 3) + "em"
-                document.body.style.maxWidth = document.body.style.minWidth
+                pokeEvent.dataField.style.minWidth = (columns * 10 + 3) + "em";
+                pokeEvent.dataField.style.maxWidth = pokeEvent.dataField.style.minWidth;
             }
 
             
