@@ -525,7 +525,12 @@ event_column{
 
 event_column:first-of-type{
     text-align: center;
-    border-right: 2px solid gray;;
+    border-right: 2px solid gray;
+    position: sticky;
+    left:0;
+    background-color: whitesmoke;
+    z-index: 2;
+    
 }
 
 event_cell{
