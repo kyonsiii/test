@@ -116,10 +116,9 @@ class PokeEvent{
         panel.appendChild(titleEl);
         panel.appendChild(ulEl);
 
-
         let diffHours = (endDate - startDate) / (1000 * 60 * 60);
         panel.style.height = (diffHours * 0.5) + "em";
-        panel.style.zIndex = 1;
+        alert(panel.style.height);
 
         var cell = this.getCellOf(column, startDate);
 
