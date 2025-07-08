@@ -68,7 +68,7 @@ class PokeEvent{
                     this.EventItems["pickup_goodsleepday"],
                     this.EventItems["goodsleepday_power_bonus"],
                     this.EventItems["goodsleepday_exp_bonus"],
-                    this.EventItems["goodsleepdaypoint_bonus"]
+                    this.EventItems["goodsleepday_point_bonus"]
                 ]
             },
             "もうすぐ2周年キャンペーン" : {
