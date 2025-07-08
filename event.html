@@ -14,11 +14,13 @@
 
     <body>
         <div id="page_link">
+            <div class="sticky">
             <a href = "./index.html"><img src="img/pages/pokedex.png"></a>
             <a href = "./sleep.html"><img src="img/pages/sleep.png"></a>
             <a href = "./cook.html"><img src="img/pages/cook.png"></a>            
             <a href = "./report.html"><img src="img/pages/report.png"></a>
             <a href = "./event.html" class ="current"><img src="img/pages/event.png"></a>
+            </div>
         </div>
 
     
@@ -42,6 +44,7 @@
                 let columns = document.querySelectorAll("event_column").length - 1;
                 pokeEvent.dataField.style.minWidth = (columns * 10 + 3) + "em";
                 pokeEvent.dataField.style.maxWidth = pokeEvent.dataField.style.minWidth;
+                document.body.style.width = pokeEvent.dataField.style.minWidth;
             }
 
             
