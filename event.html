@@ -40,8 +40,8 @@
                 this.pokeEvent.addEntry("2025/07/21 04:00", "2025/07/28 03:59", "周年2フェスティバル後半", "2周年フェスティバル後半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
             
                 let columns = document.querySelectorAll("event_column").length - 1;
-
-                document.body.style.maxWidth = (columns * 10 + 3) + "em"
+                document.body.style.minWidth = (columns * 10 + 3) + "em"
+                document.body.style.maxWidth = document.body.style.minWidth
             }
 
             
