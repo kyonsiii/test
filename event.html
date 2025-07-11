@@ -14,13 +14,11 @@
 
     <body>
         <div id="page_link">
-            <div class="sticky">
             <a href = "./index.html"><img src="img/pages/pokedex.png"></a>
             <a href = "./sleep.html"><img src="img/pages/sleep.png"></a>
             <a href = "./cook.html"><img src="img/pages/cook.png"></a>            
             <a href = "./report.html"><img src="img/pages/report.png"></a>
             <a href = "./event.html" class ="current"><img src="img/pages/event.png"></a>
-            </div>
         </div>
 
     
@@ -40,7 +38,7 @@
                 this.pokeEvent.addEntry("2025/07/10 04:00", "2025/07/13 04:00", "グッドスリープデー", "◆グッドスリープデーVol.24");
                 this.pokeEvent.addEntry("2025/07/14 04:00", "2025/07/21 03:59", "2周年フェスティバル前半", "◆2周年フェスティバル前半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
                 this.pokeEvent.addEntry("2025/07/21 04:00", "2025/07/28 03:59", "2周年フェスティバル後半", "◆2周年フェスティバル後半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
-            
+                this.pokeEvent.addEntry("2025/07/24 04:00", "2025/07/27 03:59", "ニュームーンデー", "◆第3回ニュームーンデー");
                 let columns = document.querySelectorAll("event_column").length - 1;
                 pokeEvent.dataField.style.minWidth = (columns * 10 + 3) + "em";
                 pokeEvent.dataField.style.maxWidth = pokeEvent.dataField.style.minWidth;

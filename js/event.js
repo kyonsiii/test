@@ -8,12 +8,16 @@ class PokeEvent{
 
         this.EventItems = {
             /*ポケモンのピックアップ*/
+            pickup_shiny
+             : "色違い出現率アップ",
             pickup_other_sleep_type
              : "ほかの睡眠タイプ出現",
             pickup_goodsleepday
              : "ピィ/ピッピ/ピクシー 中ピックアップ",
             pickup_undiscovered
              : "未発見のポケモンの出現率UP",
+            pickup_darkrai
+             : "ダークライ 特別ピックアップ",
 
             /*睡眠リサーチ関係*/
             sleep_exp_bonus_150percent
@@ -24,6 +28,8 @@ class PokeEvent{
              : "リサーチのゆめのかけら1.5倍",
             sleep_get_chance
              : "チャンス1匹確定(1回目のみ)",
+            sleep_hunger_change
+             : "おやつで満腹になりにくい",
 
 
             /*料理関係*/
@@ -69,6 +75,14 @@ class PokeEvent{
                     this.EventItems["goodsleepday_power_bonus"],
                     this.EventItems["goodsleepday_exp_bonus"],
                     this.EventItems["goodsleepday_point_bonus"]
+                ]
+            },
+            "ニュームーンデー" : {
+                items: [
+                    this.EventItems["pickup_darkrai"],
+                    this.EventItems["sleep_hunger_change"],
+                    this.EventItems["pickup_shiny"]
+
                 ]
             },
             "もうすぐ2周年キャンペーン" : {
