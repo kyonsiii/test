@@ -65,9 +65,9 @@ class PokeEvent{
         this.EventPresets = {
              "" : {
                 items:[
-
                 ]
              },
+
             "グッドスリープデー" : {
                 items: [
                     this.EventItems["pickup_undiscovered"],
@@ -77,14 +77,15 @@ class PokeEvent{
                     this.EventItems["goodsleepday_point_bonus"]
                 ]
             },
+
             "ニュームーンデー" : {
                 items: [
                     this.EventItems["pickup_darkrai"],
-                    this.EventItems["sleep_hunger_change"],
-                    this.EventItems["pickup_shiny"]
-
+                    this.EventItems["pickup_shiny"],
+                    this.EventItems["sleep_hunger_change"]
                 ]
             },
+
             "もうすぐ2周年キャンペーン" : {
                 items: [
                     this.EventItems["pickup_other_sleep_type"],
@@ -138,10 +139,14 @@ class PokeEvent{
 
 
 
-    addEntry(startDateStr, endDateStr, presetKey, label, ...params){
+    addEntry(startDateStr, endDateStr, endAtPreviousDayEnd, presetKey, label, ...params){
         let tmpStartDate = new Date(startDateStr);
         let startDate = (this.today > tmpStartDate) ? this.today : tmpStartDate;
         let endDate = new Date(endDateStr);
+        if (endAtPreviousDayEnd){
+            endDate.setDate(endDate.getDate() - 1);
+            endDate.setHours(23, 59, 0);
+        }
 
         if (endDate < this.today) return;
 
