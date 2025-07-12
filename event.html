@@ -32,13 +32,25 @@
             window.onload = ()=>{
                 this.pokeEvent = new PokeEvent();
              
+                
+                //addEntry(startDateStr, endDateStr, endAtPreviousDayEnd, presetKey, label, ...params)
+                //endAt... = trueの時、は0:00～3:59のパネルを省く
+                //presetKeyはEventPresetsで設定したキーを呼び出す
+                //イベントが登録されていない場合はEventPresetsに登録するか、キーを""に指定した上でparams部分で項目を自分で書く
+                //イベントはさらにEventItemsに項目があるので、そちらから項目を流用することもできる
+                //labelはパネルに表示するタイトルを書く
+
+                //↓日付列の作成
                 this.pokeEvent.setDateCellsToColumn(document.getElementById("event_column_date"), 30, true);
-                //this.pokeEvent.addEntry("2025/07/01 04:00", "2025/07/02 04:00", "", "もう終わったイベント");
+
+                //↓イベントの登録 終了日が本日を過ぎている場合は表示されない。順番は登録順なので、開始日に合わせて手動で挿入場所を変えること
                 this.pokeEvent.addEntry("2025/07/07 04:00", "2025/07/14 04:00", true, "もうすぐ2周年キャンペーン", "◆もうすぐ2周年キャンペーン");
-                this.pokeEvent.addEntry("2025/07/10 04:00", "2025/07/12 04:00", true, "グッドスリープデー", "◆グッドスリープデーVol.24");
+                this.pokeEvent.addEntry("2025/07/10 04:00", "2025/07/13 04:00", true, "グッドスリープデー", "◆グッドスリープデーVol.24");
                 this.pokeEvent.addEntry("2025/07/14 04:00", "2025/07/21 03:59", true, "2周年フェスティバル前半", "◆2周年フェスティバル前半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
                 this.pokeEvent.addEntry("2025/07/21 04:00", "2025/07/28 03:59", true, "2周年フェスティバル後半", "◆2周年フェスティバル後半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
                 this.pokeEvent.addEntry("2025/07/24 04:00", "2025/07/27 03:59", true, "ニュームーンデー", "◆第3回ニュームーンデー");
+
+                //最終的に幅を決める
                 let columns = document.querySelectorAll("event_column").length - 1;
                 pokeEvent.dataField.style.minWidth = (columns * 10 + 3) + "em";
                 pokeEvent.dataField.style.maxWidth = pokeEvent.dataField.style.minWidth;
