@@ -29,14 +29,11 @@
         </div>
         <!--以下、スクリプト-->
         <script>
-            this.AnyVariable = "AAA";
-            window.onload = ()=>{
-                this.pokeEvent = new PokeEvent();
-             
-                
-                //addEntry(startDateStr, endDateStr, endAtPreviousDayEnd, presetKey, label, ...params)
+          window.onload = ()=>{
+                this.pokeEvent = new PokeEvent();                
+                //addEntry(startDateStr, endDateStr, endAtPreviousDayEnd, presetItems, label, ...params)
                 //endAt... = trueの時、は0:00～3:59のパネルを省く
-                //presetKeyはEventPresetsで設定したキーを呼び出す
+                //presetItemsはGetPresetでイベントを取得し、配列を渡す。
                 //イベントが登録されていない場合はEventPresetsに登録するか、キーを""に指定した上でparams部分で項目を自分で書く
                 //イベントはさらにEventItemsに項目があるので、そちらから項目を流用することもできる
                 //labelはパネルに表示するタイトルを書く
@@ -45,11 +42,16 @@
                 this.pokeEvent.setDateCellsToColumn(document.getElementById("event_column_date"), 30, true);
 
                 //↓イベントの登録 終了日が本日を過ぎている場合は表示されない。順番は登録順なので、開始日に合わせて手動で挿入場所を変えること
-                this.pokeEvent.addEntry("2025/07/07 04:00", "2025/07/14 04:00", true, "もうすぐ2周年キャンペーン", "◆もうすぐ2周年キャンペーン");
-                this.pokeEvent.addEntry("2025/07/10 04:00", "2025/07/13 04:00", true, "グッドスリープデー", "◆グッドスリープデーVol.24");
-                this.pokeEvent.addEntry("2025/07/14 04:00", "2025/07/21 03:59", true, "2周年フェスティバル前半", "◆2周年フェスティバル前半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
-                this.pokeEvent.addEntry("2025/07/21 04:00", "2025/07/28 03:59", true, "2周年フェスティバル後半", "◆2周年フェスティバル後半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
-                this.pokeEvent.addEntry("2025/07/24 04:00", "2025/07/27 03:59", true, "ニュームーンデー", "◆第3回ニュームーンデー");
+                this.pokeEvent.addEntry("2025/07/07 04:00", "2025/07/14 04:00", true, GetPreset("もうすぐ2周年キャンペーン"), "◆もうすぐ2周年キャンペーン");
+                this.pokeEvent.addEntry("2025/07/10 04:00", "2025/07/13 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.24");
+                this.pokeEvent.addEntry("2025/07/14 04:00", "2025/07/21 03:59", true, GetPreset("2周年フェスティバル前半"), "◆2周年フェスティバル前半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
+                this.pokeEvent.addEntry("2025/07/21 04:00", "2025/07/28 03:59", true, GetPreset("2周年フェスティバル後半"), "◆2周年フェスティバル後半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
+                this.pokeEvent.addEntry("2025/07/21 12:00", "2025/07/22 03:59", true, GetPreset(), "◆Pokemon Presents記念", EventItems["sleep_power_150percent"]);
+                this.pokeEvent.addEntry("2025/07/24 04:00", "2025/07/27 03:59", true, GetPreset("ニュームーンデー"), "◆第3回ニュームーンデー");
+
+                //コピー用
+                //this.pokeEvent.addEntry("2025/00/00 04:00", "2025/00/00 03:59", true, GetPreset(""), "◆");
+
 
                 //最終的に幅を決める
                 let columns = document.querySelectorAll("event_column").length - 1;
@@ -58,6 +60,123 @@
                 document.body.style.width = pokeEvent.dataField.style.minWidth;
             }
 
+            this.EventItems = {
+                /*ポケモンのピックアップ*/
+                pickup_shiny
+                : "色違い出現率アップ",
+                pickup_other_sleep_type
+                : "ほかの睡眠タイプ出現",
+                pickup_goodsleepday
+                : "ピィ/ピッピ/ピクシー 中ピックアップ",
+                pickup_undiscovered
+                : "未発見のポケモンの出現率UP",
+                pickup_darkrai
+                : "ダークライ 特別ピックアップ",
+
+                /*睡眠リサーチ関係*/
+                sleep_exp_bonus_150percent
+                : "睡眠EXP1.5倍",
+                sleep_candy_150percent
+                : "アメ獲得量1.5倍",
+                sleep_yumenokakera_150percent
+                : "リサーチのゆめのかけら1.5倍",
+                sleep_get_chance
+                : "チャンス1匹確定(1回目のみ)",
+                sleep_hunger_change
+                : "おやつで満腹になりにくい",
+                sleep_power_150percent
+                 : "ねむけパワー1.5倍",
+
+
+                /*料理関係*/
+                cooking_capacity
+                : "なべの容量1.5倍(日曜3倍)",
+                cooking_power_150percent
+                : "料理エナジー1.5倍",
+
+                /*スキル関係*/
+                main_skill_150percent
+                : "メインスキル発動率1.5倍",
+
+                /*その他関係*/
+                mini_candy_boost
+                : "ミニアメブースト",
+                dream_gift
+                : "ドリームギフト(1日1回)",
+
+
+                /*○○関係*/
+
+                /*グッドスリープデー関係*/
+                goodsleepday_point_bonus
+                : "スリープポイントが1日前/後に+500pt、当日は+1000pt",
+                goodsleepday_exp_bonus
+                : "睡眠Expが1日前/後に2倍、当日は3倍",
+                goodsleepday_power_bonus
+                : "ねむけパワーが1日前/後に2倍、当日は3倍",
+            }
+
+            this.EventPresets = {
+                "" : {
+                    items:[
+                    ]
+                },
+
+                "グッドスリープデー" : {
+                    items: [
+                        this.EventItems["pickup_undiscovered"],
+                        this.EventItems["pickup_goodsleepday"],
+                        this.EventItems["goodsleepday_power_bonus"],
+                        this.EventItems["goodsleepday_exp_bonus"],
+                        this.EventItems["goodsleepday_point_bonus"]
+                    ]
+                },
+
+                "ニュームーンデー" : {
+                    items: [
+                        this.EventItems["pickup_darkrai"],
+                        this.EventItems["pickup_shiny"],
+                        this.EventItems["sleep_hunger_change"]
+                    ]
+                },
+
+                "もうすぐ2周年キャンペーン" : {
+                    items: [
+                        this.EventItems["pickup_other_sleep_type"],
+                        this.EventItems["sleep_yumenokakera_150percent"],
+                        this.EventItems["cooking_capacity"],
+                        "ニャオハ・ホゲータ・クワッス 中ピックアップ"
+                    ]
+                },
+
+                "2周年フェスティバル前半" : {
+                    items:[
+                        this.EventItems["pickup_other_sleep_type"],
+                        this.EventItems["sleep_get_chance"],
+                        this.EventItems["main_skill_150percent"],
+                        this.EventItems["sleep_exp_bonus_150percent"],
+                        this.EventItems["sleep_candy_150percent"],
+                        this.EventItems["dream_gift"]
+                    ]
+                },
+
+                "2周年フェスティバル後半" : {
+                    items:[
+                        this.EventItems["pickup_other_sleep_type"],
+                        this.EventItems["cooking_power_150percent"],
+                        this.EventItems["mini_candy_boost"]
+                    ]
+                }
+            }
+
+            function GetPreset(key = ""){
+                let tmp = this.EventPresets[key];
+                if (tmp == undefined){
+                    alert(key + "がイベントリストに存在しません。");
+                    return [];
+                }
+                return tmp.items;
+            }
             
         </script>
     </body>
