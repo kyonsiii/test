@@ -20,42 +20,21 @@
             <a href = "./event.html"><img src="img/pages/event.png"></a>
         </div>
 
-        
-        <p>
-            <h3 style="margin: 0;">睡眠計算ツールv1.1</h3>
-            現在のパワー: <input type="text" id="current_power" class="input_short" inputmode="decimal" onfocus="selectAll(this);" onkeyup="event_target_keyup(event);"><br>
-            目標得点　　: <input type="text" id="target_power" class="input_short" inputmode="decimal"><br>
-            <button id="button_calc" onclick="pokesleeping.calc();">計算</button><br>
-            <span id="calc_result"></span>
-        </p>
-  
-        <p id="field_filter">
-            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="waka">ワカクサ
-            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="cyan">シアン
-            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="taup">トープ
-            <br>
-            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="uno">ウノハナ
-            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="rapi">ラピス
-            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="gold">ゴールド
-        </p>
-
-        <div id="field_tables" style="display: none;">
-        </div>
-
+        <h3 style="margin: 0;">睡眠計算ツールv1.2</h3>
         <div id ="calc">
             <table class="table_calc">
                 <thead>
                     <tr>
-                        <th>狙い</th>
+                        <th>登録</th>
                         <th>うと-すや-ぐっ</th>
                         <th>ボタン</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>狙い値</td>
+                        <td>計測値</td>
                         <td><input type="text" id="calc_target" class="calc_sleep_input" inputmode="decimal"/></td>
-                        <td><button onclick="calc.showRatioCalcResult();" class="smaller">計算</button></td>
+                        <td><button onclick="calc.registerNewSleepData();" class="smaller">登録</button></td>
                     </tr>
                     <tr>
                         <td>現在値</td>
@@ -76,14 +55,36 @@
                 <tbody>
 
                 </tbody>
+                
             </table>
-            <input id="import_text" type="text" />
+
+
+            <input id="import_text" style="margin: 0;" type="text" />
             <br>
+            
             <button class="smaller" onclick="calc.getSleepRecordsToClipboard();">情報をコピー</button>
             <button class="smaller" onclick="calc.setSleepRecordsFromTextBox();">インポート</button>
-        </div>
-          
+        </div>          
+        
+        <p>            
+            現在のパワー: <input type="text" id="current_power" class="input_short" inputmode="decimal" onfocus="selectAll(this);" onkeyup="event_target_keyup(event);"><br>
+            目標得点　　: <input type="text" id="target_power" class="input_short" inputmode="decimal"><br>
+            <button id="button_calc" onclick="pokesleeping.calc();">計算</button><br>
+            <span id="calc_result"></span>
+        </p>
+  
+        <p id="field_filter">
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="waka">ワカクサ
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="cyan">シアン
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="taup">トープ
+            <br>
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="uno">ウノハナ
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="rapi">ラピス
+            <input type="radio" name="field_filter" onchange="pokesleeping.filterField(this)" value="gold">ゴールド
+        </p>
 
+        <div id="field_tables" style="display: none;">
+        </div>
         <!--以下、スクリプト-->
         <script>
             
@@ -117,7 +118,7 @@
             }
 
             function selectAll(el){
-                    el.select();
+                el.select();
             }
 
             function event_target_keyup(e){
