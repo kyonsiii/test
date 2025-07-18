@@ -28,16 +28,17 @@ class PokeSleepingCalc{
             
             let c3 = r.insertCell();
             c3.innerHTML = (i == 1) ? '<button tabindex="-1" onclick="calc.offsetCalcRowValue(false);" class="smaller">↓</button> <button tabindex="-1" onclick="calc.offsetCalcRowValue(true);"  class="smaller">↑</button>'
-                         : (i == 5) ? '<span style="background-color: aquamarine;" onclick="calc.showAll();" class="smaller">6回前～を表示</span'    
+                         : (i == 5) ? '<span style="background-color: aquamarine;" onclick="calc.showAll(this);" class="smaller">6回前～を表示</span'    
                                     : "";
         }
     }
 
-    showAll(){
+    showAll(sender){
         for (let i = 1; i <= 30; i++){
-            var el = document.getElementById("calc_row_" + i);
+            let el = document.getElementById("calc_row_" + i);
             el.style.display = "table-row";
         }
+        sender.style.display = "none";
     }
 
     textBoxKeyPress(sender, event){
