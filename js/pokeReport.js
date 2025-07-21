@@ -51,7 +51,8 @@ const mask_result_op_visible_FullyEvolved = 0b000000000000000000000010000000;
 const mask_result_op_visible_minNum       = 0b000000000000000000000001111000;
 const mask_mypoke_op_food_ranking_skyBlue = 0b000000000000000000000000000100;
 
-                        
+const mask16_nodp_plan       = 0b0111100000000000;
+const mask16_no_plan         = 0b0000011111111111;    
 
 class PokeReport{
     constructor(pokedex, recipedb){
@@ -377,6 +378,68 @@ class PokeReport{
         return x;
     }
  
+
+    insertPokeToPlanArea(poke, area, withoutSaving = false){
+        console.log(area.children.length);
+        if (area.children.length == 0){
+            var h3 = document.createElement("strong");
+            h3.textContent = "獲得予定:"
+            h3.style.display = "block";
+            area.appendChild(h3);
+        }
+
+        let img = document.createElement("img");
+        img.classList.add("tiny");
+        img.dataset.no = String(poke.no).padStart(3, '0');
+        img.src = "img/poke/" + img.dataset.no  + ".png";
+        
+        img.addEventListener("click", function (e){
+            if (this.dataset.next){
+                this.remove();
+                pokeReport.savePlanPokeCookie(area);
+            }
+            else {
+                this.style.opacity = 0.3;
+                this.dataset.next = true;
+            }
+            
+        });
+        area.appendChild(img);
+        if (!withoutSaving) this.savePlanPokeCookie(area);
+        return img;
+    }
+
+
+//クッキー用
+
+    savePlanPokeCookie(area){
+        let list = area.getElementsByTagName("img");
+      
+
+        var cookieList = [];
+        for (let i = 0; i < list.length; i++){
+            let no = Number(list[i].dataset.no);
+            let n = numToBit(Math.round(no % 1 * 10), mask16_nodp_plan);
+            n += numToBit(Math.trunc(no), mask16_no_plan);            
+        }
+        setCookie("pktg", cookieList.join("-"))
+        console.log(cookieList.join("-"));
+    }
+
+    loadPlanPokeFromCookie(area){
+        let c = getCookie("pktg");
+        if (c == undefined) return;
+
+        let noList = c.split('-');
+
+        for (let i = 0; i < noList.length; i++){
+            let n = parseInt(noList[i], 32);
+            let no = Math.round((bitToNum(n, mask16_no_plan) * 10) + bitToNum(n, mask16_nodp_plan))/ 10;
+            var poke = pokedex.getPokemonByNo(no);
+            this.insertPokeToPlanArea(poke, area, i != noList.length - 1);
+        }
+    }
+
     /*
     ※32進数は54bit以降が失われるらしい
     |基本情報(4Byte)                       |補助情報(4Byte)                        |サブスキル情報(4Byte)

@@ -24,6 +24,9 @@
             <a href = "./event.html"><img src="img/pages/event.png"></a>
         </div>
 
+        <div id="plan_to_get_area">
+        </div>
+
         <div class="input_form_area">
             <div style="display: flex; justify-content: space-between; background-color: beige;">
                 <strong id="page_title"> Myポケモン登録v0.7:</strong>
@@ -67,6 +70,7 @@
                 </select>
 
                 <button onclick="showBerryPower();">🍒</button>
+                <button onclick="addPokemonToGet();">◓</button>
 
                 <div id="sub_skill_area">
                     <select id="sub_skill_lv10" onchange="changeSubSkill(this);"></select>
@@ -428,7 +432,15 @@
         <!--以下、スクリプト-->
         <script>
             const cookie_mypoke_max = 200;
-            let lastClickedFoodIconElement;
+            this.lastClickedFoodIconElement;
+            this.pokeList = this.document.getElementById('input_mypoke_name');
+            this.pokeListPlanningToGet = this.document.getElementById("plan_to_get_area");
+
+
+            function addPokemonToGet(){
+                let poke = pokedex.getPokemonByName(this.pokeList.value);
+                pokeReport.insertPokeToPlanArea(poke, pokeListPlanningToGet);
+            }
 
             function selectFoodsByRecipe(el){
                 Array.from(document.querySelectorAll("#food_buttons img")).forEach(c => this.changeIconStyle(c, false));
@@ -478,7 +490,7 @@
 
             //再編集の時にel=nullで呼び出したいので
             function showHideInputForm(el){                
-                var visible = (el == null) ? false : el.getAttribute("visible") === "true" ;//反転前なのでfalse
+                let visible = (el == null) ? false : el.getAttribute("visible") === "true" ;//反転前なのでfalse
                 el = el ?? document.getElementById("input_mypoke_form_visible");
                 
                 if (visible){
@@ -549,19 +561,19 @@
                 }
 
                 function setCharacteristicFromCode(c){
-                    var list = document.getElementById("input_mypoke_char");
-                    var options = Array.from(list.children);
-                    var el = options.find(op => op.value == c);
+                    let list = document.getElementById("input_mypoke_char");
+                    let options = Array.from(list.children);
+                    let el = options.find(op => op.value == c);
                     if (el == null) return;
 
                     list.selectedIndex = options.indexOf(el);
                 }
 
                 function setSkillFromCode(c, skillLv){
-                    var elId = "sub_skill_lv" + skillLv;
-                    var list = document.getElementById(elId);
-                    var options = Array.from(list.children);
-                    var el = options.find(op => op.getAttribute("identifier") == c);
+                    let elId = "sub_skill_lv" + skillLv;
+                    let list = document.getElementById(elId);
+                    let options = Array.from(list.children);
+                    let el = options.find(op => op.getAttribute("identifier") == c);
                     if (el == null) return;
 
                     list.selectedIndex = options.indexOf(el);
@@ -1048,8 +1060,8 @@
                 if (c == null) return;
 
                 let jss = c.split("/").map(x => pokeReport.createJsonFromCookieValue32(x));
-                var tb = document.getElementById("mypoke_quick_check_food").tBodies[0];
-                var onlySkyBlue = document.getElementById("option_mypoke_listup_backcolor").checked;
+                let tb = document.getElementById("mypoke_quick_check_food").tBodies[0];
+                let onlySkyBlue = document.getElementById("option_mypoke_listup_backcolor").checked;
                 pokeReport.setMyPokeFoodListInfo(tb, jss, onlySkyBlue);
 
                 for (let i = 0; i < jss.length; i++){
@@ -1061,6 +1073,8 @@
                     }
                 }
             }
+
+       
 
 
 
@@ -1081,7 +1095,7 @@
                 
                 this.setMypokesToListFromCookie();
                 this.pokeReport.setOptionsFromCookie(cookieOpt);
-
+                this.pokeReport.loadPlanPokeFromCookie(this.pokeListPlanningToGet);
                 let sb_recipe = document.getElementById("select_recipe");              
                 if (sb_recipe.children.length == 0) this.selectRecipeCategory(document.getElementById("select_recipe_category"), true);
             }
