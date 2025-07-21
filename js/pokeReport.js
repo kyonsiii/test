@@ -420,7 +420,8 @@ class PokeReport{
         for (let i = 0; i < list.length; i++){
             let no = Number(list[i].dataset.no);
             let n = numToBit(Math.round(no % 1 * 10), mask16_nodp_plan);
-            n += numToBit(Math.trunc(no), mask16_no_plan);            
+            n += numToBit(Math.trunc(no), mask16_no_plan);
+            cookieList.push(n.toString(32));
         }
         setCookie("pktg", cookieList.join("-"))
         console.log(cookieList.join("-"));
