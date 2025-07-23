@@ -50,7 +50,7 @@ const mask_result_op_visible_MyPokeLv60ft = 0b000000000000000000000100000000;
 const mask_result_op_visible_FullyEvolved = 0b000000000000000000000010000000;
 const mask_result_op_visible_minNum       = 0b000000000000000000000001111000;
 const mask_mypoke_op_food_ranking_skyBlue = 0b000000000000000000000000000100;
-
+const mask_mypoke_op_listup_over_Lv60     = 0b000000000000000000000000000010;
 const mask16_nodp_plan       = 0b0111100000000000;
 const mask16_no_plan         = 0b0000011111111111;    
 
@@ -112,6 +112,7 @@ class PokeReport{
         n += numToBit(document.getElementById("only_fully_evolved").checked, mask_result_op_visible_FullyEvolved);
         n += numToBit(document.getElementById("food_min").selectedIndex, mask_result_op_visible_minNum);
         n += numToBit(document.getElementById("option_mypoke_listup_backcolor").checked, mask_mypoke_op_food_ranking_skyBlue);
+        n += numToBit(document.getElementById("option_mypoke_quick_min").checked, mask_mypoke_op_listup_over_Lv60);
         setCookie("ropt", n.toString(32), 30);
     }
 
@@ -130,7 +131,8 @@ class PokeReport{
         document.getElementById("option_potential_60").checked = bitToNum(n, mask_result_op_visible_MyPokeLv60ft);
         document.getElementById("only_fully_evolved").checked = bitToNum(n, mask_result_op_visible_FullyEvolved);
         document.getElementById("food_min").selectedIndex = bitToNum(n, mask_result_op_visible_minNum);
-
+        document.getElementById("option_mypoke_listup_backcolor").checked = bitToNum(n, mask_mypoke_op_food_ranking_skyBlue);
+        document.getElementById("option_mypoke_quick_min").checked = bitToNum(n, mask_mypoke_op_listup_over_Lv60);
         let sb_recipe_min = document.getElementById("option_ingredient_min_count");
         sb_recipe_min.selectedIndex = bitToNum(n, mask_op_recipe_list_min_index);
             
@@ -380,7 +382,6 @@ class PokeReport{
  
 
     insertPokeToPlanArea(poke, area, withoutSaving = false){
-        console.log(area.children.length);
         if (area.children.length == 0){
             var h3 = document.createElement("strong");
             h3.textContent = "獲得予定: "
@@ -425,7 +426,6 @@ class PokeReport{
             cookieList.push(n.toString(32));
         }
         setCookie("pktg", cookieList.join("-"), 30)
-        console.log(cookieList.join("-"));
     }
 
     loadPlanPokeFromCookie(area){
@@ -514,9 +514,42 @@ class PokeReport{
                                                    bitToNum(n, mask32c_sub4),
                                                    bitToNum(n, mask32c_sub5));
         this.setSubSkillsEnabled(j, -1, true);
+
+       
+        this.setOtetsudaiInfoToJson(j);
         return j;
     }
 
+    //jsonに情報を付与する
+    setOtetsudaiInfoToJson(j){
+        let poke = pokedex.getPokemonByNo(j.no);
+
+        j.otetsudaiCountDay = Math.round(poke.getOtetsudaiCountDay(j.lv, j.charAdjusts.speed, j.subAdjusts.speed));
+        j.otetsudaiCountFoodDay =  Math.round(j.otetsudaiCountDay * (poke.foodRate * (1 + j.charAdjusts.food + j.subAdjusts.food)));
+        j.otetsudaiCountBerryDay = j.otetsudaiCountDay - j.otetsudaiCountFoodDay;
+
+        j.otetsudaiCountDayNoAdjust = Math.round(poke.getOtetsudaiCountDay(j.lv));
+        j.otetsudaiCountFoodDayNoAdjust = Math.round(j.otetsudaiCountDayNoAdjust * poke.foodRate);
+        j.otetsudaiCountBerryNoAdjust = j.otetsudaiCountDayNoAdjust - j.otetsudaiCountFoodDayNoAdjust;
+
+        j.berryPower                  = Math.round(pokedex.getBerryPowerOf(poke.berry, j.lv) * 100) / 100;
+        j.berryPowerDay               = Math.round(j.berryPower * poke.getBerryNum(j.subBerryS) * j.otetsudaiCountBerryDay);
+        j.berryPowerDayNoAdjustBerryS = Math.round(j.berryPower * poke.getBerryNum(true) * j.otetsudaiCountBerryNoAdjust);
+        j.skillPopRate                = Math.round(((poke.skillRate * (1 + j.charAdjusts.skill + j.subAdjusts.skill))) * 100000) / 100000;
+        j.skillPopDay                 = Math.round((j.otetsudaiCountDay * j.skillPopRate + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
+        j.skillPopDayNoAdjust         = Math.round((j.otetsudaiCountDayNoAdjust * poke.skillRate + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
+        
+        let berryDiff = (Math.round((j.berryPowerDay / j.berryPowerDayNoAdjustBerryS) * 100) / 100) - 1;
+
+        j.berryPowerDayDiff = (berryDiff == 0) ? "±" + Math.round(berryDiff * 100).toFixed(0) + "%"
+                               : (berryDiff > 0)  ? "+" + Math.round(berryDiff * 100).toFixed(0) + "%"
+                               : "-" + Math.round((Math.abs(berryDiff) * 100)).toFixed(0) + "%";
+        
+        let skillDiff = (Math.round((j.skillPopDay / j.skillPopDayNoAdjust) * 100) / 100) - 1;
+        j.skillPopDayDiff  = (skillDiff == 0) ? "±" + Math.round(skillDiff * 100).toFixed(0) + "%"
+                           : (skillDiff >= 0) ? "+" + Math.round(skillDiff * 100).toFixed(0) + "%"
+                           : "-" + Math.round(Math.abs(skillDiff) * 100).toFixed(0) + "%";
+    }
 
     getSubSkillListByNum(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill){
         return{

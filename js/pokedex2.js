@@ -273,6 +273,17 @@ new Pokemon({no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材"
         return null;
     }
 
+    getBerryPowerDayWithNoAdjust(poke, lv){
+        let ote = poke.getOtetsudaiCountDay(lv);
+        let berryOte = ote * (1 - poke.foodRate);
+        let berryNum = poke.getBerryNum(true);
+        let berryPow = this.getBerryPowerOf(poke.berry, lv);
+        
+        return Math.round(berryNum * berryPow * berryOte);
+
+    }
+    
+
     getBerryPowerBaseOf(name){
         for (let i = 0; i < this.berries.length; i++){
             if (this.berries[i].name == name) return this.berries[i].power;
@@ -285,7 +296,6 @@ new Pokemon({no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材"
         if (powerBase == -1) return -1;
         return Math.max(powerBase + (lv - 1), powerBase * Math.pow(1.025, lv - 1));
     }
-
 
 }
 
@@ -343,8 +353,8 @@ class Pokemon{
 
     getOtetsudaiCountDay(lv, spdAdj = 0.0, subAdj = 0.0, genkiAdj = 0.52, foodCountMode = false){//speedAdjはプラスのほうが○
         let lvAdj  = 1 - ((lv - 1) * 0.002);
-        spdAdj = 1 - spdAdj;
-        subAdj = 1 - subAdj;
+        spdAdj = 1 / (1 + spdAdj);
+        subAdj = 1 / (1 + subAdj);
 
         let adjSec = this.sec * lvAdj * spdAdj * subAdj;
         let oteCount = 86400 / (adjSec * genkiAdj)

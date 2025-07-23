@@ -300,6 +300,7 @@
                         <tr>
                             <th style="width: 20em;">Myポケモン</th>
                             <th style="width:  9em;">きのみパワー</th>
+                            <th style="width:  9em;">スキル</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -376,8 +377,13 @@
                     <option value= "70">70個</option>
                     <option value="0">無制限</option>
                 </select><br>
-                
-                背景色表示(色単位は未実装)
+
+                  <div class="select_button_area">
+                    <input type="checkbox" id="option_mypoke_quick_min" checked><label for="option_mypoke_quick_min">Lv60未満を表示しない</label>
+                </div>
+
+
+            
                 <div class="select_button_area">
                     <input type="checkbox" id="option_mypoke_listup_backcolor" checked><label for="option_mypoke_listup_backcolor">水色だけ食材ランキング一覧に表示</label>
                 </div>
@@ -393,6 +399,7 @@
                     <input type="radio" name="option_color_picker" value="6" id="option_color_pick_GR"><label for="option_color_pick_GR">□</label>
                     <input type="radio" name="option_color_picker" value="7" id="option_color_pick_GD"><label for="option_color_pick_GD">□</label>
                 </div>
+                背景色表示(色単位は未実装)<br>
                 
                 <button style="font-size:1em; vertical-align: middle;" onclick="copyCookieValue();">Cookieを取得</button>
                 <button style="font-size:1em; vertical-align: middle;" onclick="importCookieValue();">復元</button><br>
@@ -673,32 +680,21 @@
                 let json = this.createJsonFromInputForm32(this.document.getElementById('input_mypoke_name').value);
                 if (json == null) return;
 
-                let res = this.createBerryPowerInfo(json);
-                alert(res.mes);
+        
+                let poke = pokedex.getPokemonByNo(json.no);
+                let mes = json.name + " Lv" + json.lv
+                                    + "\nきのみおてつだい: " + json.otetsudaiCountBerryDay + "/" + json.otetsudaiCountDay
+                                    + "\nきのみパワー: " + json.berryPower
+                                    + "\n1日: " + json.berryPowerDay + "(" + json.berryPowerDayDiff + ")"
+                                    + "\n(きのみS無補正個体: " + pokedex.getBerryPowerDayWithNoAdjust(poke, json.lv) +")"
+                                    + "\n"
+                                    + "\nスキル発動回数: " + json.skillPopDay + "(" + json.skillPopDayDiff + ")";
+                alert(mes);
             }
 
 
 
-            function createBerryPowerInfo(json){
-                berryInfoResult = {};
-                let poke = pokedex.getPokemonByName(json.name);
-                let oteCount = poke.getOtetsudaiCountDay(json.lv, json.charAdjusts.speed, json.subAdjusts.speed);
-                let foodOteCount =  oteCount * (poke.foodRate * (1 + json.charAdjusts.food + json.subAdjusts.food));
-                let berryOteCount = oteCount - foodOteCount;
-                let berryPower = pokedex.getBerryPowerOf(poke.berry, json.lv) ;
-                let berryPowerDay = berryPower * poke.getBerryNum(json.subBerryS) * berryOteCount;
-                berryInfoResult.oteCount = oteCount;
-                berryInfoResult.foodOteCount = foodOteCount;
-                berryInfoResult.berryOteCount = berryOteCount;
-                berryInfoResult.berryPower = berryPower;
-                berryInfoResult.berryPowerDay = berryPowerDay;
-                berryInfoResult.mes =  poke.name + " Lv" + json.lv
-                                    + "\nきのみおてつだい: " + Math.round(berryOteCount) + "/" + Math.round(oteCount)
-                                    + "\nきのみパワー: " + Math.round(berryPower * 10) / 10
-                                    + "\n1日: " + Math.round(berryPowerDay);
-                return berryInfoResult;
-            }
-
+   
 
             function registerMyPoke(){
                 let pokeList = this.document.getElementById('input_mypoke_name');
@@ -751,30 +747,29 @@
 
 
             function listupMyPokeInfo(j){
-                let body = document.getElementById("mypoke_quick_check").tBodies[0];
-                let result = this.createBerryPowerInfo(j);
-
+                let tbody = document.getElementById("mypoke_quick_check").tBodies[0];
+            
                 let tr = document.createElement("tr");
-                //tr.style.backgroundColor = pokeReport.getColorCodeOf(j.backgroundColor);
                 pokeReport.setColorClassTo(tr, j.backgroundColor);
                 
-                tr.setAttribute("value", result.berryPowerDay);
+                tr.setAttribute("value", j.berryPowerDay);
                 tr.insertCell().textContent = j.name + "Lv" + j.lv + j.foodCode + " " + pokeReport.createIdentifierOf(j);
-                tr.insertCell().textContent = Math.round(result.berryPowerDay) + "(" + Math.round(result.berryOteCount) + "/" + Math.round(result.oteCount) + ")";
+                tr.insertCell().textContent = j.berryPowerDay + "(" + j.berryPowerDayDiff + ")";
+                tr.insertCell().textContent = j.skillPopDay.toFixed(1) + "("+ j.skillPopDayDiff +")"
 
-                let rows = body.children;
+                let rows = tbody.children;
                 if (rows.length == 0){
-                    body.appendChild(tr);
+                    tbody.appendChild(tr);
                     return;
                 } else {
                     for (let i = 0; i < rows.length; i++){
                         let value = rows[i].getAttribute('value');
-                        if (value <= result.berryPowerDay){
-                            body.insertBefore(tr, rows[i]);
+                        if (value <= j.berryPowerDay){
+                            tbody.insertBefore(tr, rows[i]);
                             return;;
                         }
                     }
-                    body.appendChild(tr);
+                    tbody.appendChild(tr);
                 }
             }
 
@@ -823,7 +818,8 @@
                     document.getElementById("sub_skill_lv75").value,
                     document.getElementById("sub_skill_lv100").value);
 
-                    pokeReport.setSubSkillsEnabled(j, -1, true);//AdjustValueの初期化いらないならfalse
+                pokeReport.setSubSkillsEnabled(j, -1, true);//AdjustValueの初期化いらないならfalse
+                pokeReport.setOtetsudaiInfoToJson(j);
                 return j;
             }
 
@@ -1064,8 +1060,10 @@
                 let onlySkyBlue = document.getElementById("option_mypoke_listup_backcolor").checked;
                 pokeReport.setMyPokeFoodListInfo(tb, jss, onlySkyBlue);
 
+                let minLv = (document.getElementById("option_mypoke_quick_min").checked) ? 60 : -1;
+
                 for (let i = 0; i < jss.length; i++){
-                    this.listupMyPokeInfo(jss[i]);
+                    if (jss[i].lv >= minLv) this.listupMyPokeInfo(jss[i]);
                     let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));
                     if (maxFlag){
                         alert("限界");
@@ -1088,13 +1086,10 @@
                 this.selectBoxInitialized = false;
                 this.setSubSkillSelectBoxes();
 
-                let cookieOpt = getCookie("ropt", "");
-                if (cookieOpt != ""){
-                    document.getElementById("option_mypoke_listup_backcolor").checked = bitToNum(parseInt(cookieOpt,32), mask_mypoke_op_food_ranking_skyBlue);
-                }
-                
+           
+                this.pokeReport.setOptionsFromCookie(getCookie("ropt", ""));
                 this.setMypokesToListFromCookie();
-                this.pokeReport.setOptionsFromCookie(cookieOpt);
+             
                 this.pokeReport.loadPlanPokeFromCookie(this.pokeListPlanningToGet);
                 let sb_recipe = document.getElementById("select_recipe");              
                 if (sb_recipe.children.length == 0) this.selectRecipeCategory(document.getElementById("select_recipe_category"), true);
