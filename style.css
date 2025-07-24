@@ -236,6 +236,7 @@ table thead tr th {
 }
 #mypoke_quick_check{
     font-size: 0.6em;
+    width: fit-content;
 }
 
 #mypoke_quick_check_food td,
@@ -297,9 +298,9 @@ table thead tr th {
     color: rgb(132, 0, 240);
 }
 
-#mypoke_quick_check{
-    table-layout: fixed;
-}
+
+
+
 #mypoke_quick_check td:first-child{
     white-space: nowrap;
     overflow: hidden;

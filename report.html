@@ -298,10 +298,10 @@
                 <table id="mypoke_quick_check">
                     <thead>
                         <tr>
-                            <th style="width: 20em;">Myポケモン</th>
-                            <th style="width:  7em;">きのみパワー</th>
-                            <th style="width:  7em;">食材</th>
-                            <th style="width:  9em;">スキル</th>
+                            <th>Myポケモン</th>
+                            <th style="width: 9em;">きのみパワー</th>
+                            <th style="width: 9em;">食材</th>
+                            <th style="width: 9em;">スキル</th>
                           
                         </tr>
                     </thead>
@@ -757,9 +757,8 @@
                 tr.setAttribute("value", j.berryPowerDay);
                 tr.insertCell().textContent = j.name + "Lv" + j.lv + j.foodCode + " " + pokeReport.createIdentifierOf(j);
                 tr.insertCell().textContent = j.berryPowerDay + "(" + j.berryPowerDayDiff + ")";
-                tr.insertCell().textContent = j.skillPopDay.toFixed(1) + "("+ j.skillPopDayDiff +")"
                 tr.insertCell().textContent = j.foodCollectDiff;
-
+                tr.insertCell().textContent = j.skillPopDay.toFixed(1) + "("+ j.skillPopDayDiff +")"
                 let rows = tbody.children;
                 if (rows.length == 0){
                     tbody.appendChild(tr);

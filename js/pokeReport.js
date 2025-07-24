@@ -549,8 +549,6 @@ class PokeReport{
         j.skillPopDay                 = Math.round((raw_otetsudaiCountDay * j.skillPopRate + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
         j.skillPopDayNoAdjust         = Math.round((raw_otetsudaiCountDayNoAdjust * poke.skillRate + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
         
-
-        console.log(j);
         let berryDiff = (Math.round((j.berryPowerDay / j.berryPowerDayNoAdjustBerryS) * 100) / 100) - 1;
 
         j.berryPowerDayDiff = (berryDiff == 0) ? "±" + Math.round(berryDiff * 100).toFixed(0) + "%"
@@ -565,7 +563,7 @@ class PokeReport{
         let foodDiff = ((Math.round((raw_otetsudaiCountFoodDay / raw_otetsudaiCountFoodDayNoAdjust) * 100)) - 100);
         j.foodCollectDiff = (foodDiff == 0) ? "100%(±0%)"
                           : (foodDiff >  0) ? (100 + foodDiff).toFixed(0) + "%(+" + foodDiff.toFixed(0) + "%)"
-                          : (100 + foodDiff).toFixed(0) + "%(" + foodDiff.toFixed(0) + "%)"
+                          : (100 + foodDiff).toFixed(0) + "%(-" + foodDiff.toFixed(0) + "%)"
     }
 
     getSubSkillListByNum(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill){
