@@ -524,21 +524,33 @@ class PokeReport{
     setOtetsudaiInfoToJson(j){
         let poke = pokedex.getPokemonByNo(j.no);
 
-        j.otetsudaiCountDay = Math.round(poke.getOtetsudaiCountDay(j.lv, j.charAdjusts.speed, j.subAdjusts.speed));
-        j.otetsudaiCountFoodDay =  Math.round(j.otetsudaiCountDay * (poke.foodRate * (1 + j.charAdjusts.food + j.subAdjusts.food)));
-        j.otetsudaiCountBerryDay = j.otetsudaiCountDay - j.otetsudaiCountFoodDay;
+        let raw_otetsudaiCountDay = poke.getOtetsudaiCountDay(j.lv, j.charAdjusts.speed, j.subAdjusts.speed);
+        let raw_otetsudaiCountFoodDay = raw_otetsudaiCountDay * (poke.foodRate * (1 + j.charAdjusts.food + j.subAdjusts.food));
+        let raw_otetsudaiCountBerryDay = raw_otetsudaiCountDay - raw_otetsudaiCountFoodDay;
 
-        j.otetsudaiCountDayNoAdjust = Math.round(poke.getOtetsudaiCountDay(j.lv));
-        j.otetsudaiCountFoodDayNoAdjust = Math.round(j.otetsudaiCountDayNoAdjust * poke.foodRate);
-        j.otetsudaiCountBerryNoAdjust = j.otetsudaiCountDayNoAdjust - j.otetsudaiCountFoodDayNoAdjust;
+
+        j.otetsudaiCountDay             = Math.round(raw_otetsudaiCountDay);
+        j.otetsudaiCountFoodDay         =  Math.round(raw_otetsudaiCountFoodDay);
+        j.otetsudaiCountBerryDay        = j.otetsudaiCountDay - j.otetsudaiCountFoodDay;
+
+        let raw_otetsudaiCountDayNoAdjust = poke.getOtetsudaiCountDay(j.lv);
+        let raw_otetsudaiCountFoodDayNoAdjust = raw_otetsudaiCountDayNoAdjust * poke.foodRate;
+        let raw_otetsudaiCountBerryNoAdjust = raw_otetsudaiCountDayNoAdjust - raw_otetsudaiCountFoodDayNoAdjust;
+
+        j.otetsudaiCountDayNoAdjust     = Math.round(raw_otetsudaiCountDayNoAdjust);
+        j.otetsudaiCountFoodDayNoAdjust = Math.round(raw_otetsudaiCountFoodDayNoAdjust);
+        j.otetsudaiCountBerryNoAdjust   = j.otetsudaiCountDayNoAdjust - j.otetsudaiCountFoodDayNoAdjust;
 
         j.berryPower                  = Math.round(pokedex.getBerryPowerOf(poke.berry, j.lv) * 100) / 100;
-        j.berryPowerDay               = Math.round(j.berryPower * poke.getBerryNum(j.subBerryS) * j.otetsudaiCountBerryDay);
-        j.berryPowerDayNoAdjustBerryS = Math.round(j.berryPower * poke.getBerryNum(true) * j.otetsudaiCountBerryNoAdjust);
+        j.berryPowerDay               = Math.round(j.berryPower * poke.getBerryNum(j.subBerryS) * raw_otetsudaiCountBerryDay);
+        j.berryPowerDayNoAdjustBerryS = Math.round(j.berryPower * poke.getBerryNum(true) * raw_otetsudaiCountBerryNoAdjust);
+
         j.skillPopRate                = Math.round(((poke.skillRate * (1 + j.charAdjusts.skill + j.subAdjusts.skill))) * 100000) / 100000;
-        j.skillPopDay                 = Math.round((j.otetsudaiCountDay * j.skillPopRate + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
-        j.skillPopDayNoAdjust         = Math.round((j.otetsudaiCountDayNoAdjust * poke.skillRate + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
+        j.skillPopDay                 = Math.round((raw_otetsudaiCountDay * j.skillPopRate + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
+        j.skillPopDayNoAdjust         = Math.round((raw_otetsudaiCountDayNoAdjust * poke.skillRate + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
         
+
+        console.log(j);
         let berryDiff = (Math.round((j.berryPowerDay / j.berryPowerDayNoAdjustBerryS) * 100) / 100) - 1;
 
         j.berryPowerDayDiff = (berryDiff == 0) ? "±" + Math.round(berryDiff * 100).toFixed(0) + "%"
@@ -549,6 +561,11 @@ class PokeReport{
         j.skillPopDayDiff  = (skillDiff == 0) ? "±" + Math.round(skillDiff * 100).toFixed(0) + "%"
                            : (skillDiff >= 0) ? "+" + Math.round(skillDiff * 100).toFixed(0) + "%"
                            : "-" + Math.round(Math.abs(skillDiff) * 100).toFixed(0) + "%";
+
+        let foodDiff = ((Math.round((raw_otetsudaiCountFoodDay / raw_otetsudaiCountFoodDayNoAdjust) * 100)) - 100);
+        j.foodCollectDiff = (foodDiff == 0) ? "100%(±0%)"
+                          : (foodDiff >  0) ? (100 + foodDiff).toFixed(0) + "%(+" + foodDiff.toFixed(0) + "%)"
+                          : (100 + foodDiff).toFixed(0) + "%(" + foodDiff.toFixed(0) + "%)"
     }
 
     getSubSkillListByNum(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill){

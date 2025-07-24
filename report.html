@@ -299,8 +299,10 @@
                     <thead>
                         <tr>
                             <th style="width: 20em;">Myポケモン</th>
-                            <th style="width:  9em;">きのみパワー</th>
+                            <th style="width:  7em;">きのみパワー</th>
+                            <th style="width:  7em;">食材</th>
                             <th style="width:  9em;">スキル</th>
+                          
                         </tr>
                     </thead>
                     <tbody>
@@ -756,6 +758,7 @@
                 tr.insertCell().textContent = j.name + "Lv" + j.lv + j.foodCode + " " + pokeReport.createIdentifierOf(j);
                 tr.insertCell().textContent = j.berryPowerDay + "(" + j.berryPowerDayDiff + ")";
                 tr.insertCell().textContent = j.skillPopDay.toFixed(1) + "("+ j.skillPopDayDiff +")"
+                tr.insertCell().textContent = j.foodCollectDiff;
 
                 let rows = tbody.children;
                 if (rows.length == 0){

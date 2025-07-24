@@ -234,6 +234,10 @@ table thead tr th {
 #result{
     margin-top: 1em;
 }
+#mypoke_quick_check{
+    font-size: 0.6em;
+}
+
 #mypoke_quick_check_food td,
 #result_table td{
     position: relative;
