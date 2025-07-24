@@ -236,7 +236,7 @@ table thead tr th {
 }
 #mypoke_quick_check{
     font-size: 0.6em;
-    width: fit-content;
+    width: 140%;
 }
 
 #mypoke_quick_check_food td,
