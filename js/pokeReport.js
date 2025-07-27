@@ -97,6 +97,17 @@ class PokeReport{
     }
 
 
+    setMyPokeListToCookie(){
+        let options = document.getElementById("input_mypoke_registered").children;
+        let sorted = Array.from(options).sort((a, b) => a.textContent > b.textContent ? 1 : -1);
+        let values = [];
+        for (let i = 0; i < sorted.length; i++){
+            values.push(sorted[i].value);
+        }
+        console.log("mylist saved.");
+        setCookie("rmpl", values.join("/"), 30)
+    }
+
     setCurrentOptionsToCookie(){
         let n = 0;
         n += numToBit(document.getElementById("option_ingredient_min_count").selectedIndex, mask_op_recipe_list_min_index );

@@ -719,7 +719,7 @@
 
                 this.addMyPokeToList(this.createMyPokeOption(json));
                 this.listupMyPokeInfo(json);
-                this.setMyPokeCookie();
+                pokeReport.setMyPokeListToCookie();
                 this.resetInputForm();
             }
 
@@ -742,7 +742,7 @@
 
             function deleteMypoke(op){
                 document.getElementById("input_mypoke_registered").removeChild(op);
-                this.setMyPokeCookie();
+                pokeReport.setMyPokeListToCookie();
             }
 
 
@@ -1034,16 +1034,7 @@
 
 
             //クッキー関連(登録)
-            function setMyPokeCookie(){
-                let options = document.getElementById("input_mypoke_registered").children;
-                let sorted = Array.from(options).sort((a, b) => a.textContent > b.textContent ? 1 : -1);
-                let values = [];
-                for (let i = 0; i < sorted.length; i++){
-                    values.push(sorted[i].value);
-                }
-                setCookie("rmpl", values.join("/"), 365);
-            }
-
+  
 
 
             //クッキー関連(呼び出し)
@@ -1071,6 +1062,7 @@
                         return;
                     }
                 }
+                pokeReport.setMyPokeListToCookie();
             }
 
        
