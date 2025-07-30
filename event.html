@@ -44,11 +44,12 @@
                 //↓イベントの登録 終了日が本日を過ぎている場合は表示されない。順番は登録順なので、開始日に合わせて手動で挿入場所を変えること
                 this.pokeEvent.addEntry("2025/07/07 04:00", "2025/07/14 04:00", true, GetPreset("もうすぐ2周年キャンペーン"), "◆もうすぐ2周年キャンペーン");
                 this.pokeEvent.addEntry("2025/07/10 04:00", "2025/07/13 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.24");
-                this.pokeEvent.addEntry("2025/07/14 04:00", "2025/07/21 03:59", true, GetPreset("2周年フェスティバル前半"), "◆2周年フェスティバル前半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
-                this.pokeEvent.addEntry("2025/07/21 04:00", "2025/07/28 03:59", true, GetPreset("2周年フェスティバル後半"), "◆2周年フェスティバル後半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
-                this.pokeEvent.addEntry("2025/07/21 12:00", "2025/07/22 03:59", true, GetPreset(), "◆Pokemon Presents記念", EventItems["sleep_power_150percent"]);
-                this.pokeEvent.addEntry("2025/07/24 04:00", "2025/07/27 03:59", true, GetPreset("ニュームーンデー"), "◆第3回ニュームーンデー");
+                this.pokeEvent.addEntry("2025/07/14 04:00", "2025/07/21 04:00", true, GetPreset("2周年フェスティバル前半"), "◆2周年フェスティバル前半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
+                this.pokeEvent.addEntry("2025/07/21 04:00", "2025/07/28 04:00", true, GetPreset("2周年フェスティバル後半"), "◆2周年フェスティバル後半", "キモリ / アチャモ / ミズゴロウ / プラスル / マイナン 出現率アップ");
+                this.pokeEvent.addEntry("2025/07/21 12:00", "2025/07/22 04:00", true, GetPreset(), "◆Pokemon Presents記念", EventItems["sleep_power_150percent"]);
+                this.pokeEvent.addEntry("2025/07/24 04:00", "2025/07/27 04:00", true, GetPreset("ニュームーンデー"), "◆第3回ニュームーンデー");
                 this.pokeEvent.addEntry("2025/08/08 04:00", "2025/08/11 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.25");
+                this.pokeEvent.addEntry("2025/08/11 04:00", "2025/08/18 04:00", true, GetPreset("連発！スキルウィーク"), "◆連発！スキルウィーク vol.2", "中ピックアップ: エレズン / ストリンダー(ハイなすがた) / ストリンダー(ローなすがた)", "小ピックアップ: ニャース / コダック / ガーディ / ヤドン / コイル / イーブイ / ププリン / トゲピー / メリープ / ヤミカラス / ヘラクロス / キモリ / ラルトス / ヤミラミ / プラスル / マイナン / ゴクリン / ソーナノ / フワンテ / ウソハチ / リオル / ワシボン / デデンネ / ミミッキュ / パモ")
                 //コピー用
                 //this.pokeEvent.addEntry("2025/00/00 04:00", "2025/00/00 03:59", true, GetPreset(""), "◆");
 
@@ -97,6 +98,8 @@
                 /*スキル関係*/
                 main_skill_150percent
                 : "メインスキル発動率1.5倍",
+                main_skill_lv_plus3
+                : "メインスキルのレベル+3",
 
                 /*その他関係*/
                 mini_candy_boost
@@ -137,6 +140,15 @@
                         this.EventItems["pickup_darkrai"],
                         this.EventItems["pickup_shiny"],
                         this.EventItems["sleep_hunger_change"]
+                    ]
+                },
+
+                "連発！スキルウィーク" : {
+                    items: [
+                        this.EventItems["mini_candy_boost"],
+                        this.EventItems["pickup_other_sleep_type"],
+                        this.EventItems["main_skill_150percent"],
+                        this.EventItems["main_skill_lv_plus3"]
                     ]
                 },
 
