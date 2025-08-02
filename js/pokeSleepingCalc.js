@@ -49,6 +49,12 @@ class PokeSleepingCalc{
         }
     }
 
+    registerTextBoxKeyPress(sender, event){
+        if (event.key !== "Enter") return;
+
+        this.registerNewSleepData();
+    }
+
 
 
     //睡眠記録関連(ボタンで呼び出すもの)
@@ -65,6 +71,7 @@ class PokeSleepingCalc{
         input1.value = targTb.value;
 
         setCookie("srcd", this.recordsToCookieValue(), 30);
+        this.getCurrentRatio(true)
         targTb.value = "";
         targTb.style.backgroundColor = "LightYellow";
         targTb.placeholder =  "登録されました。";
@@ -92,7 +99,7 @@ class PokeSleepingCalc{
 
 
 
-    getCurrentRatio(){
+    getCurrentRatio(withSetValue = false){
         this.recalcSleepRecords();
         let cnt  = 0;
         let uto  = 0;
@@ -118,7 +125,7 @@ class PokeSleepingCalc{
         uto  = Math.round((uto  / cnt) * 10) / 10;
         suya = Math.round((suya / cnt) * 10) / 10;
         gusu = Math.round((100 - uto - suya) * 10) / 10;
-        document.getElementById("calc_current_ratio").textContent = uto + "-" + suya + "-" + gusu;
+        if (withSetValue) document.getElementById("calc_current_ratio").textContent = uto + "-" + suya + "-" + gusu;
         return [uto, suya, gusu];
     }
 
