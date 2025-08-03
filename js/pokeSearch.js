@@ -184,8 +184,8 @@ class PokeSearch{
         + poke.sec
         + "<p>"
 
-        + "<span class=\"indicator_text\">きのみSPow/日:</span>" + poke.berrySEnergyLv60Day    
-        + "<br><span class=\"indicator_text\">食材拾い/日:</span>" + poke.getOtetsudaiCountDay(60, 0, 0, 0.52, true).toFixed(1) + "回"    
+        + "<span class=\"indicator_text\">きのみSPow/日:</span>" + poke.berrySEnergyLvMaxDay  
+        + "<br><span class=\"indicator_text\">食材拾い/日:</span>" + poke.foodOtetsudaiCountDay + "回"    
         + "<br><span class=\"indicator_text\">スキル発動/日:</span>" + poke.skillExpectionDay.toFixed(1) + "回"
         + "<br><span class=\"indicator_text\">食材確率:</span>"+ (poke.foodRate * 100).toFixed(1) + "%"
         + "<br><span class=\"indicator_text\">きのみRank</span> " + poke.getIndicatorBarOf(poke.rankOfBerry)//poke.indicatorChar.repeat(poke.berryIndicator)
