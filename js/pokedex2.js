@@ -1,4 +1,13 @@
 class Pokedex{
+    dakutenMap = {
+        'ガ': 'カ', 'ギ': 'キ', 'グ': 'ク', 'ゲ': 'ケ', 'ゴ': 'コ',
+        'ザ': 'サ', 'ジ': 'シ', 'ズ': 'ス', 'ゼ': 'セ', 'ゾ': 'ソ',
+        'ダ': 'タ', 'ヂ': 'チ', 'ヅ': 'ツ', 'デ': 'テ', 'ド': 'ト',
+        'バ': 'ハ', 'ビ': 'ヒ', 'ブ': 'フ', 'ベ': 'ヘ', 'ボ': 'ホ',
+        'パ': 'ハ', 'ピ': 'ヒ', 'プ': 'フ', 'ペ': 'ヘ', 'ポ': 'ホ'
+    };
+    
+
     constructor(pokemons){
         this.pokemons =
         [new Pokemon({no:1,name:"フシギダネ",sleepType:"うとうと",specialty:"食材",berry:"ドリのみ",food1:"あまいミツ",food1Num:[2,5,7],food2:"あんみんトマト",food2Num:[0,4,7],food3:"ほっこりポテト",food3Num:[0,0,6],skill:"食材ゲットS",fp:5,sec:4400,fullyEvolved:false,foodRate:0.257,foodOtetsudaiCountDay:11.1,skillRate:0.019,skillExpectionDay:0.72,berryEnergy:30,berrySEnergyLvMaxDay:9376,rankOfBerry:2,rankOfFood:3,rankOfSkill:2}),
@@ -242,7 +251,33 @@ new Pokemon({no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材"
         this.berryList = this.berries;
         this.skillList = Array.from((new Set(this.pokemons.map(p => p.skill)))).sort();
         this.foodList = Array.from((new Set(this.pokemons.map(p => [p.food1, p.food2, p.food3]).flat()))).filter(f => f != "").sort();//本当はこんなのよくないよね・・・
+        this.pokeKanaDic = {
+            "ア": [],"カ": [],"サ": [],"タ": [],"ナ": [],
+            "ハ": [],"マ": [],"ヤ": [],"ラ": [],"ワ": []
+        };
+        this.pokemons.map(p =>( {kana: p.name[0], name: p.name})).forEach(p => {
+            this.pokeKanaDic[this.getInitialKanaOf(p.kana)].push(p.name);
+        });
     }
+
+    getInitialKanaOf(s){
+        let targ = this.removeDakuten(s);
+        return ("アイウエオ".includes(targ)) ? "ア"
+             : ("カキクケコ".includes(targ)) ? "カ"
+             : ("サシスセソ".includes(targ)) ? "サ"
+             : ("タチツテト".includes(targ)) ? "タ"
+             : ("ナニヌネノ".includes(targ)) ? "ナ"
+             : ("ハヒフヘホ".includes(targ)) ? "ハ"
+             : ("マミムメモ".includes(targ)) ? "マ"
+             : ("ヤユヨ".includes(targ)) ? "ヤ"
+             : ("ラリルレロ".includes(targ)) ? "ラ"
+             : ("ワオン".includes(targ)) ? "ワ"
+             : "×";
+    }
+    removeDakuten(s){
+        return s in this.dakutenMap ? this.dakutenMap[s] : s;
+    }
+
 
     
 

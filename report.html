@@ -30,11 +30,25 @@
         <div class="input_form_area">
             <div style="display: flex; justify-content: space-between; background-color: beige;">
                 <strong id="page_title"> Myポケモン登録v0.7:</strong>
-                <span id="input_mypoke_form_visible" visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this);initializePokeList();">　表示▼</span>
+                <span id="input_mypoke_form_visible" visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this); initializePokeList();">　表示▼</span>
             </div>
             <div id="input_form" style="display: none;">
-                <select id="input_mypoke_name" style="width:10em; font-size:1em" onclick="initializePokeList()" onchange="setFoodImages(this)" src></select>
-                Lv<select id="input_mypoke_lv" style="width:4em; font-size:1em" onclick="initializePokeList()"></select>
+                <select id="input_mypoke_kana" style="width:3em; font-size:1em" onchange="initializePokeList(this);">
+                    <option value=""></option>
+                    <option value="ア">あ</option>
+                    <option value="カ">か</option>
+                    <option value="サ">さ</option>
+                    <option value="タ">た</option>
+                    <option value="ナ">な</option>
+                    <option value="ハ">は</option>
+                    <option value="マ">ま</option>
+                    <option value="ヤ">や</option>
+                    <option value="ラ">ら</option>
+                    <option value="ワ">わ</option>
+                </select>
+
+                <select id="input_mypoke_name" style="width:10em; font-size:1em" onchange="setFoodImages(this)" src></select>
+                Lv<select id="input_mypoke_lv" style="width:4em; font-size:1em"></select>
 
                 <img id="input_mypoke_food_1" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
                 <img id="input_mypoke_food_2" src="" dir="img/food/" class="ex-tiny" style="vertical-align: bottom;" onclick="toggleFood(this)">
@@ -973,16 +987,18 @@
 
 
 
-            function initializePokeList(){
-                if (this.selectBoxInitialized) return;
-
+            function initializePokeList(el = undefined){
                 let list = document.getElementById('input_mypoke_name');
+                list.innerHTML = "";
+
                 let blankOp = document.createElement('option');
                 blankOp.text = "";
                 blankOp.value = "";
                 list.appendChild(blankOp);
 
-                let names = pokemons.map(p => p.name).sort();
+
+                let names = (el == undefined || el.value == "") ? pokemons.map(p => p.name).sort()
+                            : pokedex.pokeKanaDic[el.value].sort();
                 for (let i = 0; i < names.length; i++){
                     let op = document.createElement('option');
                     op.text = names[i];
@@ -991,8 +1007,7 @@
                 }
 
                 list = document.getElementById('input_mypoke_lv');
-                blankOp = document.createElement('option');
-
+                if (list.innerHTML != "") return;
 
                 for (let i = 1; i <= 100; i++){
                     let op = document.createElement('option');
@@ -1001,8 +1016,6 @@
                     list.appendChild(op);
                 }
                 list.selectedIndex = 29;
-
-                this.selectBoxInitialized = true;
             }
 
 
@@ -1076,7 +1089,6 @@
                 this.recipedb = new RecipeDB();
                 this.pokeReport = new PokeReport(this.pokedex, this.recipedb);
                 this.pokeReport.initialize();
-                this.selectBoxInitialized = false;
                 this.setSubSkillSelectBoxes();
 
            
