@@ -7,8 +7,7 @@
         <script src="js/main.js"></script>
         <script src="js/event.js"></script>
 
-        <title>ポケモンスリープアプリv1.21</title>
-
+        <title>ポケスリイベント</title>
     </head>
 
 
@@ -51,6 +50,7 @@
                 this.pokeEvent.addEntry("2025/08/08 04:00", "2025/08/11 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.25");
                 this.pokeEvent.addEntry("2025/08/11 04:00", "2025/08/18 04:00", true, GetPreset("連発！スキルウィーク"), "◆連発！スキルウィーク vol.2", "中ピックアップ: エレズン / ストリンダー(ハイなすがた) / ストリンダー(ローなすがた)", "小ピックアップ: ニャース / コダック / ガーディ / ヤドン / コイル / イーブイ / ププリン / トゲピー / メリープ / ヤミカラス / ヘラクロス / キモリ / ラルトス / ヤミラミ / プラスル / マイナン / ゴクリン / ソーナノ / フワンテ / ウソハチ / リオル / ワシボン / デデンネ / ミミッキュ / パモ")
                 this.pokeEvent.addEntry("2025/08/22 04:00", "2025/08/25 04:00", true, GetPreset("ニュームーンデー"), "◆第4回ニュームーンデー");
+                this.pokeEvent.addEntry("2025/08/25 04:00", "2025/09/01 04:00", true, GetPreset("トリプルタイプウィーク"), "◆トリプルタイプウィーク", "中ピックアップ: でんき・ほのお・みずタイプのポケモン")
                 //コピー用
                 //this.pokeEvent.addEntry("2025/00/00 04:00", "2025/00/00 03:59", true, GetPreset(""), "◆");
 
@@ -150,6 +150,14 @@
                         this.EventItems["pickup_other_sleep_type"],
                         this.EventItems["main_skill_150percent"],
                         this.EventItems["main_skill_lv_plus3"]
+                    ]
+                },
+
+                "トリプルタイプウィーク" : {
+                    items: [
+                        this.EventItems["mini_candy_boost"],
+                        this.EventItems["pickup_other_sleep_type"],
+                        this.EventItems["sleep_get_chance"]
                     ]
                 },
 
