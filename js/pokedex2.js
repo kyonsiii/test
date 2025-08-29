@@ -10,7 +10,9 @@ class Pokedex{
 
     constructor(pokemons){
         this.pokemons =
-        [new Pokemon({no:1,name:"フシギダネ",sleepType:"うとうと",specialty:"食材",berry:"ドリのみ",food1:"あまいミツ",food1Num:[2,5,7],food2:"あんみんトマト",food2Num:[0,4,7],food3:"ほっこりポテト",food3Num:[0,0,6],skill:"食材ゲットS",fp:5,sec:4400,fullyEvolved:false,foodRate:0.257,foodOtetsudaiCountDay:11.1,skillRate:0.019,skillExpectionDay:0.72,berryEnergy:30,berrySEnergyLvMaxDay:9376,rankOfBerry:2,rankOfFood:3,rankOfSkill:2}),
+        [
+        
+new Pokemon({no:1,name:"フシギダネ",sleepType:"うとうと",specialty:"食材",berry:"ドリのみ",food1:"あまいミツ",food1Num:[2,5,7],food2:"あんみんトマト",food2Num:[0,4,7],food3:"ほっこりポテト",food3Num:[0,0,6],skill:"食材ゲットS",fp:5,sec:4400,fullyEvolved:false,foodRate:0.257,foodOtetsudaiCountDay:11.1,skillRate:0.019,skillExpectionDay:0.72,berryEnergy:30,berrySEnergyLvMaxDay:9376,rankOfBerry:2,rankOfFood:3,rankOfSkill:2}),
 new Pokemon({no:2,name:"フシギソウ",sleepType:"うとうと",specialty:"食材",berry:"ドリのみ",food1:"あまいミツ",food1Num:[2,5,7],food2:"あんみんトマト",food2Num:[0,4,7],food3:"ほっこりポテト",food3Num:[0,0,6],skill:"食材ゲットS",fp:12,sec:3300,fullyEvolved:false,foodRate:0.255,foodOtetsudaiCountDay:14.7,skillRate:0.019,skillExpectionDay:0.96,berryEnergy:30,berrySEnergyLvMaxDay:12535,rankOfBerry:3,rankOfFood:6,rankOfSkill:2}),
 new Pokemon({no:3,name:"フシギバナ",sleepType:"うとうと",specialty:"食材",berry:"ドリのみ",food1:"あまいミツ",food1Num:[2,5,7],food2:"あんみんトマト",food2Num:[0,4,7],food3:"ほっこりポテト",food3Num:[0,0,6],skill:"食材ゲットS",fp:20,sec:2800,fullyEvolved:true,foodRate:0.266,foodOtetsudaiCountDay:18.1,skillRate:0.021,skillExpectionDay:1.25,berryEnergy:30,berrySEnergyLvMaxDay:14555,rankOfBerry:4,rankOfFood:9,rankOfSkill:3}),
 new Pokemon({no:4,name:"ヒトカゲ",sleepType:"すやすや",specialty:"食材",berry:"ヒメリのみ",food1:"マメミート",food1Num:[2,5,7],food2:"あったかジンジャー",food2Num:[0,4,7],food3:"げきからハーブ",food3Num:[0,0,6],skill:"食材ゲットS",fp:5,sec:3500,fullyEvolved:false,foodRate:0.201,foodOtetsudaiCountDay:10.9,skillRate:0.011,skillExpectionDay:0.52,berryEnergy:27,berrySEnergyLvMaxDay:11408,rankOfBerry:3,rankOfFood:2,rankOfSkill:2}),
@@ -198,29 +200,29 @@ new Pokemon({no:914,name:"ウェーニバル",sleepType:"ぐっすり",specialty
 new Pokemon({no:921,name:"パモ",sleepType:"すやすや",specialty:"スキル",berry:"ウブのみ",food1:"リラックスカカオ",food1Num:[1,2,4],food2:"モーモーミルク",food2Num:[0,3,6],food3:"とくせんエッグ",food3Num:[0,0,5],skill:"げんきオールS",fp:5,sec:4600,fullyEvolved:false,foodRate:0.111,foodOtetsudaiCountDay:4.6,skillRate:0.036,skillExpectionDay:2.3,berryEnergy:25,berrySEnergyLvMaxDay:8942,rankOfBerry:1,rankOfFood:1,rankOfSkill:4}),
 new Pokemon({no:922,name:"パモット",sleepType:"すやすや",specialty:"スキル",berry:"ウブのみ",food1:"リラックスカカオ",food1Num:[1,2,4],food2:"モーモーミルク",food2Num:[0,3,6],food3:"とくせんエッグ",food3Num:[0,0,5],skill:"げんきオールS",fp:12,sec:3300,fullyEvolved:false,foodRate:0.109,foodOtetsudaiCountDay:6.3,skillRate:0.036,skillExpectionDay:2.81,berryEnergy:25,berrySEnergyLvMaxDay:12493,rankOfBerry:3,rankOfFood:1,rankOfSkill:5}),
 new Pokemon({no:923,name:"パーモット",sleepType:"すやすや",specialty:"スキル",berry:"ウブのみ",food1:"リラックスカカオ",food1Num:[1,2,4],food2:"モーモーミルク",food2Num:[0,3,6],food3:"とくせんエッグ",food3Num:[0,0,5],skill:"げんきオールS",fp:22,sec:2400,fullyEvolved:true,foodRate:0.141,foodOtetsudaiCountDay:11.2,skillRate:0.039,skillExpectionDay:3.7,berryEnergy:25,berrySEnergyLvMaxDay:16560,rankOfBerry:5,rankOfFood:1,rankOfSkill:7}),
-new Pokemon({no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材",berry:"カゴのみ",food1:"リラックスカカオ",food1Num:[2,5,7],food2:"めざましコーヒー",food2Num:[0,4,7],food3:"ほっこりポテト",food3Num:[0,0,9],skill:"げんきチャージS",fp:12,sec:3500,fullyEvolved:true,foodRate:0.208,foodOtetsudaiCountDay:11.3,skillRate:0.055,skillExpectionDay:2.61,berryEnergy:32,berrySEnergyLvMaxDay:13402,rankOfBerry:4,rankOfFood:3,rankOfSkill:6})
-            
-            
-            
-            
-            
-            //コピーする前に全部のポケモンがいるか確認！！(現在の最後はドオー)
+new Pokemon({no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材",berry:"カゴのみ",food1:"リラックスカカオ",food1Num:[2,5,7],food2:"めざましコーヒー",food2Num:[0,4,7],food3:"ほっこりポテト",food3Num:[0,0,9],skill:"げんきチャージS",fp:12,sec:3500,fullyEvolved:true,foodRate:0.208,foodOtetsudaiCountDay:11.3,skillRate:0.055,skillExpectionDay:2.61,berryEnergy:32,berrySEnergyLvMaxDay:13402,rankOfBerry:4,rankOfFood:3,rankOfSkill:6}),
+new Pokemon({no:848,name:"エレズン",sleepType:"ぐっすり",specialty:"スキル",berry:"カゴのみ",food1:"モーモーミルク",food1Num:[1,2,4],food2:"とくせんリンゴ",food2Num:[0,2,4],food3:"ふといながねぎ",food3Num:[0,0,2],skill:"食材ゲットS",fp:5,sec:5600,fullyEvolved:false,foodRate:0.209,foodOtetsudaiCountDay:7.1,skillRate:0.048,skillExpectionDay:2.42,berryEnergy:32,berrySEnergyLvMaxDay:8365,rankOfBerry:1,rankOfFood:1,rankOfSkill:4}),
+new Pokemon({no:849.1,name:"ストリンダー(ハイ)",sleepType:"うとうと",specialty:"スキル",berry:"カゴのみ",food1:"モーモーミルク",food1Num:[1,2,4],food2:"とくせんリンゴ",food2Num:[0,2,4],food3:"ふといながねぎ",food3Num:[0,0,2],skill:"プラス(食材ゲットS)",fp:20,sec:3100,fullyEvolved:true,foodRate:0.239,foodOtetsudaiCountDay:14.7,skillRate:0.064,skillExpectionDay:4.43,berryEnergy:32,berrySEnergyLvMaxDay:14539,rankOfBerry:4,rankOfFood:1,rankOfSkill:8}),
+new Pokemon({no:849.2,name:"ストリンダー(ロー)",sleepType:"うとうと",specialty:"スキル",berry:"カゴのみ",food1:"モーモーミルク",food1Num:[1,2,4],food2:"とくせんリンゴ",food2Num:[0,2,4],food3:"ふといながねぎ",food3Num:[0,0,2],skill:"マイナス(料理パワーアップS)",fp:20,sec:3100,fullyEvolved:true,foodRate:0.239,foodOtetsudaiCountDay:14.7,skillRate:0.064,skillExpectionDay:4.43,berryEnergy:32,berrySEnergyLvMaxDay:14539,rankOfBerry:4,rankOfFood:1,rankOfSkill:8})
 
 
 
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            //コピーする前に全部のポケモンがいるか確認！！(現在の最後はストリンダーハイ)
+
         
         ];
         
