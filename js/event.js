@@ -61,7 +61,6 @@ class PokeEvent{
 
         let diffHours = (endDate - startDate) / (1000 * 60 * 60);
         panel.style.height = (diffHours * 0.5) + "em";
-
         var cell = this.getCellOf(column, startDate);
 
         if (cell != undefined){
@@ -69,6 +68,14 @@ class PokeEvent{
             panel.style.marginTop = (startDate.getHours() * 0.5) + "em";
         }
         this.dataField.appendChild(column);
+        console.log(panel.offsetTop);
+        let panelBottom = panel.offsetTop + panel.offsetHeight;
+        let fieldBottom = this.dataField.offsetTop + this.dataField.offsetHeight;
+        
+        if (panelBottom > fieldBottom){
+            panel.style.height = (fieldBottom - panel.offsetTop + 50)+ "px";
+            panel.classList.add("over_calendar");
+        }
     }
 
     getCellOf(column, startDate){
