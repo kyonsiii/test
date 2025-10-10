@@ -726,8 +726,7 @@ class PokeReport{
                 }
             case 0b010:
                 switch (down){
-                    case 0b001: return "太";
-                    //case 0b001: return "ず";たぶんいらんよねこの行
+                    case 0b001: return "ず";
                     case 0b010: return "×";
                     case 0b011: return "わ";
                     case 0b100: return "能";
@@ -773,8 +772,8 @@ class PokeReport{
             case "い": return 0b001011;
             case "や": return 0b001100;
             case "勇": return 0b001101;
-            case "太": return 0b010001;
-            case "ず": return 0b010001;//しばらくおいておく
+            case "ず": return 0b010001;
+            case "太": return 0b010001;//しばらくおいておく
             case "わ": return 0b010011;
             case "能": return 0b010100;
             case "の": return 0b010101;

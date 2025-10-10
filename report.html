@@ -29,7 +29,7 @@
 
         <div class="input_form_area">
             <div style="display: flex; justify-content: space-between; background-color: beige;">
-                <strong id="page_title"> Myポケモン登録v0.7:</strong>
+                <strong id="page_title"> Myポケモン登録v0.8:</strong>
                 <span id="input_mypoke_form_visible" visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this); initializePokeList();">　表示▼</span>
             </div>
             <div id="input_form" style="display: none;">
@@ -561,12 +561,7 @@
 
 
             function setSubSkillsFromIdentifier(el){
-                // toggleFood(el, setIndex = -1){
-                // let a = document.getElementById("input_mypoke_food_1")
-                // let a = document.getElementById("input_mypoke_food_2")
-                // let a = document.getElementById("input_mypoke_food_3")
                 let s = el.value;
-
                 for (let i = 0; i < el.value.length; i++){
                     switch(i){
                         case 0: this.toggleFood(document.getElementById("input_mypoke_food_1"), s[0].charCodeAt() - 65); break;
@@ -686,7 +681,7 @@
                 if (json == null) return;
 
                 json.backgroundColor = 6;
-                console.log(json);
+
                 this.insertMyPokemons([json], foodName, min, true);//現在入力中のキャラ
             }
 
@@ -927,7 +922,6 @@
                 if (!res) return false;
 
                 let pokeList = document.getElementById('input_mypoke_name');
-                console.log(json);
                 pokeList.value = (json == null) ? "" : json.name;
                 pokeList.setAttribute("src", (json == null) ? "" : json.src);
                 pokeList.style.backgroundColor = (json == null) ? "" : "#FF8899";
@@ -958,6 +952,9 @@
             function reeditMypoke(){
                 let list = document.getElementById("input_mypoke_registered");
                 if (list.children.length == 0) return;
+
+                document.getElementById("input_mypoke_kana").value = "";
+                this.initializePokeList();
 
                 this.showHideInputForm(null);
                 let j = pokeReport.createJsonFromCookieValue32(list.value);
