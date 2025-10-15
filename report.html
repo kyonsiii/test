@@ -926,6 +926,7 @@
                 pokeList.setAttribute("src", (json == null) ? "" : json.src);
                 pokeList.style.backgroundColor = (json == null) ? "" : "#FF8899";
 
+                document.getElementById("input_mypoke_kana").selectedIndex = 0;
                 document.getElementById('input_mypoke_lv').selectedIndex   = (json == null) ? 29 : json.lv - 1;
                 document.getElementById("input_mypoke_char").selectedIndex = 0;
                 document.getElementById("sub_skill_lv10").selectedIndex    = 0;
@@ -963,6 +964,7 @@
 
 
             function setJsonToInputFormForReEdit(j){
+                console.log(j)
                 let poke = pokedex.getPokemonByName(j.name);
                 let pokeList = document.getElementById("input_mypoke_name");
                 if (pokeList.children.length == 0) this.initializePokeList(); //初めてリストに触った時に実行されることになっている
