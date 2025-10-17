@@ -964,7 +964,6 @@
 
 
             function setJsonToInputFormForReEdit(j){
-                console.log(j)
                 let poke = pokedex.getPokemonByName(j.name);
                 let pokeList = document.getElementById("input_mypoke_name");
                 if (pokeList.children.length == 0) this.initializePokeList(); //初めてリストに触った時に実行されることになっている
@@ -976,7 +975,6 @@
                     alert("中断");
                     return false;
                 }
-
                 
                 Array.from(document.getElementById("input_mypoke_char").children).find(o => o.value == j.char).selected = true;
                 this.setFoodImages(null, poke, j.foodCode[0], j.foodCode[1], j.foodCode[2]);

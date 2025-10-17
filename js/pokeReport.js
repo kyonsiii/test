@@ -158,12 +158,12 @@ class PokeReport{
 
 
 
-    setMyPokeFoodListInfo(tbody, jsonList, onlySkyBlue = false){
+    setMyPokeFoodListInfo(tbody, jsonList, onlySkyBlueGold = false){
         let pokeAndComb = [];
         for (let i = 0; i < jsonList.length; i++){
             let j = jsonList[i];
             let p = this.pokedex.getPokemonByNo(j.no);
-            if (onlySkyBlue && j.backgroundColor != 0) continue;
+            if (onlySkyBlueGold && (j.backgroundColor != 0 && j.backgroundColor != 7)) continue;
             pokeAndComb.push({poke: p, json: j, comb:p.createFoodCombination(j, j.lv, j.foodCode)});            
         }
         
