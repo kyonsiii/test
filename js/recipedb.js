@@ -109,6 +109,7 @@ class RecipeDB{
             {name: "あんみんトマト", power: 110, advanced: false},
             {name: "おいしいシッポ", power: 342, advanced: true},
             {name: "げきからハーブ", power: 130, advanced: false},
+            {name: "ずっしりカボチャ", power: 250, advanced: false},
             {name: "とくせんエッグ", power: 115, advanced: false},
             {name: "とくせんリンゴ", power: 90, advanced: false},
             {name: "ピュアなオイル", power: 121, advanced: false},

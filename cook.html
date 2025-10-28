@@ -48,23 +48,7 @@
 
             <select id="select_food" onchange="pokeCook.setTarget(this, null)">
                 <option value = "----">----</option>
-                <option value="あじわいキノコ">あじわいキノコ</option>
-                <option value="あったかジンジャー">あったかジンジャー</option>
-                <option value="あまいミツ">あまいミツ</option>
-                <option value="あんみんトマト">あんみんトマト</option>
-                <option value="おいしいシッポ">おいしいシッポ</option>
-                <option value="げきからハーブ">げきからハーブ</option>
-                <option value="とくせんエッグ">とくせんエッグ</option>
-                <option value="とくせんリンゴ">とくせんリンゴ</option>
-                <option value="ふといながねぎ">ふといながねぎ</option>
-                <option value="ほっこりポテト">ほっこりポテト</option>
-                <option value="ピュアなオイル">ピュアなオイル</option>
-                <option value="マメミート">マメミート</option>                
-                <option value="めざましコーヒー">めざましコーヒー</option>
-                <option value="モーモーミルク">モーモーミルク</option>
-                <option value="リラックスカカオ">リラックスカカオ</option>                
-                <option value="ワカクサコーン">ワカクサコーン</option>
-                <option value="ワカクサ大豆">ワカクサ大豆</option>
+
             </select>
         </div>
 
@@ -90,7 +74,15 @@
                 this.recipedb = new RecipeDB();
                 this.pokeCook = new PokeCook(this.recipedb.recipes);
                 this.pokeCook.setTableRows();  
-                this.pokeCook.setOptionsFromCookie(getCookie("cinf"));         
+                this.pokeCook.setOptionsFromCookie(getCookie("cinf"));     
+                let el = document.getElementById("select_food");
+                let add = (food) => {
+                    let op = document.createElement("option");
+                    op.value = food;
+                    op.textContent = food;
+                    el.appendChild(op);
+                }
+                this.recipedb.foods.forEach(f => add(f.name));
                 setCookie("myrecipe", "", 0);     
             }
 
