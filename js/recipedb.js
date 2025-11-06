@@ -97,24 +97,24 @@ new Recipe({no:84, category: "デザート・ドリンク", name: "どきどき�
         ];
 
         this.foods = [
-            {name: "あじわいキノコ", power: 167, advanced: true},
-            {name: "あったかジンジャー", power: 109, advanced: false},
-            {name: "あまいミツ", power: 101, advanced: false},
-            {name: "あんみんトマト", power: 110, advanced: false},
-            {name: "おいしいシッポ", power: 342, advanced: true},
-            {name: "げきからハーブ", power: 130, advanced: false},
-            {name: "ずっしりカボチャ", power: 250, advanced: false},
-            {name: "とくせんエッグ", power: 115, advanced: false},
-            {name: "とくせんリンゴ", power: 90, advanced: false},
-            {name: "ピュアなオイル", power: 121, advanced: false},
-            {name: "ふといながねぎ", power: 185, advanced: true},
-            {name: "ほっこりポテト", power: 124, advanced: false},
-            {name: "マメミート", power: 103, advanced: false},
-            {name: "めざましコーヒー", power: 153, advanced: false},
-            {name: "モーモーミルク", power: 98, advanced: false},
-            {name: "リラックスカカオ", power: 151, advanced: false},
-            {name: "ワカクサ大豆", power: 100, advanced: false},
-            {name: "ワカクサコーン", power: 140, advanced: false}
+            {name: "あじわいキノコ", power: 167},
+            {name: "あったかジンジャー", power: 109},
+            {name: "あまいミツ", power: 101},
+            {name: "あんみんトマト", power: 110},
+            {name: "おいしいシッポ", power: 342},
+            {name: "げきからハーブ", power: 130},
+            {name: "ずっしりカボチャ", power: 250},
+            {name: "とくせんエッグ", power: 115},
+            {name: "とくせんリンゴ", power: 90},
+            {name: "ピュアなオイル", power: 121},
+            {name: "ふといながねぎ", power: 185},
+            {name: "ほっこりポテト", power: 124},
+            {name: "マメミート", power: 103},
+            {name: "めざましコーヒー", power: 153},
+            {name: "モーモーミルク", power: 98},
+            {name: "リラックスカカオ", power: 151},
+            {name: "ワカクサ大豆", power: 100},
+            {name: "ワカクサコーン", power: 140}
         ];
     }
 
@@ -147,21 +147,19 @@ new Recipe({no:84, category: "デザート・ドリンク", name: "どきどき�
 
 class Recipe{
     constructor(json){
-        this.advancedFoods = ["おいしいシッポ", "ふといながねぎ"];
         this.no = json.no;
         this.category = json.category;
         this.name = json.name;
         this.energy = json.energy;
         this.weekendCount = 0;
-        this.ingredients = [new Ingredient(json.food1, json.food1Num, this.advancedFoods.includes(json.food1))]
-        if (json.food2 != "") this.ingredients.push(new Ingredient(json.food2, json.food2Num, this.advancedFoods.includes(json.food2)));
-        if (json.food3 != "") this.ingredients.push(new Ingredient(json.food3, json.food3Num, this.advancedFoods.includes(json.food3)));
-        if (json.food4 != "") this.ingredients.push(new Ingredient(json.food4, json.food4Num, this.advancedFoods.includes(json.food4)));
-        if (json.food5 != "") this.ingredients.push(new Ingredient(json.food5, json.food5Num, this.advancedFoods.includes(json.food5)));
+        this.ingredients = [new Ingredient(json.food1, json.food1Num)]
+        if (json.food2 != "") this.ingredients.push(new Ingredient(json.food2, json.food2Num));
+        if (json.food3 != "") this.ingredients.push(new Ingredient(json.food3, json.food3Num));
+        if (json.food4 != "") this.ingredients.push(new Ingredient(json.food4, json.food4Num));
+        if (json.food5 != "") this.ingredients.push(new Ingredient(json.food5, json.food5Num));
 
         this.totalFoodsCount = 0;
         this.ingredients.forEach(f => this.totalFoodsCount+= f.num);
-        this.hasAnyAdvancedFood = this.ingredients.some(f => f.isAdvanced);
     }
 
         //個数制限なしの場合は9999が入力されるのでかならずtrueを返すようにする
@@ -181,10 +179,9 @@ class Recipe{
 
 
 class Ingredient{
-    constructor(name, num, isAdvanced){
+    constructor(name, num){
         this.name = (name == undefined) ? "" : name;
         this.num = (num == undefined) ? 0 : num;
-        this.isAdvanced = isAdvanced;
     }
 
 
@@ -195,8 +192,7 @@ class Ingredient{
         img.src = "img/food/" + this.name + ".png";
         el.appendChild(img);
 
-        el.innerHTML += (this.isAdvanced) ? "<strong>" + this.name + "x" + this.num + "</strong>"
-                      : this.name + "x" + this.num;
+        el.innerHTML += this.name + "x" + this.num;
         return el;
     }
 }

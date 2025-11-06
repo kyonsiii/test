@@ -29,22 +29,14 @@
             </div>
             <br>
             
-            <div id="current_advanced_filter">
-                <input type="checkbox" onchange="pokeCook.setTarget(this, null)" id="without_advanced" value="1">上位素材を除く
-                <input type="checkbox" onchange="pokeCook.setTarget(this, null)" id="only_advanced" value="2">上位素材使用のみ
-            </div>
-
 
             <div id="recipe_limit">
-                <input type="radio" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" value="9999" checked>制限なし
-                <input type="radio" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" onclick="pokeCook.setTarget(this, null)" value="-1">制限:
-                <input type="text" id="recipe_limit_manual" style="width:10em;">                       
+                <input type="radio" id="recipe_limit_nolimit" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" value="9999" checked>制限なし<br>                
+                <input type="text" id="recipe_limit_manual" style="width:3em;">個
+                <input type="radio" id="recipe_limit_more" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" value="more" checked>以上
+                <input type="radio" id="recipe_limit_less" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" value="less">以下                   
             </div>   
 
-            <div id="recipe_more_less">
-                <input type="radio" name="recipe_more_less" onchange="pokeCook.setTarget(this, null)" value="more" checked>以上
-                <input type="radio" name="recipe_more_less" onchange="pokeCook.setTarget(this, null)" value="less">以下  
-            </div>
 
             <select id="select_food" onchange="pokeCook.setTarget(this, null)">
                 <option value = "----">----</option>
@@ -74,8 +66,8 @@
             window.onload = ()=>{
                 this.recipedb = new RecipeDB();
                 this.pokeCook = new PokeCook(this.recipedb.recipes);
-                this.pokeCook.setTableRows();  
-                this.pokeCook.setOptionsFromCookie(getCookie("cinf"));     
+                this.pokeCook.setTableRows(true);  
+                    
                 let el = document.getElementById("select_food");
                 let add = (food) => {
                     let op = document.createElement("option");
@@ -84,7 +76,7 @@
                     el.appendChild(op);
                 }
                 this.recipedb.foods.forEach(f => add(f.name));
-                setCookie("myrecipe", "", 0);     
+                this.pokeCook.setOptionsFromCookie(getCookie("cinf")); 
             }
 
         </script>
