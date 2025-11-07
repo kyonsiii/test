@@ -17,7 +17,9 @@ class PokeSleeping{
         el.appendChild(createField("uno", "ウノハナ雪原", "283万～", "717万～", "1547万～", "2878万～", "6570万～"));
         el.appendChild(createField("rapi", "ラピスラズリ湖畔", "316万～", "774万～", "1666万～", "3050万～", "6867万～"));
         el.appendChild(createField("gold", "ゴールド旧発電所", "602万～", "1434万～", "3050万～	", "4992万～", "9732万～"));
+        el.appendChild(createField("amber", "アンバー渓谷", "638万～", "1521万～", "3121万～", "5182万～", "9994万～"));
         el.appendChild(createField("waka_ex", "ワカクサ本島EX", "602万～", "1434万～", "3050万～	", "4992万～", "9732万～"));
+        
         //el.appendChild(createField("", "", "", "", "", ""));
         //el.appendChild(createField("", "", "", "", "", ""));
 
