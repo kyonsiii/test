@@ -269,9 +269,14 @@ new Pokemon({no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材"
             "ア": [],"カ": [],"サ": [],"タ": [],"ナ": [],
             "ハ": [],"マ": [],"ヤ": [],"ラ": [],"ワ": []
         };
-        this.pokemons.map(p =>( {kana: p.name[0], name: p.name})).forEach(p => {
-            this.pokeKanaDic[this.getInitialKanaOf(p.kana)].push(p.name);
+        
+        let kanaSortedPokemonNames = this.pokemons.map(p => ({name: p.name, kana: p.name.normalize("NFD").replace(/[\u3099\u309A]/g, '').normalize("NFC")}))
+                                      .sort((p1, p2) => (p1.kana > p2.kana) ? 1 : -1);
+
+        kanaSortedPokemonNames.map(p =>( {kanaChar: this.getInitialKanaOf(p.kana[0]), name: p.name})).forEach(p => {
+            this.pokeKanaDic[p.kanaChar].push(p.name);
         });
+        this.pokemonsSortedByKana = kanaSortedPokemonNames.map(p => p.name);
     }
 
     getInitialKanaOf(s){
