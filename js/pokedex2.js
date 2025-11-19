@@ -270,7 +270,7 @@ new Pokemon({no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材"
             "ハ": [],"マ": [],"ヤ": [],"ラ": [],"ワ": []
         };
         
-        let kanaSortedPokemonNames = this.pokemons.map(p => ({name: p.name, kana: p.name.normalize("NFD").replace(/[\u3099\u309A]/g, '').normalize("NFC")}))
+        let kanaSortedPokemonNames = this.pokemons.map(p => ({name: p.name, kana: this.getNobasibouConvertedName(p.name.normalize("NFD").replace(/[\u3099\u309A]/g, '').normalize("NFC"))}))
                                       .sort((p1, p2) => (p1.kana > p2.kana) ? 1 : -1);
 
         kanaSortedPokemonNames.map(p =>( {kanaChar: this.getInitialKanaOf(p.kana[0]), name: p.name})).forEach(p => {
@@ -279,8 +279,26 @@ new Pokemon({no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材"
         this.pokemonsSortedByKana = kanaSortedPokemonNames.map(p => p.name);
     }
 
+    getNobasibouConvertedName(s){
+        if (s.indexOf("ー") == -1) return s;
+        let getNobasibouKanaOf = (c) => {
+            return ("アカサタナハマヤラワガザダバパァャ".includes(c)) ? "ア"
+                 : ("イキシチニヒミ　リ　ギジヂビピィ　".includes(c)) ? "イ"
+                 : ("ウクスツヌフムユルングズヅブプゥュ".includes(c)) ? "ウ"
+                 : ("エケセテネヘメ　レ　ゲゼデベペェ　".includes(c)) ? "エ"
+                 : ("オコソトノホモヨロヲゴゾドボポォョ".includes(c)) ? "オ" : "？";
+                 //"ッ"などの小さい文字は伸ばし棒の前に来ないので無視
+        }
+        let kanaList = s.split('');
+        for (let i = 0; i < kanaList.length; i++){
+            if (kanaList[i] == 'ー') kanaList[i] = getNobasibouKanaOf(kanaList[i - 1]);
+        }
+        return kanaList.join('');
+    }
+    
+
     getInitialKanaOf(s){
-        let targ = this.removeDakuten(s);
+        let targ = s in this.dakutenMap ? this.dakutenMap[s] : s;
         return ("アイウエオ".includes(targ)) ? "ア"
              : ("カキクケコ".includes(targ)) ? "カ"
              : ("サシスセソ".includes(targ)) ? "サ"
@@ -293,12 +311,8 @@ new Pokemon({no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材"
              : ("ワオン".includes(targ)) ? "ワ"
              : "×";
     }
-    removeDakuten(s){
-        return s in this.dakutenMap ? this.dakutenMap[s] : s;
-    }
 
 
-    
 
     getPokemonByName(name){
         for (let i = 0; i < this.pokemons.length; i++){

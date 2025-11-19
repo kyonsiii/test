@@ -67,8 +67,9 @@
                 this.pokeEvent.addEntry("2025/11/10 04:00", "2025/11/17 04:00",false, GetPreset(), "◆アンバー渓谷登場キャンペーン 前半", this.EventItems["pickup_other_sleep_type"], "小ピックアップ: ナックラー / タツベイ / イシズマイ", "ワカクサ本島でも出現(EXでは出ない)", "新ポケモンはアンバー渓谷のほうが出やすい");
                 this.pokeEvent.addEntry("2025/11/17 04:00", "2025/11/24 04:00", true, GetPreset(), "◆アンバー渓谷登場キャンペーン 後半", this.EventItems["pickup_other_sleep_type"], "小ピックアップ: ナックラー / タツベイ / イシズマイ", "ワカクサ本島でも出現(EXでは出ない)", "新ポケモンはアンバー渓谷のほうが出やすい");
                 this.pokeEvent.addEntry("2025/11/19 04:00", "2025/11/22 04:00", true, GetPreset("ニュームーンデー"), "◆第7回ニュームーンデー");      
+                this.pokeEvent.addEntry("2025/12/01 04:00", "2025/12/08 04:00", true, GetPreset("デカ盛り！料理ウィーク"), "◆デカ盛り！料理ウィークVol.2", "中ピックアップ: ミカルゲ", "小ピックアップ: ディグダ / マダツボミ / イシツブテ / カモネギ / ガルーラ / メタモン / ウパー / ウパー(パルデアのすがた) / ヨーギラス / クチート / アブソル / コリンク / マネネ / グレッグル / ユキカブリ / バケッチャ / アゴジムシ / ヌイコグマ / キュワワー / ウッウ / クワッス");
                 this.pokeEvent.addEntry("2025/12/04 04:00", "2025/12/07 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.29");
-
+               
 
                 //最終的に幅を決める
                 let columns = document.querySelectorAll("event_column").length - 1;
@@ -102,30 +103,41 @@
                 sleep_hunger_change
                 : "おやつで満腹になりにくい",
                 sleep_power_150percent
-                 : "ねむけパワー1.5倍",
+                : "ねむけパワー1.5倍",
 
 
                 /*料理関係*/
-                cooking_capacity
+                cooking_capacity_150percent
                 : "なべの容量1.5倍(日曜3倍)",
+                cooking_capacity_200percent
+                : "なべの容量2倍(日曜4倍)",
                 cooking_power_110percent
                 : "料理エナジー1.1倍",
                 cooking_power_125percent
                 : "料理エナジー1.25倍",
                 cooking_power_150percent
                 : "料理エナジー1.5倍",
+                cooking_genki_bonus_5
+                : "料理で元気回復+5",
 
                 /*スキル関係*/
                 main_skill_150percent
                 : "メインスキル発動率1.5倍",
+                main_skill_bonus_150percent_about_food
+                : "食材ゲットS、食材セレクトSの効果1.5倍",
                 main_skill_lv_plus3
                 : "メインスキルのレベル+3",
+                
 
                 /*きのみ関係*/
-                berry_plus1
+                berry_plus_1
                 : "きのみタイプのきのみ+1",
                 berry_skill_up
                 : "きのみバースト系の効果1.4倍",
+
+                /*食材関係*/
+                food_plus_1
+                : "食材タイプの食材+1",
 
                 /*その他関係*/
                 mini_candy_boost
@@ -194,10 +206,22 @@
                     items: [
                         this.EventItems["mini_candy_boost"],
                         this.EventItems["pickup_other_sleep_type"],
-                        this.EventItems["berry_plus1"],
+                        this.EventItems["berry_plus_1"],
                         this.EventItems["berry_skill_up"]
                     ]
                 },
+                "デカ盛り！料理ウィーク" :{
+                    items: [         
+                        this.EventItems["mini_candy_boost"],           
+                        this.EventItems["pickup_other_sleep_type"],
+                        this.EventItems["cooking_capacity_200percent"],  
+                        this.EventItems["cooking_power_125percent"], 
+                        this.EventItems["cooking_genki_bonus_5"],
+                        this.EventItems["food_plus_1"],
+                        this.EventItems["main_skill_bonus_150percent_about_food"]                                         
+                    ]
+                },
+
                 "トリプルタイプウィーク" : {
                     items: [
                         this.EventItems["mini_candy_boost"],
@@ -210,7 +234,7 @@
                     items: [
                         this.EventItems["pickup_other_sleep_type"],
                         this.EventItems["sleep_yumenokakera_150percent"],
-                        this.EventItems["cooking_capacity"],
+                        this.EventItems["cooking_capacity_150percent"],
                         "ニャオハ・ホゲータ・クワッス 中ピックアップ"
                     ]
                 },

@@ -1003,8 +1003,7 @@
                 list.appendChild(blankOp);
 
                 let names = (el == undefined || el.value == "") ? pokedex.pokemonsSortedByKana
-                            : pokedex.pokeKanaDic[el.value].sort();
-
+                            : pokedex.pokeKanaDic[el.value];
                
                 for (let i = 0; i < names.length; i++){
                     let op = document.createElement('option');

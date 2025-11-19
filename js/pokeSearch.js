@@ -104,6 +104,11 @@ class PokeSearch{
             this.selectIcon(this.getBerryIconOf("ブリーのみ"), true);
             this.selectIcon(this.getBerryIconOf("ベリブのみ"));
         }
+        else if (fieldName == "アンバー"){
+            this.selectIcon(this.getBerryIconOf("ラムのみ"), true);
+            this.selectIcon(this.getBerryIconOf("カゴのみ"), true);
+            this.selectIcon(this.getBerryIconOf("ヤチェのみ"));
+        }
     }
     
     getBerryIconOf(berryName){
