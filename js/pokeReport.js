@@ -151,9 +151,10 @@ class PokeReport{
         sb_cat.selectedIndex = bitToNum(n, mask_op_recipe_category_index);        
         selectRecipeCategory(sb_cat);
 
-        let sb_recipe = document.getElementById("select_recipe");
-        sb_recipe.selectedIndex = bitToNum(n, mask_op_recipe_name_index);
-        selectFoodsByRecipe(sb_recipe);
+        //いったんいらない気がするからやめる
+        //let sb_recipe = document.getElementById("select_recipe");
+        //sb_recipe.selectedIndex = bitToNum(n, mask_op_recipe_name_index);
+        //selectFoodsByRecipe(sb_recipe);
     }
 
 
