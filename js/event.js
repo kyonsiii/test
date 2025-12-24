@@ -14,11 +14,11 @@ class PokeEvent{
 
     setDateCellsToColumn(column, count, withDateStr){
         for (let i = 0; i < count; i++){
-            var el = document.createElement("event_cell");
-            var d = new Date(this.today);
+            let el = document.createElement("event_cell");
+            let d = new Date(this.today);
             d.setDate(d.getDate() + i);
-            var dateStr = (d.getMonth() + 1) + "/" + d.getDate();
-            var youbi = this.Youbi[d.getDay()];
+            let dateStr = (d.getMonth() + 1) + "/" + d.getDate();
+            let youbi = this.Youbi[d.getDay()];
             el.dataset.date = dateStr;
             if (youbi == "日"){
                 el.className = "sunday";
@@ -61,7 +61,7 @@ class PokeEvent{
 
         let diffHours = (endDate - startDate) / (1000 * 60 * 60);
         panel.style.height = (diffHours * 0.5) + "em";
-        var cell = this.getCellOf(column, startDate);
+        let cell = this.getCellOf(column, startDate);
 
         if (cell != undefined){
             cell.appendChild(panel);
@@ -79,8 +79,8 @@ class PokeEvent{
     }
 
     getCellOf(column, startDate){
-        var date = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-        var dateStr = (date.getMonth() + 1) + "/" + date.getDate();
+        let date = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+        let dateStr = (date.getMonth() + 1) + "/" + date.getDate();
         return Array.from(column.children).find(cell => cell.dataset.date == dateStr);
     }
 
