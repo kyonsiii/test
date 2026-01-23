@@ -405,10 +405,8 @@ class PokeReport{
         let img = document.createElement("img");
         img.classList.add("tiny");
 
-        console.log(poke);
         //flagForPlanは食材を獲得予定に載せるときに作った仮のポケモンクラス
         if (poke.flagForPlan != undefined || poke.flagForPlan != null){
-            console.log(poke);
             img.dataset.no = String(poke.no).padStart(3, '0');
             img.dataset.name = poke.name;
             img.src = "img/food/" + img.dataset.name  + ".png";
@@ -461,8 +459,6 @@ class PokeReport{
         if (c == undefined) return;
 
         let noList = c.split('-');
-
-        console.log(foodList);
         for (let i = 0; i < noList.length; i++){
             let raw = parseInt(noList[i], 32);
             let foodFlag = (raw & mask16_nodp_plan) == mask16_nodp_plan;
