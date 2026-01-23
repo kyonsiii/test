@@ -470,7 +470,32 @@
 
             function addPokemonToGet(){
                 let poke = pokedex.getPokemonByName(this.pokeList.value);
-                pokeReport.insertPokeToPlanArea(poke, pokeListPlanningToGet);
+
+                if (poke == null){
+                    let selectedFoods = Array.from(document.querySelectorAll("#food_buttons img")).filter(el => el.dataset.state == "ON").map(el => el.name);
+                    if (selectedFoods.length != 1) return;
+                    let selectedFood = selectedFoods[0];
+                    let foodIndex = this.getFoodIndexOf(selectedFood);
+                    let kariPokemon = new Pokemon({no:0b0111100000000000 + foodIndex, name:selectedFood, flagForPlan: true});
+                    pokeReport.insertPokeToPlanArea(kariPokemon, pokeListPlanningToGet);
+                }
+                else{
+                    pokeReport.insertPokeToPlanArea(poke, pokeListPlanningToGet);
+                }
+            }
+       
+
+            function getFoodNamesOnArea(){
+                return Array.from(document.querySelectorAll("#food_buttons img")).map(el => el.name);
+            }
+
+            function getFoodIndexOf(food){
+                let foods = this.getFoodNamesOnArea();
+                for (let i = 0; i < foods.length; i++){
+                    console.log(foods[i]);
+                    if (foods[i] == food) return i;
+                }
+                return -1;
             }
 
             function selectFoodsByRecipe(el){
@@ -541,13 +566,13 @@
                 if (el.style.margin == "" || el.style.margin == "4px"){
                     el.style.margin = "0px";
                     el.style.border = "4px solid blue";
-                    el.value = "ON";
+                    el.dataset.state = "ON";
                     el.previousElementSibling.textContent = (num == 0) ? "" : num;
                 }
                 else {
                     el.style.margin = "4px";
                     el.style.border = "";
-                    el.value = "";
+                    el.dataset.state = "";
                     el.previousElementSibling.textContent = "";
                 }
             }
@@ -557,12 +582,12 @@
                 if (turnOn){
                     el.style.margin = "0px";
                     el.style.border = "4px solid blue";
-                    el.value = "ON";
+                    el.dataset.state = "ON";
                 }
                 else{
                     el.style.margin = "4px";
                     el.style.border = "";
-                    el.value = "";
+                    el.dataset.state = "";
                 }
                 el.previousElementSibling.textContent = "";
             }
@@ -667,7 +692,7 @@
                 this.lastClickedFoodIconElement = el;//これ何につかってんの？
 
                 //作成中
-                let selectedFoods = Array.from(document.querySelectorAll("#food_buttons img")).filter(el => el.value =="ON").map(el => el.name);
+                let selectedFoods = Array.from(document.querySelectorAll("#food_buttons img")).filter(el => el.dataset.state == "ON").map(el => el.name);
 
                 let foods = (selectedFoods.includes(el.name)) ? [el.name] : [];
                 for (let i = 0; i < selectedFoods.length; i++){
@@ -1084,8 +1109,6 @@
                 pokeReport.setMyPokeListToCookie();
             }
 
-       
-
 
 
             //ロード時のイベント
@@ -1101,7 +1124,7 @@
                 this.pokeReport.setOptionsFromCookie(getCookie("ropt", ""));
                 this.setMypokesToListFromCookie();
              
-                this.pokeReport.loadPlanPokeFromCookie(this.pokeListPlanningToGet);
+                this.pokeReport.loadPlanPokeFromCookie(this.pokeListPlanningToGet, this.getFoodNamesOnArea());
                 let sb_recipe = document.getElementById("select_recipe");              
                 if (sb_recipe.children.length == 0) this.selectRecipeCategory(document.getElementById("select_recipe_category"), true);
             }

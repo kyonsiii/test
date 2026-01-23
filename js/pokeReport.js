@@ -404,8 +404,20 @@ class PokeReport{
 
         let img = document.createElement("img");
         img.classList.add("tiny");
-        img.dataset.no = String(poke.no).padStart(3, '0');
-        img.src = "img/poke/" + img.dataset.no  + ".png";
+
+        console.log(poke);
+        //flagForPlanは食材を獲得予定に載せるときに作った仮のポケモンクラス
+        if (poke.flagForPlan != undefined || poke.flagForPlan != null){
+            console.log(poke);
+            img.dataset.no = String(poke.no).padStart(3, '0');
+            img.dataset.name = poke.name;
+            img.src = "img/food/" + img.dataset.name  + ".png";
+        }
+        else{
+            img.dataset.no = String(poke.no).padStart(3, '0');
+            img.src = "img/poke/" + img.dataset.no  + ".png";
+        }
+
         
         img.addEventListener("click", function (e){
             if (this.dataset.next){
@@ -429,27 +441,38 @@ class PokeReport{
     savePlanPokeCookie(area){
         let list = area.getElementsByTagName("img");
       
-
         var cookieList = [];
         for (let i = 0; i < list.length; i++){
             let no = Number(list[i].dataset.no);
-            let n = numToBit(Math.round(no % 1 * 10), mask16_nodp_plan);
+            //console.log(no >= mask16_nodp_plan);
+            //PokeNoDecimalChangeTag:
+            //let n = numToBit(Math.round(no % 1 * 10), mask16_nodp_plan);
+            
+            let n = numToBit(this.getPokeNoDecimalOf(no, true), mask16_nodp_plan);
             n += numToBit(Math.trunc(no), mask16_no_plan);
             cookieList.push(n.toString(32));
         }
         setCookie("pktg", cookieList.join("-"), 30)
     }
 
-    loadPlanPokeFromCookie(area){
+
+    loadPlanPokeFromCookie(area, foodList = []){
         let c = getCookie("pktg");
         if (c == undefined) return;
 
         let noList = c.split('-');
 
+        console.log(foodList);
         for (let i = 0; i < noList.length; i++){
-            let n = parseInt(noList[i], 32);
-            let no = Math.round((bitToNum(n, mask16_no_plan) * 10) + bitToNum(n, mask16_nodp_plan))/ 10;
-            var poke = pokedex.getPokemonByNo(no);
+            let raw = parseInt(noList[i], 32);
+            let foodFlag = (raw & mask16_nodp_plan) == mask16_nodp_plan;
+            let n = foodFlag ? (raw & mask16_no_plan) : raw;
+            //PokeNoDecimalChangeTag:
+            //let no = Math.round((bitToNum(n, mask16_no_plan) * 10) + bitToNum(n, mask16_nodp_plan))/ 10;
+
+            let no = bitToNum(n, mask16_no_plan) + this.convertNumToPokeNoDecimal(bitToNum(n, mask16_nodp_plan));
+            let poke = (foodFlag) ? new Pokemon({no: raw, name: foodList[raw & mask16_no_plan], flagForPlan: true}) 
+                                  : pokedex.getPokemonByNo(no);
             this.insertPokeToPlanArea(poke, area, i != noList.length - 1);
         }
     }
@@ -508,7 +531,10 @@ class PokeReport{
         j.src = ck;
         
         n = parseInt(valueArr[0], 32);     
-        j.no = Math.round((bitToNum(n, mask32a_no) * 10) + bitToNum(n,mask32a_nodp)) / 10;
+        //PokeNoDecimalChangeTag:
+        //j.no = Math.round((bitToNum(n, mask32a_no) * 10) + bitToNum(n,mask32a_nodp)) / 10;
+        j.no = bitToNum(n, mask32a_no) + this.convertNumToPokeNoDecimal(bitToNum(n, mask32a_nodp));
+        //console.log(j.no);
         j.name = pokedex.getPokemonByNo(j.no).name;
         j.lv = bitToNum(n, mask32a_lv);
         j.foodCode = this.getFoodCodeOf(bitToNum(n, mask32a_food1)) + this.getFoodCodeOf(bitToNum(n, mask32a_food2)) + this.getFoodCodeOf(bitToNum(n, mask32a_food3));
@@ -632,12 +658,37 @@ class PokeReport{
         if (setAdjustValueImmediately) this.setAdjustValues(j);
     }
 
-    
+    //小数点以下をポケモンのバージョン違いにし4bitで管理しているが、10～15(0110～1111)までは/10で処理できないため作成
+    //なお、1と10は区別がつかないため10は使用禁止（エラー処理もできないよ！設計ダメだね！！）
+    getPokeNoDecimalOf(n, multiply10 = false){        
+        let decRaw = Math.round(n % 1 * 100);
+        if (decRaw == 0) return 0;
+        if (decRaw < 10) throw new Error("小数点第一位が0の数値は対応していません。.1 .2 .3… と .11～.15に対応しています。");
+
+        decRaw = (decRaw % 10 == 0) ? decRaw / 10 : decRaw;
+        if (decRaw >= 16) throw new Error("小数点部分を整形後、15を超えました。");
+
+        let div = (decRaw >= 10) ? 100 : 10;
+        return decRaw / div * (multiply10 ? 10 : 1);
+    }
+
+    convertNumToPokeNoDecimal(n){
+        if (n == 0) return 0;
+        if (!Number.isInteger(n)) throw Error("小数点に対応していません。");
+        if (n >= 16) throw Error("16以上の数値に対応していません。" + "\r\n\r\n" + n);
+        
+        let div = (n >= 10) ? 100 : 10;
+        return n / div;
+    }
+
+
     createCookieValueFromJson32(j){
         let abc = [];
         let n = 0;
         
-        n += numToBit(Math.round(j.no % 1 * 10), mask32a_nodp);
+        //PokeNoDecimalChangeTag:
+        //n += numToBit(Math.round(j.no % 1 * 10), mask32a_nodp);
+        n += numToBit(this.getPokeNoDecimalOf(j.no, true), mask32a_nodp);
         n += numToBit(Math.trunc(j.no), mask32a_no);
         n += numToBit(j.lv, mask32a_lv);
         n += numToBit(this.getFoodNumOf(j.foodCode[0]), mask32a_food1);
