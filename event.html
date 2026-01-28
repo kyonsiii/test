@@ -79,8 +79,9 @@
                 this.pokeEvent.addEntry("2026/01/19 04:00", "2026/01/26 04:00", true, GetPreset("連発！スキルウィーク"), "◆連発！スキルウィーク vol.3", "中ピックアップ: ツボツボ", "【 小ピックアップ 】 ニャース / コダック / ガーディ / ヤドン / コイル / イーブイ / ププリン / トゲピー / メリープ / ヤミカラス / ヘラクロス / キモリ / ラルトス / ヤミラミ / プラスル / マイナン / ゴクリン / ソーナノ / フワンテ / ウソハチ / リオル / イシズマイ / ワシボン / デデンネ / トゲデマル / ミミッキュ / エレズン / パモ")
                 this.pokeEvent.addEntry("2026/01/19 15:00", "2026/01/26 04:00", true, GetPreset(), "◆新ポケモン【ツボツボ】追加", "【ツボツボ】(うとうと) ワカクサ本島・～EX/シアンの砂浜/トープ洞窟/アンバー渓谷", "新スキル「きのみジュース」","味方全員のげんきを回復し、時々「きのみジュース」のアイテムを獲得（げんきマクラの20回復版）");     
                 this.pokeEvent.addEntry("2026/02/01 04:00", "2026/02/04 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.31");
-                
-                
+                this.pokeEvent.addEntry("2026/02/09 04:00", "2026/02/16 04:00", true, GetPreset("バレンタイン"), "◆バレンタイン2026", "【中ピックアップ】アブリー / アブリボン", "【小ピックアップ】フシギダネ / カイロス / メタモン / ウパー(パルデアのすがた) / クチート / アブソル / グレッグル / ヌイコグマ / キュワワー / ウッウ");
+                this.pokeEvent.addEntry("2026/02/09 15:00", "2026/02/16 04:00", true, GetPreset(), "◆新ポケモン【アブリー】【アブリボン】追加", "すやすや", "ワカクサ本島・～EX / シアンの砂浜 / ラピスラズリ湖畔 / アンバー渓谷");     
+
                 
                 //最終的に幅を決める
                 let columns = document.querySelectorAll("event_column").length - 1;
@@ -118,6 +119,12 @@
 
 
                 /*料理関係*/
+                fix_recipe_curry
+                : "カレー・シチューで固定",
+                fix_recipe_salad
+                : "サラダで固定",
+                fix_recipe_sweet
+                : "デザート・ドリンクで固定",                
                 cooking_capacity_150percent
                 : "なべの容量1.5倍(日曜3倍)",
                 cooking_capacity_200percent
@@ -136,6 +143,8 @@
                 : "メインスキル発動率1.25倍",
                 main_skill_150percent
                 : "メインスキル発動率1.5倍",
+                main_skill_125percent_about_food
+                : "スキルで獲得する食材1.25倍",
                 main_skill_150percent_about_food
                 : "食材ゲットS、食材セレクトSの効果1.5倍",
                 main_skill_150percent_dream_shard_get
@@ -272,6 +281,16 @@
                     ]
                 },
 
+                "バレンタイン": {
+                    items: [
+                        
+                        this.EventItems["pickup_other_sleep_type"],
+                        this.EventItems["fix_recipe_sweet"],
+                        this.EventItems["pickup_shiny"],
+                        this.EventItems["cooking_power_150percent"], 
+                        this.EventItems["main_skill_125percent_about_food"]
+                    ]
+                },
                 "もうすぐ2周年キャンペーン" : {
                     items: [
                         this.EventItems["pickup_other_sleep_type"],
