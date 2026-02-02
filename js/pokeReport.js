@@ -243,17 +243,17 @@ class PokeReport{
             this.insertMyPokeRowInto(tbody, poke, json, json.lv, foods, foodMin, json.backgroundColor);
 
             if (json.lv < 30 && showPotential30){
-                this.setSubSkillsEnabled(json, 30, true);
+                this.setSubSkillsEnabled(json, 30);
                 this.insertMyPokeRowInto(tbody, poke, json, 30, foods, foodMin, 3);
             }
 
             if (json.lv < 50 && showPotential50){
-                this.setSubSkillsEnabled(json, 50, true);
+                this.setSubSkillsEnabled(json, 50);
                 this.insertMyPokeRowInto(tbody, poke, json, 50, foods, foodMin, 4);
             }
 
             if (json.lv < 60 && showPotential60){
-                this.setSubSkillsEnabled(json, 60, true);
+                this.setSubSkillsEnabled(json, 60);
                 this.insertMyPokeRowInto(tbody, poke, json, 60, foods, foodMin, 5);
             }
         }        
@@ -548,7 +548,7 @@ class PokeReport{
                                                    bitToNum(n, mask32c_sub3),
                                                    bitToNum(n, mask32c_sub4),
                                                    bitToNum(n, mask32c_sub5));
-        this.setSubSkillsEnabled(j, -1, true);
+        this.setSubSkillsEnabled(j, -1);
 
        
         this.setOtetsudaiInfoToJson(j);
@@ -556,8 +556,20 @@ class PokeReport{
     }
 
     //jsonに情報を付与する
-    setOtetsudaiInfoToJson(j){
+    setOtetsudaiInfoToJson(j, maxLv = 65){
+        j.LvMax = maxLv;
         let poke = pokedex.getPokemonByNo(j.no);
+
+        let jMax = structuredClone(j);
+        jMax.lv = (j.lv < maxLv) ? maxLv : j.lv;
+        this.setSubSkillsEnabled(jMax, jMax.lv);
+
+        let j60 = structuredClone(j);
+        j60.lv = (j.lv < 60) ? 60 : j.lv;
+        this.setSubSkillsEnabled(j60, 60);
+        
+        console.log(j);
+        console.log(jMax);
 
         let raw_otetsudaiCountDay = poke.getOtetsudaiCountDay(j.lv, j.charAdjusts.speed, j.subAdjusts.speed);
         let raw_otetsudaiCountFoodDay = raw_otetsudaiCountDay * (poke.foodRate * (1 + j.charAdjusts.food + j.subAdjusts.food));
@@ -567,10 +579,14 @@ class PokeReport{
         let raw_otetsudaiCountFoodDayNoAdjust = raw_otetsudaiCountDayNoAdjust * poke.foodRate;
         let raw_otetsudaiCountBerryNoAdjust   = raw_otetsudaiCountDayNoAdjust - raw_otetsudaiCountFoodDayNoAdjust;
 
-        let raw_otetsudaiCountDay60      = poke.getOtetsudaiCountDay((j.lv < 60) ? 60 : j.lv, j.charAdjusts.speed, j.subAdjusts.speed);
-        let raw_otetsudaiCountFoodDay60  = raw_otetsudaiCountDay60 * (poke.foodRate * (1 + j.charAdjusts.food + j.subAdjusts.food));
-        let raw_otetsudaiCountBerryDay60 = raw_otetsudaiCountDay60 - raw_otetsudaiCountFoodDay60;
+        //このへんがっつり直そう j => jMax
+        let raw_otetsudaiCountDayMax      = poke.getOtetsudaiCountDay(jMax.lv, jMax.charAdjusts.speed, jMax.subAdjusts.speed);
+        let raw_otetsudaiCountFoodDayMax  = raw_otetsudaiCountDayMax * (poke.foodRate * (1 + jMax.charAdjusts.food + jMax.subAdjusts.food));
+        let raw_otetsudaiCountBerryDayMax = raw_otetsudaiCountDayMax - raw_otetsudaiCountFoodDayMax;
 
+        let raw_otetsudaiCountDay60      = poke.getOtetsudaiCountDay(j60.lv, j60.charAdjusts.speed, j60.subAdjusts.speed);
+        let raw_otetsudaiCountFoodDay60  = raw_otetsudaiCountDay60 * (poke.foodRate * (1 + j60.charAdjusts.food + j60.subAdjusts.food));
+        
         j.otetsudaiCountDay             = Math.round(raw_otetsudaiCountDay);
         j.otetsudaiCountFoodDay         =  Math.round(raw_otetsudaiCountFoodDay);
         j.otetsudaiCountBerryDay        = j.otetsudaiCountDay - j.otetsudaiCountFoodDay;
@@ -583,10 +599,15 @@ class PokeReport{
         j.berryPowerDay               = Math.round(j.berryPower * poke.getBerryNum(j.subBerryS) * raw_otetsudaiCountBerryDay);
         j.berryPowerDayNoAdjustBerryS = Math.round(j.berryPower * poke.getBerryNum(true) * raw_otetsudaiCountBerryNoAdjust);
 
+        let maxBerryPower             = Math.round(pokedex.getBerryPowerOf(poke.berry, maxLv) * 100) / 100;
+        j.berryPowerLvMax             = Math.round(maxBerryPower * poke.getBerryNum(jMax.subBerryS) * raw_otetsudaiCountBerryDayMax);
+        
         j.skillPopRate                = Math.round(((poke.skillRate * (1 + j.charAdjusts.skill + j.subAdjusts.skill))) * 100000) / 100000;
         j.skillPopDay                 = Math.round((raw_otetsudaiCountDay * j.skillPopRate + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
         j.skillPopDayNoAdjust         = Math.round((raw_otetsudaiCountDayNoAdjust * poke.skillRate + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
-        
+        j.skillPopRateLvMax           = Math.round(((poke.skillRate * (1 + jMax.charAdjusts.skill + jMax.subAdjusts.skill))) * 100000) / 100000;
+        j.skillPopDayLvMax            = Math.round((raw_otetsudaiCountDayMax * j.skillPopRateLvMax + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
+
         let berryDiff = (Math.round((j.berryPowerDay / j.berryPowerDayNoAdjustBerryS) * 100) / 100) - 1;
 
         j.berryPowerDayDiff = (berryDiff == 0) ? "±" + Math.round(berryDiff * 100).toFixed(0) + "%"
@@ -617,9 +638,10 @@ class PokeReport{
         }
 
         j.foodPowerKariDay = Math.round(total);
-        j.foodPowerKariDay += (foodDiff == 0) ? " (±0%)"
-                            : (foodDiff >  0) ? " (+" + foodDiff.toFixed(0) + "%)"
-                            : " (" + foodDiff.toFixed(0) + "%)";
+        j.foodPowerKariDayDiff  = j.foodPowerKariDay;
+        j.foodPowerKariDayDiff += (foodDiff == 0) ? "(±0%)"
+                                : (foodDiff >  0) ? "(+" + foodDiff.toFixed(0) + "%)"
+                                : "(" + foodDiff.toFixed(0) + "%)";
         j.foodPowerKariDayLv60 = Math.round(totalLv60);
         
         //let pow_foodA = poke.getFoodByCode()
@@ -647,7 +669,7 @@ class PokeReport{
     }
 
 
-    setSubSkillsEnabled(j, lv = -1, setAdjustValueImmediately = false){
+    setSubSkillsEnabled(j, lv = -1){
         lv = (lv == -1) ? j.lv : lv;
         j.subSkillList.lv10.enabled = j.subSkillList.lv10.lv <= lv;
         j.subSkillList.lv25.enabled = j.subSkillList.lv25.lv <= lv;
@@ -676,7 +698,7 @@ class PokeReport{
         j.subYumeBonus     = exists(sub_num_yumeBonus);
         j.subResearchBonus = exists(sub_num_researchBonus);
 
-        if (setAdjustValueImmediately) this.setAdjustValues(j);
+        this.setAdjustValues(j);
     }
 
     //小数点以下をポケモンのバージョン違いにし4bitで管理しているが、10～15(0110～1111)までは/10で処理できないため作成

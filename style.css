@@ -240,6 +240,7 @@ table thead tr th {
 
 .mypoke_quick_check_table td{
     vertical-align: middle;
+    padding-left: 0.2em;
 }
 
 #mypoke_quick_check_food_top3 td,

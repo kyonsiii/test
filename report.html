@@ -843,13 +843,14 @@
 
                 tbodyList.forEach(tbody => {
                     let tr = document.createElement("tr");
+                    let pow = (type == "食材") ? j.foodPowerKariDay : j.berryPowerDay;
                     pokeReport.setColorClassTo(tr, j.backgroundColor);
                     
-                    tr.setAttribute("value", j.berryPowerDay);
+                    tr.setAttribute("value", pow);
                     tr.insertCell().innerHTML = j.name + "Lv" + j.lv + "<br>" + j.foodCode + " " + pokeReport.createIdentifierOf(j);
-                    tr.insertCell().textContent = j.berryPowerDay + "(" + j.berryPowerDayDiff + ")";
-                    tr.insertCell().innerHTML = j.foodPowerKariDay + ((j.lv < 60) ? "<br> → " + j.foodPowerKariDayLv60 + "(Lv60)" : "");
-                    tr.insertCell().textContent = j.skillPopDay.toFixed(1) + "("+ j.skillPopDayDiff +")"
+                    tr.insertCell().innerHTML= j.berryPowerDay + "(" + j.berryPowerDayDiff + ")"+ ((j.lv < 65) ? "<br> → " + j.berryPowerLvMax + "(Lv" + j.LvMax + ")" : "");
+                    tr.insertCell().innerHTML = j.foodPowerKariDayDiff + ((j.lv < 60) ? "<br> → " + j.foodPowerKariDayLv60 + "(Lv60)" : "");
+                    tr.insertCell().innerHTML = j.skillPopDay.toFixed(1) + "("+ j.skillPopDayDiff + ")"  + ((j.lv < 65) ? "<br> → " + j.skillPopDayLvMax + "(Lv" + j.LvMax + ")" : "");
                     let rows = tbody.children;
 
                     if (rows.length == 0){
@@ -858,7 +859,7 @@
                     } else {
                         for (let i = 0; i < rows.length; i++){
                             let value = rows[i].getAttribute('value');
-                            if (value <= j.berryPowerDay){
+                            if (value <= pow){
                                 tbody.insertBefore(tr, rows[i]);
                                 return;;
                             }
@@ -916,7 +917,7 @@
                     document.getElementById("sub_skill_lv75").value,
                     document.getElementById("sub_skill_lv100").value);
 
-                pokeReport.setSubSkillsEnabled(j, -1, true);//AdjustValueの初期化いらないならfalse
+                pokeReport.setSubSkillsEnabled(j, -1);//AdjustValueの初期化いらないならfalse
                 pokeReport.setOtetsudaiInfoToJson(j);
                 return j;
             }
