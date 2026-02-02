@@ -303,7 +303,7 @@
 
         <div id="mypoke_list">
             <div>
-                <table id="mypoke_quick_check_food">
+                <table id="mypoke_quick_check_food_top3">
                     <thead>
                         <tr>
                             <th>食材</th>
@@ -317,13 +317,14 @@
                     </tbody>
                 </table>
 
-                <table id="mypoke_quick_check">
+                <strong>きのみタイプ</strong>
+                <table id="mypoke_quick_check" class="mypoke_quick_check_table">
                     <thead>
                         <tr>
-                            <th style="width: 20em;">Myポケモン</th>
+                            <th style="width: 16em;">Myポケモン</th>
                             <th style="width: 9em;">きのみパワー</th>
                             <th style="width: 9em;">食材</th>
-                            <th>スキル</th>
+                            <th style="width: 9em;">スキル</th>
                           
                         </tr>
                     </thead>
@@ -332,6 +333,39 @@
                     </tbody>
                 </table>
 
+
+                <strong>スキルタイプ</strong>
+                <table id="mypoke_quick_check_skill" class="mypoke_quick_check_table">
+                    <thead>
+                        <tr>
+                            <th style="width: 16em;">Myポケモン</th>
+                            <th style="width: 9em;">きのみパワー</th>
+                            <th style="width: 9em;">食材</th>
+                            <th style="width: 9em;">スキル</th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+
+
+                <strong>食材タイプ</strong>
+                <table id="mypoke_quick_check_food" class="mypoke_quick_check_table">
+                    <thead>
+                        <tr>
+                            <th style="width: 16em;">Myポケモン</th>
+                            <th style="width: 9em;">きのみパワー</th>
+                            <th style="width: 9em;">食材</th>
+                            <th style="width: 9em;">スキル</th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
 
             </div>
 
@@ -402,14 +436,9 @@
                     <option value="0">無制限</option>
                 </select><br>
 
-                  <div class="select_button_area">
-                    <input type="checkbox" id="option_mypoke_quick_min" checked><label for="option_mypoke_quick_min">Lv60未満を表示しない</label>
-                </div>
-
-
             
                 <div class="select_button_area">
-                    <input type="checkbox" id="option_mypoke_listup_backcolor" checked><label for="option_mypoke_listup_backcolor">水色だけ食材ランキング一覧に表示</label>
+                    <input type="checkbox" id="option_mypoke_listup_backcolor" checked><label for="option_mypoke_listup_backcolor">水色/黄色だけTOP3に表示</label>
                 </div>
 
                 
@@ -789,18 +818,18 @@
 
 
 
-            function listupMyPokeInfo(j){
-                let tbody = document.getElementById("mypoke_quick_check").tBodies[0];
-            
+            function listupMyPokeInfo(tbody, j){
+
                 let tr = document.createElement("tr");
                 pokeReport.setColorClassTo(tr, j.backgroundColor);
                 
                 tr.setAttribute("value", j.berryPowerDay);
-                tr.insertCell().textContent = j.name + "Lv" + j.lv + j.foodCode + " " + pokeReport.createIdentifierOf(j);
+                tr.insertCell().innerHTML = j.name + "Lv" + j.lv + "<br>" + j.foodCode + " " + pokeReport.createIdentifierOf(j);
                 tr.insertCell().textContent = j.berryPowerDay + "(" + j.berryPowerDayDiff + ")";
-                tr.insertCell().textContent = j.foodCollectDiff;
+                tr.insertCell().innerHTML = j.foodPowerKariDay + ((j.lv < 60) ? "<br> → " + j.foodPowerKariDayLv60 + "(Lv60)" : "");
                 tr.insertCell().textContent = j.skillPopDay.toFixed(1) + "("+ j.skillPopDayDiff +")"
                 let rows = tbody.children;
+
                 if (rows.length == 0){
                     tbody.appendChild(tr);
                     return;
@@ -1091,14 +1120,34 @@
                 if (c == null) return;
 
                 let jss = c.split("/").map(x => pokeReport.createJsonFromCookieValue32(x));
-                let tb = document.getElementById("mypoke_quick_check_food").tBodies[0];
+                let tbTop3 = document.getElementById("mypoke_quick_check_food_top3").tBodies[0];
                 let onlySkyBlue = document.getElementById("option_mypoke_listup_backcolor").checked;
-                pokeReport.setMyPokeFoodListInfo(tb, jss, onlySkyBlue);
+                pokeReport.setMyPokeFoodListInfo(tbTop3, jss, onlySkyBlue);
 
-                let minLv = (document.getElementById("option_mypoke_quick_min").checked) ? 60 : -1;
-
+                let tbDetailBerry = document.getElementById("mypoke_quick_check").tBodies[0];
+                let tbDetailFood = document.getElementById("mypoke_quick_check_food").tBodies[0];
+                let tbDetailSkill = document.getElementById("mypoke_quick_check_skill").tBodies[0];
+                
                 for (let i = 0; i < jss.length; i++){
-                    if (jss[i].lv >= minLv) this.listupMyPokeInfo(jss[i]);
+                    let type = pokedex.getPokemonByNo(jss[i].no).specialty;
+                    if (type == "きのみ"){
+                        this.listupMyPokeInfo(tbDetailBerry, jss[i]);
+                    }
+                    else if (type == "食材"){
+                       this.listupMyPokeInfo(tbDetailFood, jss[i]);
+                    }
+                    else if (type == "スキル"){
+                        this.listupMyPokeInfo(tbDetailSkill, jss[i]);
+                    }
+                    else if (type == "オール"){
+                        this.listupMyPokeInfo(tbDetailBerry, jss[i]);
+                        this.listupMyPokeInfo(tbDetailFood, jss[i]);
+                        this.listupMyPokeInfo(tbDetailSkill, jss[i]);
+                    }
+                    else{
+                        alert("不明なとくいタイプ: " + type);
+                    }
+
                     let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));
                     if (maxFlag){
                         alert("限界");

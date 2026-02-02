@@ -294,6 +294,19 @@ new Pokemon({no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材"
             {no: 18, name: "モモンのみ", power: 26}
         ];
 
+        this.foodPowerKariMap = {
+            "おいしいシッポ" : 1200,
+            "ずっしりカボチャ" : 1100,
+            "ふといながねぎ" : 1000,
+            "あじわいキノコ" : 1000,
+            "リラックスカカオ" : 1000,
+            "めざましコーヒー" : 1000,
+            "ピュアなオイル" : 800,
+            "ワカクサコーン" : 800,
+            "げきからハーブ" : 800,
+            "つやつやアボカド" : 800
+        };
+
         this.berryList = this.berries;
         this.skillList = Array.from((new Set(this.pokemons.map(p => p.skill)))).sort();
         this.foodList = Array.from((new Set(this.pokemons.map(p => [p.food1, p.food2, p.food3]).flat()))).filter(f => f != "").sort();//本当はこんなのよくないよね・・・
@@ -389,6 +402,16 @@ new Pokemon({no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材"
         return Math.max(powerBase + (lv - 1), powerBase * Math.pow(1.025, lv - 1));
     }
 
+    getFoodPowerKariOf(poke, foodCode, ABCIndex){
+        let food = poke.getFoodByCode(foodCode);
+        let foodPow = this.foodPowerKariMap[food] ?? 600;
+        let foodCount = (foodCode == "A") ? poke.food1Num[ABCIndex]
+                      : (foodCode == "B") ? poke.food2Num[ABCIndex]
+                      : (foodCode == "C") ? poke.food3Num[ABCIndex]
+                      : poke.food1Num[ABCIndex];
+
+        return foodPow * foodCount;              
+    }
 }
 
 
@@ -396,6 +419,13 @@ class Pokemon{
     constructor(json){
         Object.assign(this, json);
         this.indicatorChar = "|";
+    }
+
+    getFoodByCode(code){
+        return  (code == "A") ? this.food1
+              : (code == "B") ? this.food2
+              : (code == "C") ? this.food3
+              : this.food1;
     }
 
     setFoodCombinations(){

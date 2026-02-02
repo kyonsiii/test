@@ -50,7 +50,7 @@ const mask_result_op_visible_MyPokeLv60ft = 0b000000000000000000000100000000;
 const mask_result_op_visible_FullyEvolved = 0b000000000000000000000010000000;
 const mask_result_op_visible_minNum       = 0b000000000000000000000001111000;
 const mask_mypoke_op_food_ranking_skyBlue = 0b000000000000000000000000000100;
-const mask_mypoke_op_listup_over_Lv60     = 0b000000000000000000000000000010;
+//const mask_mypoke_op_listup_over_Lv60     = 0b000000000000000000000000000010;
 const mask16_nodp_plan       = 0b0111100000000000;
 const mask16_no_plan         = 0b0000011111111111;    
 
@@ -123,7 +123,7 @@ class PokeReport{
         n += numToBit(document.getElementById("only_fully_evolved").checked, mask_result_op_visible_FullyEvolved);
         n += numToBit(document.getElementById("food_min").selectedIndex, mask_result_op_visible_minNum);
         n += numToBit(document.getElementById("option_mypoke_listup_backcolor").checked, mask_mypoke_op_food_ranking_skyBlue);
-        n += numToBit(document.getElementById("option_mypoke_quick_min").checked, mask_mypoke_op_listup_over_Lv60);
+        n += numToBit(0, 0b000000000000000000000000000010);  //option_mypoke_quick_minを廃止
         setCookie("ropt", n.toString(32), 30);
     }
 
@@ -143,7 +143,8 @@ class PokeReport{
         document.getElementById("only_fully_evolved").checked = bitToNum(n, mask_result_op_visible_FullyEvolved);
         document.getElementById("food_min").selectedIndex = bitToNum(n, mask_result_op_visible_minNum);
         document.getElementById("option_mypoke_listup_backcolor").checked = bitToNum(n, mask_mypoke_op_food_ranking_skyBlue);
-        document.getElementById("option_mypoke_quick_min").checked = bitToNum(n, mask_mypoke_op_listup_over_Lv60);
+        //廃止
+        //document.getElementById("option_mypoke_quick_min").checked = bitToNum(n, mask_mypoke_op_listup_over_Lv60);
         let sb_recipe_min = document.getElementById("option_ingredient_min_count");
         sb_recipe_min.selectedIndex = bitToNum(n, mask_op_recipe_list_min_index);
             
@@ -562,14 +563,17 @@ class PokeReport{
         let raw_otetsudaiCountFoodDay = raw_otetsudaiCountDay * (poke.foodRate * (1 + j.charAdjusts.food + j.subAdjusts.food));
         let raw_otetsudaiCountBerryDay = raw_otetsudaiCountDay - raw_otetsudaiCountFoodDay;
 
+        let raw_otetsudaiCountDayNoAdjust     = poke.getOtetsudaiCountDay(j.lv);
+        let raw_otetsudaiCountFoodDayNoAdjust = raw_otetsudaiCountDayNoAdjust * poke.foodRate;
+        let raw_otetsudaiCountBerryNoAdjust   = raw_otetsudaiCountDayNoAdjust - raw_otetsudaiCountFoodDayNoAdjust;
+
+        let raw_otetsudaiCountDay60      = poke.getOtetsudaiCountDay((j.lv < 60) ? 60 : j.lv, j.charAdjusts.speed, j.subAdjusts.speed);
+        let raw_otetsudaiCountFoodDay60  = raw_otetsudaiCountDay60 * (poke.foodRate * (1 + j.charAdjusts.food + j.subAdjusts.food));
+        let raw_otetsudaiCountBerryDay60 = raw_otetsudaiCountDay60 - raw_otetsudaiCountFoodDay60;
 
         j.otetsudaiCountDay             = Math.round(raw_otetsudaiCountDay);
         j.otetsudaiCountFoodDay         =  Math.round(raw_otetsudaiCountFoodDay);
         j.otetsudaiCountBerryDay        = j.otetsudaiCountDay - j.otetsudaiCountFoodDay;
-
-        let raw_otetsudaiCountDayNoAdjust = poke.getOtetsudaiCountDay(j.lv);
-        let raw_otetsudaiCountFoodDayNoAdjust = raw_otetsudaiCountDayNoAdjust * poke.foodRate;
-        let raw_otetsudaiCountBerryNoAdjust = raw_otetsudaiCountDayNoAdjust - raw_otetsudaiCountFoodDayNoAdjust;
 
         j.otetsudaiCountDayNoAdjust     = Math.round(raw_otetsudaiCountDayNoAdjust);
         j.otetsudaiCountFoodDayNoAdjust = Math.round(raw_otetsudaiCountFoodDayNoAdjust);
@@ -595,9 +599,30 @@ class PokeReport{
                            : "-" + Math.round(Math.abs(skillDiff) * 100).toFixed(0) + "%";
 
         let foodDiff = ((Math.round((raw_otetsudaiCountFoodDay / raw_otetsudaiCountFoodDayNoAdjust) * 100)) - 100);
-        j.foodCollectDiff = (foodDiff == 0) ? "100%(±0%)"
-                          : (foodDiff >  0) ? (100 + foodDiff).toFixed(0) + "%(+" + foodDiff.toFixed(0) + "%)"
-                          : (100 + foodDiff).toFixed(0) + "%(" + foodDiff.toFixed(0) + "%)"
+        
+        let cnt = raw_otetsudaiCountFoodDay;
+        let powFoodA = this.pokedex.getFoodPowerKariOf(poke, j.foodCode[0], 0);
+        let powFoodB = this.pokedex.getFoodPowerKariOf(poke, j.foodCode[1], 1);
+        let powFoodC = this.pokedex.getFoodPowerKariOf(poke, j.foodCode[2], 2);
+        let total = 0;
+        let totalLv60 = (powFoodA + powFoodB + powFoodC) * (raw_otetsudaiCountFoodDay60 / 3);
+        if (j.lv >= 60) {
+            total = (powFoodA + powFoodB + powFoodC) * (cnt / 3);
+        }
+        else if (j.lv >= 30) {
+            total = (powFoodA + powFoodB) * (cnt / 2);
+        }
+        else {
+            total = (powFoodA) * (cnt);
+        }
+
+        j.foodPowerKariDay = Math.round(total);
+        j.foodPowerKariDay += (foodDiff == 0) ? " (±0%)"
+                            : (foodDiff >  0) ? " (+" + foodDiff.toFixed(0) + "%)"
+                            : " (" + foodDiff.toFixed(0) + "%)";
+        j.foodPowerKariDayLv60 = Math.round(totalLv60);
+        
+        //let pow_foodA = poke.getFoodByCode()
     }
 
     getSubSkillListByNum(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill){

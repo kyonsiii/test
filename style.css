@@ -234,12 +234,15 @@ table thead tr th {
 #result{
     margin-top: 1em;
 }
-#mypoke_quick_check{
+.mypoke_quick_check_table{
     font-size: 0.6em;
-    width: 140%;
 }
 
-#mypoke_quick_check_food td,
+.mypoke_quick_check_table td{
+    vertical-align: middle;
+}
+
+#mypoke_quick_check_food_top3 td,
 #result_table td{
     position: relative;
 }
@@ -249,22 +252,22 @@ table thead tr th {
 }
 
 #result_table th:not(:first-child),
-#mypoke_quick_check_food th:nth-child(n+3){
+#mypoke_quick_check_food_top3 th:nth-child(n+3){
     width: 2.5em;
 }
-#mypoke_quick_check_food img{
+#mypoke_quick_check_food_top3 img{
     vertical-align: sub;    
 }
 
 
-#mypoke_quick_check_food img.ex-tiny:not(:first-child),
+#mypoke_quick_check_food_top3 img.ex-tiny:not(:first-child),
 #result_table td:first-child img.ex-tiny:not(:first-child){
     margin-left: -0.4em;
     vertical-align: sub;    
 }
 
 
-#mypoke_quick_check_food span,
+#mypoke_quick_check_food_top3 span,
 #result_table td:first-child span{
     margin-right: 0.3em;
 }
@@ -307,7 +310,7 @@ table thead tr th {
     text-overflow: ellipsis;
 }
 
-#mypoke_quick_check_food .first-row{
+#mypoke_quick_check_food_top3 .first-row{
     border-top: 2px solid orange;
 }
 
