@@ -495,7 +495,9 @@
             this.lastClickedFoodIconElement;
             this.pokeList = this.document.getElementById('input_mypoke_name');
             this.pokeListPlanningToGet = this.document.getElementById("plan_to_get_area");
-
+            this.tbDetailBerry = document.getElementById("mypoke_quick_check").tBodies[0];
+            this.tbDetailFood = document.getElementById("mypoke_quick_check_food").tBodies[0];
+            this.tbDetailSkill = document.getElementById("mypoke_quick_check_skill").tBodies[0];
 
             function addPokemonToGet(){
                 let poke = pokedex.getPokemonByName(this.pokeList.value);
@@ -789,7 +791,9 @@
                 }
 
                 this.addMyPokeToList(this.createMyPokeOption(json));
-                this.listupMyPokeInfo(json);
+
+                this.listupMyPokeInfo(json)
+
                 pokeReport.setMyPokeListToCookie();
                 this.resetInputForm();
             }
@@ -818,31 +822,52 @@
 
 
 
-            function listupMyPokeInfo(tbody, j){
-
-                let tr = document.createElement("tr");
-                pokeReport.setColorClassTo(tr, j.backgroundColor);
-                
-                tr.setAttribute("value", j.berryPowerDay);
-                tr.insertCell().innerHTML = j.name + "Lv" + j.lv + "<br>" + j.foodCode + " " + pokeReport.createIdentifierOf(j);
-                tr.insertCell().textContent = j.berryPowerDay + "(" + j.berryPowerDayDiff + ")";
-                tr.insertCell().innerHTML = j.foodPowerKariDay + ((j.lv < 60) ? "<br> → " + j.foodPowerKariDayLv60 + "(Lv60)" : "");
-                tr.insertCell().textContent = j.skillPopDay.toFixed(1) + "("+ j.skillPopDayDiff +")"
-                let rows = tbody.children;
-
-                if (rows.length == 0){
-                    tbody.appendChild(tr);
-                    return;
-                } else {
-                    for (let i = 0; i < rows.length; i++){
-                        let value = rows[i].getAttribute('value');
-                        if (value <= j.berryPowerDay){
-                            tbody.insertBefore(tr, rows[i]);
-                            return;;
-                        }
-                    }
-                    tbody.appendChild(tr);
+            function listupMyPokeInfo(j){
+                let type = pokedex.getPokemonByNo(j.no).specialty;
+                let tbodyList = [];
+                if (type == "きのみ") {
+                    tbodyList = [this.tbDetailBerry];
                 }
+                else if (type == "食材") {
+                    tbodyList.push(this.tbDetailFood);
+                }
+                else if (type == "スキル") {
+                    tbodyList.push(this.tbDetailSkill);
+                }
+                else if (type == "オール"){
+                    tbodyList = [this.tbDetailBerry, this.tbDetailFood, this.tbDetailSkill];
+                }
+                else {
+                    //alert("不明なとくいタイプ: " + j.specialty);
+                }
+
+                tbodyList.forEach(tbody => {
+                    let tr = document.createElement("tr");
+                    pokeReport.setColorClassTo(tr, j.backgroundColor);
+                    
+                    tr.setAttribute("value", j.berryPowerDay);
+                    tr.insertCell().innerHTML = j.name + "Lv" + j.lv + "<br>" + j.foodCode + " " + pokeReport.createIdentifierOf(j);
+                    tr.insertCell().textContent = j.berryPowerDay + "(" + j.berryPowerDayDiff + ")";
+                    tr.insertCell().innerHTML = j.foodPowerKariDay + ((j.lv < 60) ? "<br> → " + j.foodPowerKariDayLv60 + "(Lv60)" : "");
+                    tr.insertCell().textContent = j.skillPopDay.toFixed(1) + "("+ j.skillPopDayDiff +")"
+                    let rows = tbody.children;
+
+                    if (rows.length == 0){
+                        tbody.appendChild(tr);
+                        return;
+                    } else {
+                        for (let i = 0; i < rows.length; i++){
+                            let value = rows[i].getAttribute('value');
+                            if (value <= j.berryPowerDay){
+                                tbody.insertBefore(tr, rows[i]);
+                                return;;
+                            }
+                        }
+                        tbody.appendChild(tr);
+                    }
+
+                });
+
             }
 
 
@@ -877,6 +902,7 @@
                 j.lv = Number(this.document.getElementById('input_mypoke_lv').value);
                 j.foodCode = this.getMyPokeFoodCode();
                 j.char = document.getElementById("input_mypoke_char").value;
+
                 if (j.char == "") return null;
 
                 j.ribbonEv = 0;
@@ -1124,29 +1150,9 @@
                 let onlySkyBlue = document.getElementById("option_mypoke_listup_backcolor").checked;
                 pokeReport.setMyPokeFoodListInfo(tbTop3, jss, onlySkyBlue);
 
-                let tbDetailBerry = document.getElementById("mypoke_quick_check").tBodies[0];
-                let tbDetailFood = document.getElementById("mypoke_quick_check_food").tBodies[0];
-                let tbDetailSkill = document.getElementById("mypoke_quick_check_skill").tBodies[0];
-                
+             
                 for (let i = 0; i < jss.length; i++){
-                    let type = pokedex.getPokemonByNo(jss[i].no).specialty;
-                    if (type == "きのみ"){
-                        this.listupMyPokeInfo(tbDetailBerry, jss[i]);
-                    }
-                    else if (type == "食材"){
-                       this.listupMyPokeInfo(tbDetailFood, jss[i]);
-                    }
-                    else if (type == "スキル"){
-                        this.listupMyPokeInfo(tbDetailSkill, jss[i]);
-                    }
-                    else if (type == "オール"){
-                        this.listupMyPokeInfo(tbDetailBerry, jss[i]);
-                        this.listupMyPokeInfo(tbDetailFood, jss[i]);
-                        this.listupMyPokeInfo(tbDetailSkill, jss[i]);
-                    }
-                    else{
-                        alert("不明なとくいタイプ: " + type);
-                    }
+                    this.listupMyPokeInfo(jss[i]);
 
                     let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));
                     if (maxFlag){
