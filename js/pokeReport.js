@@ -568,8 +568,8 @@ class PokeReport{
         j60.lv = (j.lv < 60) ? 60 : j.lv;
         this.setSubSkillsEnabled(j60, 60);
         
-        console.log(j);
-        console.log(jMax);
+        //console.log(j);
+        //console.log(jMax);
 
         let raw_otetsudaiCountDay = poke.getOtetsudaiCountDay(j.lv, j.charAdjusts.speed, j.subAdjusts.speed);
         let raw_otetsudaiCountFoodDay = raw_otetsudaiCountDay * (poke.foodRate * (1 + j.charAdjusts.food + j.subAdjusts.food));
