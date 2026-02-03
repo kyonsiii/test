@@ -316,6 +316,7 @@
                     <tbody>
                     </tbody>
                 </table>
+                <div style="text-align: right;"><a class="moveBottom" href="#option_recipe_max_count">画面下部へ移動</a></div>
 
                 <strong>きのみタイプ</strong>
                 <table id="mypoke_quick_check" class="mypoke_quick_check_table">
@@ -366,18 +367,16 @@
 
                     </tbody>
                 </table>
-                    現在の食材レート(マジで適当)<br>
-            "おいしいシッポ" : 5000<br>
-            "ずっしりカボチャ" : 1750<br>
-            "ふといながねぎ" : 1200<br>
-            "あじわいキノコ" : 1000<br>
-            "リラックスカカオ" : 1000<br>
-            "めざましコーヒー" : 1000<br>
-            "ピュアなオイル" : 800<br>
-            "ワカクサコーン" : 800<br>
-            "げきからハーブ" : 800<br>
-            "つやつやアボカド" : 800<br>
-            "上記以外の食材": 600
+                <div style="font-size: 0.4em;">
+                    <strong>現在の食材レート(マジで適当)</strong><br>
+                    5000: おいしいシッポ<br>
+                    1750: ずっしりカボチャ<br>
+                    1200: ふといながねぎ<br>
+                    1000: あじわいキノコ リラックスカカオ めざましコーヒー<br>
+                    800: ピュアなオイル ワカクサコーン げきからハーブ つやつやアボカド ほっこりポテト<br>
+                    600: 上記以外の食材
+                </div>
+
             </div>
 
             <div id="memo" style="background-color: lightcyan; font-size: 0.7em; margin-bottom: 2em;">
@@ -859,7 +858,11 @@
                     
                     tr.setAttribute("value", pow);
                     tr.insertCell().innerHTML = j.name + "Lv" + j.lv + "<br>" + j.foodCode + " " + pokeReport.createIdentifierOf(j);
-                    tr.insertCell().innerHTML= j.berryPowerDay + "(" + j.berryPowerDayDiff + ")"+ ((j.lv < 65) ? "<br> → " + j.berryPowerLvMax + "(Lv" + j.LvMax + ")" : "");
+
+                    tr.insertCell().innerHTML = j.berryPowerDay + "(" + j.berryPowerDayDiff + ")"
+                                              + ((type != "きのみ") ? "" : "<br>" + j.berryPowerDayNoPicking + "(NP)")
+                                              + ((j.lv < 65) ? "<br> → " + j.berryPowerLvMax + "(Lv" + j.LvMax + ")" : "")
+                                              + ((j.lv >= 65 || type != "きのみ") ? "" : "<br> 　 " + j.berryPowerLvMaxNoPicking + "(NP)")
                     tr.insertCell().innerHTML = j.foodPowerKariDayDiff + ((j.lv < 60) ? "<br> → " + j.foodPowerKariDayLv60 + "(Lv60)" : "");
                     tr.insertCell().innerHTML = j.skillPopDay.toFixed(1) + "("+ j.skillPopDayDiff + ")"  + ((j.lv < 65) ? "<br> → " + j.skillPopDayLvMax + "(Lv" + j.LvMax + ")" : "");
                     let rows = tbody.children;

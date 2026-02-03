@@ -597,11 +597,12 @@ class PokeReport{
 
         j.berryPower                  = Math.round(pokedex.getBerryPowerOf(poke.berry, j.lv) * 100) / 100;
         j.berryPowerDay               = Math.round(j.berryPower * poke.getBerryNum(j.subBerryS) * raw_otetsudaiCountBerryDay);
+        j.berryPowerDayNoPicking      = Math.round(j.berryPower * poke.getBerryNum(j.subBerryS) * raw_otetsudaiCountDay);
         j.berryPowerDayNoAdjustBerryS = Math.round(j.berryPower * poke.getBerryNum(true) * raw_otetsudaiCountBerryNoAdjust);
 
         let maxBerryPower             = Math.round(pokedex.getBerryPowerOf(poke.berry, maxLv) * 100) / 100;
         j.berryPowerLvMax             = Math.round(maxBerryPower * poke.getBerryNum(jMax.subBerryS) * raw_otetsudaiCountBerryDayMax);
-        
+        j.berryPowerLvMaxNoPicking    = Math.round(maxBerryPower * poke.getBerryNum(jMax.subBerryS) * raw_otetsudaiCountDayMax);
         j.skillPopRate                = Math.round(((poke.skillRate * (1 + j.charAdjusts.skill + j.subAdjusts.skill))) * 100000) / 100000;
         j.skillPopDay                 = Math.round((raw_otetsudaiCountDay * j.skillPopRate + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
         j.skillPopDayNoAdjust         = Math.round((raw_otetsudaiCountDayNoAdjust * poke.skillRate + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
