@@ -318,8 +318,8 @@
                 </table>
                 <div style="text-align: right;"><a class="moveBottom" href="#mypoke_options">画面下部へ移動</a></div>
                 
-                <strong>きのみタイプ</strong>
-                <table id="mypoke_quick_check" class="mypoke_quick_check_table">
+                <div onclick="toggleShowHideTable(this, 'mypoke_quick_check');"><strong>きのみタイプ▼</strong></div>
+                <table id="mypoke_quick_check" class="mypoke_quick_check_table" style="display: none;">
                     <thead>
                         <tr>
                             <th style="width: 16em;">Myポケモン</th>
@@ -335,8 +335,8 @@
                 </table>
 
 
-                <strong>スキルタイプ</strong>
-                <table id="mypoke_quick_check_skill" class="mypoke_quick_check_table">
+                <div onclick="toggleShowHideTable(this, 'mypoke_quick_check_skill');"><strong>スキルタイプ▼</strong></div>
+                <table id="mypoke_quick_check_skill" class="mypoke_quick_check_table" style="display: none;">
                     <thead>
                         <tr>
                             <th style="width: 16em;">Myポケモン</th>
@@ -352,8 +352,8 @@
                 </table>
 
 
-                <strong>食材タイプ</strong>
-                <table id="mypoke_quick_check_food" class="mypoke_quick_check_table">
+                <div onclick="toggleShowHideTable(this, 'mypoke_quick_check_food');"><strong>食材タイプ▼</strong></div>
+                <table id="mypoke_quick_check_food" class="mypoke_quick_check_table" style="display: none;">
                     <thead>
                         <tr>
                             <th style="width: 16em;">Myポケモン</th>
@@ -508,6 +508,17 @@
             this.tbDetailBerry = document.getElementById("mypoke_quick_check").tBodies[0];
             this.tbDetailFood = document.getElementById("mypoke_quick_check_food").tBodies[0];
             this.tbDetailSkill = document.getElementById("mypoke_quick_check_skill").tBodies[0];
+
+
+            function toggleShowHideTable(el, id){
+                let t = document.getElementById(id);
+                t.style.display = (t.style.display == "none") ? "" : "none";
+                let label = el.children[0];
+                let cap = label.textContent.slice(0, -1);
+                let delta = (t.style.display == "none") ? "▼" : "▲";
+
+                label.textContent = cap + delta;
+            }
 
             function addPokemonToGet(){
                 let poke = pokedex.getPokemonByName(this.pokeList.value);
