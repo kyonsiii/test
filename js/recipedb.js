@@ -103,8 +103,7 @@ new Recipe({no:97, category: "デザート・ドリンク", name: "フラワー�
 new Recipe({no:98, category: "デザート・ドリンク", name: "スパークスパイスコーラ", energy:102252, food1:"とくせんリンゴ", food1Num:35, food2:"あったかジンジャー", food2Num:20, food3:"ふといながねぎ", food3Num:20, food4:"めざましコーヒー", food4Num:12, food5:"", food5Num:0}),
 new Recipe({no:99, category: "デザート・ドリンク", name: "ドオーのエクレア", energy:122073, food1:"リラックスカカオ", food1Num:30, food2:"モーモーミルク", food2Num:26, food3:"めざましコーヒー", food3Num:24, food4:"あまいミツ", food4Num:22, food5:"", food5Num:0}),
 new Recipe({no:100, category: "デザート・ドリンク", name: "どきどきこわいかおパンケーキ", energy:142349, food1:"とくせんエッグ", food1Num:24, food2:"あんみんトマト", food2Num:29, food3:"あまいミツ", food3Num:32, food4:"ずっしりカボチャ", food4Num:18, food5:"", food5Num:0}),
-
-
+new Recipe({no:101, category: "デザート・ドリンク", name: "みつあつめチョコワッフル", energy:148954, food1:"あまいミツ", food1Num:38, food2:"ワカクサコーン", food2Num:28, food3:"ピュアなオイル", food3Num:28, food4:"リラックスカカオ", food4Num:21, food5:"", food5Num:0}),
 
 
 

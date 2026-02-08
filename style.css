@@ -410,6 +410,11 @@ table thead tr th {
 #recipe_table{
     font-size: 1em;
 }
+
+#recipe_table ul li img{
+    vertical-align: bottom;
+}
+
 #weekend{
     font-size: 1.75em;
 }
@@ -418,7 +423,6 @@ table thead tr th {
 /*レシピのタグ*/
 .recipe_title{
     width: 24em;
-    margin-bottom: 0.5em;
     font-weight: 600;
 }
 
