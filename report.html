@@ -703,9 +703,10 @@
 
             function copyCookieValue(){
                 let tb = document.getElementById("mypoke_import_cookie");
-                tb.value = getCookie("rmpl");
+                tb.value = getCookie("pktg") + ";" + getCookie("rmpl");
                 navigator.clipboard.writeText(tb.value);
             }
+
 
             function importCookieValue(){
                 let tb = document.getElementById("mypoke_import_cookie");
@@ -713,8 +714,25 @@
                     alert("入力してからクリック");
                     return;
                 }
-                document.getElementById("input_mypoke_registered").innerHTML = "";
-                this.setMypokesToListFromCookie(tb.value);
+                let cookies = tb.value.split(";");
+
+                //もともとmypokeだけImport/Exportしていたが、途中から
+                //捕獲予定も対象にしたので対応するために判定処理をする                
+                if (cookies.length == 1){
+                    document.getElementById("input_mypoke_registered").innerHTML = "";
+                    this.setMypokesToListFromCookie(cookies[0]);
+                }
+                else if (cookies.length == 2){
+                    this.pokeReport.loadPlanPokeFromCookie(cookies[0], this.pokeListPlanningToGet, this.getFoodNamesOnArea());
+                    
+                    document.getElementById("input_mypoke_registered").innerHTML = "";
+                    this.setMypokesToListFromCookie(cookies[1]);
+                }
+                else{
+                    alert(";で区切るのは0個か1個");
+                    return;
+                }
+                pokeReport.setMyPokeListToCookie();
             }
 
 
@@ -1204,8 +1222,8 @@
                 this.pokeReport.setOptionsFromCookie(getCookie("ropt", ""));
                 this.setMypokesToListFromCookie();
              
-                this.pokeReport.loadPlanPokeFromCookie(this.pokeListPlanningToGet, this.getFoodNamesOnArea());
-                let sb_recipe = document.getElementById("select_recipe");              
+                this.pokeReport.loadPlanPokeFromCookie(getCookie("pktg", ""), this.pokeListPlanningToGet, this.getFoodNamesOnArea());
+                let sb_recipe = document.getElementById("select_recipe", "");              
                 if (sb_recipe.children.length == 0) this.selectRecipeCategory(document.getElementById("select_recipe_category"), true);
             }
 

@@ -455,9 +455,8 @@ class PokeReport{
     }
 
 
-    loadPlanPokeFromCookie(area, foodList = []){
-        let c = getCookie("pktg");
-        if (c == undefined) return;
+    loadPlanPokeFromCookie(c, area, foodList = []){
+        if (c == "") return;
 
         let noList = c.split('-');
         for (let i = 0; i < noList.length; i++){
