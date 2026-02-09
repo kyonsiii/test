@@ -367,14 +367,8 @@
 
                     </tbody>
                 </table>
-                <div style="font-size: 0.4em;">
-                    <strong>現在の食材レート(マジで適当)</strong><br>
-                    5000: おいしいシッポ<br>
-                    1750: ずっしりカボチャ<br>
-                    1200: ふといながねぎ<br>
-                    1000: あじわいキノコ リラックスカカオ めざましコーヒー<br>
-                    800: ピュアなオイル ワカクサコーン げきからハーブ つやつやアボカド ほっこりポテト<br>
-                    600: 上記以外の食材
+                <div id="food_rate_ref" style="font-size: 0.4em;">
+                    <strong>現在の食材レート(マジで適当)</strong><br>                    
                 </div>
 
             </div>
@@ -1221,8 +1215,8 @@
            
                 this.pokeReport.setOptionsFromCookie(getCookie("ropt", ""));
                 this.setMypokesToListFromCookie();
-             
                 this.pokeReport.loadPlanPokeFromCookie(getCookie("pktg", ""), this.pokeListPlanningToGet, this.getFoodNamesOnArea());
+                document.getElementById("food_rate_ref").innerHTML = Object.entries(pokedex.foodPowerKariMap).map(([k, v]) => k + ": " + v).join("<br>");
                 let sb_recipe = document.getElementById("select_recipe", "");              
                 if (sb_recipe.children.length == 0) this.selectRecipeCategory(document.getElementById("select_recipe_category"), true);
             }

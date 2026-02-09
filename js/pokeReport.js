@@ -623,11 +623,13 @@ class PokeReport{
         let foodDiff = ((Math.round((raw_otetsudaiCountFoodDay / raw_otetsudaiCountFoodDayNoAdjust) * 100)) - 100);
         
         let cnt = raw_otetsudaiCountFoodDay;
-        let powFoodA = this.pokedex.getFoodPowerKariOf(poke, j.foodCode[0], 0);
-        let powFoodB = this.pokedex.getFoodPowerKariOf(poke, j.foodCode[1], 1);
-        let powFoodC = this.pokedex.getFoodPowerKariOf(poke, j.foodCode[2], 2);
+        let otherFoodPower = 350;
+        let powFoodA = this.pokedex.getFoodPowerKariOf(poke, j.foodCode[0], 0, otherFoodPower);
+        let powFoodB = this.pokedex.getFoodPowerKariOf(poke, j.foodCode[1], 1, otherFoodPower);
+        let powFoodC = this.pokedex.getFoodPowerKariOf(poke, j.foodCode[2], 2, otherFoodPower);
+
         let total = 0;
-        let totalLv60 = (powFoodA + powFoodB + powFoodC) * (raw_otetsudaiCountFoodDay60 / 3);
+        let totalLv60 = (powFoodA + powFoodB + powFoodC) * raw_otetsudaiCountFoodDay60 / 3;
         if (j.lv >= 60) {
             total = (powFoodA + powFoodB + powFoodC) * (cnt / 3);
         }
