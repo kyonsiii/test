@@ -51,6 +51,10 @@ html {
     margin-bottom: 1em;
 }
 
+#input_form select, #input_form button{
+    font-size:0.75em;
+}
+
 #input_option_buttons input,
 .area_color_buttons input,
 .select_button_area input{
@@ -148,12 +152,10 @@ html {
 #sub_skill_area select{
     min-width: 40%;
     max-width: 47%;
-    font-size: 1em;
 }
 #sub_skill_area input{
     background-color: lightgrey;
     max-width: 38%;
-    font-size: 1em;
 }
 
 
