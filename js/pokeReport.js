@@ -353,7 +353,6 @@ class PokeReport{
                     row.appendChild(this.createFoodNumCell(comb, i));
                 }
             }
-            
         } else {        //食材ターゲットを複数選択した際にターゲットが含まれないポケモンも登場する
             for (let i = 0; i < 3; i++){                
                 row.appendChild(this.createFoodNumCell(comb, i));
@@ -374,6 +373,7 @@ class PokeReport{
         c.appendChild(img);
 
         let numEl = document.createElement('strong');
+        numEl.style.zIndex = 1;
         numEl.textContent = comb.foods[index].expection;
         c.appendChild(numEl);
         c.setAttribute('name', comb.foods[index].name);
