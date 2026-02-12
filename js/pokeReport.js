@@ -372,13 +372,17 @@ class PokeReport{
         img.src = "img/food/" + comb.foods[index].name + ".png";        
         c.appendChild(img);
 
+        let num = comb.foods[index].expection;
         let numEl = document.createElement('strong');
         numEl.style.zIndex = 1;
-        numEl.textContent = comb.foods[index].expection;
+        numEl.textContent = num;
         c.appendChild(numEl);
         c.setAttribute('name', comb.foods[index].name);
-        c.setAttribute('value', comb.foods[index].expection);
+        c.setAttribute('value', num);
         c.classList.add('food_num');
+        let dig = (num < 10) ? "digit1"
+                 : (num < 100) ? "digit2" : "digit3";
+                 c.classList.add(dig);
         return c;
     }
 

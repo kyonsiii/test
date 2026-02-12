@@ -171,94 +171,94 @@
             <div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="とくせんリンゴ" src="img/food/とくせんリンゴ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
 
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="モーモーミルク" src="img/food/モーモーミルク.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
 
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="ワカクサ大豆" src="img/food/ワカクサ大豆.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
 
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="あまいミツ" src="img/food/あまいミツ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
 
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="マメミート" src="img/food/マメミート.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
 
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="あったかジンジャー" src="img/food/あったかジンジャー.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
 
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="あんみんトマト" src="img/food/あんみんトマト.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
 
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="とくせんエッグ" src="img/food/とくせんエッグ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
 
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="ピュアなオイル" src="img/food/ピュアなオイル.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
 
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="ほっこりポテト" src="img/food/ほっこりポテト.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
             
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="げきからハーブ" src="img/food/げきからハーブ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
 
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="リラックスカカオ" src="img/food/リラックスカカオ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
 
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="あじわいキノコ" src="img/food/あじわいキノコ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
             
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="ふといながねぎ" src="img/food/ふといながねぎ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
 
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="おいしいシッポ" src="img/food/おいしいシッポ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
 
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="ワカクサコーン" src="img/food/ワカクサコーン.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
             
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="めざましコーヒー" src="img/food/めざましコーヒー.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
 
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="ずっしりカボチャ" src="img/food/ずっしりカボチャ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
+            </div><!--
             
-            <div class="ingredient-container food_num">
+            --><div class="ingredient-container food_num">
                 <strong></strong>
                 <img name="つやつやアボカド" src="img/food/つやつやアボカド.png" onclick="selectIcon(this);setResultOf(this)">
             </div>
@@ -281,6 +281,7 @@
 
                 <select id="select_recipe" style="font-size:1em; width:15em;" onchange="selectFoodsByRecipe(this);">
                 </select>
+                <strong id="select_recipe_total" style="display: none;">aaa</strong>
             </div>
         </div>
 
@@ -432,11 +433,11 @@
                 <select id="option_ingredient_min_count" style="width:6em; font-size:1em">
                     <option value= "10">10個</option>
                     <option value= "20">20個</option>
-                    <option value= "30">30個</option>
                     <option value= "40">40個</option>
                     <option value= "60">60個</option>
                     <option value= "80">80個</option>
                     <option value= "100">100個</option>
+                    <option value= "110">110個</option>
                     <option value="0">無制限</option>
                 </select><br>
 
@@ -518,7 +519,7 @@
                 let poke = pokedex.getPokemonByName(this.pokeList.value);
 
                 if (poke == null){
-                    let selectedFoods = Array.from(document.querySelectorAll("#food_buttons img")).filter(el => el.dataset.state == "ON").map(el => el.name);
+                    let selectedFoods = Array.from(document.querySelectorAll("#food_buttons .selected img")).map(el => el.name);
                     if (selectedFoods.length != 1) return;
                     let selectedFood = selectedFoods[0];
                     let foodIndex = this.getFoodIndexOf(selectedFood);
@@ -559,6 +560,8 @@
                     if (i == (foods.length - 1)) this.setResultOf(b);
                     }
                 }
+                
+                document.getElementById("select_recipe_total").textContent = nums.map(n => Number(n)).reduce((accum, n) => accum + n);
             }
 
             function selectRecipeCategory(el, onlySetItems = false){
@@ -608,35 +611,50 @@
 
 
             function selectIcon(el, num = 0){
-                if (el.style.margin == "" || el.style.margin == "4px"){
-                    el.style.margin = "0px";
-                    el.style.border = "4px solid blue";
-                    el.dataset.state = "ON";
+                let parent = el.parentNode;
+                parent.classList.toggle("selected");
+                if (parent.classList.contains("selected")) {
+                    let dig = (num == 0) ? 0
+                             : (num < 10) ? 1
+                              : (num < 100) ? 2 : 3
+                    this.refreshDigit(parent, dig)
                     el.previousElementSibling.textContent = (num == 0) ? "" : num;
-                }
-                else {
-                    el.style.margin = "4px";
-                    el.style.border = "";
-                    el.dataset.state = "";
+                } else {
                     el.previousElementSibling.textContent = "";
                 }
             }
 
 
             function changeIconStyle(el, turnOn){
-                if (turnOn){
-                    el.style.margin = "0px";
-                    el.style.border = "4px solid blue";
-                    el.dataset.state = "ON";
-                }
-                else{
-                    el.style.margin = "4px";
-                    el.style.border = "";
-                    el.dataset.state = "";
+                let parent = el.parentNode;
+                if (turnOn) {
+                    parent.classList.add("selected");
+                } else {
+                    parent.classList.remove("selected");
                 }
                 el.previousElementSibling.textContent = "";
             }
 
+            //setDigitによって数値の表記位置を調整する。0の時、すべて削除
+            function refreshDigit(el, setDigit = 0){          
+                if (setDigit == 1){
+                    el.classList.add("digit1");
+                    el.classList.remove("digit2");
+                    el.classList.remove("digit3");
+                } else if (setDigit == 2){
+                    el.classList.remove("digit1");
+                    el.classList.add("digit2");
+                    el.classList.remove("digit3");
+                } else if (setDigit == 3){
+                    el.classList.remove("digit1");
+                    el.classList.remove("digit2");
+                    el.classList.add("digit3");
+                } else{
+                    el.classList.remove("digit1");
+                    el.classList.remove("digit2");
+                    el.classList.remove("digit3");
+                }
+            }
 
 
             function setSubSkillsFromIdentifier(el){
@@ -755,7 +773,7 @@
                 this.lastClickedFoodIconElement = el;//これ何につかってんの？
 
                 //作成中
-                let selectedFoods = Array.from(document.querySelectorAll("#food_buttons img")).filter(el => el.dataset.state == "ON").map(el => el.name);
+                let selectedFoods = Array.from(document.querySelectorAll("#food_buttons .selected img")).map(el => el.name);
 
                 let foods = (selectedFoods.includes(el.name)) ? [el.name] : [];
                 for (let i = 0; i < selectedFoods.length; i++){

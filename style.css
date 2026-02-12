@@ -302,7 +302,16 @@ table thead tr th {
       -2px  0px 1px #FFFFFF,
        0px -2px 1px #FFFFFF; 
 }
+.food_num.digit1 strong{
+    left: 1.5em;
+}
+.food_num.digit2 strong{
+    left: 1em;
+}
 
+.food_num.digit3 strong{
+    left: 0.8em;
+}
 .ingredient-container strong{
     color: rgb(132, 0, 240);
 }
@@ -454,6 +463,21 @@ table thead tr th {
     width: 2em;
     height: 2em;
     margin: 4px;
+}
+
+#food_buttons img {
+    margin: 3px;
+    /*margin-left: 0px;*/
+    /*margin-right: 0px;*/
+    /*background-color: blue;*/
+}
+
+#food_buttons .selected img {
+    /*margin-left: 4px;*/
+    /*margin-right: 4px;*/
+    margin: 0px;
+    border: 3px solid LightSkyBlue;
+    background-color: seashell;
 }
 
 img.small{
