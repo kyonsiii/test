@@ -3,20 +3,11 @@ html {
 }
 
 
-#mypoke_list{
-    padding-bottom: 5em;
-}
-
-.mypoke_identifier{
-    position: absolute;
-    font-size: 0.75em;
-    padding-left: 0.2em;
-}
-
 #page_link{
     width: fit-content;
     position: sticky;
     left: 0;
+    min-width: 300px;
 }
 
 
@@ -236,9 +227,10 @@ table thead tr th {
 }
 
 
-#result{
+#result_table{
     margin-top: 1em;
 }
+
 .mypoke_quick_check_table{
     font-size: 0.6em;
 }
@@ -549,15 +541,21 @@ img.field{
 
 
 
+/*report専用*/
+#mypoke_list{
+    padding-bottom: 5em;
+}
+
+.mypoke_identifier{
+    position: absolute;
+    font-size: 0.75em;
+    padding-left: 0.2em;
+}
 
 
 
 
-
-
-
-
-
+/*event専用*/
 
 
 #event_schedule{
@@ -566,7 +564,6 @@ img.field{
     grid-template-columns: 3em repeat(auto-fit, minmax(0, 1fr));
     border: 1px solid black;
 }
-
 
 event_column{
     display: block;
@@ -581,7 +578,6 @@ event_column:first-of-type{
     left:0;
     background-color: whitesmoke;
     z-index: 2;
-    
 }
 
 event_cell{
@@ -598,7 +594,6 @@ event_cell.sunday{
 }
 
 event_panel{
-
     display: block;
     position: relative;
     width: 100%;
@@ -606,11 +601,13 @@ event_panel{
     box-sizing: border-box;
     z-index: 1;
 }
+
 /*nth-of-type(1)は日付の列*/
 event_column:nth-of-type(2) event_panel {
   background-color: mintcream;
   border: 2px solid aquamarine;
 }
+
 event_column:nth-of-type(2) event_panel.over_calendar {
   border: 2px dotted aquamarine;
 }
@@ -619,6 +616,7 @@ event_column:nth-of-type(3) event_panel {
   background-color: azure;
   border: 2px solid paleturquoise;
 }
+
 event_column:nth-of-type(3) event_panel.over_calendar {
   border: 2px dotted paleturquoise;
 }
@@ -647,7 +645,6 @@ event_column:nth-of-type(6) event_panel.over_calendar {
   border: 2px dotted bisque;
 }
 
-
 #event_schedule h3{
     font-size: 1em;
     padding: 0;
@@ -662,6 +659,7 @@ event_panel ul{
     margin-bottom: 0.2em;
     margin-block-end: 0em;
 }
+
 event_panel li{
     font-size: 0.8em;
     margin-left: -0.5em;

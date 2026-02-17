@@ -33,7 +33,7 @@
                 <tbody>
                     <tr>
                         <td>計測値</td>
-                        <td><input type="text" id="calc_target" class="calc_sleep_input" inputmode="decimal" onkeypress="calc.registerTextBoxKeyPress(this, event);"/></td>
+                        <td><input type="text" id="calc_target" class="calc_sleep_input" inputmode="decimal" onkeyup="calc.registerTextBoxKeyPress(this, event);"/></td>
                         <td><button onclick="calc.registerNewSleepData();" class="smaller">登録</button></td>
                     </tr>
                     <tr>

@@ -50,9 +50,10 @@ class PokeSleepingCalc{
     }
 
     registerTextBoxKeyPress(sender, event){
-        if (event.key !== "Enter") return;
-
-        this.registerNewSleepData();
+        let dotCount = (sender.value.split(".").length - 1);
+        if (event.key == "Enter" || (event.key == "." && dotCount == 2)){
+            this.registerNewSleepData();
+        }
     }
 
 
