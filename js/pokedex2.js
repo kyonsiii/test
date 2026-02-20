@@ -411,6 +411,9 @@ class Pokemon{
     constructor(json){
         Object.assign(this, json);
         this.indicatorChar = "|";
+        this.isBerrySpecialty = (this.specialty == "きのみ" || this.specialty == "オール");
+        this.isFoodSpecialty = (this.specialty == "食材" || this.specialty == "オール");
+        this.isSkillSpecialty = (this.specialty == "スキル" || this.specialty == "オール");
     }
 
     getFoodByCode(code){
@@ -476,7 +479,7 @@ class Pokemon{
     }
 
     getBerryNum(subBerryS = false){
-        return (this.specialty == "きのみ" ? 2 : 1) + (subBerryS ? 1 : 0);
+        return (this.isBerrySpecialty ? 2 : 1) + (subBerryS ? 1 : 0);
     }
 }
 

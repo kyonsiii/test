@@ -603,28 +603,28 @@ class PokeReport{
         j.berryPowerDay               = Math.round(j.berryPower * poke.getBerryNum(j.subBerryS) * raw_otetsudaiCountBerryDay);
         j.berryPowerDayNoPicking      = Math.round(j.berryPower * poke.getBerryNum(j.subBerryS) * raw_otetsudaiCountDay);
         j.berryPowerDayNoAdjustBerryS = Math.round(j.berryPower * poke.getBerryNum(true) * raw_otetsudaiCountBerryNoAdjust);
-
         let maxBerryPower             = Math.round(pokedex.getBerryPowerOf(poke.berry, maxLv) * 100) / 100;
         j.berryPowerLvMax             = Math.round(maxBerryPower * poke.getBerryNum(jMax.subBerryS) * raw_otetsudaiCountBerryDayMax);
         j.berryPowerLvMaxNoPicking    = Math.round(maxBerryPower * poke.getBerryNum(jMax.subBerryS) * raw_otetsudaiCountDayMax);
+
         j.skillPopRate                = Math.round(((poke.skillRate * (1 + j.charAdjusts.skill + j.subAdjusts.skill))) * 100000) / 100000;
-        j.skillPopDay                 = Math.round((raw_otetsudaiCountDay * j.skillPopRate + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
-        j.skillPopDayNoAdjust         = Math.round((raw_otetsudaiCountDayNoAdjust * poke.skillRate + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
+        j.skillPopDay                 = Math.round((raw_otetsudaiCountDay * j.skillPopRate + (poke.isSkillSpecialty ? 1 : 0)) * 10) / 10;
+        j.skillPopDayNoAdjust         = Math.round((raw_otetsudaiCountDayNoAdjust * poke.skillRate + (poke.isSkillSpecialty ? 1 : 0)) * 10) / 10;
         j.skillPopRateLvMax           = Math.round(((poke.skillRate * (1 + jMax.charAdjusts.skill + jMax.subAdjusts.skill))) * 100000) / 100000;
-        j.skillPopDayLvMax            = Math.round((raw_otetsudaiCountDayMax * j.skillPopRateLvMax + (poke.specialty == "スキル" ? 1 : 0)) * 10) / 10;
+        j.skillPopDayLvMax            = Math.round((raw_otetsudaiCountDayMax * j.skillPopRateLvMax + (poke.isSkillSpecialty ? 1 : 0)) * 10) / 10;
 
         let berryDiff = (Math.round((j.berryPowerDay / j.berryPowerDayNoAdjustBerryS) * 100) / 100) - 1;
-
         j.berryPowerDayDiff = (berryDiff == 0) ? "±" + Math.round(berryDiff * 100).toFixed(0) + "%"
                                : (berryDiff > 0)  ? "+" + Math.round(berryDiff * 100).toFixed(0) + "%"
                                : "-" + Math.round((Math.abs(berryDiff) * 100)).toFixed(0) + "%";
-        
+
+        let foodDiff = ((Math.round((raw_otetsudaiCountFoodDay / raw_otetsudaiCountFoodDayNoAdjust) * 100)) - 100);
+
         let skillDiff = (Math.round((j.skillPopDay / j.skillPopDayNoAdjust) * 100) / 100) - 1;
         j.skillPopDayDiff  = (skillDiff == 0) ? "±" + Math.round(skillDiff * 100).toFixed(0) + "%"
                            : (skillDiff >= 0) ? "+" + Math.round(skillDiff * 100).toFixed(0) + "%"
                            : "-" + Math.round(Math.abs(skillDiff) * 100).toFixed(0) + "%";
-
-        let foodDiff = ((Math.round((raw_otetsudaiCountFoodDay / raw_otetsudaiCountFoodDayNoAdjust) * 100)) - 100);
+        
         
         let cnt = raw_otetsudaiCountFoodDay;
         let otherFoodPower = 350;
