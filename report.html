@@ -871,36 +871,26 @@
 
 
             function listupMyPokeInfo(j){
-                let type = pokedex.getPokemonByNo(j.no).specialty;
+                let poke = pokedex.getPokemonByNo(j.no);
                 let tbodyList = [];
-                if (type == "きのみ") {
-                    tbodyList = [this.tbDetailBerry];
-                }
-                else if (type == "食材") {
-                    tbodyList.push(this.tbDetailFood);
-                }
-                else if (type == "スキル") {
-                    tbodyList.push(this.tbDetailSkill);
-                }
-                else if (type == "オール"){
-                    tbodyList = [this.tbDetailBerry, this.tbDetailFood, this.tbDetailSkill];
-                }
-                else {
-                    //alert("不明なとくいタイプ: " + j.specialty);
-                }
+                if (poke.isBerrySpecialty) tbodyList.push(this.tbDetailBerry);
+                if (poke.isFoodSpecialty) tbodyList.push(this.tbDetailFood);
+                if (poke.isSkillSpecialty) tbodyList.push(this.tbDetailSkill);
+
+                /*lvの65、そのうちマジックナンバーなくそう*/
 
                 tbodyList.forEach(tbody => {
                     let tr = document.createElement("tr");
-                    let pow = (type == "食材") ? j.foodPowerKariDay : j.berryPowerDay;
+                    let pow = (poke.specialty == "食材") ? j.foodPowerKariDay : j.berryPowerDay;
                     pokeReport.setColorClassTo(tr, j.backgroundColor);
                     
                     tr.setAttribute("value", pow);
                     tr.insertCell().innerHTML = j.name + "Lv" + j.lv + "<br>" + j.foodCode + " " + pokeReport.createIdentifierOf(j);
 
                     tr.insertCell().innerHTML = j.berryPowerDay + "(" + j.berryPowerDayDiff + ")"
-                                              + ((type != "きのみ") ? "" : "<br>" + j.berryPowerDayNoPicking + "(NP)")
+                                              + ((poke.specialty != "きのみ") ? "" : "<br>" + j.berryPowerDayNoPicking + "(NP)")
                                               + ((j.lv < 65) ? "<br> → " + j.berryPowerLvMax + "(Lv" + j.LvMax + ")" : "")
-                                              + ((j.lv >= 65 || type != "きのみ") ? "" : "<br> 　 " + j.berryPowerLvMaxNoPicking + "(NP)")
+                                              + ((j.lv >= 65 || poke.specialty != "きのみ") ? "" : "<br> 　 " + j.berryPowerLvMaxNoPicking + "(NP)")
                     tr.insertCell().innerHTML = j.foodPowerKariDayDiff + ((j.lv < 60) ? "<br> → " + j.foodPowerKariDayLv60 + "(Lv60)" : "");
                     tr.insertCell().innerHTML = j.skillPopDay.toFixed(1) + "("+ j.skillPopDayDiff + ")"  + ((j.lv < 65) ? "<br> → " + j.skillPopDayLvMax + "(Lv" + j.LvMax + ")" : "");
                     let rows = tbody.children;
@@ -913,7 +903,7 @@
                             let value = rows[i].getAttribute('value');
                             if (value <= pow){
                                 tbody.insertBefore(tr, rows[i]);
-                                return;;
+                                return;
                             }
                         }
                         tbody.appendChild(tr);
@@ -1172,7 +1162,6 @@
                     ["skillLvUpS", "スキルLvS","u"],["skillLvUpM", "スキルLvM","U"],["berryS", "きのみS","s"],["inventoryS", "所持S","'"],["inventoryM", "所持M", '"'],["inventoryL", "所持L","*"],
                     ["expBonus", "EXPボ","e"],["genkiBonus", "げんきボ","g"],["yumeBonus", "ゆめボ","y"],["researchBonus", "リサーチボ","r"]
                 ];
-
                 subSkillList.forEach(s => addOp("sub_skill_lv10", s[0], s[1], s[2]));
                 subSkillList.forEach(s => addOp("sub_skill_lv25", s[0], s[1], s[2]));
                 subSkillList.forEach(s => addOp("sub_skill_lv50", s[0], s[1], s[2]));
