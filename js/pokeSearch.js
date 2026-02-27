@@ -195,6 +195,7 @@ class PokeSearch{
         + "<br><span class=\"indicator_text\">食材拾い/日:</span>" + poke.foodOtetsudaiCountDay + "回"    
         + "<br><span class=\"indicator_text\">スキル発動/日:</span>" + poke.skillExpectionDay.toFixed(1) + "回"
         + "<br><span class=\"indicator_text\">食材確率:</span>"+ (poke.foodRate * 100).toFixed(1) + "%"
+        + "<br><span class=\"indicator_text\">スキル確率:</span>"+ (poke.skillRate * 100).toFixed(1) + "%"
         + "<br><span class=\"indicator_text\">きのみRank</span> " + poke.getIndicatorBarOf(poke.rankOfBerry)//poke.indicatorChar.repeat(poke.berryIndicator)
         + "<br><span class=\"indicator_text\">食材Rank</span> " + poke.getIndicatorBarOf(poke.rankOfFood)//poke.indicatorChar.repeat(poke.foodIndicator)
         + "<br><span class=\"indicator_text\">スキルRank</span> " + poke.getIndicatorBarOf(poke.rankOfSkill)//poke.indicatorChar.repeat(poke.skillIndicator)
