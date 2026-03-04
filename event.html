@@ -88,6 +88,8 @@
                 this.pokeEvent.addEntry("2026/02/28 00:00", "2026/03/30 04:00", true, GetPreset(), "◆ミラクススナップ", "1回目のリサーチにミュウが写真に写りこむ", "◆ミュウが映り込んだ写真は以下の効果が発生", "アメ1.25倍", "リサーチEXP1.25倍", "ゆめのかけら+1000");
                 this.pokeEvent.addEntry("2026/03/02 04:00", "2026/03/09 04:00", true, GetPreset(), "◆第1回 ポケモンデー記念キャンペーン", this.EventItems["pickup_other_sleep_type"], EventItems["sleep_exp_bonus_150percent"], EventItems["main_skill_125percent"], EventItems["cooking_power_125percent"], EventItems["main_skill_lv_plus1"], "【中ピックアップ】 フシギダネ / フシギソウ / フシギバナ / ヒトカゲ / リザード / リザードン / ゼニガメ / カメール / カメックス / チコリータ / ベイリーフ / メガニウム / ヒノアラシ / マグマラシ / バクフーン / ワニノコ / アリゲイツ / オーダイル / キモリ / ジュプトル / ジュカイン / アチャモ / ワカシャモ / バシャーモ / ミズゴロウ / ヌマクロー / ラグラージ / ニャオハ / ニャローテ / マスカーニャ / ホゲータ / アチゲータ / ラウドボーン / クワッス / ウェルカモ / ウェーニバル");
                 this.pokeEvent.addEntry("2026/03/02 04:00", "2026/03/05 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.32");
+                this.pokeEvent.addEntry("2026/03/16 04:00", "2026/03/23 04:00", true, GetPreset("ゆめのカケラGETウィーク"), "◆ゆめのカケラGETウィークVol.2");
+                
                 //最終的に幅を決める
                 let columns = document.querySelectorAll("event_column").length - 1;
                 pokeEvent.dataField.style.minWidth = (columns * 10 + 3) + "em";
@@ -153,7 +155,7 @@
                 main_skill_150percent_about_food
                 : "食材ゲットS、食材セレクトSの効果1.5倍",
                 main_skill_150percent_dream_shard_get
-                : "ゆめのかけらゲット効果2倍",
+                : "スキルで獲得するゆめのかけら1.5倍",
                 main_skill_lv_plus1
                 : "メインスキルのレベル+1",
                 main_skill_lv_plus3
@@ -218,6 +220,15 @@
                         this.EventItems["pickup_darkrai"],
                         this.EventItems["pickup_shiny"],
                         this.EventItems["sleep_hunger_chance"]
+                    ]
+                },
+
+                "ゆめのカケラGETウィーク" : {
+                    items: [
+                        this.EventItems["mini_candy_boost"],
+                        this.EventItems["sleep_yumenokakera_150percent"],
+                        this.EventItems["main_skill_125percent"],
+                        this.EventItems["main_skill_150percent_dream_shard_get"]
                     ]
                 },
 
