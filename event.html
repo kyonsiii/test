@@ -90,7 +90,9 @@
                 this.pokeEvent.addEntry("2026/03/02 04:00", "2026/03/05 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.32");
                 this.pokeEvent.addEntry("2026/03/16 04:00", "2026/03/23 04:00", true, GetPreset("ゆめのカケラGETウィーク"), "◆ゆめのカケラGETウィークVol.2");
                 this.pokeEvent.addEntry("2026/03/18 04:00", "2026/03/21 04:00", true, GetPreset("ニュームーンデー"), "◆第11回ニュームーンデー"); 
+                this.pokeEvent.addEntry("2026/03/23 15:00", "2026/04/22 04:00", true, GetPreset(), "◆新ポケモン【オンバット】【オンバーン】追加", "【オンバット】【オンバーン】(ドラゴンタイプ・うとうと) ワカクサ本島・～EX/トープ洞窟/アンバー渓谷");     
 
+                this.pokeEvent.addEntry("2026/03/23 04:00", "2026/03/30 04:00", true, GetPreset("ピックアップウィーク(スキル)"), "◆第1回ピックアップウィーク(スキル)", "【 中ピックアップ 】オンバット / オンバーン", "【 小ピックアップ 】ニャース / コダック / ガーディ / ヤドン / コイル / イーブイ / ププリン / トゲピー / メリープ / ヤミカラス / ツボツボ / ヘラクロス / キモリ / ラルトス / ヤミラミ / プラスル / マイナン / ゴクリン / ソーナノ / フワンテ / ウソハチ / リオル / イシズマイ / ワシボン / デデンネ / トゲデマル / ミミッキュ / エレズン / パモ"); 
                 //最終的に幅を決める
                 let columns = document.querySelectorAll("event_column").length - 1;
                 pokeEvent.dataField.style.minWidth = (columns * 10 + 3) + "em";
@@ -221,6 +223,14 @@
                         this.EventItems["pickup_darkrai"],
                         this.EventItems["pickup_shiny"],
                         this.EventItems["sleep_hunger_chance"]
+                    ]
+                },
+
+                "ピックアップウィーク(スキル)": {
+                    items: [
+                        this.EventItems["mini_candy_boost"],
+                        this.EventItems["pickup_other_sleep_type"],
+                        this.EventItems["sleep_get_chance"]
                     ]
                 },
 
