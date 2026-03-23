@@ -15,12 +15,12 @@
         <div id="page_link">
             <a href = "./index.html"><img src="img/pages/pokedex.png"></a>
             <a href = "./sleep.html"><img src="img/pages/sleep.png"></a>
-            <a href = "./cook.html"><img src="img/pages/cook.png"></a>            
+            <a href = "./cook.html"><img src="img/pages/cook.png"></a>
             <a href = "./report.html"><img src="img/pages/report.png"></a>
             <a href = "./event.html" class ="current"><img src="img/pages/event.png"></a>
         </div>
 
-    
+
 
         <div id="event_schedule">
           <event_column id="event_column_date"></event_column>
@@ -29,7 +29,7 @@
         <!--以下、スクリプト-->
         <script>
           window.onload = ()=>{
-                this.pokeEvent = new PokeEvent();                
+                this.pokeEvent = new PokeEvent();
                 //addEntry(startDateStr, endDateStr, endAtPreviousDayEnd, presetItems, label, ...params)
                 //endAtPreviousDayEnd = trueの時、は0:00～3:59のパネルを省く
                 //presetItemsはGetPresetでイベントを取得し、配列を渡す。
@@ -59,42 +59,44 @@
                 //this.pokeEvent.addEntry("2025/09/29 15:00", "2025/10/06 04:00", true, GetPreset(), "◆ネイティ・ネイティオ追加", "ワカクサ本島・～EX", "ラピスラズリ湖畔", "すやすや");
                 //this.pokeEvent.addEntry("2025/10/06 04:00", "2025/10/09 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.27");
                 //this.pokeEvent.addEntry("2025/10/06 04:00", "2025/10/13 04:00", true, GetPreset("ポケモン寝顔発見ウィーク"), "◆第2回ポケモン寝顔発見ウィーク");
-                //this.pokeEvent.addEntry("2025/10/20 04:00", "2025/10/23 04:00", true, GetPreset("ニュームーンデー"), "◆第6回ニュームーンデー");           
-                //this.pokeEvent.addEntry("2025/10/22 04:00", "2025/11/03 04:00", true, GetPreset(), "◆バケッチャ・パンプジン追加", "ワカクサ本島・～EX", "ゴールド発電所", "うとうと", "大きいほど所持数↑", "小さいほどおてつだいスピード↑");     
+                //this.pokeEvent.addEntry("2025/10/20 04:00", "2025/10/23 04:00", true, GetPreset("ニュームーンデー"), "◆第6回ニュームーンデー");
+                //this.pokeEvent.addEntry("2025/10/22 04:00", "2025/11/03 04:00", true, GetPreset(), "◆バケッチャ・パンプジン追加", "ワカクサ本島・～EX", "ゴールド発電所", "うとうと", "大きいほど所持数↑", "小さいほどおてつだいスピード↑");
                 //this.pokeEvent.addEntry("2025/10/27 04:00", "2025/11/03 04:00", true, GetPreset(), "◆ハロウィン2025:ダブルアメリサーチ", this.EventItems["pickup_other_sleep_type"], "開催フィールドの「今週のカビゴンの好きなきのみ」の1種類が ブリーのみ (ゴーストタイプ)で固定され、のこりの2種類はランダム", "ゴーストタイプのおてつだいポケモンが通常のおてつだいで食材を拾ってきた場合、 ", "食材+1個", "メインスキル発生確率1.25倍", "メインスキルのレベル+3", "【ハロウィンの日(10/31)・イベント最終日(11/2)、1回目の睡眠リサーチでの アメ獲得量3倍", "【それ以外の日 】、1回目の睡眠リサーチでの アメ獲得量2倍", "【 大ピックアップ 】イーブイ(ハロウィン) / バケッチャ / パンプジン", "【 中ピックアップ 】ピカチュウ(ハロウィン) / ゴース / ゴースト / ゲンガー / カゲボウズ / ジュペッタ / フワンテ / フワライド / ミミッキュ / ラウドボーン");
                 //this.pokeEvent.addEntry("2025/11/04 04:00", "2025/11/07 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.28");
                 //this.pokeEvent.addEntry("2025/11/06 15:00", "2025/11/10 04:00",false, GetPreset(), "◆新フィールド追加「アンバー渓谷」","得意タイプ「どく」「むし」「ドラゴン」","新規ポケモン追加", "ナックラー・ビブラーバ・フライゴン（ぐっすり、じめんタイプ、トープにも出現）", "タツベイ・コモルー・ボーマンダ（うとうと、ドラゴンタイプ）", "イシズマイ・イワパレス（うとうと、むしタイプ）", "新食材「つやつやアボカド」追加", "カレーのレシピ1種類追加", "サラダのレシピ2種類追加", "デザートのレシピ1種類追加");
                 //this.pokeEvent.addEntry("2025/11/10 04:00", "2025/11/17 04:00",false, GetPreset(), "◆アンバー渓谷登場キャンペーン 前半", this.EventItems["pickup_other_sleep_type"], "小ピックアップ: ナックラー / タツベイ / イシズマイ", "ワカクサ本島でも出現(EXでは出ない)", "新ポケモンはアンバー渓谷のほうが出やすい");
                 //this.pokeEvent.addEntry("2025/11/17 04:00", "2025/11/24 04:00", true, GetPreset(), "◆アンバー渓谷登場キャンペーン 後半", this.EventItems["pickup_other_sleep_type"], "小ピックアップ: ナックラー / タツベイ / イシズマイ", "ワカクサ本島でも出現(EXでは出ない)", "新ポケモンはアンバー渓谷のほうが出やすい");
-                //this.pokeEvent.addEntry("2025/11/19 04:00", "2025/11/22 04:00", true, GetPreset("ニュームーンデー"), "◆第7回ニュームーンデー");      
+                //this.pokeEvent.addEntry("2025/11/19 04:00", "2025/11/22 04:00", true, GetPreset("ニュームーンデー"), "◆第7回ニュームーンデー");
                 //this.pokeEvent.addEntry("2025/12/01 04:00", "2025/12/08 04:00", true, GetPreset("デカ盛り！料理ウィーク"), "◆デカ盛り！料理ウィークVol.2", "中ピックアップ: ミカルゲ", "小ピックアップ: ディグダ / マダツボミ / イシツブテ / カモネギ / ガルーラ / メタモン / ウパー / ウパー(パルデアのすがた) / ヨーギラス / クチート / アブソル / コリンク / マネネ / グレッグル / ユキカブリ / バケッチャ / アゴジムシ / ヌイコグマ / キュワワー / ウッウ / クワッス");
                 //this.pokeEvent.addEntry("2025/12/04 04:00", "2025/12/07 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.29");
-                //this.pokeEvent.addEntry("2025/12/19 04:00", "2025/12/22 04:00", true, GetPreset("ニュームーンデー"), "◆第8回ニュームーンデー");   
+                //this.pokeEvent.addEntry("2025/12/19 04:00", "2025/12/22 04:00", true, GetPreset("ニュームーンデー"), "◆第8回ニュームーンデー");
                 //this.pokeEvent.addEntry("2025/12/22 04:00", "2025/12/29 04:00", true, GetPreset("ダブルゆめのかけらリサーチ"), "◆ホリデー2025：ダブルゆめのかけらリサーチ", "【12/24】【12/25】 ドリームギフト", "【12/25】 リサーチのゆめのかけら3倍", "カビゴンの好きなきのみが「チーゴのみ」「ベリブのみ」「ランダム」に固定", "▼こおり/はがねタイプ", this.EventItems["food_plus_1_for_food_type"], this.EventItems["main_skill_150percent"], this.EventItems["main_skill_lv_plus3"], "【 大ピックアップ 】タマザラシ(ホリデー) / トゲデマル / アルクジラ / ハルクジラ", "【 中ピックアップ 】ピカチュウ(ホリデー) / イーブイ(ホリデー)", "【 小ピックアップ 】ロコン(アローラのすがた) / キュウコン(アローラのすがた) / デリバード / タマザラシ / トドグラー / トドゼルガ / ユキカブリ / ユキノオー / グレイシア / パモ / パモット / パーモット")
-                //this.pokeEvent.addEntry("2025/12/22 15:00", "2025/12/29 04:00", true, GetPreset(), "◆新ポケモン【トゲデマル】【アルクジラ】【ハルクジラ】追加", "【トゲデマル】(ぐっすり) ワカクサ本島・～EX/ウノハナ雪原/ゴールド発電所/アンバー渓谷", "【アルクジラ】(ぐっすり) ワカクサ本島・～EX/ウノハナ雪原", "【ハルクジラ】(ぐっすり) ワカクサ本島EX/ウノハナ雪原");     
-                //this.pokeEvent.addEntry("2025/12/29 04:00", "2026/01/05 04:00",false, GetPreset("ニューイヤー"), "◆ニューイヤー2026 前半", this.EventItems["sleep_candy_150percent"], this.EventItems["main_skill_125percent"], this.EventItems["main_skill_lv_plus1"], "【1/1】 ねむけパワー3倍", "【 小ピックアップ 】カモネギ / ラッキー / ウパー(パルデアのすがた) / ヤミカラス / ハピナス / キモリ / ジュプトル / ジュカイン / アチャモ / ワカシャモ / バシャーモ / ミズゴロウ / ヌマクロー / ラグラージ / クチート / ドンカラス / ピンプク / ムンナ / ムシャーナ / ワシボン / ウォーグル / ドオー");   
+                //this.pokeEvent.addEntry("2025/12/22 15:00", "2025/12/29 04:00", true, GetPreset(), "◆新ポケモン【トゲデマル】【アルクジラ】【ハルクジラ】追加", "【トゲデマル】(ぐっすり) ワカクサ本島・～EX/ウノハナ雪原/ゴールド発電所/アンバー渓谷", "【アルクジラ】(ぐっすり) ワカクサ本島・～EX/ウノハナ雪原", "【ハルクジラ】(ぐっすり) ワカクサ本島EX/ウノハナ雪原");
+                //this.pokeEvent.addEntry("2025/12/29 04:00", "2026/01/05 04:00",false, GetPreset("ニューイヤー"), "◆ニューイヤー2026 前半", this.EventItems["sleep_candy_150percent"], this.EventItems["main_skill_125percent"], this.EventItems["main_skill_lv_plus1"], "【1/1】 ねむけパワー3倍", "【 小ピックアップ 】カモネギ / ラッキー / ウパー(パルデアのすがた) / ヤミカラス / ハピナス / キモリ / ジュプトル / ジュカイン / アチャモ / ワカシャモ / バシャーモ / ミズゴロウ / ヌマクロー / ラグラージ / クチート / ドンカラス / ピンプク / ムンナ / ムシャーナ / ワシボン / ウォーグル / ドオー");
                 //this.pokeEvent.addEntry("2026/01/02 04:00", "2026/01/05 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.30");
-                //this.pokeEvent.addEntry("2026/01/05 04:00", "2026/01/12 04:00", true, GetPreset("ニューイヤー"), "◆ニューイヤー2026 後半", this.EventItems["sleep_yumenokakera_150percent"], this.EventItems["cooking_power_125percent"], this.EventItems["uu_robo"], "【 小ピックアップ 】ネイティ / ネイティオ / プラスル / マイナン / ナックラー / ビブラーバ / フライゴン / タツベイ / コモルー / ボーマンダ / ミカルゲ / イシズマイ / イワパレス / バケッチャ / パンプジン / エレズン / ストリンダー(ハイなすがた) / ストリンダー(ローなすがた)", "「 ナックラー 」「 タツベイ 」「 イシズマイ 」などの一部ポケモンに、期間中のみ ワカクサ本島 でもう一度出会えるように");  
-                //this.pokeEvent.addEntry("2026/01/18 04:00", "2026/01/21 04:00", true, GetPreset("ニュームーンデー"), "◆第9回ニュームーンデー"); 
+                //this.pokeEvent.addEntry("2026/01/05 04:00", "2026/01/12 04:00", true, GetPreset("ニューイヤー"), "◆ニューイヤー2026 後半", this.EventItems["sleep_yumenokakera_150percent"], this.EventItems["cooking_power_125percent"], this.EventItems["uu_robo"], "【 小ピックアップ 】ネイティ / ネイティオ / プラスル / マイナン / ナックラー / ビブラーバ / フライゴン / タツベイ / コモルー / ボーマンダ / ミカルゲ / イシズマイ / イワパレス / バケッチャ / パンプジン / エレズン / ストリンダー(ハイなすがた) / ストリンダー(ローなすがた)", "「 ナックラー 」「 タツベイ 」「 イシズマイ 」などの一部ポケモンに、期間中のみ ワカクサ本島 でもう一度出会えるように");
+                //this.pokeEvent.addEntry("2026/01/18 04:00", "2026/01/21 04:00", true, GetPreset("ニュームーンデー"), "◆第9回ニュームーンデー");
                 //this.pokeEvent.addEntry("2026/01/19 04:00", "2026/01/26 04:00", true, GetPreset("連発！スキルウィーク"), "◆連発！スキルウィーク vol.3", "中ピックアップ: ツボツボ", "【 小ピックアップ 】 ニャース / コダック / ガーディ / ヤドン / コイル / イーブイ / ププリン / トゲピー / メリープ / ヤミカラス / ヘラクロス / キモリ / ラルトス / ヤミラミ / プラスル / マイナン / ゴクリン / ソーナノ / フワンテ / ウソハチ / リオル / イシズマイ / ワシボン / デデンネ / トゲデマル / ミミッキュ / エレズン / パモ")
-                //this.pokeEvent.addEntry("2026/01/19 15:00", "2026/01/26 04:00", true, GetPreset(), "◆新ポケモン【ツボツボ】追加", "【ツボツボ】(うとうと) ワカクサ本島・～EX/シアンの砂浜/トープ洞窟/アンバー渓谷", "新スキル「きのみジュース」","味方全員のげんきを回復し、時々「きのみジュース」のアイテムを獲得（げんきマクラの20回復版）");     
+                //this.pokeEvent.addEntry("2026/01/19 15:00", "2026/01/26 04:00", true, GetPreset(), "◆新ポケモン【ツボツボ】追加", "【ツボツボ】(うとうと) ワカクサ本島・～EX/シアンの砂浜/トープ洞窟/アンバー渓谷", "新スキル「きのみジュース」","味方全員のげんきを回復し、時々「きのみジュース」のアイテムを獲得（げんきマクラの20回復版）");
                 //this.pokeEvent.addEntry("2026/02/01 04:00", "2026/02/04 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.31");
                 //this.pokeEvent.addEntry("2026/02/09 04:00", "2026/02/16 04:00", true, GetPreset("バレンタイン"), "◆バレンタイン2026", "【中ピックアップ】アブリー / アブリボン", "【小ピックアップ】フシギダネ / カイロス / メタモン / ウパー(パルデアのすがた) / クチート / アブソル / グレッグル / ヌイコグマ / キュワワー / ウッウ");
-                //this.pokeEvent.addEntry("2026/02/09 15:00", "2026/02/16 04:00", true, GetPreset(), "◆新ポケモン【アブリー】【アブリボン】追加", "すやすや", "ワカクサ本島・～EX / シアンの砂浜 / ラピスラズリ湖畔 / アンバー渓谷");     
-                //this.pokeEvent.addEntry("2026/02/16 04:00", "2026/02/19 04:00", true, GetPreset("ニュームーンデー"), "◆第10回ニュームーンデー"); 
+                //this.pokeEvent.addEntry("2026/02/09 15:00", "2026/02/16 04:00", true, GetPreset(), "◆新ポケモン【アブリー】【アブリボン】追加", "すやすや", "ワカクサ本島・～EX / シアンの砂浜 / ラピスラズリ湖畔 / アンバー渓谷");
+                //this.pokeEvent.addEntry("2026/02/16 04:00", "2026/02/19 04:00", true, GetPreset("ニュームーンデー"), "◆第10回ニュームーンデー");
                 //this.pokeEvent.addEntry("2026/02/24 13:30", "2026/02/24 18:00",false, GetPreset(), "◆メンテナンス");
                 //this.pokeEvent.addEntry("2026/02/26 15:00", "2026/02/27 09:00",false, GetPreset(), "◆Pokémon Day記念！", "ねむけパワー1.5倍");
-                
+
                 this.pokeEvent.addEntry("2026/02/28 00:00", "2026/03/30 04:00", true, GetPreset(), "◆ミラクススナップ", "1回目のリサーチにミュウが写真に写りこむ", "◆ミュウが映り込んだ写真は以下の効果が発生", "アメ1.25倍", "リサーチEXP1.25倍", "ゆめのかけら+1000");
-                this.pokeEvent.addEntry("2026/03/02 04:00", "2026/03/09 04:00", true, GetPreset(), "◆第1回 ポケモンデー記念キャンペーン", this.EventItems["pickup_other_sleep_type"], EventItems["sleep_exp_bonus_150percent"], EventItems["main_skill_125percent"], EventItems["cooking_power_125percent"], EventItems["main_skill_lv_plus1"], "【中ピックアップ】 フシギダネ / フシギソウ / フシギバナ / ヒトカゲ / リザード / リザードン / ゼニガメ / カメール / カメックス / チコリータ / ベイリーフ / メガニウム / ヒノアラシ / マグマラシ / バクフーン / ワニノコ / アリゲイツ / オーダイル / キモリ / ジュプトル / ジュカイン / アチャモ / ワカシャモ / バシャーモ / ミズゴロウ / ヌマクロー / ラグラージ / ニャオハ / ニャローテ / マスカーニャ / ホゲータ / アチゲータ / ラウドボーン / クワッス / ウェルカモ / ウェーニバル");
-                this.pokeEvent.addEntry("2026/03/02 04:00", "2026/03/05 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.32");
-                this.pokeEvent.addEntry("2026/03/16 04:00", "2026/03/23 04:00", true, GetPreset("ゆめのカケラGETウィーク"), "◆ゆめのカケラGETウィークVol.2");
-                this.pokeEvent.addEntry("2026/03/18 04:00", "2026/03/21 04:00", true, GetPreset("ニュームーンデー"), "◆第11回ニュームーンデー");  
-                this.pokeEvent.addEntry("2026/03/23 04:00", "2026/03/30 04:00", true, GetPreset("ピックアップウィーク(スキル)"), "◆第1回ピックアップウィーク(スキル)", "【 中ピックアップ 】オンバット / オンバーン", "【 小ピックアップ 】ニャース / コダック / ガーディ / ヤドン / コイル / イーブイ / ププリン / トゲピー / メリープ / ヤミカラス / ツボツボ / ヘラクロス / キモリ / ラルトス / ヤミラミ / プラスル / マイナン / ゴクリン / ソーナノ / フワンテ / ウソハチ / リオル / イシズマイ / ワシボン / デデンネ / トゲデマル / ミミッキュ / エレズン / パモ"); 
-                this.pokeEvent.addEntry("2026/03/23 15:00", "2026/03/30 04:00", true, GetPreset(), "◆新ポケモン【オンバット】【オンバーン】追加", "【オンバット】【オンバーン】(ドラゴンタイプ・うとうと) ワカクサ本島・～EX/トープ洞窟/アンバー渓谷");     
-                this.pokeEvent.addEntry("2026/04/06 04:00", "2026/04/13 04:00",false, GetPreset(), "◆ラティアスリサーチ 前半", EventItems["exchange_shop"], EventItems["exchange_item"], EventItems["pickup_other_sleep_type"], "【スキルタイプ限定】", EventItems["main_skill_125percent"], EventItems["food_plus_1"], EventItems["main_skill_lv_plus2"], "所持数+8", "【中ピックアップ】ラティアス", "【小ピックアップ】ニャース / コダック / ガーディ / ヤドン / コイル / イーブイ / ププリン / トゲピー / メリープ / ヤミカラス / ツボツボ / ヘラクロス / キモリ / ラルトス / ヤミラミ / プラスル / マイナン / ゴクリン / ソーナノ / フワンテ / ウソハチ / リオル / イシズマイ / ワシボン / デデンネ / オンバット / トゲデマル / ミミッキュ / エレズン / パモ");   
+                //this.pokeEvent.addEntry("2026/03/02 04:00", "2026/03/09 04:00", true, GetPreset(), "◆第1回 ポケモンデー記念キャンペーン", this.EventItems["pickup_other_sleep_type"], EventItems["sleep_exp_bonus_150percent"], EventItems["main_skill_125percent"], EventItems["cooking_power_125percent"], EventItems["main_skill_lv_plus1"], "【中ピックアップ】 フシギダネ / フシギソウ / フシギバナ / ヒトカゲ / リザード / リザードン / ゼニガメ / カメール / カメックス / チコリータ / ベイリーフ / メガニウム / ヒノアラシ / マグマラシ / バクフーン / ワニノコ / アリゲイツ / オーダイル / キモリ / ジュプトル / ジュカイン / アチャモ / ワカシャモ / バシャーモ / ミズゴロウ / ヌマクロー / ラグラージ / ニャオハ / ニャローテ / マスカーニャ / ホゲータ / アチゲータ / ラウドボーン / クワッス / ウェルカモ / ウェーニバル");
+                //this.pokeEvent.addEntry("2026/03/02 04:00", "2026/03/05 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.32");
+                //this.pokeEvent.addEntry("2026/03/16 04:00", "2026/03/23 04:00", true, GetPreset("ゆめのカケラGETウィーク"), "◆ゆめのカケラGETウィークVol.2");
+                //this.pokeEvent.addEntry("2026/03/18 04:00", "2026/03/21 04:00", true, GetPreset("ニュームーンデー"), "◆第11回ニュームーンデー");
+                this.pokeEvent.addEntry("2026/03/23 04:00", "2026/03/30 04:00", true, GetPreset("ピックアップウィーク(スキル)"), "◆第1回ピックアップウィーク(スキル)", "【 中ピックアップ 】オンバット / オンバーン", "【 小ピックアップ 】ニャース / コダック / ガーディ / ヤドン / コイル / イーブイ / ププリン / トゲピー / メリープ / ヤミカラス / ツボツボ / ヘラクロス / キモリ / ラルトス / ヤミラミ / プラスル / マイナン / ゴクリン / ソーナノ / フワンテ / ウソハチ / リオル / イシズマイ / ワシボン / デデンネ / トゲデマル / ミミッキュ / エレズン / パモ");
+                this.pokeEvent.addEntry("2026/03/23 15:00", "2026/03/30 04:00", true, GetPreset(), "◆新ポケモン【オンバット】【オンバーン】追加", "【オンバット】【オンバーン】(ドラゴンタイプ・うとうと) ワカクサ本島・～EX/トープ洞窟/アンバー渓谷");
+                this.pokeEvent.addEntry("2026/04/01 04:00", "2026/04/04 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.33");
                 this.pokeEvent.addEntry("2026/04/06 15:00", "2026/04/20 04:00", true, GetPreset(), "◆新ポケモン【ラティアス】？？")
-                this.pokeEvent.addEntry("2026/04/13 04:00", "2026/04/20 04:00", true, GetPreset(), "◆ラティアスリサーチ 後半", EventItems["exchange_shop"], EventItems["exchange_item"], EventItems["pickup_other_sleep_type"], EventItems["big_kabigon"], "【スキルタイプ限定】", EventItems["main_skill_125percent"], EventItems["berry_plus_1"], EventItems["main_skill_lv_plus5"], "所持数+15", "【中ピックアップ】ラティアス", "【小ピックアップ】ニャース / コダック / ガーディ / ヤドン / コイル / イーブイ / ププリン / トゲピー / メリープ / ヤミカラス / ツボツボ / ヘラクロス / キモリ / ラルトス / ヤミラミ / プラスル / マイナン / ゴクリン / ソーナノ / フワンテ / ウソハチ / リオル / イシズマイ / ワシボン / デデンネ / オンバット / トゲデマル / ミミッキュ / エレズン / パモ");  
+                this.pokeEvent.addEntry("2026/04/06 04:00", "2026/04/13 04:00",false, GetPreset(), "◆ラティアスリサーチ 前半", EventItems["exchange_shop"], EventItems["exchange_item"], EventItems["pickup_other_sleep_type"], "【スキルタイプ限定】", EventItems["main_skill_125percent"], EventItems["food_plus_1"], EventItems["main_skill_lv_plus2"], "所持数+8", "【中ピックアップ】ラティアス", "【小ピックアップ】ニャース / コダック / ガーディ / ヤドン / コイル / イーブイ / ププリン / トゲピー / メリープ / ヤミカラス / ツボツボ / ヘラクロス / キモリ / ラルトス / ヤミラミ / プラスル / マイナン / ゴクリン / ソーナノ / フワンテ / ウソハチ / リオル / イシズマイ / ワシボン / デデンネ / オンバット / トゲデマル / ミミッキュ / エレズン / パモ");
+                this.pokeEvent.addEntry("2026/04/13 04:00", "2026/04/20 04:00", true, GetPreset(), "◆ラティアスリサーチ 後半", EventItems["exchange_shop"], EventItems["exchange_item"], EventItems["pickup_other_sleep_type"], EventItems["big_kabigon"], "【スキルタイプ限定】", EventItems["main_skill_125percent"], EventItems["berry_plus_1"], EventItems["main_skill_lv_plus5"], "所持数+15", "【中ピックアップ】ラティアス", "【小ピックアップ】ニャース / コダック / ガーディ / ヤドン / コイル / イーブイ / ププリン / トゲピー / メリープ / ヤミカラス / ツボツボ / ヘラクロス / キモリ / ラルトス / ヤミラミ / プラスル / マイナン / ゴクリン / ソーナノ / フワンテ / ウソハチ / リオル / イシズマイ / ワシボン / デデンネ / オンバット / トゲデマル / ミミッキュ / エレズン / パモ");
+
 
 
 
@@ -140,7 +142,7 @@
                 fix_recipe_salad
                 : "サラダで固定",
                 fix_recipe_sweet
-                : "デザート・ドリンクで固定",                
+                : "デザート・ドリンクで固定",
                 cooking_capacity_150percent
                 : "なべの容量1.5倍(日曜3倍)",
                 cooking_capacity_200percent
@@ -175,7 +177,7 @@
                 : "メインスキルのレベル+4",
                 main_skill_lv_plus5
                 : "メインスキルのレベル+5",
-                
+
 
                 /*きのみ関係*/
                 berry_plus_1
@@ -276,11 +278,11 @@
 
                 "ポケモン寝顔発見ウィーク" : {
                     items: [
-                        this.EventItems["mini_candy_boost"],                        
+                        this.EventItems["mini_candy_boost"],
                         this.EventItems["pickup_other_sleep_type"],
                         this.EventItems["pickup_undiscovered"],
-                        this.EventItems["cooking_power_125percent"]                              
-                    ]  
+                        this.EventItems["cooking_power_125percent"]
+                    ]
                 },
 
                 "連発！スキルウィーク" : {
@@ -301,14 +303,14 @@
                     ]
                 },
                 "デカ盛り！料理ウィーク" :{
-                    items: [         
-                        this.EventItems["mini_candy_boost"],           
+                    items: [
+                        this.EventItems["mini_candy_boost"],
                         this.EventItems["pickup_other_sleep_type"],
-                        this.EventItems["cooking_capacity_200percent"],  
-                        this.EventItems["cooking_power_125percent"], 
+                        this.EventItems["cooking_capacity_200percent"],
+                        this.EventItems["cooking_power_125percent"],
                         this.EventItems["cooking_genki_bonus_5"],
                         this.EventItems["food_plus_1_for_food_type"],
-                        this.EventItems["main_skill_150percent_about_food"]                                         
+                        this.EventItems["main_skill_150percent_about_food"]
                     ]
                 },
 
@@ -331,11 +333,11 @@
 
                 "バレンタイン": {
                     items: [
-                        
+
                         this.EventItems["pickup_other_sleep_type"],
                         this.EventItems["fix_recipe_sweet"],
                         this.EventItems["pickup_shiny"],
-                        this.EventItems["cooking_power_150percent"], 
+                        this.EventItems["cooking_power_150percent"],
                         this.EventItems["main_skill_125percent_about_food"]
                     ]
                 },
@@ -387,7 +389,7 @@
                 }
                 return tmp.items;
             }
-            
+
         </script>
     </body>
 
