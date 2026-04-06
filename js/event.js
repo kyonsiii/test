@@ -68,7 +68,7 @@ class PokeEvent{
             panel.style.marginTop = (startDate.getHours() * 0.5) + "em";
         }
         this.dataField.appendChild(column);
-        console.log(panel.offsetTop);
+        //console.log(panel.offsetTop);
         let panelBottom = panel.offsetTop + panel.offsetHeight;
         let fieldBottom = this.dataField.offsetTop + this.dataField.offsetHeight;
         

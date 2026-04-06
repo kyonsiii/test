@@ -608,10 +608,17 @@ class PokeReport{
         j.berryPowerLvMaxNoPicking    = Math.round(maxBerryPower * poke.getBerryNum(jMax.subBerryS) * raw_otetsudaiCountDayMax);
 
         j.skillPopRate                = Math.round(((poke.skillRate * (1 + j.charAdjusts.skill + j.subAdjusts.skill))) * 100000) / 100000;
-        j.skillPopDay                 = Math.round((raw_otetsudaiCountDay * j.skillPopRate + (poke.isSkillSpecialty ? 1 : 0)) * 10) / 10;
-        j.skillPopDayNoAdjust         = Math.round((raw_otetsudaiCountDayNoAdjust * poke.skillRate + (poke.isSkillSpecialty ? 1 : 0)) * 10) / 10;
         j.skillPopRateLvMax           = Math.round(((poke.skillRate * (1 + jMax.charAdjusts.skill + jMax.subAdjusts.skill))) * 100000) / 100000;
-        j.skillPopDayLvMax            = Math.round((raw_otetsudaiCountDayMax * j.skillPopRateLvMax + (poke.isSkillSpecialty ? 1 : 0)) * 10) / 10;
+
+        //最低保証を考慮した回数に変更
+        let minGuaranteedCount = 144000 / poke.sec;
+        let minIncludedPopRate = (minGuaranteedCount * j.skillPopRate + (1 - j.skillPopRate)**minGuaranteedCount) / minGuaranteedCount;
+        let minIncludedPopRateNoAdjust = (minGuaranteedCount * poke.skillRate + (1 - poke.skillRate)**minGuaranteedCount) / minGuaranteedCount;
+        let minIncludedPopRateLvMax = (minGuaranteedCount * j.skillPopRateLvMax + (1 - j.skillPopRateLvMax)**minGuaranteedCount) / minGuaranteedCount;
+        
+        j.skillPopDay                 = Math.round((raw_otetsudaiCountDay * minIncludedPopRate) * 10) / 10;
+        j.skillPopDayNoAdjust         = Math.round((raw_otetsudaiCountDayNoAdjust * minIncludedPopRateNoAdjust) * 10) / 10;        
+        j.skillPopDayLvMax            = Math.round((raw_otetsudaiCountDayMax * minIncludedPopRateLvMax) * 10) / 10;
 
         let berryDiff = (Math.round((j.berryPowerDay / j.berryPowerDayNoAdjustBerryS) * 100) / 100) - 1;
         j.berryPowerDayDiff = (berryDiff == 0) ? "±" + Math.round(berryDiff * 100).toFixed(0) + "%"
