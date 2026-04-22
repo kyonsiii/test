@@ -100,10 +100,10 @@
                 this.pokeEvent.addEntry("2026/04/27 04:00", "2026/05/04 04:00", true, GetPreset("スプリングフェス"), "◆スプリングフェス2026", "【中ピックアップ】サンド / サンドパン", "【小ピックアップ】ウパー / アチャモ / ミズゴロウ / タツベイ / フワンテ / ミカルゲ / バケッチャ / ヌイコグマ / キュワワー / ニャオハ / アルクジラ");
 
                 this.pokeEvent.addEntry("2026/04/27 15:00", "2026/05/04 04:00", true, GetPreset(), "◆新ポケモン【サンド】【サンドパン】 追加", "ぐっすり", "ワカクサ本島・～EX", "トープ洞窟", "アンバー渓谷")
-
+                this.pokeEvent.addEntry("2026/05/01 04:00", "2026/05/04 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.34");
 
                 //最終的に幅を決める
-                let columns = document.querySelectorAll("event_column").length - 1;
+                const columns = document.querySelectorAll("event_column").length - 1;
                 pokeEvent.dataField.style.minWidth = (columns * 10 + 3) + "em";
                 pokeEvent.dataField.style.maxWidth = pokeEvent.dataField.style.minWidth;
                 document.body.style.width = pokeEvent.dataField.style.minWidth;
@@ -355,7 +355,6 @@
 
                 "スプリングフェス": {
                     items: [
-
                         this.EventItems["pickup_other_sleep_type"],
                         this.EventItems["fix_recipe_salad"],
                         this.EventItems["sleep_get_chance"],
