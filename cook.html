@@ -53,12 +53,15 @@
             </table>
 
 
-            <strong style="white-space: nowrap">レシピLv65、フィールドBonus+75%で計算</strong>
+            <strong style="white-space: nowrap" id="bonus_info">レシピLv--、フィールドBonus+--%で計算</strong>
             <table id="recipe_table">
                 <tbody>
                 </tbody>
             </table>
         </div>
+        <span style="background-color: lightblue;" ondblclick="pokeCook.recalcRecipeInfo75();">
+            ダブルクリックでBonus75%で表示
+        </span>
 
 
         <!--以下、スクリプト-->
@@ -77,6 +80,7 @@
                 }
                 this.recipedb.foods.forEach(f => add(f.name));
                 this.pokeCook.setOptionsFromCookie(getCookie("cinf")); 
+                
             }
 
         </script>

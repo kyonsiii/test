@@ -16,6 +16,22 @@ class PokeCook{
         this.selectBox_food = document.getElementById('select_food');
     }
 
+    recalcRecipeInfo75(){
+        this.recalcRecipeInfo(65, "75%", true, true);
+    }
+
+
+    recalcRecipeInfo(recipeLv, fieldBonusPercent, descendingMode, removeButtons = false){
+        this.recipes.forEach(x => x.setEnergy(recipeLv, fieldBonusPercent));
+        this.setTarget(null, null);
+        this.setTableRows(descendingMode);
+
+        if (removeButtons){
+            const b = document.getElementsByTagName("button");
+            Array.from(b).forEach(x => x.remove());
+        }
+    }
+
 
 
     setCookieValue(){
@@ -66,6 +82,10 @@ class PokeCook{
 
  
     setTableRows(descendingMode = false){
+        const sample = this.recipes[0];
+        document.getElementById("bonus_info").textContent = "レシピLv" + sample.recipeLv + "、フィールドボーナス+" + sample.fieldBonus + "で計算";
+
+        this.recipe_table.tBodies[0].innerHTML = "";
         let list = descendingMode ? this.recipes.sort((a, b) => b.energy - a.energy) : this.recipes
         for (let r of list){
             this.recipe_table.tBodies[0].appendChild(this.createTr(r));
