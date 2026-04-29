@@ -657,7 +657,7 @@ class PokeReport{
                                 : (foodDiff >  0) ? "(+" + foodDiff.toFixed(0) + "%)"
                                 : "(" + foodDiff.toFixed(0) + "%)";
         j.foodPowerKariDayLv60 = Math.round(totalLv60);
-        
+        console.log(j);
         //let pow_foodA = poke.getFoodByCode()
     }
 
