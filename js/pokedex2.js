@@ -513,7 +513,7 @@ class Pokemon{
 
     getOtetsudaiCountDay(lv, spdAdj = 0.0, subAdj = 0.0, genkiAdj = 0.52, foodCountMode = false){//speedAdjはプラスのほうが○
         let lvAdj  = 1 - ((lv - 1) * 0.002);
-        spdAdj = 1 - spdAdj;
+        spdAdj = 1 / (1 + spdAdj);
         subAdj = 1 - subAdj;
 
         let adjSec = this.sec * lvAdj * spdAdj * subAdj * genkiAdj;
