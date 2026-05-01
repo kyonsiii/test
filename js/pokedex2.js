@@ -513,11 +513,11 @@ class Pokemon{
 
     getOtetsudaiCountDay(lv, spdAdj = 0.0, subAdj = 0.0, genkiAdj = 0.52, foodCountMode = false){//speedAdjはプラスのほうが○
         let lvAdj  = 1 - ((lv - 1) * 0.002);
-        spdAdj = 1 - subAdj;
+        spdAdj = 1 - spdAdj;
         subAdj = 1 - subAdj;
 
-        let adjSec = this.sec * lvAdj * spdAdj * subAdj;
-        let oteCount = 86400 / (adjSec * genkiAdj)
+        let adjSec = this.sec * lvAdj * spdAdj * subAdj * genkiAdj;
+        let oteCount = 86400 / adjSec
         return (foodCountMode) ? oteCount * this.foodRate : oteCount;
     }
 

@@ -576,6 +576,8 @@ class PokeReport{
         //console.log(jMax);
 
         let raw_otetsudaiCountDay = poke.getOtetsudaiCountDay(j.lv, j.charAdjusts.speed, j.subAdjusts.speed);
+        console.log(j);
+        console.log(raw_otetsudaiCountDay);
         let raw_otetsudaiCountFoodDay = raw_otetsudaiCountDay * (poke.foodRate * (1 + j.charAdjusts.food + j.subAdjusts.food));
         let raw_otetsudaiCountBerryDay = raw_otetsudaiCountDay - raw_otetsudaiCountFoodDay;
 
