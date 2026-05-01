@@ -579,9 +579,9 @@ class PokeReport{
         let raw_otetsudaiCountFoodDay = raw_otetsudaiCountDay * (poke.foodRate * (1 + j.charAdjusts.food + j.subAdjusts.food));
         let raw_otetsudaiCountBerryDay = raw_otetsudaiCountDay - raw_otetsudaiCountFoodDay;
 
-        let raw_otetsudaiCountDayNoAdjust     = poke.getOtetsudaiCountDay(j.lv);
-        let raw_otetsudaiCountFoodDayNoAdjust = raw_otetsudaiCountDayNoAdjust * poke.foodRate;
-        let raw_otetsudaiCountBerryNoAdjust   = raw_otetsudaiCountDayNoAdjust - raw_otetsudaiCountFoodDayNoAdjust;
+        let raw_otetsudaiCountDayNoBonus     = poke.getOtetsudaiCountDay(j.lv);
+        let raw_otetsudaiCountFoodDayNoBonus = raw_otetsudaiCountDayNoBonus * poke.foodRate;
+        let raw_otetsudaiCountBerryNoBonus   = raw_otetsudaiCountDayNoBonus - raw_otetsudaiCountFoodDayNoBonus;
 
         //このへんがっつり直そう j => jMax
         let raw_otetsudaiCountDayMax      = poke.getOtetsudaiCountDay(jMax.lv, jMax.charAdjusts.speed, jMax.subAdjusts.speed);
@@ -592,17 +592,18 @@ class PokeReport{
         let raw_otetsudaiCountFoodDay60  = raw_otetsudaiCountDay60 * (poke.foodRate * (1 + j60.charAdjusts.food + j60.subAdjusts.food));
         
         j.otetsudaiCountDay             = Math.round(raw_otetsudaiCountDay);
-        j.otetsudaiCountFoodDay         =  Math.round(raw_otetsudaiCountFoodDay);
+        j.otetsudaiCountFoodDay         = Math.round(raw_otetsudaiCountFoodDay);
         j.otetsudaiCountBerryDay        = j.otetsudaiCountDay - j.otetsudaiCountFoodDay;
 
-        j.otetsudaiCountDayNoAdjust     = Math.round(raw_otetsudaiCountDayNoAdjust);
-        j.otetsudaiCountFoodDayNoAdjust = Math.round(raw_otetsudaiCountFoodDayNoAdjust);
-        j.otetsudaiCountBerryNoAdjust   = j.otetsudaiCountDayNoAdjust - j.otetsudaiCountFoodDayNoAdjust;
+        j.otetsudaiCountDayNoBonus     = Math.round(raw_otetsudaiCountDayNoBonus);
+        j.otetsudaiCountFoodDayNoBonus = Math.round(raw_otetsudaiCountFoodDayNoBonus);
+        j.otetsudaiCountBerryNoBonus   = j.otetsudaiCountDayNoBonus - j.otetsudaiCountFoodDayNoBonus;
 
         j.berryPower                  = Math.round(pokedex.getBerryPowerOf(poke.berry, j.lv) * 100) / 100;
         j.berryPowerDay               = Math.round(j.berryPower * poke.getBerryNum(j.subBerryS) * raw_otetsudaiCountBerryDay);
         j.berryPowerDayNoPicking      = Math.round(j.berryPower * poke.getBerryNum(j.subBerryS) * raw_otetsudaiCountDay);
-        j.berryPowerDayNoAdjustBerryS = Math.round(j.berryPower * poke.getBerryNum(true) * raw_otetsudaiCountBerryNoAdjust);
+        j.berryPowerDayNoBonusBerryS = Math.round(j.berryPower * poke.getBerryNum(true) * raw_otetsudaiCountBerryNoBonus);
+
         let maxBerryPower             = Math.round(pokedex.getBerryPowerOf(poke.berry, maxLv) * 100) / 100;
         j.berryPowerLvMax             = Math.round(maxBerryPower * poke.getBerryNum(jMax.subBerryS) * raw_otetsudaiCountBerryDayMax);
         j.berryPowerLvMaxNoPicking    = Math.round(maxBerryPower * poke.getBerryNum(jMax.subBerryS) * raw_otetsudaiCountDayMax);
@@ -613,21 +614,21 @@ class PokeReport{
         //最低保証を考慮した回数に変更
         let minGuaranteedCount = 144000 / poke.sec;
         let minIncludedPopRate = (minGuaranteedCount * j.skillPopRate + (1 - j.skillPopRate)**minGuaranteedCount) / minGuaranteedCount;
-        let minIncludedPopRateNoAdjust = (minGuaranteedCount * poke.skillRate + (1 - poke.skillRate)**minGuaranteedCount) / minGuaranteedCount;
+        let minIncludedPopRateNoBonus = (minGuaranteedCount * poke.skillRate + (1 - poke.skillRate)**minGuaranteedCount) / minGuaranteedCount;
         let minIncludedPopRateLvMax = (minGuaranteedCount * j.skillPopRateLvMax + (1 - j.skillPopRateLvMax)**minGuaranteedCount) / minGuaranteedCount;
         
         j.skillPopDay                 = Math.round((raw_otetsudaiCountDay * minIncludedPopRate) * 10) / 10;
-        j.skillPopDayNoAdjust         = Math.round((raw_otetsudaiCountDayNoAdjust * minIncludedPopRateNoAdjust) * 10) / 10;        
+        j.skillPopDayNoBonus         = Math.round((raw_otetsudaiCountDayNoBonus * minIncludedPopRateNoBonus) * 10) / 10;        
         j.skillPopDayLvMax            = Math.round((raw_otetsudaiCountDayMax * minIncludedPopRateLvMax) * 10) / 10;
 
-        let berryDiff = (Math.round((j.berryPowerDay / j.berryPowerDayNoAdjustBerryS) * 100) / 100) - 1;
+        let berryDiff = (Math.round((j.berryPowerDay / j.berryPowerDayNoBonusBerryS) * 100) / 100) - 1;
         j.berryPowerDayDiff = (berryDiff == 0) ? "±" + Math.round(berryDiff * 100).toFixed(0) + "%"
                                : (berryDiff > 0)  ? "+" + Math.round(berryDiff * 100).toFixed(0) + "%"
                                : "-" + Math.round((Math.abs(berryDiff) * 100)).toFixed(0) + "%";
 
-        let foodDiff = ((Math.round((raw_otetsudaiCountFoodDay / raw_otetsudaiCountFoodDayNoAdjust) * 100)) - 100);
+        let foodDiff = ((Math.round((raw_otetsudaiCountFoodDay / raw_otetsudaiCountFoodDayNoBonus) * 100)) - 100);
 
-        let skillDiff = (Math.round((j.skillPopDay / j.skillPopDayNoAdjust) * 100) / 100) - 1;
+        let skillDiff = (Math.round((j.skillPopDay / j.skillPopDayNoBonus) * 100) / 100) - 1;
         j.skillPopDayDiff  = (skillDiff == 0) ? "±" + Math.round(skillDiff * 100).toFixed(0) + "%"
                            : (skillDiff >= 0) ? "+" + Math.round(skillDiff * 100).toFixed(0) + "%"
                            : "-" + Math.round(Math.abs(skillDiff) * 100).toFixed(0) + "%";
@@ -657,7 +658,7 @@ class PokeReport{
                                 : (foodDiff >  0) ? "(+" + foodDiff.toFixed(0) + "%)"
                                 : "(" + foodDiff.toFixed(0) + "%)";
         j.foodPowerKariDayLv60 = Math.round(totalLv60);
-        console.log(j);
+        //console.log(j);
         //let pow_foodA = poke.getFoodByCode()
     }
 

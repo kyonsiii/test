@@ -324,7 +324,7 @@
                             <th style="width: 9em;">きのみパワー</th>
                             <th style="width: 9em;">食材</th>
                             <th style="width: 9em;">スキル</th>
-                          
+                            <th style="width: 9em;">合計</th>                         
                         </tr>
                     </thead>
                     <tbody>
@@ -341,7 +341,7 @@
                             <th style="width: 9em;">きのみパワー</th>
                             <th style="width: 9em;">食材</th>
                             <th style="width: 9em;">スキル</th>
-                          
+                            <th style="width: 9em;">合計</th>                           
                         </tr>
                     </thead>
                     <tbody>
@@ -358,7 +358,7 @@
                             <th style="width: 9em;">きのみパワー</th>
                             <th style="width: 9em;">食材</th>
                             <th style="width: 9em;">スキル</th>
-                          
+                            <th style="width: 9em;">合計</th>                           
                         </tr>
                     </thead>
                     <tbody>
@@ -808,7 +808,7 @@
                                     + "\nきのみおてつだい: " + json.otetsudaiCountBerryDay + "/" + json.otetsudaiCountDay
                                     + "\nきのみパワー: " + json.berryPower
                                     + "\n1日: " + json.berryPowerDay + "(" + json.berryPowerDayDiff + ")"
-                                    + "\n(きのみS無補正個体: " + pokedex.getBerryPowerDayWithNoAdjust(poke, json.lv) +")"
+                                    + "\n(きのみS無補正個体: " + pokedex.getBerryPowerDayNoBonus(poke, json.lv) +")"
                                     + "\n"
                                     + "\nスキル発動回数: " + json.skillPopDay + "(" + json.skillPopDayDiff + ")";
                 alert(mes);
@@ -880,19 +880,31 @@
                 /*lvの65、そのうちマジックナンバーなくそう*/
 
                 tbodyList.forEach(tbody => {
-                    let tr = document.createElement("tr");
-                    let pow = (poke.specialty == "食材") ? j.foodPowerKariDay : j.berryPowerDay;
+                    const tr = document.createElement("tr");
+                    const pow = (poke.specialty == "食材") ? j.foodPowerKariDay : j.berryPowerDay;
                     pokeReport.setColorClassTo(tr, j.backgroundColor);
                     
                     tr.setAttribute("value", pow);
-                    tr.insertCell().innerHTML = j.name + "Lv" + j.lv + "<br>" + j.foodCode + " " + pokeReport.createIdentifierOf(j);
+                    const nameCell = tr.insertCell();
+                    nameCell.innerHTML = j.name + "Lv" + j.lv + "<br>" + j.foodCode + " " + pokeReport.createIdentifierOf(j);
 
-                    tr.insertCell().innerHTML = j.berryPowerDay + "(" + j.berryPowerDayDiff + ")"
-                                              + ((poke.specialty != "きのみ") ? "" : "<br>" + j.berryPowerDayNoPicking + "(NP)")
-                                              + ((j.lv < 65) ? "<br> → " + j.berryPowerLvMax + "(Lv" + j.LvMax + ")" : "")
-                                              + ((j.lv >= 65 || poke.specialty != "きのみ") ? "" : "<br> 　 " + j.berryPowerLvMaxNoPicking + "(NP)")
-                    tr.insertCell().innerHTML = j.foodPowerKariDayDiff + ((j.lv < 60) ? "<br> → " + j.foodPowerKariDayLv60 + "(Lv60)" : "");
-                    tr.insertCell().innerHTML = j.skillPopDay.toFixed(1) + "("+ j.skillPopDayDiff + ")"  + ((j.lv < 65) ? "<br> → " + j.skillPopDayLvMax + "(Lv" + j.LvMax + ")" : "");
+                    const berryCell = tr.insertCell();
+                    berryCell.innerHTML = j.berryPowerDay + "(" + j.berryPowerDayDiff + ")"
+                                        + ((poke.specialty != "きのみ") ? "" : "<br>" + j.berryPowerDayNoPicking + "(NP)")
+                                        + ((j.lv < 65) ? "<br> → " + j.berryPowerLvMax + "(Lv" + j.LvMax + ")" : "")
+                                        + ((j.lv >= 65 || poke.specialty != "きのみ") ? "" : "<br> 　 " + j.berryPowerLvMaxNoPicking + "(NP)");
+
+                    const foodCell = tr.insertCell();
+                    foodCell.innerHTML = j.foodPowerKariDayDiff + ((j.lv < 60) ? "<br> → " + j.foodPowerKariDayLv60 + "(Lv60)" : "");
+
+                    const skillCell = tr.insertCell();
+                    skillCell.innerHTML = j.skillPopDay.toFixed(1) + "("+ j.skillPopDayDiff + ")"  + ((j.lv < 65) ? "<br> → " + j.skillPopDayLvMax + "(Lv" + j.LvMax + ")" : "");
+
+                    const totalCell = tr.insertCell();
+                    const total =  (j.berryPowerDay + j.foodPowerKariDay);
+                    //console.log(j);
+                    totalCell.innerHTML = total;
+                    totalCell.setAttribute("power", total);
                     let rows = tbody.children;
 
                     if (rows.length == 0){

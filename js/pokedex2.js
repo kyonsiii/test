@@ -310,8 +310,54 @@ new Pokemon({no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材"
             this.pokeKanaDic[p.kanaChar].push(p.name);
         });
         this.pokemonsSortedByKana = kanaSortedPokemonNames.map(p => p.name);
+
+
+        const makeGeneralCalc = (option) => (poke, expectionDay) => this.calcSkillGeneral(poke, expectionDay, option);
+
+        this.skillCalculators = {
+"いやしのはどう(げんきエールS)"     : (poke, expectionDay, option1) => undefined, 
+"おてつだいサポートS"               : makeGeneralCalc(400), 
+"おてつだいブースト(でんき)"        : (poke, expectionDay, option1) => undefined, 
+"おてつだいブースト(ほのお)"        : (poke, expectionDay, option1) => undefined, 
+"おてつだいブースト(みず)"          : (poke, expectionDay, option1) => undefined, 
+"かいりきバサミ(食材セレクトS)"     : (poke, expectionDay, option1) => undefined, 
+"きのみジュース(げんきオールS)"     : (poke, expectionDay, option1) => undefined, 
+"きのみバースト"                    : (poke, expectionDay, option1) => undefined, 
+"きょううん(食材セレクトS)"         : (poke, expectionDay, option1) => undefined, 
+"げんきエールS"                     : (poke, expectionDay, option1) => undefined, 
+"げんきオールS"                     : (poke, expectionDay, option1) => undefined, 
+"げんきチャージS"                   : (poke, expectionDay, option1) => undefined, 
+"たくわえる(エナジーチャージS)"     : (poke, expectionDay, option1) => undefined, 
+"つきのひかり"                      : (poke, expectionDay, option1) => undefined, 
+"ばけのかわ(きのみバースト)"        : (poke, expectionDay, option1) => undefined, 
+"へんしん(スキルコピー)"            : (poke, expectionDay, option1) => undefined, 
+"ほっぺすりすり(げんきエールS)"     : (poke, expectionDay, option1) => undefined, 
+"みかづきのいのり(げんきオールS)"   : (poke, expectionDay, option1) => undefined, 
+"ゆびをふる"                        : (poke, expectionDay, option1) => undefined, 
+"ゆめのかけらゲットS"               : (poke, expectionDay, option1) => undefined, 
+"ゆめのかけらゲットS(ランダム)"     : (poke, expectionDay, option1) => undefined, 
+"エナジーチャージS"                 : (poke, expectionDay, option1) => undefined, 
+"エナジーチャージM"                 : (poke, expectionDay, option1) => undefined, 
+"エナジーチャージS(ランダム)"       : (poke, expectionDay, option1) => undefined, 
+"オールマイティー"                  : (poke, expectionDay, option1) => undefined, 
+"ナイトメア(エナジーチャージM)"     : (poke, expectionDay, option1) => undefined, 
+"ビルドアップ(料理アシストS)"       : (poke, expectionDay, option1) => undefined, 
+"プラス(食材ゲットS)"               : (poke, expectionDay, option1) => undefined, 
+"プレゼント(食材ゲットS)"           : (poke, expectionDay, option1) => undefined, 
+"マイナス(料理パワーアップS)"       : (poke, expectionDay, option1) => undefined, 
+"料理チャンスS"                     : (poke, expectionDay, option1) => undefined, 
+"料理パワーアップS"                 : (poke, expectionDay, option1) => undefined, 
+"食材ゲットS"                       : (poke, expectionDay, option1) => undefined, 
+"食材セレクトS"                     : (poke, expectionDay, option1) => undefined, 
+        };
     }
 
+    getSkillPowerOf(poke, expectionDay){
+        console.log(poke.skill);
+    }
+    calcSkillGeneral(poke, expectionDay, num){
+        return expectionDay * num;
+    }
 
     
     getNobasibouConvertedName(s){
@@ -368,14 +414,13 @@ new Pokemon({no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材"
         return null;
     }
 
-    getBerryPowerDayWithNoAdjust(poke, lv){
+    getBerryPowerDayNoBonus(poke, lv){
         let ote = poke.getOtetsudaiCountDay(lv);
         let berryOte = ote * (1 - poke.foodRate);
         let berryNum = poke.getBerryNum(true);
         let berryPow = this.getBerryPowerOf(poke.berry, lv);
         
         return Math.round(berryNum * berryPow * berryOte);
-
     }
     
 
@@ -468,8 +513,8 @@ class Pokemon{
 
     getOtetsudaiCountDay(lv, spdAdj = 0.0, subAdj = 0.0, genkiAdj = 0.52, foodCountMode = false){//speedAdjはプラスのほうが○
         let lvAdj  = 1 - ((lv - 1) * 0.002);
-        spdAdj = 1 / (1 + spdAdj);
-        subAdj = 1 / (1 + subAdj);
+        spdAdj = 1 - subAdj;
+        subAdj = 1 - subAdj;
 
         let adjSec = this.sec * lvAdj * spdAdj * subAdj;
         let oteCount = 86400 / (adjSec * genkiAdj)
