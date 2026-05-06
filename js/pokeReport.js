@@ -65,12 +65,17 @@ class PokeReport{
         this.pokedex.pokemons.forEach(p => p.setFoodCombinations());
         this.combinationsInitialized = true;
 
-        this.foodMypokeMap = recipedb.foods.map(f => ({name: f.name}));
-        this.foodMypokeMap.forEach(f => {
-            let cands = this.pokedex.pokemons.filter(p => p.fullyEvolved && p.existAnyInFoodList(f.name))
-                         .map(p => ({pokemon: p.name, count: Math.max(...p.foodCombinations.map(fc => fc.getExpectionOf(f.name)))}));
+        this.foodMypokeMap = {};
+
+        recipedb.foods.forEach(f => {
+            this.foodMypokeMap[f.name] = {};
+        });
+        Object.keys(this.foodMypokeMap).forEach(f => {
+            let cands = this.pokedex.pokemons.filter(p => p.fullyEvolved && p.existAnyInFoodList(f))
+                         .map(p => ({pokemon: p.name, count: Math.max(...p.foodCombinations.map(fc => fc.getExpectionOf(f)))}));
             let p = cands.reduce((prev, cur) => (cur.count > prev.count ? cur: prev));
-            f.NoAdjust = {no: this.pokedex.getPokemonByName(p.pokemon).no, name: p.pokemon, count: p.count};
+            this.foodMypokeMap[f].NoAdjust = {no: this.pokedex.getPokemonByName(p.pokemon).no, name: p.pokemon, count: p.count};
+
         });
     }
 
@@ -238,11 +243,11 @@ class PokeReport{
 
     setFoodMypokeMap(pokeAndCombArr){
         const arr = pokeAndCombArr;
-        this.foodMypokeMap.forEach(fm => {
-            let max = arr.map(x => ({pokemon: x, count: x.comb.getExpectionOf(fm.name), json: x.json}))
+        Object.keys(this.foodMypokeMap).forEach(f => {
+            let max = arr.map(x => ({pokemon: x, count: x.comb.getExpectionOf(f), json: x.json}))
                           .reduce((prev, cur) => (cur.count > prev.count) ? cur : prev);
             
-            fm.MyPoke = (max.count == 0) ? null : 
+            this.foodMypokeMap[f].MyPoke = (max.count == 0) ? null : 
                 { no: max.json.no ,
                   name: max.json.name +  this.createIdentifierOf(max.json) + " Lv" + max.json.lv, 
                   count: max.count}
@@ -257,23 +262,132 @@ class PokeReport{
                 el.textContent = text;
                 return el
             };
+
+            //backcolorTargetは0でrow,1～3はセル
+            const createInfoRow = (caption, text, backcolor, backcolorTarget = 0) => {
+                const row = createDiv("recipe_efficiency_info1_row");
+                row.appendChild(createDiv("recipe_efficiency_info1_cell"));
+                row.appendChild(createDiv("recipe_efficiency_info1_cell", caption));
+                row.appendChild(createDiv("recipe_efficiency_info1_cell", text));
+
+                if (backcolor != undefined){
+                    ((backcolorTarget == 0) ? row : row.children[backcolorTarget - 1]).style.backgroundColor = backcolor;
+                }
+                return row;
+            };
+
+            //Itemsは"{text:, color:}を想定 
+            const createTr = (items) => {
+                const tr = document.createElement("tr");
+                items.forEach(item => {
+                    const c = tr.insertCell();
+                    if (typeof item == "object"){
+                        c.textContent = item.text;
+                        c.style.backgroundColor = item.color;
+                    }
+                    else{
+                        c.textContent = item;           
+                    }                    
+                });
+                return tr;
+            };
+
+            const getCellColor = (min) => {
+                return (min <= 240) ? "Honeydew"
+                        : (min <= 360) ? "white"
+                         : (min <= 540) ? "lightyellow" : "mistyrose"; 
+            };
+            const getTotalCellColor = (min) => {
+                return (min <= 960) ? "Honeydew"
+                        : (min <= 1440) ? "white"
+                         : (min <= 2160) ? "lightyellow" : "mistyrose"; 
+            };
+            
+
             //console.log(recipes);
             const parent = document.getElementById(id);
             //console.log(parent);
 
             recipes.forEach(r => {
                 if (r.totalFoodsCount < min) return;
+                //先にいろいろ計算しておく
+
+                const table = document.createElement("table");
+                const thead = document.createElement("thead");
+                thead.appendChild(createTr(["食材名", "個数", "標準時間", "Myポケ"]));
+                table.appendChild(thead);
+                const tbody = document.createElement("tbody");
+                table.appendChild(tbody);
+
+                let totalMinNa = 0;
+                let totalMinMp = 0;
+
+                r.ingredients.forEach(x => {
+                    const na = this.foodMypokeMap[x.name].NoAdjust;
+                    na.tmpRawMin = (x.num / na.count) * 60 * 24;
+                    na.tmpHour = Math.floor(na.tmpRawMin / 60);
+                    na.tmpMin = Math.ceil(na.tmpRawMin % 60);
+                    na.tmpTimeStr = na.tmpHour.toString().padStart(2, "0") + ":" + na.tmpMin.toString().padStart(2, "0");
+                    totalMinNa += na.tmpRawMin;
+
+                    let mp = this.foodMypokeMap[x.name].MyPoke;
+                    if (mp != null){
+                        mp.tmpRawMin = (x.num / mp.count) * 60 * 24;
+                        mp.tmpHour = Math.floor(mp.tmpRawMin / 60);
+                        mp.tmpMin = Math.ceil(mp.tmpRawMin % 60);
+                        mp.tmpTimeStr = mp.tmpHour.toString().padStart(2, "0") + ":" + mp.tmpMin.toString().padStart(2, "0");
+                        mp.Success = true;
+                        totalMinMp += mp.tmpRawMin;
+                    }
+                    else{
+                        mp = {tmpTimeStr: "----", Success: false};
+                        totalMinMp = -1;
+                    }
+                    
+                    //2体で3回料理できる基準 4h: 240m, 3体で3回料理できる基準 6h: 360m, 3体で2回料理できる基準: 9h: 540m
+                    tbody.appendChild(createTr([x.name, x.num, {text: na.tmpTimeStr, color: getCellColor(na.tmpRawMin)}, {text: mp.tmpTimeStr, color: getCellColor(mp.tmpRawMin)}]));
+                });
+
+                const totalTimeStrNa = Math.floor(totalMinNa / 60).toString().padStart(2, "0") + ":" + Math.floor(totalMinNa % 60).toString().padStart(2, "0");
+                const totalTimeStrMp = (totalMinMp == -1) ? "----" : Math.floor(totalMinMp / 60).toString().padStart(2, "0") + ":" + Math.floor(totalMinMp % 60).toString().padStart(2, "0");
+                tbody.appendChild(createTr(["合計:", r.totalFoodsCount, {text: totalTimeStrNa, color: getTotalCellColor(totalMinNa)}, {text: totalTimeStrMp, color: getTotalCellColor(totalMinMp)}]));
+
+                //要素の追加
                 const container = createDiv("recipe_efficiency_container");
                 const header = createDiv("recipe_efficiency_header");
-
                 header.appendChild(createDiv("recipe_efficiency_header_item", r.name));
                 header.appendChild(createDiv("recipe_efficiency_header_item", r.energy.toLocaleString()));
                 container.appendChild(header);
+
+                const infoContainer = createDiv("recipe_efficiency_info1_container");
+                const imgContainer = createDiv("recipe_efficiency_image_container");
+                const imgEl = document.createElement("img");
+                imgEl.src = "img/recipe/" + r.name + ".png";
+                imgContainer.appendChild(imgEl);
+                infoContainer.appendChild(imgContainer);
+
+
+                const infoArea = createDiv("recipe_efficiency_info1_area");
+
+                const requiredExpansion = Math.ceil(Math.max((r.totalFoodsCount - 81), 0) / 32);
+
+                infoArea.appendChild(createInfoRow("食材数合計:", r.totalFoodsCount));
+                infoArea.appendChild(createInfoRow("なべ拡張:", requiredExpansion, (requiredExpansion > 1) ? "MistyRose" : (requiredExpansion > 0) ? "LightYellow" : "", 3));
+                infoArea.appendChild(createInfoRow("標準効率:", Math.floor(r.energy / totalMinNa * 60).toLocaleString() + " /h"));
+                infoArea.appendChild(createInfoRow("Myポケ:"  , (totalMinMp == -1) ? "----" : Math.floor(r.energy / totalMinMp * 60).toLocaleString() + " /h"));
+                infoContainer.appendChild(infoArea);
+                container.appendChild(infoContainer);
+
+
+                
+                container.appendChild(table);
                 parent.appendChild(container);
             });
         };
 
         setRecipes('mypoke_quick_check_curry', this.recipedb.getAllCurryRecipes().sort((a, b) => b.energy - a.energy));
+        setRecipes('mypoke_quick_check_salad', this.recipedb.getAllSaladRecipes().sort((a, b) => b.energy - a.energy));
+        setRecipes('mypoke_quick_check_sweet', this.recipedb.getAllSweetRecipes().sort((a, b) => b.energy - a.energy));
         
     }
 

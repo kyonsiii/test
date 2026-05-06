@@ -553,12 +553,13 @@ img.field{
 
 /*report専用 - レシピ効率*/
 .recipe_efficiency_container{
-    background-color: #ccc;
+    
     width: 320px;
     font-size: 0.75em;
 }
 
 .recipe_efficiency_header{
+    background-color: #ccc;
     display: flex; 
     justify-content: space-between;
     font-size: 120%;
@@ -569,7 +570,7 @@ img.field{
     padding-right: 10px;
 }
 
-.recipe_efficiency_info1{
+.recipe_efficiency_info1_container{
     display: flex;
     background-color: #fff;
 }
@@ -601,21 +602,10 @@ img.field{
 }
 
 .recipe_efficiency_info1_area > :last-child{
-    background-color: mistyrose;
     border-bottom: none;
 }
 
-.recipe_efficiency_info1_row:nth-child(1){
-    flex: 2;
-}
 
-.recipe_efficiency_info1_row:nth-child(2){
-    flex: 2;
-}
-
-.recipe_efficiency_info1_cell{
-    background-color:  #FFF;
-}
 
 .recipe_efficiency_info1_row :nth-child(3){
     flex: 1;
@@ -640,6 +630,11 @@ img.field{
     background-color: #fff;
     border: none; margin-top: -1px;
 }
+
+.recipe_efficiency_container > table > thead{
+    background-color: #eee;
+}
+
 
 .recipe_efficiency_container > table  th{
     border: 1px solid #ccc;
