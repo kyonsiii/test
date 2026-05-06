@@ -64,9 +64,17 @@ class PokeReport{
     initialize(){
         this.pokedex.pokemons.forEach(p => p.setFoodCombinations());
         this.combinationsInitialized = true;
+
+        this.foodMypokeMap = recipedb.foods.map(f => ({name: f.name}));
+        this.foodMypokeMap.forEach(f => {
+            let cands = this.pokedex.pokemons.filter(p => p.fullyEvolved && p.existAnyInFoodList(f.name))
+                         .map(p => ({pokemon: p.name, count: Math.max(...p.foodCombinations.map(fc => fc.getExpectionOf(f.name)))}));
+            let p = cands.reduce((prev, cur) => (cur.count > prev.count ? cur: prev));
+            f.NoAdjust = {no: this.pokedex.getPokemonByName(p.pokemon).no, name: p.pokemon, count: p.count};
+        });
     }
 
-
+  
     createReport(foods, reportCountMax, min = 0, onlyFullyEvolved = false, showLv30 = true, showLv60 = true){
         if (!this.combinationsInitialized){
             alert("食べ物組み合わせが生成されていません。初期化をしてから実行してください。")
@@ -166,12 +174,12 @@ class PokeReport{
             let j = jsonList[i];
             let p = this.pokedex.getPokemonByNo(j.no);
             if (onlySkyBlueGold && (j.backgroundColor != 0 && j.backgroundColor != 7)) continue;
-            pokeAndComb.push({poke: p, json: j, comb:p.createFoodCombination(j, j.lv, j.foodCode)});            
+            pokeAndComb.push({poke: p, json: j, comb:p.createFoodCombination(j, j.lv, j.foodCode)});        
         }
         
         let tmp = [];//ここ将来食材追加されたときやばそう。どうすんの？
 
-        pokeReport.recipedb.foods.sort((a, b) => a.power - b.power).map(f => f.name).forEach(f =>{
+        this.recipedb.foods.sort((a, b) => a.power - b.power).map(f => f.name).forEach(f =>{
             tmp.push({ [f]: [] });
         });
 
@@ -224,8 +232,50 @@ class PokeReport{
             let foodName = Object.keys(f)[0];
             createRow(foodName, f[foodName]);
         });
+
+        this.setFoodMypokeMap(pokeAndComb);
     }
 
+    setFoodMypokeMap(pokeAndCombArr){
+        const arr = pokeAndCombArr;
+        this.foodMypokeMap.forEach(fm => {
+            let max = arr.map(x => ({pokemon: x, count: x.comb.getExpectionOf(fm.name), json: x.json}))
+                          .reduce((prev, cur) => (cur.count > prev.count) ? cur : prev);
+            
+            fm.MyPoke = (max.count == 0) ? null : 
+                { no: max.json.no ,
+                  name: max.json.name +  this.createIdentifierOf(max.json) + " Lv" + max.json.lv, 
+                  count: max.count}
+        });
+
+        const min = Number(document.getElementById("option_ingredient_min_count").value);
+
+        const setRecipes = (id, recipes) => {
+            const createDiv = (classname, text = "") =>{
+                const el = document.createElement("div");
+                el.className = classname;
+                el.textContent = text;
+                return el
+            };
+            //console.log(recipes);
+            const parent = document.getElementById(id);
+            //console.log(parent);
+
+            recipes.forEach(r => {
+                if (r.totalFoodsCount < min) return;
+                const container = createDiv("recipe_efficiency_container");
+                const header = createDiv("recipe_efficiency_header");
+
+                header.appendChild(createDiv("recipe_efficiency_header_item", r.name));
+                header.appendChild(createDiv("recipe_efficiency_header_item", r.energy.toLocaleString()));
+                container.appendChild(header);
+                parent.appendChild(container);
+            });
+        };
+
+        setRecipes('mypoke_quick_check_curry', this.recipedb.getAllCurryRecipes().sort((a, b) => b.energy - a.energy));
+        
+    }
 
 
 

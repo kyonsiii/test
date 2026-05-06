@@ -300,75 +300,83 @@
         </table>
 
         <div id="mypoke_list">
-            <div>
-                <table id="mypoke_quick_check_food_top3">
-                    <thead>
-                        <tr>
-                            <th>食材</th>
-                            <th>Myポケモン</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-                <div style="text-align: right;"><a class="moveBottom" href="#mypoke_options">画面下部へ移動</a></div>
-                
-                <div onclick="toggleShowHideTable(this, 'mypoke_quick_check');"><strong>きのみタイプ▼</strong></div>
-                <table id="mypoke_quick_check" class="mypoke_quick_check_table" style="display: none;">
-                    <thead>
-                        <tr>
-                            <th style="width: 16em;">Myポケモン</th>
-                            <th style="width: 9em;">きのみパワー</th>
-                            <th style="width: 9em;">食材</th>
-                            <th style="width: 9em;">スキル</th>
-                            <th style="width: 9em;">合計</th>                         
-                        </tr>
-                    </thead>
-                    <tbody>
+            <table id="mypoke_quick_check_food_top3">
+                <thead>
+                    <tr>
+                        <th>食材</th>
+                        <th>Myポケモン</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div style="text-align: right;"><a class="moveBottom" href="#mypoke_options">画面下部へ移動</a></div>
+            
+            <div onclick="toggleShowHideTable(this, 'mypoke_quick_check');"><strong>きのみタイプ▼</strong></div>
+            <table id="mypoke_quick_check" class="mypoke_quick_check_table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th style="width: 16em;">Myポケモン</th>
+                        <th style="width: 9em;">きのみパワー</th>
+                        <th style="width: 9em;">食材</th>
+                        <th style="width: 9em;">スキル</th>
+                        <th style="width: 9em;">合計</th>                         
+                    </tr>
+                </thead>
+                <tbody>
 
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
 
+            <div onclick="toggleShowHideTable(this, 'mypoke_quick_check_skill');"><strong>スキルタイプ▼</strong></div>
+            <table id="mypoke_quick_check_skill" class="mypoke_quick_check_table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th style="width: 16em;">Myポケモン</th>
+                        <th style="width: 9em;">きのみパワー</th>
+                        <th style="width: 9em;">食材</th>
+                        <th style="width: 9em;">スキル</th>
+                        <th style="width: 9em;">合計</th>                           
+                    </tr>
+                </thead>
+                <tbody>
 
-                <div onclick="toggleShowHideTable(this, 'mypoke_quick_check_skill');"><strong>スキルタイプ▼</strong></div>
-                <table id="mypoke_quick_check_skill" class="mypoke_quick_check_table" style="display: none;">
-                    <thead>
-                        <tr>
-                            <th style="width: 16em;">Myポケモン</th>
-                            <th style="width: 9em;">きのみパワー</th>
-                            <th style="width: 9em;">食材</th>
-                            <th style="width: 9em;">スキル</th>
-                            <th style="width: 9em;">合計</th>                           
-                        </tr>
-                    </thead>
-                    <tbody>
+                </tbody>
+            </table>
 
-                    </tbody>
-                </table>
+            <div onclick="toggleShowHideTable(this, 'mypoke_quick_check_food');"><strong>食材タイプ▼</strong></div>
+            <table id="mypoke_quick_check_food" class="mypoke_quick_check_table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th style="width: 16em;">Myポケモン</th>
+                        <th style="width: 9em;">きのみパワー</th>
+                        <th style="width: 9em;">食材</th>
+                        <th style="width: 9em;">スキル</th>
+                        <th style="width: 9em;">合計</th>                           
+                    </tr>
+                </thead>
+                <tbody>
 
+                </tbody>
+            </table>
 
-                <div onclick="toggleShowHideTable(this, 'mypoke_quick_check_food');"><strong>食材タイプ▼</strong></div>
-                <table id="mypoke_quick_check_food" class="mypoke_quick_check_table" style="display: none;">
-                    <thead>
-                        <tr>
-                            <th style="width: 16em;">Myポケモン</th>
-                            <th style="width: 9em;">きのみパワー</th>
-                            <th style="width: 9em;">食材</th>
-                            <th style="width: 9em;">スキル</th>
-                            <th style="width: 9em;">合計</th>                           
-                        </tr>
-                    </thead>
-                    <tbody>
+            <div onclick="toggleShowHideTable(this, 'mypoke_quick_check_curry');"><strong>カレー・シチュー▼</strong></div>
+            <div class="recipe_efficiency_container" id="mypoke_quick_check_curry">
+            </div>
 
-                    </tbody>
-                </table>
-                <div id="food_rate_ref" style="font-size: 0.4em;">
-                    <strong>現在の食材レート(マジで適当)</strong><br>                    
-                </div>
+            <div onclick="toggleShowHideTable(this, 'mypoke_quick_check_salad');"><strong>サラダ▼</strong></div>
+            <div class="recipe_efficiency_container" id="mypoke_quick_check_salad">
+            </div>
 
+            <div onclick="toggleShowHideTable(this, 'mypoke_quick_check_sweet');"><strong>デザート・ドリンク▼</strong></div>
+            <div class="recipe_efficiency_container" id="mypoke_quick_check_sweet">
+            </div>
+
+            <div id="food_rate_ref" style="font-size: 0.4em;">
+                <strong>現在の食材レート(マジで適当)</strong><br>                    
             </div>
 
             <div id="memo" style="background-color: lightcyan; font-size: 0.7em; margin-bottom: 2em;">
@@ -410,7 +418,6 @@
                 <a href="img/etc/2回目の元気回復(30)使用タイミング考察.png"><img style="width: 30%;" src="img/etc/2回目の元気回復(30)使用タイミング考察.png"></a>
                 <a href="img/etc/2回目の元気回復(20)使用タイミング考察.png"><img style="width: 30%;" src="img/etc/2回目の元気回復(20)使用タイミング考察.png"></a>
                 -->
-
             </div>
 
             <div id = "mypoke_options" class="area_another_option" style="background-color: gainsboro;">

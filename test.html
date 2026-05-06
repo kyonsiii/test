@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="style.css" rel="stylesheet"/>
+        <script src="js/main.js"></script>
+        <script src="js/pokeSleeping.js"></script>  
+        <script src="js/pokeSleepingCalc.js"></script>
+        <title>テストページ</title>
+    </head>
+
+
+    <body>
+        <div id="page_link">
+            <a href = "./index.html"><img src="img/pages/pokedex.png"></a>
+            <a href = "./sleep.html" class ="current"><img src="img/pages/sleep.png"></a>
+            <a href = "./cook.html"><img src="img/pages/cook.png"></a>            
+            <a href = "./report.html"><img src="img/pages/report.png"></a>
+            <a href = "./event.html"><img src="img/pages/event.png"></a>
+        </div>
+
+        <h3 style="margin: 0;">TEST</h3>
+
+        <div class="recipe_efficiency_container">
+
+            <div class="recipe_efficiency_header">
+                <div class="recipe_efficiency_header_item">しんりょくアボカドグラタン</div>
+                <div class="recipe_efficiency_header_item" >81500</div>
+            </div>
+
+            <!-- 中段（画像エリアと概要数値） -->
+            <div class="recipe_efficiency_info1" style="">
+                <!-- 画像ダミー -->
+                <div class="recipe_efficiency_image_container" style="">
+                    <img src="img\recipe\しんりょくアボカドグラタン.png" style="">
+                </div>
+                
+                
+                <!-- 右側の概要数値 -->
+                <div class="recipe_efficiency_info1_area" style="">
+                    <div class="recipe_efficiency_info1_row" style="">
+                        <div class="recipe_efficiency_info1_cell" style=""></div>
+                        <div class="recipe_efficiency_info1_cell" style="">食材数合計:</div>
+                        <div class="recipe_efficiency_info1_cell" style="">115</div>
+                    </div>
+
+                    <div class="recipe_efficiency_info1_row" style="">
+                        <div class="recipe_efficiency_info1_cell" style=""></div>
+                        <div class="recipe_efficiency_info1_cell" style="">なべ拡張:</div>
+                        <div class="recipe_efficiency_info1_cell" style="">2</div>
+                    </div>
+
+                    <div class="recipe_efficiency_info1_row" style="">
+                        <div class="recipe_efficiency_info1_cell" style=""></div>
+                        <div class="recipe_efficiency_info1_cell" style="">標準効率:</div>
+                        <div class="recipe_efficiency_info1_cell" style="">1500/h</div>
+                    </div>
+                    
+                    <div class="recipe_efficiency_info1_row" style="">
+                        <div class="recipe_efficiency_info1_cell" style=""></div>
+                        <div class="recipe_efficiency_info1_cell" style="">MyPoke:</div>
+                        <div class="recipe_efficiency_info1_cell" style="">2250/h</div>
+                    </div>
+                </div>
+            </div>
+
+            <table style="">
+                <thead>
+                    <tr style="background-color: #eee;">
+                        <th>食材名</th>
+                        <th>個数</th>
+                        <th>標準時間</th>
+                        <th>MyPoke</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>つやつやアボカ</td>
+                        <td>22</td>
+                        <td>8:00</td>
+                        <td>6:52</td>
+                    </tr>
+                    <tr>
+                        <td>ほっこりポテト</td>
+                        <td>20</td>
+                        <td>12:00</td>
+                        <td>12:00</td>
+                    </tr>
+                    <tr>
+                        <td>モーモーミルク</td>
+                        <td>41</td>
+                        <td>12:00</td>
+                        <td>12:00</td>
+                    </tr>
+                    <tr>
+                        <td>ピュアなオイル</td>
+                        <td>32</td>
+                        <td>12:00</td>
+                        <td>12:00</td>
+                    </tr>
+
+                    <tr>
+                        <td>合計</td>
+                        <td>115</td>
+                        <td>44:00</td>
+                        <td>42:52</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!--以下、スクリプト-->
+        <script>
+            
+
+            //ロード時の処理
+            window.onload = ()=>{};
+        </script>
+    </body>
+
+</html>

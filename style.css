@@ -537,10 +537,6 @@ img.field{
 
 
 
-
-
-
-
 /*report専用*/
 #mypoke_list{
     padding-bottom: 5em;
@@ -555,9 +551,141 @@ img.field{
 
 
 
+/*report専用 - レシピ効率*/
+.recipe_efficiency_container{
+    background-color: #ccc;
+    width: 320px;
+    font-size: 0.75em;
+}
+
+.recipe_efficiency_header{
+    display: flex; 
+    justify-content: space-between;
+    font-size: 120%;
+}
+
+
+.recipe_efficiency_header_item:last-child{
+    padding-right: 10px;
+}
+
+.recipe_efficiency_info1{
+    display: flex;
+    background-color: #fff;
+}
+
+.recipe_efficiency_image_container{
+    width: 100px;  
+    border: 1px solid #ccc; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    background-color: #f9f9f9;
+}
+
+.recipe_efficiency_image_container img{
+    width: 80px;
+    height: auto;
+}
+.recipe_efficiency_info1_area{
+    flex-grow: 1; 
+    display: flex; 
+    flex-direction: column; 
+    border: 1px solid #ccc; 
+    border-left: none;
+}
+.recipe_efficiency_info1_row{
+    display: flex; 
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+}
+
+.recipe_efficiency_info1_area > :last-child{
+    background-color: mistyrose;
+    border-bottom: none;
+}
+
+.recipe_efficiency_info1_row:nth-child(1){
+    flex: 2;
+}
+
+.recipe_efficiency_info1_row:nth-child(2){
+    flex: 2;
+}
+
+.recipe_efficiency_info1_cell{
+    background-color:  #FFF;
+}
+
+.recipe_efficiency_info1_row :nth-child(3){
+    flex: 1;
+    text-align: center;
+}
+
+.recipe_efficiency_info1_cell:nth-child(1){
+    flex: 2;
+}
+
+.recipe_efficiency_info1_cell:nth-child(2){
+    flex: 2;
+}
+
+.recipe_efficiency_info1_cell:nth-child(3){
+    flex: 1;
+}
+
+.recipe_efficiency_container > table{
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border: none; margin-top: -1px;
+}
+
+.recipe_efficiency_container > table  th{
+    border: 1px solid #ccc;
+    text-align: right;
+    width: 17%;
+    padding-right: 5px;
+    padding-left: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* 改行させずに一行に収める */
+}
+
+.recipe_efficiency_container > table  th:first-child{
+    border: 1px solid #ccc;
+    text-align: left;
+    width: auto;
+}
+
+.recipe_efficiency_container > table  th:nth-child(2){
+    border: 1px solid #ccc;
+    text-align: right;
+    width: 12%;
+}
+
+.recipe_efficiency_container > table td{
+    border: 1px solid #ccc;
+    text-align: right;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.recipe_efficiency_container > table td:nth-child(1){
+    text-align: left;
+}
+
+.recipe_efficiency_container > table tr:last-child{
+    font-weight: 700;
+}
+
+.recipe_efficiency_container > table tr:last-child td:first-child{
+    text-align: right;
+}
+
+
+
 /*event専用*/
-
-
 #event_schedule{
     width: 100%;
     display: grid;
@@ -672,6 +800,7 @@ event_panel li{
     margin-left: -0.5em;
     padding-bottom: 0.5em;
 }
+
 
 
 
