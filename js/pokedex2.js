@@ -570,6 +570,10 @@ class FoodCombination{
         }
     }
 
+    containsFoodsAny(foodNames){
+        return this.foods.some(f => foodNames.some(fn => fn == f.name));
+    }
+
     containsFoodsAtLeast(foodNames, min = 0){
         return this.getExpectionOf(foodNames) >= min;
     }

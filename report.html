@@ -1225,6 +1225,8 @@
 
             //ロード時のイベント
             window.onload = ()=>{
+
+
                 this.pokedex = new Pokedex();
                 this.pokemons = pokedex.pokemons;
                 this.recipedb = new RecipeDB();
@@ -1239,6 +1241,8 @@
                 document.getElementById("food_rate_ref").innerHTML = Object.entries(pokedex.foodPowerKariMap).map(([k, v]) => k + ": " + v).join("<br>");
                 let sb_recipe = document.getElementById("select_recipe", "");              
                 if (sb_recipe.children.length == 0) this.selectRecipeCategory(document.getElementById("select_recipe_category"), true);
+
+              
             }
 
 

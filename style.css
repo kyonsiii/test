@@ -556,6 +556,7 @@ img.field{
     
     width: 320px;
     font-size: 0.75em;
+    margin-bottom: 4em;
 }
 
 .recipe_efficiency_header{
@@ -624,19 +625,24 @@ img.field{
     flex: 1;
 }
 
+/* テーブル */
 .recipe_efficiency_container > table{
     width: 100%;
     border-collapse: collapse;
     background-color: #fff;
     border: none; margin-top: -1px;
+    margin-bottom: 0;
+}
+.recipe_efficiency_container > table td{
+    vertical-align: middle;
 }
 
-.recipe_efficiency_container > table > thead{
+table.recipe_efficiency_table_outline > thead{
     background-color: #eee;
 }
 
 
-.recipe_efficiency_container > table  th{
+table.recipe_efficiency_table_outline  th{
     border: 1px solid #ccc;
     text-align: right;
     width: 17%;
@@ -647,35 +653,72 @@ img.field{
     white-space: nowrap; /* 改行させずに一行に収める */
 }
 
-.recipe_efficiency_container > table  th:first-child{
+table.recipe_efficiency_table_outline  th:first-child{
     border: 1px solid #ccc;
     text-align: left;
     width: auto;
 }
 
-.recipe_efficiency_container > table  th:nth-child(2){
+table.recipe_efficiency_table_outline  th:nth-child(2){
     border: 1px solid #ccc;
     text-align: right;
     width: 12%;
 }
 
-.recipe_efficiency_container > table td{
+table.recipe_efficiency_table_outline td{
     border: 1px solid #ccc;
     text-align: right;
     padding-right: 5px;
     padding-left: 5px;
 }
 
-.recipe_efficiency_container > table td:nth-child(1){
+table.recipe_efficiency_table_outline td:nth-child(1){
     text-align: left;
 }
 
-.recipe_efficiency_container > table tr:last-child{
+table.recipe_efficiency_table_outline tr:last-child{
     font-weight: 700;
 }
 
-.recipe_efficiency_container > table tr:last-child td:first-child{
+table.recipe_efficiency_table_outline tr:last-child td:first-child{
     text-align: right;
+}
+
+
+/* テーブル(トップレート) */
+table.recipe_efficiency_table_topRate th{
+    text-align: right;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    width: 4em;
+}
+table.recipe_efficiency_table_topRate th > img{
+    vertical-align: middle;
+    width: 3em;
+    height: auto;
+}
+
+table.recipe_efficiency_table_topRate td > img{
+    vertical-align: middle;
+    width: 2em;
+    height: auto;
+}
+
+
+table.recipe_efficiency_table_topRate th:first-child{
+    width: 2em;
+}
+
+table.recipe_efficiency_table_topRate th:last-child{
+    vertical-align: bottom;
+    text-align: right;
+    width: auto;
+}
+table.recipe_efficiency_table_topRate td{
+    border: 1px solid #ccc;
+    text-align: right;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 
