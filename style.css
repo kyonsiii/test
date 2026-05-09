@@ -569,8 +569,11 @@ img.field{
 
 .recipe_efficiency_header_item:last-child{
     padding-right: 10px;
+    align-content: flex-end;
 }
-
+.recipe_efficiency_header_item > img{
+    vertical-align: bottom;
+}
 .recipe_efficiency_info1_container{
     display: flex;
     background-color: #fff;
