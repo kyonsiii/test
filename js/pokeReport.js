@@ -398,6 +398,7 @@ class PokeReport{
         setRecipes('mypoke_quick_check_curry', this.recipedb.getAllCurryRecipes().sort((a, b) => b.energy - a.energy));
         setRecipes('mypoke_quick_check_salad', this.recipedb.getAllSaladRecipes().sort((a, b) => b.energy - a.energy));
         setRecipes('mypoke_quick_check_sweet', this.recipedb.getAllSweetRecipes().sort((a, b) => b.energy - a.energy));
+        
     }
 
     insertMypokeRecipeEfficiency(span, recipeName){
@@ -501,18 +502,41 @@ class PokeReport{
                 totalRate += x[f.name].rate;
             });
             return {combs: combs, totalRate: totalRate, rateMap: x};
-        }).sort((a, b) => b.totalRate - a.totalRate).slice(0, 400);                
+        }).sort((a, b) => b.totalRate - a.totalRate).slice(0, 200);                
         const topRateMap = {};
         topRateMap["Most Efficient Members"] = [{combs: tmpCombsExpectionRateMap[0].combs, rateMap: tmpCombsExpectionRateMap[0].rateMap, totalRate: tmpCombsExpectionRateMap[0].totalRate}];
         
         //ここで食材ごとのレート確認をしているはず
         const sliceCount = 5;
+        const foods = r.ingredients.map(f => f.name);
         r.ingredients.forEach(f => {                    
             const tmpTopN = tmpCombsExpectionRateMap.filter(x => x.rateMap[f.name].rate >= 1);
+            const passedSimilarItems = [];
+            for (const tmp of tmpTopN) {
+                //すでに追加済みの組み合わせに対して、各食材がレートを超えているかを確認
+                //超えている場合はそのまま追加でOK
+                //超えていない場合は、超えているやつと比べてポケモンの種族が違う時だけ追加する
+                const dame = passedSimilarItems.some(passed =>{
+                    if (foods.some(f => tmp.rateMap[f].rate > passed.rateMap[f].rate)) return false;
+                    //ここむずすぎる
+                    const diffPokes = tmp.combs.filter(x => !passed.combs.some(p => p.info.poke.name == x.info.poke.name));
+                    if (diffPokes.length > 0) return false;
+
+                    return true;
+                });
+                if (!dame) passedSimilarItems.push(tmp);
+                if (passedSimilarItems.length >= sliceCount) break;
+            };
+            /*
             const topN = (tmpTopN.length >= sliceCount) ? tmpTopN.slice(0, sliceCount)
                          : tmpCombsExpectionRateMap.sort((a, b) => (b.rateMap[f.name] - a.rateMap[f.name])).slice(0, sliceCount);
-            topRateMap[f.name] = topN;
+                         
+            */
+           console.log(passedSimilarItems.length);
+            topRateMap[f.name] = passedSimilarItems;
         });
+
+
 
         const keys = Object.keys(topRateMap);
         
