@@ -256,7 +256,20 @@ new Pokemon({no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材"
         ];
         
         this.fullyEvolvedPokemons = this.pokemons.filter(p => p.fullyEvolved);
-        
+        const groupNameDic ={
+            "ハピナス": "ラッキー",
+            "バケッチャ(こだま)" : "バケッチャ",
+            "バケッチャ(ちゅうだま)" : "バケッチャ",
+            "バケッチャ(おおだま)" : "バケッチャ",
+            "バケッチャ(ギガだま)" : "バケッチャ",
+            "パンプジン(こだま)" : "パンプジン",
+            "パンプジン(ちゅうだま)" : "パンプジン",
+            "パンプジン(おおだま)" : "パンプジン",
+            "パンプジン(ギガだま)" : "パンプジン",
+
+        };
+        this.pokemons.forEach(p => p.groupName = groupNameDic[p.name] ?? p.name);
+
         this.berries =
         [
             {no: 1, name: "キーのみ", power: 28},

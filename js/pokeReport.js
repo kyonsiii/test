@@ -489,7 +489,8 @@ class PokeReport{
 
         console.log("◆" + recipeName);
         const r = this.recipedb.getRecipeOf(recipeName);
-        const candsTop20 = this.mypokeInfoList.map(x => ({info: x, expection: x.comb.getExpectionOf(r.ingredients.map(x => x.name))})).filter(x => x.expection > 0).sort((a, b) => b.expection - a.expection).slice(0, 20);
+        const candsTop20 = this.mypokeInfoList.map(x => ({info: x, expection: x.comb.getExpectionOf(r.ingredients.map(x => x.name))}))
+                            .filter(x => x.expection > 0).sort((a, b) => b.expection - a.expection).slice(0, 20);
         const tmpCombsExpectionRateMap = getCombinations(candsTop20, 4).map(combs => {
             let x = {};
             let totalRate = 0;
@@ -509,8 +510,8 @@ class PokeReport{
         //ここで食材ごとのレート確認をしているはず
         const sliceCount = 5;
         const foods = r.ingredients.map(f => f.name);
-        r.ingredients.forEach(f => {                    
-            const tmpTopN = tmpCombsExpectionRateMap.filter(x => x.rateMap[f.name].rate >= 1);
+        const getRateFilteredTopN = (rateMin, food) =>{
+            const tmpTopN = tmpCombsExpectionRateMap.filter(x => x.rateMap[food].rate >= rateMin);
             const passedSimilarItems = [];
             for (const tmp of tmpTopN) {
                 //すでに追加済みの組み合わせに対して、各食材がレートを超えているかを確認
@@ -519,7 +520,7 @@ class PokeReport{
                 const dame = passedSimilarItems.some(passed =>{
                     if (foods.some(f => tmp.rateMap[f].rate > passed.rateMap[f].rate)) return false;
                     //ここむずすぎる
-                    const diffPokes = tmp.combs.filter(x => !passed.combs.some(p => p.info.poke.name == x.info.poke.name));
+                    const diffPokes = tmp.combs.filter(x => !passed.combs.some(p => p.info.poke.groupName == x.info.poke.groupName));
                     if (diffPokes.length > 0) return false;
 
                     return true;
@@ -527,13 +528,16 @@ class PokeReport{
                 if (!dame) passedSimilarItems.push(tmp);
                 if (passedSimilarItems.length >= sliceCount) break;
             };
-            /*
-            const topN = (tmpTopN.length >= sliceCount) ? tmpTopN.slice(0, sliceCount)
-                         : tmpCombsExpectionRateMap.sort((a, b) => (b.rateMap[f.name] - a.rateMap[f.name])).slice(0, sliceCount);
-                         
-            */
-           console.log(passedSimilarItems.length);
-            topRateMap[f.name] = passedSimilarItems;
+            return passedSimilarItems;            
+        };
+
+        r.ingredients.forEach(f => {                                
+            let passedItems;
+            for (let i = 0; i < 5; i++){
+                passedItems = getRateFilteredTopN(1 - (i * 0.25), f.name);
+                if (passedItems.length > 0) break;
+            }
+            topRateMap[f.name] = passedItems;
         });
 
 
@@ -570,8 +574,6 @@ class PokeReport{
                     ]));
                 });
             }
-
-
         }
 
         container.removeChild(span);                
@@ -821,8 +823,7 @@ class PokeReport{
 
 
     loadPlanPokeFromCookie(c, area, foodList = []){
-        if (c == "") return;
-
+        if (c == "" || c == "null") return;
         area.innerHTML = "";
         let noList = c.split('-');
         for (let i = 0; i < noList.length; i++){
