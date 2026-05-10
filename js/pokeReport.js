@@ -99,8 +99,10 @@ class PokeReport{
             p.foodCombinations.forEach(c => {
                 if (c.containsFoodsAtLeast(foods, min) && (c.lv != 30 || showLv30) && (c.lv != 60 || showLv60)){
                     pokeAndComb.push({poke: p, comb: c});     
+
+                    //this.createPokemonInfoRow(tr, pac.comb, food, pacjson, this.createIdentifierOf(pac.json));
                     if (isFoodGainPoke){
-                        const copiedComb = p.createFoodCombination(null, c.lv, c.code, 1);
+                        const copiedComb = p.createFoodCombination(null, c.lv, c.code, p.skillLv);
                         if (copiedComb.containsFoodsAtLeast(foods, min)) pokeAndComb.push({poke: p, comb: copiedComb});   
                     }    
                 }      
@@ -198,9 +200,7 @@ class PokeReport{
             let selector = "td.mypoke_outline, td.mypoke_outline~td";            
             let insertInfo = (pac, rank, tr = null) => {
                 tr = tr ?? tbody.insertRow();
-                //pac.comb.insertResultTo(tr, food, pac.poke, this.createIdentifierOf(pac.json));
-                //this.createPokemonInfoRow(tr, pac.comb, food, pacjson, this.createIdentifierOf(pac.json));
-                this.insertCombinationResultTo(tr, pac.poke, pac.comb, food, this.createIdentifierOf(pac.json))
+                this.insertCombinationResultTo(tr, pac.poke, pac.comb, food, this.createIdentifierOf(pac.json), false, pac.json.skillLv)
                 
                 tr.querySelectorAll(selector).forEach(el => {
                     this.setColorClassTo(el, pac.json.backgroundColor);
@@ -563,7 +563,7 @@ class PokeReport{
                 container.appendChild(header);
                 container.appendChild(table);
                 header.appendChild(createDiv("recipe_efficiency_header_item", (i == 0) ? "オススメ" : "【" + key + "】の組み合わせ - " + (topNo + 1), (i == 0) ? undefined: {folder: "food", name: key}));
-                header.appendChild(createDiv("recipe_efficiency_header_item", topN[topNo].totalRate.toFixed(2)));
+                header.appendChild(createDiv("recipe_efficiency_header_item", topN[topNo].totalRate.toFixed(3)));
                 thead.appendChild(createTrHeader(["", ...pokeArgs, "合計", ""]));   
                 r.ingredients.forEach(food => {
                     const foodExpections = topN[topNo].combs.map(c => c.info.comb.getExpectionOf(food.name));
@@ -654,7 +654,7 @@ class PokeReport{
         let tr = document.createElement("tr");
 
         //comb.insertResultTo(r, food, poke);昔のやりかた
-        this.insertCombinationResultTo(tr, poke, comb, food);
+        this.insertCombinationResultTo(tr, poke, comb, food, null, false, comb.skillLv);
        
         return tr;
     }
@@ -667,8 +667,9 @@ class PokeReport{
         return tr;
     }
 
-    insertCombinationResultTo(tr, poke, comb, food, identifier = null, noSetCombinationResult = false){
+    insertCombinationResultTo(tr, poke, comb, food, identifier = null, noSetCombinationResult = false, skillLv = undefined){
         tr.setAttribute("expection_total", comb.totalExpectionFinally);
+
         let cell = tr.insertCell();
         cell.classList.add("mypoke_outline");
         let img = document.createElement("img");
@@ -679,8 +680,12 @@ class PokeReport{
             let star = document.createElement("span");
             star.classList.add((poke.skillLvIsMax(comb.skillLv)) ? "mypoke_skill_max" : "mypoke_skill_nomax");
             star.textContent = "★";
-            
             cell.appendChild(star);
+
+            let starText = document.createElement("span");
+            starText.classList.add((poke.skillLvIsMax(comb.skillLv)) ? "mypoke_skill_max" : "mypoke_skill_nomax");
+            starText.textContent = skillLv ?? poke.skillLv;
+            cell.appendChild(starText);
         }
         cell.appendChild(img);
         
@@ -908,7 +913,8 @@ class PokeReport{
         //console.log(j.no);
         j.name = pokedex.getPokemonByNo(j.no).name;
         j.lv = bitToNum(n, mask32a_lv);
-        j.skillLv = 777;
+        j.skillLv = 777;        
+        j.skillLv = this.pokedex.getPokemonByNo(j.no).getMaxSkillLv();
         j.foodCode = this.getFoodCodeOf(bitToNum(n, mask32a_food1)) + this.getFoodCodeOf(bitToNum(n, mask32a_food2)) + this.getFoodCodeOf(bitToNum(n, mask32a_food3));
 
         n = parseInt(valueArr[1], 32);   

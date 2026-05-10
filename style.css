@@ -333,6 +333,17 @@ table thead tr th {
        0px -2px 1px #00DDEE; 
 }
 
+.mypoke_skill_max + .mypoke_skill_max{
+    opacity: 1;
+    font-size: 0.75em;
+    left: 1.7em;
+    top: 1.7em;
+    color: crimson;
+    font-weight: 500;
+    text-shadow: none;
+    background-color: transparent;
+}
+
 .mypoke_skill_nomax{
     font-size: 0.8em;
     opacity: 0.94;
@@ -359,6 +370,16 @@ table thead tr th {
        0px -2px 1px #5bf5e8; 
 }
 
+.mypoke_skill_nomax + .mypoke_skill_nomax{
+    opacity: 1;
+    font-size: 0.65em;
+    left: 2.1em;
+    top: 2.1em;
+    color: darkgreen;
+    font-weight: 500;
+    text-shadow: none;
+    background-color: transparent;
+}
 
 #mypoke_quick_check td:first-child{
     white-space: nowrap;
