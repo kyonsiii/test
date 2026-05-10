@@ -308,7 +308,30 @@ table thead tr th {
     color: rgb(132, 0, 240);
 }
 
-
+.mypoke_skill_enabled{
+    opacity: 0.8;
+    color: yellow;
+    position:absolute;
+    top: 1em;
+    left: 1em;
+    text-shadow: 
+       1px  1px 1px #00DDEE,
+      -1px  1px 1px #00DDEE,
+       1px -1px 1px #00DDEE,
+      -1px -1px 1px #00DDEE,
+       1px  0px 1px #00DDEE,
+       0px  1px 1px #00DDEE,
+      -1px  0px 1px #00DDEE,
+       0px -1px 1px #00DDEE,
+       2px  2px 1px #00DDEE,
+      -2px  2px 1px #00DDEE,
+       2px -2px 1px #00DDEE,
+      -2px -2px 1px #00DDEE,
+       2px  0px 1px #00DDEE,
+       0px  2px 1px #00DDEE,
+      -2px  0px 1px #00DDEE,
+       0px -2px 1px #00DDEE; 
+}
 
 
 #mypoke_quick_check td:first-child{
@@ -491,6 +514,8 @@ img.disabled{
     width: 1em;
     height: auto;
 }
+
+
 
 img.normal{
     width: 5em;

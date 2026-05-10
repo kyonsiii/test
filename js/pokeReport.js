@@ -85,7 +85,6 @@ class PokeReport{
         }
 
         let targPokemons = (onlyFullyEvolved) ? this.pokedex.fullyEvolvedPokemons : this.pokedex.pokemons;
-
         let targetPokemons = targPokemons.filter(p => (!onlyFullyEvolved || p.fullyEvolved) && p.existAnyInFoodList(foods));
         let tbody = document.createElement("tbody");
         tbody.id = "report_result";
@@ -669,8 +668,15 @@ class PokeReport{
         let img = document.createElement("img");
         img.src = "img/poke/" + String(poke.no).padStart(3, '0') + ".png"
         img.classList.add("tiny");
-        cell.appendChild(img);
 
+        if (poke.skillIsFoodGainer()){
+            let star = document.createElement("span");
+            star.classList.add("mypoke_skill_enabled");
+            star.textContent = "★";
+            cell.appendChild(star);
+        }
+        cell.appendChild(img);
+        
         if (identifier != null){
             let id = document.createElement("span");
             id.classList.add("mypoke_identifier");
