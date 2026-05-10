@@ -337,21 +337,26 @@ new Pokemon(this, {no:980,name:"ドオー",sleepType:"うとうと",specialty:"�
             "おてつだいブースト(でんき)"        : (poke, expectionDay, option1) => undefined, 
             "おてつだいブースト(ほのお)"        : (poke, expectionDay, option1) => undefined, 
             "おてつだいブースト(みず)"          : (poke, expectionDay, option1) => undefined, 
-            "かいりきバサミ(食材セレクトS)"     : {
-                foodGainFunc  : (poke, expectionDay, option1) => {
-                    //そのうち、スキルレベル対応させよう
-                    // 大成功16%で、 18 * 0.84 + 36 * 0.16 = 22.88 で計算       
-                    const expectionPerFood = 20.88 / 4;             
-                    return [
-                        {food: "ピュアなオイル", num: expectionPerFood * expectionDay},
-                        {food: "ワカクサコーン", num: expectionPerFood * expectionDay},
-                        {food: "あんみんトマト", num: expectionPerFood * expectionDay},
-                        {food: "ほっこりポテト", num: expectionPerFood * expectionDay}
-                    ];
-                    return poke.foods.map(f => ({food: f.name, num: expectionPerFood * expectionDay}));
-                },
-                energyGainFunc:  (poke, expectionDay, option1) => undefined
-            },
+            "かいりきバサミ(食材セレクトS)"     : (() => {
+                const skillTable = [5,6,8,11,13,16,18];
+                return {
+                    getMaxLv: () => skillTable.length,
+                        foodGainFunc  : (poke, expectionDay, option1 = 1) => {
+                        //そのうち、スキルレベル対応させよう
+                        // 大成功16%で、 18 * 0.84 + 36 * 0.16 = 22.88 で計算       
+                        const index = (option1 > skillTable.length) ? skillTable.length - 1 : option1 - 1; 
+                        const normalExpection = skillTable[index];
+                        const expectionPerFood = ((normalExpection * 0.84) + (normalExpection * 2 * 0.16)) / 4;             
+                        return [
+                            {food: "ピュアなオイル", num: expectionPerFood * expectionDay},
+                            {food: "ワカクサコーン", num: expectionPerFood * expectionDay},
+                            {food: "あんみんトマト", num: expectionPerFood * expectionDay},
+                            {food: "ほっこりポテト", num: expectionPerFood * expectionDay}
+                        ];
+                    },
+                    energyGainFunc:  (poke, expectionDay, option1) => undefined
+                    }
+            })(),
             "きのみジュース(げんきオールS)"     : (poke, expectionDay, option1) => undefined, 
             "きのみバースト"                    : (poke, expectionDay, option1) => undefined, 
             "きょううん(食材セレクトS)"         : (poke, expectionDay, option1) => undefined, 
@@ -373,30 +378,43 @@ new Pokemon(this, {no:980,name:"ドオー",sleepType:"うとうと",specialty:"�
             "オールマイティー"                  : (poke, expectionDay, option1) => undefined, 
             "ナイトメア(エナジーチャージM)"     : (poke, expectionDay, option1) => undefined, 
             "ビルドアップ(料理アシストS)"       : (poke, expectionDay, option1) => undefined, 
-            "プラス(食材ゲットS)"               : {
-                foodGainFunc  : (poke, expectionDay, option1) => { 
-                    const food = poke.foods[0].name;
-                    const num  = (food == "めざましコーヒー") ? 12
-                                : (food == "モーモーミルク") ? 14 : 999;                   
-                    return [{food: food, num: num * expectionDay}];
-                },
-                energyGainFunc:  (poke, expectionDay, option1) => undefined
-            },
+            "プラス(食材ゲットS)"               : (() => {
+                const skillTable1 = [6,7,8,9,10,11,12];
+                const skillTable2 = [6,7,9,10,12,13,14];
+                return {
+                    getMaxLv: () => skillTable1.length,
+                    foodGainFunc  : (poke, expectionDay, option1 = 1) => { 
+                        const food = poke.foods[0].name;
+                        const index = (option1 > skillTable1.length) ? skillTable1.length - 1 : option1 - 1; 
+                        const num  = (food == "めざましコーヒー") ? skillTable1[index] 
+                                    : (food == "モーモーミルク") ? skillTable2[index]  : 999;                   
+                        return [{food: food, num: num * expectionDay}];
+                    },
+                    energyGainFunc:  (poke, expectionDay, option1) => undefined
+                }
+            })(),
             "プレゼント(食材ゲットS)"           : (poke, expectionDay, option1) => undefined, 
             "マイナス(料理パワーアップS)"       : (poke, expectionDay, option1) => undefined, 
             "料理チャンスS"                     : (poke, expectionDay, option1) => undefined, 
             "料理パワーアップS"                 : (poke, expectionDay, option1) => undefined, 
             "食材ゲットS"                       : (poke, expectionDay, option1) => undefined, 
-            "食材セレクトS"                     : {
-                foodGainFunc  : (poke, expectionDay, option1) => {
-                    //そのうち、スキルレベル対応させよう！                    
-                    const expectionPerFood = 18 / poke.foods.length;
-                    return poke.foods.map(f => ({food: f.name, num: expectionPerFood * expectionDay}));
-                },
-                energyGainFunc:  (poke, expectionDay, option1) => undefined
-            }, 
+            "食材セレクトS"                     : (() =>{
+                const skillTable = [5,6,8,11,13,16,18];
+                return {
+                    getMaxLv: () => skillTable.length,
+                    foodGainFunc  : (poke, expectionDay, option1 = 1) => {
+                        //そのうち、スキルレベル対応させよう！     
+                        const index = (option1 > skillTable.length) ? skillTable.length - 1 : option1 - 1;                
+                        const expectionPerFood = skillTable[index] / poke.foods.length;
+                        return poke.foods.map(f => ({food: f.name, num: expectionPerFood * expectionDay}));
+                    },
+                    energyGainFunc:  (poke, expectionDay, option1) => undefined
+                }
+            })(), 
         };
     }
+
+
 
     getSkillPowerOf(poke, expectionDay){
         console.log(poke.skill);
@@ -533,6 +551,12 @@ class Pokemon{
         return (func.foodGainFunc == undefined) ? false : true;
     }
 
+    skillLvIsMax(num){
+        const func = this.pokedex.skillCalculators[this.skill];
+        if (func == undefined) return false;
+        const getFunc = func.getMaxLv;
+        return (getFunc == undefined) ? false : num >= getFunc();
+    }
 
     getFoodByCode(code){
         const index = code.charCodeAt(0) - 65;
@@ -554,26 +578,27 @@ class Pokemon{
     }
 
 
-    createFoodCombination(json = null, lv = -1, code = null){   //json=nullは無補正の一覧表示の時を想定。 lvとcodeは上書きできるように
+    createFoodCombination(json = null, lv = -1, code = undefined, skillLv = undefined){   //json=nullは無補正の一覧表示の時を想定。 lvとcodeは上書きできるように
+        const isVanilla = (json == null);   //比較用の無補正個体
         if (json == null){
             json = {
                 charAdjusts: {speed: 0, food: 0, skill: 0},
                 subAdjusts:  {speed: 0, food: 0, skill: 0},
-                isVanilla: true
+                isVanilla: isVanilla
             };
         }                
         lv = (lv == -1) ? json.lv : lv; //lvの入力がなかったらjsonの情報を見る
         
-        code = code ?? json.foodCode;   //foodCodeの入力がなかったらjsonの情報を見る
-        
-        const comb = new FoodCombination(this, lv, this.getOtetsudaiCountDay(lv, json.charAdjusts.speed, json.subAdjusts.speed), code, json.charAdjusts.food + json.subAdjusts.food);
-        
+        code = code ?? json.foodCode;   //foodCodeの入力がなかったらjsonの情報を見る        
+        const comb = new FoodCombination(this, lv, this.getOtetsudaiCountDay(lv, json.charAdjusts.speed, json.subAdjusts.speed), code, json.charAdjusts.food + json.subAdjusts.food);        
         const foodGainFunc = this.pokedex.skillCalculators[this.skill].foodGainFunc;
         if (foodGainFunc != undefined){
             const skillCount = (json.isVanilla) ? this.skillExpectionDay 
                               : this.getSkillPopCountWithGuaranteed(lv, json.charAdjusts.speed, json.subAdjusts.speed, json.charAdjusts.skill, json.subAdjusts.skill);
-                        
-            for (const res of foodGainFunc(this, skillCount, 0)){
+            comb.skillLv = (!isVanilla) ? json.skillLv
+                          : skillLv ?? 999;
+
+            for (const res of foodGainFunc(this, skillCount, comb.skillLv)){
                 comb.addFood(res.food, res.num);
             }
         }
@@ -647,6 +672,7 @@ class FoodCombination{
     constructor(poke, lv, otetudaiCount, code, foodRateAdjust = 0){
         this.code = code;
         this.lv = lv;
+        this.skillLv = 1;
         this.foods = [];
         const codeForCalc = (lv < 30) ? code.substring(0, 1)
                            : (lv < 60) ? code.substring(0, 2) : code; //lvが60未満の時は3つ目の食材は取れない

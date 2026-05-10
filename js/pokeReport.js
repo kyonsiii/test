@@ -93,10 +93,16 @@ class PokeReport{
         let foodName = foods[0];
 
         for (let i = 0; i < targetPokemons.length; i++){
-            let p = targetPokemons[i];
+            const p = targetPokemons[i];
+            const isFoodGainPoke = p.skillIsFoodGainer();
+
             p.foodCombinations.forEach(c => {
                 if (c.containsFoodsAtLeast(foods, min) && (c.lv != 30 || showLv30) && (c.lv != 60 || showLv60)){
-                    pokeAndComb.push({poke: p, comb: c});         
+                    pokeAndComb.push({poke: p, comb: c});     
+                    if (isFoodGainPoke){
+                        const copiedComb = p.createFoodCombination(null, c.lv, c.code, 1);
+                        if (copiedComb.containsFoodsAtLeast(foods, min)) pokeAndComb.push({poke: p, comb: copiedComb});   
+                    }    
                 }      
             });
         }
@@ -671,8 +677,9 @@ class PokeReport{
 
         if (poke.skillIsFoodGainer()){
             let star = document.createElement("span");
-            star.classList.add("mypoke_skill_enabled");
+            star.classList.add((poke.skillLvIsMax(comb.skillLv)) ? "mypoke_skill_max" : "mypoke_skill_nomax");
             star.textContent = "★";
+            
             cell.appendChild(star);
         }
         cell.appendChild(img);
@@ -901,6 +908,7 @@ class PokeReport{
         //console.log(j.no);
         j.name = pokedex.getPokemonByNo(j.no).name;
         j.lv = bitToNum(n, mask32a_lv);
+        j.skillLv = 777;
         j.foodCode = this.getFoodCodeOf(bitToNum(n, mask32a_food1)) + this.getFoodCodeOf(bitToNum(n, mask32a_food2)) + this.getFoodCodeOf(bitToNum(n, mask32a_food3));
 
         n = parseInt(valueArr[1], 32);   

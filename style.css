@@ -308,7 +308,7 @@ table thead tr th {
     color: rgb(132, 0, 240);
 }
 
-.mypoke_skill_enabled{
+.mypoke_skill_max{
     opacity: 0.8;
     color: yellow;
     position:absolute;
@@ -331,6 +331,32 @@ table thead tr th {
        0px  2px 1px #00DDEE,
       -2px  0px 1px #00DDEE,
        0px -2px 1px #00DDEE; 
+}
+
+.mypoke_skill_nomax{
+    font-size: 0.8em;
+    opacity: 0.94;
+    color: rgb(168, 215, 238);
+    position:absolute;
+    top: 1.5em;
+    left: 1.5em;
+    text-shadow: 
+       1px  1px 1px #5bf5e8,
+      -1px  1px 1px #5bf5e8,
+       1px -1px 1px #5bf5e8,
+      -1px -1px 1px #5bf5e8,
+       1px  0px 1px #5bf5e8,
+       0px  1px 1px #5bf5e8,
+      -1px  0px 1px #5bf5e8,
+       0px -1px 1px #5bf5e8,
+       2px  2px 1px #5bf5e8,
+      -2px  2px 1px #5bf5e8,
+       2px -2px 1px #5bf5e8,
+      -2px -2px 1px #5bf5e8,
+       2px  0px 1px #5bf5e8,
+       0px  2px 1px #5bf5e8,
+      -2px  0px 1px #5bf5e8,
+       0px -2px 1px #5bf5e8; 
 }
 
 
