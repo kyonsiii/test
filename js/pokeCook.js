@@ -4,7 +4,7 @@ const mask_recipe_max         = 0b00000111111111100000000000000000;//前はadvan
 const mask_recipe_type_select = 0b00000000000000011000000000000000;//この2bitのあとの2bitはもともと上位食材ON/OFFで使用していたが現在はレベルアップが簡単になったので判定を削除
 const mask_recipe_max_select  = 0b00000000000000000001110000000000;//
 
-const mask_recipe_food        = 0b00000000000000000000000111111000;
+//const mask_recipe_food        = 0b00000000000000000000000111111000;ボタン式に変更したから使うのやめた
 //
 
 class PokeCook{
@@ -13,7 +13,6 @@ class PokeCook{
     constructor(recipes){
         this.recipes = recipes;
         this.recipe_table = document.getElementById('recipe_table');
-        this.selectBox_food = document.getElementById('select_food');
     }
 
     recalcRecipeInfo75(){
@@ -39,12 +38,8 @@ class PokeCook{
         n += numToBit(this.getCurrentMaxManualInputNum(), mask_recipe_max);
         n += numToBit(this.getCurrentRecipeTypeNum(), mask_recipe_type_select);
         n += numToBit(this.getCurrentMaxIndex(), mask_recipe_max_select);
-        n += numToBit(this.getFoodListIndex(), mask_recipe_food);        
+        //n += numToBit(this.getFoodListIndex(), mask_recipe_food);       リストボックスやめた   
         setCookie("cinf", n.toString(32), 30);
-    }
-
-    getFoodListIndex(){
-        return document.getElementById("select_food").selectedIndex;
     }
 
     getCurrentMaxIndex(){
@@ -71,12 +66,10 @@ class PokeCook{
         if (c == null) return;
 
         let n = parseInt(c, 32);
-        document.querySelectorAll("#current_recipe_type input")[bitToNum(n, mask_recipe_type_select)].checked = true;
-        
+        document.querySelectorAll("#current_recipe_type input")[bitToNum(n, mask_recipe_type_select)].checked = true;        
         document.querySelectorAll('#recipe_limit [type="radio"]')[bitToNum(n, mask_recipe_max_select)].checked = true;
         document.getElementById("recipe_limit_manual").value = bitToNum(n, mask_recipe_max);
         
-        document.getElementById("select_food").selectedIndex = bitToNum(n, mask_recipe_food);
         this.setTarget(null, null)        
     }
 
@@ -162,13 +155,14 @@ class PokeCook{
         }
       
 
+       
         //選択した食材が含まれているかの確認
-        if (this.selectBox_food.value != "----"){
-            visibleRows = visibleRows.filter(r => r.style.display == "");
-            for (let r of visibleRows){
-                let ingredients =  r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_ingredients');
-                r.style.display = (ingredients.includes(this.selectBox_food.value)) ? "" : "none";
-            }
+        const selectedFoods = Array.from(document.querySelectorAll("#food_buttons .selected")).map(el => el.name);
+        visibleRows = visibleRows.filter(r => r.style.display == "");
+        for (let r of visibleRows){
+            let ingredients =  r.getElementsByClassName('recipe_title')[0].getAttribute('recipe_ingredients');
+            r.style.display = (selectedFoods.length == 0) ? ""
+                             : (selectedFoods.every(sf => ingredients.includes(sf))) ? "" : "none";
         }
 
         this.setCookieValue();

@@ -5,9 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="style.css" rel="stylesheet"/>
         <script src="js/main.js"></script>
-        <script src="js/recipedb.js"></script>
-        <script src="js/pokeCook.js"></script>
-        <title>料理v1.0.3</title>
+        <script src="js/recipedb.js?t=20260511_1"></script>
+        <script src="js/pokeCook.js?t=20260511_1"></script>
+        <script src="js/pokedex2.js?t=20260511_1"></script>
+        <title>料理v1.1</title>
     </head>
 
 
@@ -27,8 +28,8 @@
                 <input type="radio" name="recipe_type" onclick="pokeCook.setTarget(this, this)" id="filter_sal" value="サラダ"><label for="filter_sal"><img src="img/recipe/salad.png"></label>
                 <input type="radio" name="recipe_type" onclick="pokeCook.setTarget(this, this)" id="filter_des" value="デザート・ドリンク"><label for="filter_des"><img src="img/recipe/sweet.png"></label>               
             </div>
+
             <br>
-            
 
             <div id="recipe_limit">
                 <input type="radio" id="recipe_limit_nolimit" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" value="9999" checked>制限なし<br>                
@@ -37,11 +38,8 @@
                 <input type="radio" id="recipe_limit_less" name="recipe_limit" onchange="pokeCook.setTarget(this, null)" value="less">以下                   
             </div>   
 
-
-            <select id="select_food" style="margin-top: 0.5em;" onchange="pokeCook.setTarget(this, null)">
-                <option value = "----">----</option>
-
-            </select>
+            <div id="food_buttons">
+            </div>
         </div>
 
 
@@ -66,20 +64,28 @@
 
         <!--以下、スクリプト-->
         <script>
+            function selectIcon(el){
+                if (el == null){
+                    Array.from(document.getElementById('berry_buttons').children).forEach(c => this.changeIconStyle(c, false));
+                    Array.from(document.getElementById('food_buttons').children).forEach(c => this.changeIconStyle(c, false));
+                }
+                else if (el.style.margin == "" || el.style.margin == "4px"){
+                    el.style.margin = "0px";
+                    el.style.border = "4px solid blue";
+                    el.classList.add("selected");
+                }
+                else{
+                    el.style.margin = "4px";
+                    el.style.border = "";
+                    el.classList.remove("selected");
+                }
+            }
             window.onload = ()=>{
                 this.recipedb = new RecipeDB();
                 this.pokeCook = new PokeCook(this.recipedb.recipes);
-                this.pokeCook.setTableRows(true);  
-                    
-                let el = document.getElementById("select_food");
-                let add = (food) => {
-                    let op = document.createElement("option");
-                    op.value = food;
-                    op.textContent = food;
-                    el.appendChild(op);
-                }
-                this.recipedb.foods.forEach(f => add(f.name));
+                this.pokeCook.setTableRows(true);                  
                 this.pokeCook.setOptionsFromCookie(getCookie("cinf")); 
+                document.getElementById("food_buttons").innerHTML = new Pokedex().foodList.map(f => `<img name="${f}" src="img/food/${f}.png" onclick="selectIcon(this); pokeCook.setTarget(this, null)">`).join("");
                 
             }
 

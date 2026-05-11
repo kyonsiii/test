@@ -18,24 +18,7 @@ class PokeSearch{
 
     }
 
-    setFoodImgListTo(listEl){ 
-        console.log({listFl:listEl});
-        console.log()
-        for (let i = 0; i < this.pokedex.foodList.length; i++){
-            let img = this.getFoodImgElementOf(this.pokedex.foodList[i]);
-            img.setAttribute("onclick", "pokesearch.selectIcon(this)");
-            listEl.appendChild(img);
-        }
-    }
 
-
-    setBerryImgListTo(listEl){
-        for (let i = 0; i < this.pokedex.berryList.length; i++){
-            let img = this.getBerryImgElementOf(this.pokedex.berryList[i].name);
-            img.setAttribute("onclick", "pokesearch.selectIcon(this)");
-            listEl.appendChild(img);
-        }
-    }
 
     getBerryImgElementOf(berry){
         let el = document.createElement("img");

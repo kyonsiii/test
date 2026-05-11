@@ -88,8 +88,9 @@
                 this.pokesearch = new PokeSearch();
                 this.pokesearch.initialize(this.pokedex);
                 this.pokesearch.setSkillListTo(document.getElementById("select_skill"));
-                this.pokesearch.setFoodImgListTo(document.getElementById("food_buttons"));
-                this.pokesearch.setBerryImgListTo(document.getElementById("berry_buttons"));
+                document.getElementById("food_buttons").innerHTML = pokedex.foodList.map(f => `<img name="${f}" src="img/food/${f}.png" onclick="pokesearch.selectIcon(this)">`).join("");
+                document.getElementById("berry_buttons").innerHTML = pokedex.berryList.map(b => `<img name="${b.name}" src="img/berry/${b.name}.png" onclick="pokesearch.selectIcon(this)">`).join("");
+
             }
         </script>
     </body>

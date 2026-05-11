@@ -168,100 +168,6 @@
         </div>
 
         <div id="food_buttons">
-            <div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="とくせんリンゴ" src="img/food/とくせんリンゴ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="モーモーミルク" src="img/food/モーモーミルク.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="ワカクサ大豆" src="img/food/ワカクサ大豆.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="あまいミツ" src="img/food/あまいミツ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="マメミート" src="img/food/マメミート.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="あったかジンジャー" src="img/food/あったかジンジャー.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="あんみんトマト" src="img/food/あんみんトマト.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="とくせんエッグ" src="img/food/とくせんエッグ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="ピュアなオイル" src="img/food/ピュアなオイル.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="ほっこりポテト" src="img/food/ほっこりポテト.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-            
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="げきからハーブ" src="img/food/げきからハーブ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="リラックスカカオ" src="img/food/リラックスカカオ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="あじわいキノコ" src="img/food/あじわいキノコ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-            
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="ふといながねぎ" src="img/food/ふといながねぎ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="おいしいシッポ" src="img/food/おいしいシッポ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="ワカクサコーン" src="img/food/ワカクサコーン.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-            
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="めざましコーヒー" src="img/food/めざましコーヒー.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="ずっしりカボチャ" src="img/food/ずっしりカボチャ.png" onclick="selectIcon(this);setResultOf(this)">
-            </div><!--
-            
-            --><div class="ingredient-container food_num">
-                <strong></strong>
-                <img name="つやつやアボカド" src="img/food/つやつやアボカド.png" onclick="selectIcon(this);setResultOf(this)">
-            </div>
             
             
             
@@ -1225,8 +1131,6 @@
 
             //ロード時のイベント
             window.onload = ()=>{
-
-
                 this.pokedex = new Pokedex();
                 this.pokemons = pokedex.pokemons;
                 this.recipedb = new RecipeDB();
@@ -1234,11 +1138,16 @@
                 this.pokeReport.initialize();
                 this.setSubSkillSelectBoxes();
 
-           
+                const foodButtonsEl = document.getElementById("food_buttons");
+                foodButtonsEl.innerHTML = pokedex.foodList.map(f => `<div class="ingredient-container food_num"><strong></strong><img name="${f}" src="img/food/${f}.png" onclick="selectIcon(this);setResultOf(this)"></div>`).join("") + "\r\n" + foodButtonsEl.innerHTML;
+                
                 this.pokeReport.setOptionsFromCookie(getCookie("ropt", ""));
                 this.setMypokesToListFromCookie();
                 this.pokeReport.loadPlanPokeFromCookie(getCookie("pktg", ""), this.pokeListPlanningToGet, this.getFoodNamesOnArea());
                 document.getElementById("food_rate_ref").innerHTML = Object.entries(pokedex.foodPowerKariMap).map(([k, v]) => k + ": " + v).join("<br>");
+                
+
+
                 let sb_recipe = document.getElementById("select_recipe", "");              
                 if (sb_recipe.children.length == 0) this.selectRecipeCategory(document.getElementById("select_recipe_category"), true);
 
