@@ -847,7 +847,7 @@ class PokeReport{
             //let no = Math.round((bitToNum(n, mask16_no_plan) * 10) + bitToNum(n, mask16_nodp_plan))/ 10;
 
             let no = bitToNum(n, mask16_no_plan) + this.convertNumToPokeNoDecimal(bitToNum(n, mask16_nodp_plan));
-            let poke = (foodFlag) ? new Pokemon({no: raw, name: foodList[raw & mask16_no_plan], flagForPlan: true}) 
+            let poke = (foodFlag) ? new Pokemon(undefined, {no: raw, name: foodList[raw & mask16_no_plan], flagForPlan: true}) 
                                   : pokedex.getPokemonByNo(no);
             this.insertPokeToPlanArea(poke, area, i != noList.length - 1);
         }

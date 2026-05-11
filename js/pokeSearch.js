@@ -18,7 +18,9 @@ class PokeSearch{
 
     }
 
-    setFoodImgListTo(listEl){        
+    setFoodImgListTo(listEl){ 
+        console.log({listFl:listEl});
+        console.log()
         for (let i = 0; i < this.pokedex.foodList.length; i++){
             let img = this.getFoodImgElementOf(this.pokedex.foodList[i]);
             img.setAttribute("onclick", "pokesearch.selectIcon(this)");
@@ -203,9 +205,9 @@ class PokeSearch{
 
         c = r.insertCell();
         c.innerHTML = "<img src=\"img/berry/" + poke.berry + ".png\" class=\"tiny\">" + poke.berry 
-                    + "<br><br>" + "<img src=\"img/food/" + poke.food1 + ".png\" class=\"tiny\"><b>" + "(確定)</b>" 
-                    + (poke.food2 == "" ? "" : "<br>" + "<img src=\"img/food/" + poke.food2 + ".png\" class=\"tiny\">")
-                    + (poke.food3 == "" ? "" : "<br>" + "<img src=\"img/food/" + poke.food3 + ".png\" class=\"tiny\">");
+                    + "<br><br>" + "<img src=\"img/food/" + poke.foods[0].name + ".png\" class=\"tiny\"><b>" + "(確定)</b>" 
+                    + (poke.foods.length <= 1 ? "" : "<br>" + "<img src=\"img/food/" + poke.foods[1].name + ".png\" class=\"tiny\">")
+                    + (poke.foods.length <= 2 ? "" : "<br>" + "<img src=\"img/food/" + poke.foods[2].name + ".png\" class=\"tiny\">");
 
         return r;
     }

@@ -303,7 +303,34 @@ new Pokemon(this, {no:980,name:"ドオー",sleepType:"うとうと",specialty:"�
             {no: 18, name: "モモンのみ", power: 26}
         ];
 
- 
+    
+        //食材の並び順を調整するため indexで使用、reportもここから使うかも？
+        this.foodList = [
+            "とくせんリンゴ",
+            "モーモーミルク",
+            "ワカクサ大豆",
+            "あまいミツ",
+            "マメミート",
+            "あったかジンジャー",
+            "あんみんトマト",
+            "とくせんエッグ",
+            "ピュアなオイル",
+            "ほっこりポテト",
+            "げきからハーブ",
+            "リラックスカカオ",
+            "あじわいキノコ",
+            "ふといながねぎ",
+            "おいしいシッポ",
+            "ワカクサコーン",
+            "めざましコーヒー",
+            "ずっしりカボチャ",
+            "つやつやアボカド"
+        ];
+        const foodSet = new Set(this.pokemons.map(p => p.foods.map(f => f.name).flat()).flat());
+        const diff = Array.from(foodSet).filter(fs => this.foodList.every(f => f != fs));
+        if (diff.length != 0) alert(`foodListに追加していない食材があります。\r\n\r\n${diff.join("\r\n")}`);
+
+
         //foodDBシートにもあるので値を変えたときはそちらも変えること
         this.foodPowerKariMap = {
             "おいしいシッポ" : 1500,
