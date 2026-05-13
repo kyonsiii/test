@@ -4,15 +4,15 @@
         <!--https://csshtml.work/click-button/ 参考にしたボタンの作り方。ありがとう！-->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="style.css?v202605131404" rel="stylesheet"/>
-        <script src="js/main.js?v202605131404"></script>
-        <script src="js/pokeReport.js?v202605131404"></script>
-        <script src="js/pokedex_data_poke.js?v202605131404"></script>
-        <script src="js/pokedex_data_skill.js?v202605131404"></script>
-        <script src="js/pokedex_data_etc.js?v202605131404"></script>
-        <script src="js/pokedex2.js?v202605131404"></script>
-        <script src="js/pokemonInfo.js?v202605131404"></script>
-        <script src="js/recipedb.js?v202605131404"></script>
+        <link href="style.css?v202605131501" rel="stylesheet"/>
+        <script src="js/main.js?v202605131501"></script>
+        <script src="js/pokeReport.js?v202605131501"></script>
+        <script src="js/pokedex_data_poke.js?v202605131501"></script>
+        <script src="js/pokedex_data_skill.js?v202605131501"></script>
+        <script src="js/pokedex_data_etc.js?v202605131501"></script>
+        <script src="js/pokedex2.js?v202605131501"></script>
+        <script src="js/pokemonInfo.js?v202605131501"></script>
+        <script src="js/recipedb.js?v202605131501"></script>
 
         <title>レポート(仮)</title>
 
@@ -33,7 +33,7 @@
 
         <div class="input_form_area">
             <div style="display: flex; justify-content: space-between; background-color: beige;">
-                <strong id="page_title"> Myポケモン登録v202605131404:</strong>
+                <strong id="page_title"> Myポケモン登録v202605131501:</strong>
                 <span id="input_mypoke_form_visible" visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this); initializePokeList();">　表示▼</span>
             </div>
             <div id="input_form" style="display: none;">
@@ -703,7 +703,7 @@
 
                 this.insertRegisteredMyPokemons(foods, min);
 
-                let json = this.createJsonFromInputForm32(this.document.getElementById('input_mypoke_name').value);
+                let json = this.createJsonFromInputForm32();
                 if (json == null) return;
 
                 json.LvRaw.backgroundColor = 6;
@@ -713,7 +713,7 @@
 
             function showBerryPower(){
                 //let info = pokeReport.createJsonFromCookieValue32(;
-                const info = this.createJsonFromInputForm32(this.document.getElementById('input_mypoke_name').value);
+                const info = this.createJsonFromInputForm32();
                 if (info == null) return;
 
                 console.log(info);
@@ -734,7 +734,7 @@
 
             function registerMyPoke(){
                 let pokeList = this.document.getElementById('input_mypoke_name');
-                let info = this.createJsonFromInputForm32(pokeList.value);
+                let info = this.createJsonFromInputForm32(false);
                 if (info == null){
                     alert("登録情報が足りていません。")
                     return;
@@ -745,7 +745,6 @@
                     if (res == false) return;
 
                 } else{//再編集
-                                        console.log(info);
                     let res = window.confirm(info.pokemon.name +  "\nの編集を反映してよろしいですか？");
                     if (res == false) return;
                     let op = Array.from(document.getElementById("input_mypoke_registered").children).find(op => op.value == src);
@@ -862,7 +861,8 @@
 
 
 
-            function createJsonFromInputForm32(name, passInitOtetsudaiInfo = false){
+            function createJsonFromInputForm32(passInitOtetsudaiInfo = false){
+                const name = this.document.getElementById('input_mypoke_name').value;
                 if (name == "") return null;
 
                 const j = {};
@@ -920,6 +920,7 @@
             function insertRegisteredMyPokemons(food, min){
                 if (!document.getElementById("option_mypoke_visible").checked) return;
                 let list = Array.from(document.getElementById("input_mypoke_registered").children).map(op => PokemonInfo.create(pokedex, op.value));
+
                 this.insertMyPokemons(list, food, min);
             }
 

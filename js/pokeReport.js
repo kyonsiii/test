@@ -163,7 +163,7 @@ class PokeReport{
             let selector = "td.mypoke_outline, td.mypoke_outline~td";            
             let insertInfo = (pac, rank, tr = null) => {
                 tr = tr ?? tbody.insertRow();
-                this.insertCombinationResultTo(tr, pac.poke, pac.comb, food, PokemonInfo.createIdentifierOf(pac.json), false, pac.json.skillLv)
+                this.insertCombinationResultTo(tr, pac.poke, pac.comb, food, PokemonInfo.createIdentifierOf(pac.json), false)
                 
                 tr.querySelectorAll(selector).forEach(el => {
                     //this.setColorClassTo(el, pac.json.backgroundColor);
@@ -568,6 +568,7 @@ class PokeReport{
             const poke = info.pokemon; 
             if (!poke.existAnyInFoodList(foods)) continue;
             const json = info.LvRaw;
+
             this.insertMyPokeRowInto(tbody, poke, json, json.lv, foods, foodMin, json.backgroundColor);
             if (json.lv < 30 && showPotential30){
                 info.setSubSkillsEnabled(json, 30);
@@ -616,7 +617,7 @@ class PokeReport{
         let tr = document.createElement("tr");
 
         //comb.insertResultTo(r, food, poke);昔のやりかた
-        this.insertCombinationResultTo(tr, poke, comb, food, null, false, comb.skillLv);
+        this.insertCombinationResultTo(tr, poke, comb, food, null, false);
        
         return tr;
     }
@@ -629,7 +630,7 @@ class PokeReport{
         return tr;
     }
 
-    insertCombinationResultTo(tr, poke, comb, food, identifier = null, noSetCombinationResult = false, skillLv = undefined){
+    insertCombinationResultTo(tr, poke, comb, food, identifier = null, noSetCombinationResult = false){
         tr.setAttribute("expection_total", comb.totalExpectionFinally);
 
         let cell = tr.insertCell();
@@ -646,7 +647,7 @@ class PokeReport{
 
             let starText = document.createElement("span");
             starText.classList.add((poke.skillLvIsMax(comb.skillLv)) ? "mypoke_skill_max" : "mypoke_skill_nomax");
-            starText.textContent = skillLv ?? poke.skillLv;
+            starText.textContent = comb.skillLv ?? poke.skillLv;
             cell.appendChild(starText);
         }
         cell.appendChild(img);
