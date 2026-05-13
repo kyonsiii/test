@@ -122,14 +122,8 @@ class PokemonInfo{
             rawData.skillRateWithGuaranteed = poke.getGuaranteedSkillRateWithOtetsudaiCount(rawData.otetsudaiCountDay, j.charAdjusts.skill, j.subAdjusts.skill);
             rawData.skillPopDay             = rawData.otetsudaiCountDay * rawData.skillRateWithGuaranteed;
             
-            let powA = this.pokedex.getFoodPowerKariOf(poke, j.foodCode[0], 0, this.otherFoodPower);
-            let powB = this.pokedex.getFoodPowerKariOf(poke, j.foodCode[1], 1, this.otherFoodPower);
-            let powC = this.pokedex.getFoodPowerKariOf(poke, j.foodCode[2], 2, this.otherFoodPower);
-
-            rawData.totalFoodPowerKari = (j.lv >= 60) ? (powA + powB + powC) * rawData.otetsudaiCountFoodDay / 3
-                                        : (j.lv >= 30) ? (powA + powB) * rawData.otetsudaiCountFoodDay / 2
-                                         : powA * rawData.otetsudaiCountFoodDay;
-
+            rawData.totalFoodPowerKari = this.pokemon.createFoodCombination(j).foods.reduce((accum, f) => (f.expection * this.pokedex.getFoodPowerKariFromName(f.name)) + accum, 0);
+            rawData.totalPowerKari = rawData.berryPowerDay + rawData.totalFoodPowerKari;
             j.rawResult = rawData;
         };
 

@@ -145,10 +145,16 @@ class Pokedex{
         return Math.max(powerBase + (lv - 1), powerBase * Math.pow(1.025, lv - 1));
     }
 
-    getFoodPowerKariOf(poke, foodCode, ABCIndex, powerNotFound){
+
+    getFoodPowerKariFromName(foodName){
+        return this.foodPowerKariMap[foodName] ?? Pokedex.otherFoodPower;
+    }
+
+
+    getFoodPowerKariOf(poke, foodCode, ABCIndex){
         const food = poke.getFoodByCode(foodCode);        
         
-        const foodPow = this.foodPowerKariMap[food.name] ?? powerNotFound;
+        const foodPow = this.foodPowerKariMap[food.name] ?? Pokedex.otherFoodPower;
         const foodCount = food.nums[ABCIndex];
         return foodPow * foodCount;              
     }
@@ -239,12 +245,10 @@ class Pokemon{
         const comb = new FoodCombination(this, lv, this.getOtetsudaiCountDay(lv, json.charAdjusts.speed, json.subAdjusts.speed), code, json.charAdjusts.food + json.subAdjusts.food);        
         const foodGainFunc = this.pokedex.skillCalculators[this.skill].foodGainFunc;
         if (foodGainFunc != undefined){
-
             const skillCount = (json.isVanilla) ? this.skillExpectionDay 
                               : this.getSkillPopCountWithGuaranteed(lv, json.charAdjusts.speed, json.subAdjusts.speed, json.charAdjusts.skill, json.subAdjusts.skill);
             comb.skillLv = (!isVanilla) ? json.skillLv
                           : skillLv ?? this.pokedex.skillCalculators[this.skill].getMaxLv();
-
 
             for (const res of foodGainFunc(this, skillCount, comb.skillLv)){
                 comb.addFood(res.food, res.num);

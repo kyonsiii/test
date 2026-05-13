@@ -795,7 +795,7 @@
                 const result = j.rawResult;
                 tbodyList.forEach(tbody => {
                     const tr = document.createElement("tr");
-                    const pow = (poke.specialty == "食材") ? Math.round(result.totalFoodPowerKari) : Math.round(result.berryPowerDay);
+                    const pow = Math.round(result.totalPowerKari);
                     tr.classList.add(PokemonInfo.getColorClassNameFromNum(j.backgroundColor));
 
                     tr.setAttribute("value", pow);
