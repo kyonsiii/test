@@ -478,13 +478,15 @@ class PokeReport{
                 const sum = combs.reduce((accum, obj) => accum + obj.info.comb.getExpectionOf(f.name), 0);
                 const tmpRate = (sum == 0) ? 0 : (sum / (f.num * 3));
                 const rate = (tmpRate == 0) ? 0
-                            : (tmpRate <= 1) ? tmpRate**0.5 : 0.9 + (tmpRate / 10);                   
+                            : (tmpRate <= 1) ? tmpRate**0.5 
+                             : (tmpRate <= 1.25) ? 1 + (tmpRate - 1) / 10
+                              : 1.025 + ((tmpRate - 1.25)/50);                   
                 x[f.name] = {food: f.name, rate: (rate > 1.5) ? 1.5 + ((rate - 1.5) / 10) : rate, expection: sum};
                 totalRate += x[f.name].rate;
             });
             const keys = Object.keys(x);
             if (keys.every(key => x[key].rate >= 1)){
-                keys.forEach(key => x[key].rate *= 1.25);
+                keys.forEach(key => x[key].rate *= 1.2);
                 totalRate = keys.reduce((accum, key) => x[key].rate + accum, 0);
             }
             return {combs: combs, totalRate: (totalRate / r.ingredients.length) * 5, rateMap: x};
