@@ -43,3 +43,25 @@ function bitToNum(n, mask){
 function bitMatch(n, mask){
     return (n & mask) == mask;
 }
+
+function getCombinations(arr, n, fixedItems = null){
+    const fixedIncluded = (fixedItems != null);
+    let results = [{items: [], nextIndex: 0}];
+
+    if (fixedItems != null){                
+        arr = [...fixedItems, ...arr];
+        results = [{items: [...fixedItems], nextIndex: fixedItems.length}];
+        n -= fixedItems.length;
+    }
+
+    for (let i = 0; i < n; i++){
+        let res = [];
+        for (let comb of results){
+            for (let k = comb.nextIndex; k < arr.length; k++){                          
+                res.push({items: [...comb.items, arr[k]], nextIndex: k + 1, fixedIncluded: fixedIncluded});
+            }
+        }
+        results = res;
+    }
+    return results.map(x => x.items);
+};

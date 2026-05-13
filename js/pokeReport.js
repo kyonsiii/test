@@ -352,8 +352,9 @@ class PokeReport{
                 parent.appendChild(container);
 
                 const btn = document.createElement("div");
-                btn.textContent = "詳細を計算";
+                btn.textContent = "10件表示";
                 btn.style.backgroundColor = "aliceBlue";
+                btn.setAttribute("index", "0");
                 container.appendChild(btn);
                 btn.addEventListener("click", () => this.insertMypokeRecipeEfficiency(btn, r.name));
                 return;
@@ -363,33 +364,13 @@ class PokeReport{
 
         setRecipes('mypoke_quick_check_curry', this.recipedb.curryRecipes.sort((a, b) => b.energy - a.energy));
         setRecipes('mypoke_quick_check_salad', this.recipedb.saladRecipes.sort((a, b) => b.energy - a.energy));
-        setRecipes('mypoke_quick_check_sweet', this.recipedb.sweetRecipes.sort((a, b) => b.energy - a.energy));
-        
+        setRecipes('mypoke_quick_check_sweet', this.recipedb.sweetRecipes.sort((a, b) => b.energy - a.energy));        
     }
+
 
     insertMypokeRecipeEfficiency(span, recipeName){
         const container = span.parentNode;
-        const getCombinations = (arr, n, fixedItems = null) => {
-            const fixedIncluded = (fixedItems != null);
-            let results = [{items: [], nextIndex: 0}];
 
-            if (fixedItems != null){                
-                arr = [...fixedItems, ...arr];
-                results = [{items: [...fixedItems], nextIndex: fixedItems.length}];
-                n -= fixedItems.length;
-            }
-
-            for (let i = 0; i < n; i++){
-                let res = [];
-                for (let comb of results){
-                    for (let k = comb.nextIndex; k < arr.length; k++){                          
-                        res.push({items: [...comb.items, arr[k]], nextIndex: k + 1, fixedIncluded: fixedIncluded});
-                    }
-                }
-                results = res;
-            }
-            return results.map(x => x.items);
-        };
 
         const createDiv = (classname, text = "", foodImageObj = undefined) =>{
             const el = document.createElement("div");
@@ -464,14 +445,15 @@ class PokeReport{
         
 
         console.log("◆" + recipeName);
-        const currentPokeInfo = this.getInfoForCombination(createJsonFromInputForm32(true));
+        const memberCount = 5;
+        const currentPokeInfo = this.getInfoForCombination(createJsonFromInputForm32(true));    //createJsonFromInputForm32はreport.htmlで定義されています
         const currentPoke = (currentPokeInfo == null) ? null : [{expection: 0, info: currentPokeInfo}];
-        //report.htmlで定義されています
         const r = this.recipedb.getRecipeOf(recipeName);
+        const foods = r.ingredients.map(x => x.name);
         const candsTop20 = this.mypokeInfoList.map(x => ({info: x, expection: x.comb.getExpectionOf(r.ingredients.map(x => x.name))}))
                             .filter(x => x.expection > 0).sort((a, b) => b.expection - a.expection).slice(0, 20);
         
-        const tmpCombsExpectionRateMap = getCombinations(candsTop20, 4, currentPoke).map(combs => {
+        const tmpCombsExpectionRateMap = getCombinations(candsTop20, memberCount, currentPoke).map(combs => {
             let x = {};
             let totalRate = 0;
             r.ingredients.forEach(f => {
@@ -487,11 +469,96 @@ class PokeReport{
             const keys = Object.keys(x);
             if (keys.every(key => x[key].rate >= 1)){
                 keys.forEach(key => x[key].rate *= 1.2);
-                totalRate = keys.reduce((accum, key) => x[key].rate + accum, 0);
+                totalRate = totalRate *= 1.2;
             }
             return {combs: combs, totalRate: (totalRate / r.ingredients.length) * 5, rateMap: x};
-        }).sort((a, b) => b.totalRate - a.totalRate).slice(0, 200);                
-        const topRateMap = {};
+        }).sort((a, b) => b.totalRate - a.totalRate).slice(0, 200);    
+
+        const sliceCount = 10;
+        const startIndex = Number(span.getAttribute("index"));
+        const endIndex = startIndex + sliceCount;
+
+        const getRateFilteredTopN = (rateMin) =>{
+            const tmpTopN = tmpCombsExpectionRateMap.filter(x =>  foods.every(f => x.rateMap[f].rate >= rateMin));
+            const passedSimilarItems = [];
+            for (const tmp of tmpTopN) {
+                //すでに追加済みの組み合わせに対して、各食材がレートを超えているかを確認
+                //超えている場合はそのまま追加でOK
+                //超えていない場合は、超えているやつと比べてポケモンの種族が違う時だけ追加する
+                const dame = passedSimilarItems.some(passed =>{
+                    if (foods.some(f => tmp.rateMap[f].rate > passed.rateMap[f].rate)) return false;
+                    //ここむずすぎる
+                    const diffPokes = tmp.combs.filter(x => !passed.combs.some(p => p.info.poke.groupName == x.info.poke.groupName));
+                    if (diffPokes.length > 0) return false;
+
+                    return true;
+                });
+                if (!dame) passedSimilarItems.push(tmp);
+                if (passedSimilarItems.length > endIndex) break;
+            };
+            return passedSimilarItems;            
+        };
+
+        let passedItems;
+        for (let i = 0; i < sliceCount; i++){
+            passedItems = getRateFilteredTopN(1 - (i * 0.25));
+            if (passedItems.length > endIndex) break;
+        }
+
+
+        const data = passedItems.slice(startIndex, endIndex);
+        console.log({startIndex: startIndex, endIndex: endIndex, data: data});        
+        console.log(startIndex + data.length);
+        for (let i = 0; i < data.length; i++){
+            const topN = data[i];
+                const header = createDiv("recipe_efficiency_header");
+                const table = document.createElement("table");
+                const thead = document.createElement("thead");
+                const tbody = document.createElement("tbody"); 
+                const pokeArgs = topN.combs.map(comb => ({text: comb.info.poke.no.toString().padStart(3, "0"), folder: "poke", withImage:true}));     
+                table.className = "recipe_efficiency_table_topRate";
+                table.appendChild(thead);
+                table.appendChild(tbody);
+                container.appendChild(header);
+                container.appendChild(table);
+                header.appendChild(createDiv("recipe_efficiency_header_item", (i == 0 && startIndex == 0) ? "オススメ" : "組み合わせNo." + (i + 1 + startIndex)));
+                header.appendChild(createDiv("recipe_efficiency_header_item", topN.totalRate.toFixed(3)));
+                thead.appendChild(createTrHeader(["", ...pokeArgs, "合計", ""]));   
+                r.ingredients.forEach(food => {
+                    const foodExpections = topN.combs.map(c => c.info.comb.getExpectionOf(food.name));
+                    const totalExpection = foodExpections.reduce((accum, cur) => accum + cur, 0);
+                    const timeObj = (totalExpection == 0) ? this.minutesToTime(0) : this.minutesToTime(food.num /  totalExpection * 60 * 24);
+                    tbody.appendChild(createTr([
+                        {withImage: true, folder: "food", text: food.name},
+                        ...foodExpections.map(y => y == 0 ? "" : y),
+                        {text: timeObj.timeStr, color: ((timeObj.rawMin == 0) ? "white" : getTotalCellColor(timeObj.rawMin))},
+                        ""
+                    ]));
+                });
+
+
+        }
+        span.setAttribute("index", endIndex);
+        container.removeChild(span);      
+        container.appendChild(span);          
+    }
+
+    minutesToTime(min){
+        const result = {};
+        result.rawMin = min;
+        result.hour = Math.floor(min / 60);
+        result.minute = Math.ceil(min % 60);
+        if (result.minute == 60){
+            result.hour++;
+            result.minute = 0;
+        }
+        result.timeStr = result.rawMin == 0 ? "----" : result.hour.toString().padStart(2, "0") + ":" + result.minute.toString().padStart(2, "0");
+        return result;
+    }
+
+
+    /*対比
+const topRateMap = {};
         topRateMap["Most Efficient Members"] = [{combs: tmpCombsExpectionRateMap[0].combs, rateMap: tmpCombsExpectionRateMap[0].rateMap, totalRate: tmpCombsExpectionRateMap[0].totalRate}];
         
         //ここで食材ごとのレート確認をしているはず
@@ -528,9 +595,10 @@ class PokeReport{
         });
 
 
+        
 
         const keys = Object.keys(topRateMap);
-        
+        console.log(keys);
         for (let i = 0; i < keys.length; i++){
             const key = keys[i];
             const topN = topRateMap[key];
@@ -562,24 +630,7 @@ class PokeReport{
                 });
             }
         }
-
-        container.removeChild(span);                
-    }
-
-    minutesToTime(min){
-        const result = {};
-        result.rawMin = min;
-        result.hour = Math.floor(min / 60);
-        result.minute = Math.ceil(min % 60);
-        if (result.minute == 60){
-            result.hour++;
-            result.minute = 0;
-        }
-        result.timeStr = result.rawMin == 0 ? "----" : result.hour.toString().padStart(2, "0") + ":" + result.minute.toString().padStart(2, "0");
-        return result;
-    }
-
-
+    */
 
 
     //tbのresult_tableはsetResultOfされた時に追加されるので、ない時もあるかも
