@@ -260,6 +260,11 @@ class Pokemon{
                                            : this.foods.some(f => targetFoods == f.name);
     }
 
+    existAllInFoodList(targetFoods){
+        return Array.isArray(targetFoods) ? targetFoods.every(tf => this.foods.some(f => f.name == tf))
+                                           : this.foods.some(f => targetFoods == f.name);
+    }
+
     getAllFoodNames(){
         return this.foods.map(f => f.name);
     }

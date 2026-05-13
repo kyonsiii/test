@@ -166,7 +166,8 @@ class PokeReport{
                 this.insertCombinationResultTo(tr, pac.poke, pac.comb, food, PokemonInfo.createIdentifierOf(pac.json), false, pac.json.skillLv)
                 
                 tr.querySelectorAll(selector).forEach(el => {
-                    this.setColorClassTo(el, pac.json.backgroundColor);
+                    //this.setColorClassTo(el, pac.json.backgroundColor);
+                    el.classList.add(PokemonInfo.getColorClassNameFromNum(pac.json.backgroundColor));
                 });
                 foodImgCell.rowSpan = rank;
             };            
@@ -361,9 +362,9 @@ class PokeReport{
 
         };
 
-        setRecipes('mypoke_quick_check_curry', this.recipedb.getAllCurryRecipes().sort((a, b) => b.energy - a.energy));
-        setRecipes('mypoke_quick_check_salad', this.recipedb.getAllSaladRecipes().sort((a, b) => b.energy - a.energy));
-        setRecipes('mypoke_quick_check_sweet', this.recipedb.getAllSweetRecipes().sort((a, b) => b.energy - a.energy));
+        setRecipes('mypoke_quick_check_curry', this.recipedb.curryRecipes.sort((a, b) => b.energy - a.energy));
+        setRecipes('mypoke_quick_check_salad', this.recipedb.saladRecipes.sort((a, b) => b.energy - a.energy));
+        setRecipes('mypoke_quick_check_sweet', this.recipedb.sweetRecipes.sort((a, b) => b.energy - a.energy));
         
     }
 
@@ -592,7 +593,8 @@ class PokeReport{
 
         let tr = this.createMyPokemonInfoRow(poke, comb, foods[0], json);
         backgroundColorIndex = (backgroundColorIndex == -1) ? 0 : backgroundColorIndex;
-        this.setColorClassTo(tr, backgroundColorIndex)
+        //this.setColorClassTo(tr, backgroundColorIndex)
+        tr.classList.add(PokemonInfo.getColorClassNameFromNum(backgroundColorIndex));
 
         let rows = tbody.children;
         let target = comb.getExpectionOf(foods);
@@ -849,28 +851,6 @@ class PokeReport{
 
 
 
-
-
-
-
-
-
-    setColorClassTo(el, n){
-        let className = "";
-        switch(n){
-            case 0: className = "def_color_SB"; break;
-            case 1: className = "def_color_BL"; break;
-            case 2: className = "def_color_SL"; break;
-            case 3: className = "def_color_OR"; break;                    
-            case 4: className = "def_color_PK"; break;                    
-            case 5: className = "def_color_RD"; break;
-            case 6: className = "def_color_GR"; break;
-            case 7: className = "def_color_GD"; break;                    
-            default: className = "def_color_XX"
-        }
-
-        el.classList.add(className);
-    }
 
 
 

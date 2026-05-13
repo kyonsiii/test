@@ -143,16 +143,17 @@ class PokeSearch{
         let onlyFullyEvolved = this.check_onlyFullyEvolved.checked;
         
         let selectedBerries = Array.from(document.getElementById('berry_buttons').children).filter(c => c.value == "ON").map(c => c.name).join("");
-        let selectedFoods = Array.from(document.getElementById('food_buttons').children).filter(c => c.value == "ON").map(c => c.name).join("");    
+        let selectedFoods = Array.from(document.getElementById('food_buttons').children).filter(c => c.value == "ON").map(c => c.name);    
 
         let ignoreSpecialty = (this.box_specialty.value == "----");
         let ignoreBerry = (selectedBerries == "");
         let ignoreFood = (selectedFoods == "");
         let ignoreSkill = (this.box_skill.value == "----");
+
         let results = this.pokemons.filter(p => (!onlyFullyEvolved || (p.fullyEvolved && onlyFullyEvolved))
                                              && (ignoreSpecialty || p.specialty == this.box_specialty.value || p.specialty == "オール")
                                              && (ignoreBerry || selectedBerries.includes(p.berry))
-                                             && (ignoreFood || p.existAnyInFoodList(selectedFoods))
+                                             && (ignoreFood || p.existAllInFoodList(selectedFoods))
                                              && (ignoreSkill || p.skill.indexOf(this.box_skill.value) > -1));
     
         this.reset(true);

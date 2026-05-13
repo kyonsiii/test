@@ -169,20 +169,11 @@ new Recipe({no:101, category: "デザート・ドリンク", name: "みつあつ
             {name: "ワカクサ大豆", power: 100},
             {name: "ワカクサコーン", power: 140}
         ];
-
+        this.curryRecipes = this.getRecipesOf("カレー・シチュー"); 
+        this.saladRecipes = this.getRecipesOf("サラダ");  
+        this.sweetRecipes = this.getRecipesOf("デザート・ドリンク");   
     }
-
-    getAllCurryRecipes(){
-        return this.getRecipesOf("カレー・シチュー");      
-    }
-
-    getAllSaladRecipes(){
-        return this.getRecipesOf("サラダ");      
-    }
-
-    getAllSweetRecipes(){
-        return this.getRecipesOf("デザート・ドリンク");      
-    }
+    
 
     getRecipesOf(category){        
         return (category == "") ? this.recipes : this.recipes.filter(r => r.category == category);
@@ -201,15 +192,7 @@ new Recipe({no:101, category: "デザート・ドリンク", name: "みつあつ
 
 class Recipe{
 
-    fieldBonusMap = [
-        /*Lv1  ～ Lv10 */0.00, 0.02, 0.04, 0.06, 0.08, 0.09, 0.11, 0.13, 0.16, 0.18,
-        /*Lv11 ～ Lv20 */0.19, 0.21, 0.23, 0.24, 0.26, 0.28, 0.30, 0.31, 0.33, 0.35,
-        /*Lv21 ～ Lv30 */0.37, 0.40, 0.42, 0.45, 0.47, 0.50, 0.52, 0.55, 0.58, 0.61,
-        /*Lv31 ～ Lv40 */0.64, 0.67, 0.70, 0.74, 0.77, 0.81, 0.84, 0.88, 0.92, 0.96,
-        /*Lv41 ～ Lv50 */1.00, 1.04, 1.08, 1.13, 1.17, 1.22, 1.27, 1.32, 1.37, 1.42,
-        /*Lv51 ～ Lv60 */1.48, 1.53, 1.59, 1.65, 1.71, 1.77, 1.83, 1.90, 1.97, 2.03,
-        /*Lv61 ～ Lv65 */2.09, 2.15, 2.21, 2.27, 2.34
-    ];
+    recipeBonusMap = RECIPE_BONUS_DATA;
 
     constructor(json){
         this.no = json.no;
@@ -233,7 +216,7 @@ class Recipe{
 
     setEnergy(lv, fieldBonusPercent){
         const fieldBonusNum = Number(fieldBonusPercent.match(/\d+(?=%)/)) / 100;
-        this.energy = Math.floor(this.baseEnergy * (1 + this.fieldBonusMap[lv - 1]) * (1 + fieldBonusNum));
+        this.energy = Math.floor(this.baseEnergy * (1 + this.recipeBonusMap[lv - 1]) * (1 + fieldBonusNum));
         this.fieldBonus = fieldBonusPercent;
         this.recipeLv = lv;
     }

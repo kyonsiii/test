@@ -8,8 +8,10 @@ const mask32a_food3      = 0b00000000000000000000000000000011;
 const mask32b_charUp     = 0b00000000000000000111000000000000;
 const mask32b_charDown   = 0b00000000000000000000111000000000;
 const mask32b_charAll    = 0b00000000000000000111111000000000;
-const mask32b_ribbonEv   = 0b00000000000000000000000110000000;          
-const mask32b_ribbonLv   = 0b00000000000000000000000001110000;
+
+//const mask32b_ribbonEv   = 0b00000000000000000000000110000000;          とりあえず使ってないのでslv突っ込む
+//const mask32b_ribbonLv   = 0b00000000000000000000000001110000;
+const mask32b_skillLv    = 0b00000000000000000000000111110000;
 const mask32b_backGround = 0b00000000000000000000000000001111; 
 
 const mask32c_sub1       = 0b00000001111100000000000000000000;
@@ -55,6 +57,7 @@ class PokemonInfo{
     }
 
 
+
     initializeFromCookie(ck){
         //Characteristic を Nature に変える？
         if (ck == null){
@@ -71,14 +74,15 @@ class PokemonInfo{
         this.pokemon = this.pokedex.getPokemonByNo(j.no);
         j.name = this.pokemon.name;
         j.lv = bitToNum(n, mask32a_lv);
-        j.skillLv = 777;        
-        j.skillLv = this.pokedex.getPokemonByNo(j.no).getMaxSkillLv();
+        
         j.foodCode = this.getFoodCodeOf(bitToNum(n, mask32a_food1)) + this.getFoodCodeOf(bitToNum(n, mask32a_food2)) + this.getFoodCodeOf(bitToNum(n, mask32a_food3));
 
         n = parseInt(valueArr[1], 32);   
         j.char = this.getCharacteristic(bitToNum(n, mask32b_charUp), bitToNum(n, mask32b_charDown));
-        j.ribbonEv = bitToNum(n, mask32b_ribbonEv);
-        j.ribbonLv = bitToNum(n, mask32b_ribbonLv);
+        j.skillLv = bitToNum(n, mask32b_skillLv);
+        if (j.skillLv == 0) j.skillLv = 1;
+        //j.ribbonEv = bitToNum(n, mask32b_ribbonEv);
+        //j.ribbonLv = bitToNum(n, mask32b_ribbonLv);
         j.backgroundColor = bitToNum(n, mask32b_backGround);
 
         n = parseInt(valueArr[2], 32);
@@ -193,7 +197,7 @@ class PokemonInfo{
     }
     
     setAdjustValues(json){
-        let n = this.getCharacteristicNumOf(json.char);
+        let n = PokemonInfo.getCharacteristicNumOf(json.char);
         json.charAdjusts = {
             speed: (bitToNum(n, 0b111000) == 0b001) ? +0.11
                  : (bitToNum(n, 0b000111) == 0b001) ? -0.07 : 0,
@@ -214,6 +218,55 @@ class PokemonInfo{
         };
     }
 
+
+    static getColorClassNameFromNum(n){
+        switch(n){
+            case 0: return "def_color_SB"; 
+            case 1: return "def_color_BL"; 
+            case 2: return "def_color_SL"; 
+            case 3: return "def_color_OR";                     
+            case 4: return "def_color_PK";                     
+            case 5: return "def_color_RD"; 
+            case 6: return "def_color_GR"; 
+            case 7: return "def_color_GD";                     
+            default: return "def_color_XX"
+        }
+    }
+
+    
+    //Cookie作成 (復元はinitializeFromCookie、あるいはPokemonInfo.createから)
+    static createCookieValueFromJson32(j){
+        let abc = [];
+        let n = 0;
+        
+        //PokeNoDecimalChangeTag:
+        //n += numToBit(Math.round(j.no % 1 * 10), mask32a_nodp);
+        n += numToBit(PokemonInfo.getPokeNoDecimalOf(j.no, true), mask32a_nodp);
+        n += numToBit(Math.trunc(j.no), mask32a_no);
+        n += numToBit(j.lv, mask32a_lv);
+        n += numToBit(PokemonInfo.getFoodNumOf(j.foodCode[0]), mask32a_food1);
+        n += numToBit(PokemonInfo.getFoodNumOf(j.foodCode[1]), mask32a_food2);
+        n += numToBit(PokemonInfo.getFoodNumOf(j.foodCode[2]), mask32a_food3);
+        abc.push(n.toString(32));
+        
+        n = 0;
+        n += numToBit(PokemonInfo.getCharacteristicNumOf(j.char), mask32b_charAll);
+        //n += numToBit(j.ribbonEv, mask32b_ribbonEv);
+        //n += numToBit(j.ribbonLv, mask32b_ribbonLv);
+        n += numToBit(j.skillLv, mask32b_skillLv);
+        n += numToBit(j.backgroundColor, mask32b_backGround);
+        abc.push(n.toString(32));
+
+        n = 0;
+        n += numToBit(j.subSkillList.lv10.value, mask32c_sub1);
+        n += numToBit(j.subSkillList.lv25.value, mask32c_sub2);
+        n += numToBit(j.subSkillList.lv50.value, mask32c_sub3);
+        n += numToBit(j.subSkillList.lv75.value, mask32c_sub4);
+        n += numToBit(j.subSkillList.lv100.value, mask32c_sub5);
+        abc.push(n.toString(32));
+
+        return abc.join("-");
+    }
 
 
     //関係者
@@ -251,64 +304,8 @@ class PokemonInfo{
     }
  
 
-    static getSubSkillIdentifierOf(n){
-        switch(n){
-            case 0b00000 : return "";
-            case 0b00001 : return "o";
-            case 0b00010 : return ".";
-            case 0b00011 : return ":";
-            case 0b00100 : return "f";
-            case 0b00101 : return "F";
-            case 0b00110 : return "-";
-            case 0b00111 : return "+";
-            case 0b01000 : return "u";
-            case 0b01001 : return "U";
-            case 0b01010 : return "s";
-            case 0b01011 : return "'";
-            case 0b01100 : return '"';
-            case 0b01101 : return "*";
-            case 0b01110 : return "e";
-            case 0b01111 : return "g";
-            case 0b10000: return "y";
-            case 0b10001 : return "r";
-            default : return "x";
-        }
-    }
-
-    //Cookie 保存用
-    createCookieValueFromJson32(j){
-        let abc = [];
-        let n = 0;
-        
-        //PokeNoDecimalChangeTag:
-        //n += numToBit(Math.round(j.no % 1 * 10), mask32a_nodp);
-        n += numToBit(PokemonInfo.getPokeNoDecimalOf(j.no, true), mask32a_nodp);
-        n += numToBit(Math.trunc(j.no), mask32a_no);
-        n += numToBit(j.lv, mask32a_lv);
-        n += numToBit(this.getFoodNumOf(j.foodCode[0]), mask32a_food1);
-        n += numToBit(this.getFoodNumOf(j.foodCode[1]), mask32a_food2);
-        n += numToBit(this.getFoodNumOf(j.foodCode[2]), mask32a_food3);
-        abc.push(n.toString(32));
-        
-        n = 0;
-        n += numToBit(this.getCharacteristicNumOf(j.char), mask32b_charAll);
-        n += numToBit(j.ribbonEv, mask32b_ribbonEv);
-        n += numToBit(j.ribbonLv, mask32b_ribbonLv);
-        n += numToBit(j.backgroundColor, mask32b_backGround);
-        abc.push(n.toString(32));
-
-        n = 0;
-        n += numToBit(j.subSkillList.lv10.value, mask32c_sub1);
-        n += numToBit(j.subSkillList.lv25.value, mask32c_sub2);
-        n += numToBit(j.subSkillList.lv50.value, mask32c_sub3);
-        n += numToBit(j.subSkillList.lv75.value, mask32c_sub4);
-        n += numToBit(j.subSkillList.lv100.value, mask32c_sub5);
-        abc.push(n.toString(32));
-
-        return abc.join("-");
-    }
-
-    getCharacteristicNumOf(c){
+    getCharacteristicNumOf = (c) => PokemonInfo.getCharacteristicNumOf(c);
+    static getCharacteristicNumOf(c){
         //n: 000000の6bit 
         switch(c){
             case "寂": return 0b001010;
@@ -336,22 +333,23 @@ class PokemonInfo{
         }
     }
 
-
-    getFoodNumOf(food){
+    getFoodNumOf = (food) => PokemonInfo.getFoodNumOf(food);
+    static getFoodNumOf(food){
         return (food == "A") ? 0b0001
               : (food == "B") ? 0b0010
                : (food == "C") ? 0b0011 : 0b0000;
     }
 
-    //Cookie 復元用
-    getFoodCodeOf(n){
+
+    getFoodCodeOf = (n) => PokemonInfo.getFoodCodeOf(n);
+    static getFoodCodeOf(n){
         return (n == 0b01) ? "A"
             : (n == 0b10) ? "B"
             : (n == 0b11) ? "C" : "X"
     }
 
-
-    getCharacteristic(up, down){
+    getCharacteristic = (up, down) => PokemonInfo.getCharacteristic(up, down);
+    static getCharacteristic(up, down){
         //000/111:無補正   "001 001"の場合、無補正と同じになる。なお、上昇補正がある場合は必ず下降補正もある
         //001:おてスピ補正
         //010:元気補正
@@ -409,28 +407,57 @@ class PokemonInfo{
         }
     }
 
-
-    getSubSkillListByNum(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill){
+    getSubSkillIdentifierOf = (n) => PokemonInfo.getSubSkillIdentifierOf(n);
+    static getSubSkillIdentifierOf(n){
+        switch(n){
+            case 0b00000 : return "";
+            case 0b00001 : return "o";
+            case 0b00010 : return ".";
+            case 0b00011 : return ":";
+            case 0b00100 : return "f";
+            case 0b00101 : return "F";
+            case 0b00110 : return "-";
+            case 0b00111 : return "+";
+            case 0b01000 : return "u";
+            case 0b01001 : return "U";
+            case 0b01010 : return "s";
+            case 0b01011 : return "'";
+            case 0b01100 : return '"';
+            case 0b01101 : return "*";
+            case 0b01110 : return "e";
+            case 0b01111 : return "g";
+            case 0b10000: return "y";
+            case 0b10001 : return "r";
+            default : return "x";
+        }
+    }
+    
+    getSubSkillListByNum = (lv10skill, lv25skill, lv50skill, lv75skill, lv100skill) => PokemonInfo.getSubSkillListByNum(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill);
+    static getSubSkillListByNum(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill){
         return{
-            lv10:  {value:  lv10skill, name: this.getSubSkillNameFromNum(lv10skill),  lv:  10, enabled: false},
-            lv25:  {value:  lv25skill, name: this.getSubSkillNameFromNum(lv25skill),  lv:  25, enabled: false},
-            lv50:  {value:  lv50skill, name: this.getSubSkillNameFromNum(lv50skill),  lv:  50, enabled: false},
-            lv75:  {value:  lv75skill, name: this.getSubSkillNameFromNum(lv75skill),  lv:  75, enabled: false},
-            lv100: {value: lv100skill, name: this.getSubSkillNameFromNum(lv100skill), lv: 100, enabled: false}
+            lv10:  {value:  lv10skill, name: PokemonInfo.getSubSkillNameFromNum(lv10skill),  lv:  10, enabled: false},
+            lv25:  {value:  lv25skill, name: PokemonInfo.getSubSkillNameFromNum(lv25skill),  lv:  25, enabled: false},
+            lv50:  {value:  lv50skill, name: PokemonInfo.getSubSkillNameFromNum(lv50skill),  lv:  50, enabled: false},
+            lv75:  {value:  lv75skill, name: PokemonInfo.getSubSkillNameFromNum(lv75skill),  lv:  75, enabled: false},
+            lv100: {value: lv100skill, name: PokemonInfo.getSubSkillNameFromNum(lv100skill), lv: 100, enabled: false}
         };
     }
+    
 
-    getSubSkillListByName(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill){
+    getSubSkillListByName = (lv10skill, lv25skill, lv50skill, lv75skill, lv100skill) => PokemonInfo.getSubSkillListByName(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill);
+    static getSubSkillListByName(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill){
         return{
-            lv10:  {value: this.getSubSkillNumOf(lv10skill),  name: lv10skill,  lv:  10, enabled: false},
-            lv25:  {value: this.getSubSkillNumOf(lv25skill),  name: lv25skill,  lv:  25, enabled: false},
-            lv50:  {value: this.getSubSkillNumOf(lv50skill),  name: lv50skill,  lv:  50, enabled: false},
-            lv75:  {value: this.getSubSkillNumOf(lv75skill),  name: lv75skill,  lv:  75, enabled: false},
-            lv100: {value: this.getSubSkillNumOf(lv100skill), name: lv100skill, lv: 100, enabled: false}
+            lv10:  {value: PokemonInfo.getSubSkillNumOf(lv10skill),  name: lv10skill,  lv:  10, enabled: false},
+            lv25:  {value: PokemonInfo.getSubSkillNumOf(lv25skill),  name: lv25skill,  lv:  25, enabled: false},
+            lv50:  {value: PokemonInfo.getSubSkillNumOf(lv50skill),  name: lv50skill,  lv:  50, enabled: false},
+            lv75:  {value: PokemonInfo.getSubSkillNumOf(lv75skill),  name: lv75skill,  lv:  75, enabled: false},
+            lv100: {value: PokemonInfo.getSubSkillNumOf(lv100skill), name: lv100skill, lv: 100, enabled: false}
         };
     }
+    
 
-    getSubSkillNameFromNum(n){
+    getSubSkillNameFromNum = (n) => PokemonInfo.getSubSkillNameFromNum(n);
+    static getSubSkillNameFromNum(n){
         switch(n){
             case sub_num_oteBonus       : return "oteBonus";
             case sub_num_speedS         : return "speedS";
@@ -454,8 +481,8 @@ class PokemonInfo{
     }
 
 
-
-    getSubSkillNumOf(name){
+    getSubSkillNumOf = (name) => PokemonInfo.getSubSkillNumOf(name);
+    static getSubSkillNumOf(name){
         switch(name){
             case "oteBonus"     : return sub_num_oteBonus;
             case "speedS"       : return sub_num_speedS;
