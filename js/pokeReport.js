@@ -1,42 +1,4 @@
 //クッキー用
-const mask32a_nodp       = 0b00001111000000000000000000000000;
-const mask32a_no         = 0b00000000111111111110000000000000;
-const mask32a_lv         = 0b00000000000000000001111111000000;    
-const mask32a_food1      = 0b00000000000000000000000000110000;
-const mask32a_food2      = 0b00000000000000000000000000001100;
-const mask32a_food3      = 0b00000000000000000000000000000011;
-
-const mask32b_charUp     = 0b00000000000000000111000000000000;
-const mask32b_charDown   = 0b00000000000000000000111000000000;
-const mask32b_charAll    = 0b00000000000000000111111000000000;
-const mask32b_ribbonEv   = 0b00000000000000000000000110000000;          
-const mask32b_ribbonLv   = 0b00000000000000000000000001110000;
-const mask32b_backGround = 0b00000000000000000000000000001111; 
-
-const mask32c_sub1       = 0b00000001111100000000000000000000;
-const mask32c_sub2       = 0b00000000000011111000000000000000;
-const mask32c_sub3       = 0b00000000000000000111110000000000;
-const mask32c_sub4       = 0b00000000000000000000001111100000;
-const mask32c_sub5       = 0b00000000000000000000000000011111;
-                           
-const sub_num_oteBonus      = 0b00001;
-const sub_num_speedS        = 0b00010;
-const sub_num_speedM        = 0b00011;
-const sub_num_foodS         = 0b00100;
-const sub_num_foodM         = 0b00101;
-const sub_num_skillS        = 0b00110;
-const sub_num_skillM        = 0b00111;
-const sub_num_skillLvUpS    = 0b01000;
-const sub_num_skillLvUpM    = 0b01001;
-const sub_num_berryS        = 0b01010;
-const sub_num_inventoryS    = 0b01011;
-const sub_num_inventoryM    = 0b01100;
-const sub_num_inventoryL    = 0b01101;
-const sub_num_expBonus      = 0b01110;
-const sub_num_genkiBonus    = 0b01111;
-const sub_num_yumeBonus     = 0b10000;
-const sub_num_researchBonus = 0b10001;
-const sub_num_ult           = 0b10010;
 
 const mask_op_recipe_list_min_index       = 0b011110000000000000000000000000;
 const mask_op_recipe_category_index       = 0b000001110000000000000000000000;
@@ -100,7 +62,7 @@ class PokeReport{
                 if (c.containsFoodsAtLeast(foods, min) && (c.lv != 30 || showLv30) && (c.lv != 60 || showLv60)){
                     pokeAndComb.push({poke: p, comb: c});     
 
-                    //this.createPokemonInfoRow(tr, pac.comb, food, pacjson, this.createIdentifierOf(pac.json));
+                    //this.createPokemonInfoRow(tr, pac.comb, food, pacjson, PokemonInfo.createIdentifierOf(pac.json));
                     if (isFoodGainPoke){
                         const copiedComb = p.createFoodCombination(null, c.lv, c.code, p.skillLv);
                         if (copiedComb.containsFoodsAtLeast(foods, min)) pokeAndComb.push({poke: p, comb: copiedComb});   
@@ -179,7 +141,8 @@ class PokeReport{
 
 
 
-    setMyPokeFoodListInfo(tbody, jsonList, onlySkyBlueGold = false){
+    setMyPokeFoodListInfo(tbody, infoList, onlySkyBlueGold = false){
+
         let createRow = (food, pacList) => {
             let sorted = pacList.sort((a, b) => b.comb.getExpectionOf(food) - a.comb.getExpectionOf(food));            
             let tr1 = tbody.insertRow();
@@ -200,7 +163,7 @@ class PokeReport{
             let selector = "td.mypoke_outline, td.mypoke_outline~td";            
             let insertInfo = (pac, rank, tr = null) => {
                 tr = tr ?? tbody.insertRow();
-                this.insertCombinationResultTo(tr, pac.poke, pac.comb, food, this.createIdentifierOf(pac.json), false, pac.json.skillLv)
+                this.insertCombinationResultTo(tr, pac.poke, pac.comb, food, PokemonInfo.createIdentifierOf(pac.json), false, pac.json.skillLv)
                 
                 tr.querySelectorAll(selector).forEach(el => {
                     this.setColorClassTo(el, pac.json.backgroundColor);
@@ -213,7 +176,7 @@ class PokeReport{
             }    
         };
 
-        this.initializeMyPokeInfo(jsonList, onlySkyBlueGold);
+        this.initializeMyPokeInfo(infoList, onlySkyBlueGold);
         const mil = this.mypokeInfoList;
 
         //MyPokeを食材ごとに割り振る（重複あり）
@@ -232,14 +195,14 @@ class PokeReport{
 
 
     //mypokeのjsonファイルを保持しておく
-    initializeMyPokeInfo(jsonList, onlySkyBlueGold = false){
+    initializeMyPokeInfo(infoList, onlySkyBlueGold = false){
         let pokeAndComb = [];
-        for (let i = 0; i < jsonList.length; i++){
-            let j = jsonList[i];
-            let p = this.pokedex.getPokemonByNo(j.no);
-            if (onlySkyBlueGold && (j.backgroundColor != 0 && j.backgroundColor != 7)) continue;
-            pokeAndComb.push({poke: p, json: j, comb:p.createFoodCombination(j, j.lv, j.foodCode)});        
-        }
+        infoList.forEach(info => {
+            const j = info.LvRaw;
+            if (onlySkyBlueGold && (j.backgroundColor == 0 || j.backgroundColor == 7)){
+                pokeAndComb.push({poke: info.pokemon, json: j, comb:info.pokemon.createFoodCombination(j, j.lv, j.foodCode)});
+            }            
+        });
         this.mypokeInfoList = pokeAndComb;
     }
 
@@ -252,7 +215,7 @@ class PokeReport{
     
             this.pokeFoodMap[f].MyPoke = (max == null) ? null : 
                 { no: max.info.json.no,
-                  name: max.info.json.name +  this.createIdentifierOf(max.info.json) + " Lv" + max.info.json.lv, 
+                  name: max.info.json.name +  PokemonInfo.createIdentifierOf(max.info.json) + " Lv" + max.info.json.lv, 
                   expection: max.expection,
                   cands: sortedCands
                 }
@@ -599,30 +562,27 @@ class PokeReport{
 
 
     //tbのresult_tableはsetResultOfされた時に追加されるので、ない時もあるかも
-    insertMyPokeListInto(tbody, jsonList, foods, foodMin, showPotential30, showPotential50, showPotential60){
-        for (let i = 0; i < jsonList.length; i++){
-            let json = jsonList[i];
-            let poke = this.pokedex.getPokemonByName(json.name);
-            if (!poke.existAnyInFoodList(foods)) continue;//そもそも食材含んでなかったら処理いらない
-
+    insertMyPokeListInto(tbody, infoList, foods, foodMin, showPotential30, showPotential50, showPotential60){
+        for (const info of infoList) {
+            const poke = info.pokemon; 
+            if (!poke.existAnyInFoodList(foods)) continue;
+            const json = info.LvRaw;
             this.insertMyPokeRowInto(tbody, poke, json, json.lv, foods, foodMin, json.backgroundColor);
-
-            //毎回Mypokecomb作ってるから改良の余地あり
             if (json.lv < 30 && showPotential30){
-                this.setSubSkillsEnabled(json, 30);
+                info.setSubSkillsEnabled(json, 30);
                 this.insertMyPokeRowInto(tbody, poke, json, 30, foods, foodMin, 3);
             }
 
             if (json.lv < 50 && showPotential50){
-                this.setSubSkillsEnabled(json, 50);
+                info.setSubSkillsEnabled(json, 50);
                 this.insertMyPokeRowInto(tbody, poke, json, 50, foods, foodMin, 4);
             }
 
             if (json.lv < 60 && showPotential60){
-                this.setSubSkillsEnabled(json, 60);
+                info.setSubSkillsEnabled(json, 60);
                 this.insertMyPokeRowInto(tbody, poke, json, 60, foods, foodMin, 5);
             }
-        }        
+        }
     }
 
 
@@ -661,9 +621,9 @@ class PokeReport{
 
     createMyPokemonInfoRow(poke, comb, food, json){
         let tr = document.createElement("tr");
-        //comb.insertResultTo(r, food, poke, this.createIdentifierOf(json));昔のやりかた
-        //this.createPokemonInfoRow(poke, comb, food, json, this.createIdentifierOf(json));
-        this.insertCombinationResultTo(tr, poke, comb, food, this.createIdentifierOf(json));
+        //comb.insertResultTo(r, food, poke, PokemonInfo.createIdentifierOf(json));昔のやりかた
+        //this.createPokemonInfoRow(poke, comb, food, json, PokemonInfo.createIdentifierOf(json));
+        this.insertCombinationResultTo(tr, poke, comb, food, PokemonInfo.createIdentifierOf(json));
         return tr;
     }
 
@@ -765,15 +725,8 @@ class PokeReport{
 
 
 
-    createIdentifierOf(j){
-        let x = j.char;
-        let arr = Object.entries(j.subSkillList).map(([k, v]) => v);
-        for (let i = 0; i < arr.length; i++){
-            x += this.getSubSkillIdentifierOf(arr[i].value);
-        }
-        return x;
-    }
- 
+
+
 
     insertPokeToPlanArea(poke, area, withoutSaving = false){
         if (area.children.length == 0){
@@ -827,7 +780,7 @@ class PokeReport{
             //PokeNoDecimalChangeTag:
             //let n = numToBit(Math.round(no % 1 * 10), mask16_nodp_plan);
             
-            let n = numToBit(this.getPokeNoDecimalOf(no, true), mask16_nodp_plan);
+            let n = numToBit(PokemonInfo.getPokeNoDecimalOf(no, true), mask16_nodp_plan);
             n += numToBit(Math.trunc(no), mask16_no_plan);
             cookieList.push(n.toString(32));
         }
@@ -846,7 +799,7 @@ class PokeReport{
             //PokeNoDecimalChangeTag:
             //let no = Math.round((bitToNum(n, mask16_no_plan) * 10) + bitToNum(n, mask16_nodp_plan))/ 10;
 
-            let no = bitToNum(n, mask16_no_plan) + this.convertNumToPokeNoDecimal(bitToNum(n, mask16_nodp_plan));
+            let no = bitToNum(n, mask16_no_plan) + PokemonInfo.convertNumToPokeNoDecimal(bitToNum(n, mask16_nodp_plan));
             let poke = (foodFlag) ? new Pokemon(undefined, {no: raw, name: foodList[raw & mask16_no_plan], flagForPlan: true}) 
                                   : pokedex.getPokemonByNo(no);
             this.insertPokeToPlanArea(poke, area, i != noList.length - 1);
@@ -894,278 +847,12 @@ class PokeReport{
     
 
 
-    createJsonFromCookieValue32(ck){
-        if (ck == null){
-            console.log("Cookie is Null.")
-            return;
-        }
-
-        let valueArr = ck.split("-");
-        let n = 0; //parseInt(valueArr[], 32)で使いまわす
-       
-        let j = {};
-        j.src = ck;
-        
-        n = parseInt(valueArr[0], 32);     
-        //PokeNoDecimalChangeTag:
-        //j.no = Math.round((bitToNum(n, mask32a_no) * 10) + bitToNum(n,mask32a_nodp)) / 10;
-        j.no = bitToNum(n, mask32a_no) + this.convertNumToPokeNoDecimal(bitToNum(n, mask32a_nodp));
-        //console.log(j.no);
-        j.name = pokedex.getPokemonByNo(j.no).name;
-        j.lv = bitToNum(n, mask32a_lv);
-        j.skillLv = 777;        
-        j.skillLv = this.pokedex.getPokemonByNo(j.no).getMaxSkillLv();
-        j.foodCode = this.getFoodCodeOf(bitToNum(n, mask32a_food1)) + this.getFoodCodeOf(bitToNum(n, mask32a_food2)) + this.getFoodCodeOf(bitToNum(n, mask32a_food3));
-
-        n = parseInt(valueArr[1], 32);   
-        j.char = this.getCharacteristic(bitToNum(n, mask32b_charUp), bitToNum(n, mask32b_charDown));
-        j.ribbonEv = bitToNum(n, mask32b_ribbonEv);
-        j.ribbonLv = bitToNum(n, mask32b_ribbonLv);
-        j.backgroundColor = bitToNum(n, mask32b_backGround);
-
-        n = parseInt(valueArr[2], 32);
-        j.subSkillList = this.getSubSkillListByNum(bitToNum(n, mask32c_sub1),
-                                                   bitToNum(n, mask32c_sub2),
-                                                   bitToNum(n, mask32c_sub3),
-                                                   bitToNum(n, mask32c_sub4),
-                                                   bitToNum(n, mask32c_sub5));
-        this.setSubSkillsEnabled(j, -1);
-
-       
-        this.setOtetsudaiInfoToJson(j);
-        return j;
-    }
-
-    //jsonに情報を付与する
-    setOtetsudaiInfoToJson(j, maxLv = 65){
-        j.LvMax = maxLv;
-        let poke = pokedex.getPokemonByNo(j.no);
-
-        let jMax = structuredClone(j);
-        jMax.lv = (j.lv < maxLv) ? maxLv : j.lv;
-        this.setSubSkillsEnabled(jMax, jMax.lv);
-
-        let j60 = structuredClone(j);
-        j60.lv = (j.lv < 60) ? 60 : j.lv;
-        this.setSubSkillsEnabled(j60, 60);
-        
-
-        let raw_otetsudaiCountDay = poke.getOtetsudaiCountDay(j.lv, j.charAdjusts.speed, j.subAdjusts.speed);
-        let raw_otetsudaiCountFoodDay = raw_otetsudaiCountDay * (poke.foodRate * (1 + j.charAdjusts.food + j.subAdjusts.food));
-        let raw_otetsudaiCountBerryDay = raw_otetsudaiCountDay - raw_otetsudaiCountFoodDay;
-
-        let raw_otetsudaiCountDayNoBonus     = poke.getOtetsudaiCountDay(j.lv);
-        let raw_otetsudaiCountFoodDayNoBonus = raw_otetsudaiCountDayNoBonus * poke.foodRate;
-        let raw_otetsudaiCountBerryNoBonus   = raw_otetsudaiCountDayNoBonus - raw_otetsudaiCountFoodDayNoBonus;
-
-        //このへんがっつり直そう j => jMax
-        let raw_otetsudaiCountDayMax      = poke.getOtetsudaiCountDay(jMax.lv, jMax.charAdjusts.speed, jMax.subAdjusts.speed);
-        let raw_otetsudaiCountFoodDayMax  = raw_otetsudaiCountDayMax * (poke.foodRate * (1 + jMax.charAdjusts.food + jMax.subAdjusts.food));
-        let raw_otetsudaiCountBerryDayMax = raw_otetsudaiCountDayMax - raw_otetsudaiCountFoodDayMax;
-
-        let raw_otetsudaiCountDay60      = poke.getOtetsudaiCountDay(j60.lv, j60.charAdjusts.speed, j60.subAdjusts.speed);
-        let raw_otetsudaiCountFoodDay60  = raw_otetsudaiCountDay60 * (poke.foodRate * (1 + j60.charAdjusts.food + j60.subAdjusts.food));
-        
-        j.otetsudaiCountDay             = Math.round(raw_otetsudaiCountDay);
-        j.otetsudaiCountFoodDay         = Math.round(raw_otetsudaiCountFoodDay);
-        j.otetsudaiCountBerryDay        = j.otetsudaiCountDay - j.otetsudaiCountFoodDay;
-
-        j.otetsudaiCountDayNoBonus     = Math.round(raw_otetsudaiCountDayNoBonus);
-        j.otetsudaiCountFoodDayNoBonus = Math.round(raw_otetsudaiCountFoodDayNoBonus);
-        j.otetsudaiCountBerryNoBonus   = j.otetsudaiCountDayNoBonus - j.otetsudaiCountFoodDayNoBonus;
-
-        const berryPower              = pokedex.getBerryPowerOf(poke.berry, j.lv);
-        j.berryPower                  = Math.round(berryPower * 100) / 100;
-        j.berryPowerDay               = Math.round(berryPower * poke.getBerryNum(j.subBerryS) * raw_otetsudaiCountBerryDay);
-        j.berryPowerDayNoPicking      = Math.round(berryPower * poke.getBerryNum(j.subBerryS) * raw_otetsudaiCountDay);
-        j.berryPowerDayNoBonusBerryS  = Math.round(berryPower * poke.getBerryNum(true) * raw_otetsudaiCountBerryNoBonus);
-
-        const berryPowerMax           = pokedex.getBerryPowerOf(poke.berry, maxLv);
-        j.berryPowerLvMax             = Math.round(berryPowerMax * poke.getBerryNum(jMax.subBerryS) * raw_otetsudaiCountBerryDayMax);
-        j.berryPowerLvMaxNoPicking    = Math.round(berryPowerMax * poke.getBerryNum(jMax.subBerryS) * raw_otetsudaiCountDayMax);
-
-        //((poke.skillRate * (1 + j.charAdjusts.skill) * (1 - j.subAdjusts.skill))
-        j.skillRate                     = Math.round(poke.getSkillRate(j.charAdjusts.skill, j.subAdjusts.skill) * 100000) / 100000;
-        j.skillRateLvMax                = Math.round(poke.getSkillRate(jMax.charAdjusts.skill, jMax.subAdjusts.skill) * 100000) / 100000;
-        j.skillRateWithGuaranteed       = Math.round(poke.getGuaranteedSkillRateWithOtetsudaiCount(raw_otetsudaiCountDay, j.charAdjusts.skill, j.subAdjusts.skill) * 100000) / 100000;
-        j.skillRateLvMaxWithGuaranteed  = Math.round(poke.getGuaranteedSkillRateWithOtetsudaiCount(raw_otetsudaiCountDayMax, jMax.charAdjusts.skill, jMax.subAdjusts.skill) * 100000) / 100000;
-        j.skillPopDay                   = Math.round((raw_otetsudaiCountDay * j.skillRateWithGuaranteed) * 10) / 10;
-        j.skillPopDayNoBonus            = Math.round((raw_otetsudaiCountDayNoBonus * poke.getGuaranteedSkillRate(j.lv) * 10)) / 10;        
-        j.skillPopDayLvMax              = Math.round((raw_otetsudaiCountDayMax * j.skillRateLvMaxWithGuaranteed) * 10) / 10;
 
 
-        let berryDiff = (Math.round((j.berryPowerDay / j.berryPowerDayNoBonusBerryS) * 100) / 100) - 1;
-        j.berryPowerDayDiff = (berryDiff == 0) ? "±" + Math.round(berryDiff * 100).toFixed(0) + "%"
-                               : (berryDiff > 0)  ? "+" + Math.round(berryDiff * 100).toFixed(0) + "%"
-                               : "-" + Math.round((Math.abs(berryDiff) * 100)).toFixed(0) + "%";
-
-        let foodDiff = ((Math.round((raw_otetsudaiCountFoodDay / raw_otetsudaiCountFoodDayNoBonus) * 100)) - 100);
-
-        let skillDiff = (Math.round((j.skillPopDay / j.skillPopDayNoBonus) * 100) / 100) - 1;
-        j.skillPopDayDiff  = (skillDiff == 0) ? "±" + Math.round(skillDiff * 100).toFixed(0) + "%"
-                           : (skillDiff >= 0) ? "+" + Math.round(skillDiff * 100).toFixed(0) + "%"
-                           : "-" + Math.round(Math.abs(skillDiff) * 100).toFixed(0) + "%";
-        
-        
-        let cnt = raw_otetsudaiCountFoodDay;
-        let otherFoodPower = 350;
-        let powFoodA = this.pokedex.getFoodPowerKariOf(poke, j.foodCode[0], 0, otherFoodPower);
-        let powFoodB = this.pokedex.getFoodPowerKariOf(poke, j.foodCode[1], 1, otherFoodPower);
-        let powFoodC = this.pokedex.getFoodPowerKariOf(poke, j.foodCode[2], 2, otherFoodPower);
-
-        let total = 0;
-        let totalLv60 = (powFoodA + powFoodB + powFoodC) * raw_otetsudaiCountFoodDay60 / 3;
-        if (j.lv >= 60) {
-            total = (powFoodA + powFoodB + powFoodC) * (cnt / 3);
-        }
-        else if (j.lv >= 30) {
-            total = (powFoodA + powFoodB) * (cnt / 2);
-        }
-        else {
-            total = (powFoodA) * (cnt);
-        }
-
-        j.foodPowerKariDay = Math.round(total);
-        j.foodPowerKariDayDiff  = j.foodPowerKariDay;
-        j.foodPowerKariDayDiff += (foodDiff == 0) ? "(±0%)"
-                                : (foodDiff >  0) ? "(+" + foodDiff.toFixed(0) + "%)"
-                                : "(" + foodDiff.toFixed(0) + "%)";
-        j.foodPowerKariDayLv60 = Math.round(totalLv60);
-    }
-
-    getSubSkillListByNum(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill){
-        return{
-            lv10:  {value:  lv10skill, name: this.getSubSkillNameFromNum(lv10skill),  lv:  10, enabled: false},
-            lv25:  {value:  lv25skill, name: this.getSubSkillNameFromNum(lv25skill),  lv:  25, enabled: false},
-            lv50:  {value:  lv50skill, name: this.getSubSkillNameFromNum(lv50skill),  lv:  50, enabled: false},
-            lv75:  {value:  lv75skill, name: this.getSubSkillNameFromNum(lv75skill),  lv:  75, enabled: false},
-            lv100: {value: lv100skill, name: this.getSubSkillNameFromNum(lv100skill), lv: 100, enabled: false}
-        };
-    }
 
 
-    getSubSkillList(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill){
-        return{
-            lv10:  {value: this.getSubSkillNumOf(lv10skill),  name:  lv10skill, lv:  10, enabled: false},
-            lv25:  {value: this.getSubSkillNumOf(lv25skill),  name:  lv25skill, lv:  25, enabled: false},
-            lv50:  {value: this.getSubSkillNumOf(lv50skill),  name:  lv50skill, lv:  50, enabled: false},
-            lv75:  {value: this.getSubSkillNumOf(lv75skill),  name:  lv75skill, lv:  75, enabled: false},
-            lv100: {value: this.getSubSkillNumOf(lv100skill), name: lv100skill, lv: 100, enabled: false}
-        };
-    }
 
 
-    setSubSkillsEnabled(j, lv = -1){
-        lv = (lv == -1) ? j.lv : lv;
-        j.subSkillList.lv10.enabled = j.subSkillList.lv10.lv <= lv;
-        j.subSkillList.lv25.enabled = j.subSkillList.lv25.lv <= lv;
-        j.subSkillList.lv50.enabled = j.subSkillList.lv50.lv <= lv;
-        j.subSkillList.lv75.enabled = j.subSkillList.lv75.lv <= lv;
-        j.subSkillList.lv100.enabled = j.subSkillList.lv100.lv <= lv;
-
-        let exists = (n) =>{
-            return Object.entries(j.subSkillList).some(([k, v]) => v.value == n && v.lv <= lv);
-        }
-        j.subOteBonus      = exists(sub_num_oteBonus);
-        j.subSpeedS        = exists(sub_num_speedS);
-        j.subSpeedM        = exists(sub_num_speedM);
-        j.subFoodS         = exists(sub_num_foodS);
-        j.subFoodM         = exists(sub_num_foodM);
-        j.subSkillS        = exists(sub_num_skillS);
-        j.subSkillM        = exists(sub_num_skillM);
-        j.subSkillLvUpS    = exists(sub_num_skillLvUpS);
-        j.subSkillLvUpM    = exists(sub_num_skillLvUpM);
-        j.subBerryS        = exists(sub_num_berryS);
-        j.subInventoryS    = exists(sub_num_inventoryS);
-        j.subInventoryM    = exists(sub_num_inventoryM);
-        j.subInventoryL    = exists(sub_num_inventoryL);
-        j.subExpBonus      = exists(sub_num_expBonus);
-        j.subGenkiBonus    = exists(sub_num_genkiBonus);
-        j.subYumeBonus     = exists(sub_num_yumeBonus);
-        j.subResearchBonus = exists(sub_num_researchBonus);
-
-        this.setAdjustValues(j);
-    }
-
-    //小数点以下をポケモンのバージョン違いにし4bitで管理しているが、10～15(0110～1111)までは/10で処理できないため作成
-    //なお、1と10は区別がつかないため10は使用禁止（エラー処理もできないよ！設計ダメだね！！）
-    getPokeNoDecimalOf(n, multiply10 = false){        
-        let decRaw = Math.round(n % 1 * 100);
-        if (decRaw == 0) return 0;
-        if (decRaw < 10) throw new Error("小数点第一位が0の数値は対応していません。.1 .2 .3… と .11～.15に対応しています。");
-
-        decRaw = (decRaw % 10 == 0) ? decRaw / 10 : decRaw;
-        if (decRaw >= 16) throw new Error("小数点部分を整形後、15を超えました。");
-
-        let div = (decRaw >= 10) ? 100 : 10;
-        return decRaw / div * (multiply10 ? 10 : 1);
-    }
-
-    convertNumToPokeNoDecimal(n){
-        if (n == 0) return 0;
-        if (!Number.isInteger(n)) throw Error("小数点に対応していません。");
-        if (n >= 16) throw Error("16以上の数値に対応していません。" + "\r\n\r\n" + n);
-        
-        let div = (n >= 10) ? 100 : 10;
-        return n / div;
-    }
-
-
-    createCookieValueFromJson32(j){
-        let abc = [];
-        let n = 0;
-        
-        //PokeNoDecimalChangeTag:
-        //n += numToBit(Math.round(j.no % 1 * 10), mask32a_nodp);
-        n += numToBit(this.getPokeNoDecimalOf(j.no, true), mask32a_nodp);
-        n += numToBit(Math.trunc(j.no), mask32a_no);
-        n += numToBit(j.lv, mask32a_lv);
-        n += numToBit(this.getFoodNumOf(j.foodCode[0]), mask32a_food1);
-        n += numToBit(this.getFoodNumOf(j.foodCode[1]), mask32a_food2);
-        n += numToBit(this.getFoodNumOf(j.foodCode[2]), mask32a_food3);
-        abc.push(n.toString(32));
-        
-        n = 0;
-        n += numToBit(this.getCharacteristicNumOf(j.char), mask32b_charAll);
-        n += numToBit(j.ribbonEv, mask32b_ribbonEv);
-        n += numToBit(j.ribbonLv, mask32b_ribbonLv);
-        n += numToBit(j.backgroundColor, mask32b_backGround);
-        abc.push(n.toString(32));
-
-        n = 0;
-        n += numToBit(j.subSkillList.lv10.value, mask32c_sub1);
-        n += numToBit(j.subSkillList.lv25.value, mask32c_sub2);
-        n += numToBit(j.subSkillList.lv50.value, mask32c_sub3);
-        n += numToBit(j.subSkillList.lv75.value, mask32c_sub4);
-        n += numToBit(j.subSkillList.lv100.value, mask32c_sub5);
-        abc.push(n.toString(32));
-
-        return abc.join("-");
-    }
-
-    
-    setAdjustValues(json){
-        let n = this.getCharacteristicNumOf(json.char);
-
-        json.charAdjusts = {
-            speed: (bitToNum(n, 0b111000) == 0b001) ? +0.11
-                 : (bitToNum(n, 0b000111) == 0b001) ? -0.07 : 0,
-            genki: (bitToNum(n, 0b111000) == 0b010) ? +0.2
-                 : (bitToNum(n, 0b000111) == 0b010) ? -0.12 : 0,
-            food : (bitToNum(n, 0b111000) == 0b011) ? +0.2
-                 : (bitToNum(n, 0b000111) == 0b011) ? -0.2 : 0,
-            skill: (bitToNum(n, 0b111000) == 0b100) ? +0.2
-                 : (bitToNum(n, 0b000111) == 0b100) ? -0.2 : 0,
-            exp  : (bitToNum(n, 0b111000) == 0b101) ? +0.18
-                 : (bitToNum(n, 0b000111) == 0b101) ? -0.18 : 0,
-        };
-
-        json.subAdjusts = {
-            speed: Math.round(((json.subOteBonus ? 0.05 : 0) + (json.subSpeedS ? 0.07 : 0) + (json.subSpeedM ? 0.14 : 0)) * 100) / 100,
-            food: Math.round(((json.subFoodS ? 0.18 : 0) + (json.subFoodM ? 0.36 : 0)) * 100) / 100,
-            skill: Math.round(((json.subSkillS ? 0.18 : 0) +  (json.subSkillM ? 0.36 : 0)) * 100) / 100
-        };
-    }
 
 
     setColorClassTo(el, n){
@@ -1187,178 +874,7 @@ class PokeReport{
 
 
 
-    getCharacteristic(up, down){
-        //000/111:無補正   "001 001"の場合、無補正と同じになる。なお、上昇補正がある場合は必ず下降補正もある
-        //001:おてスピ補正
-        //010:元気補正
-        //011:食材補正
-        //100:スキル補正
-        //101:EXP補正。
-
-        switch (up){
-            case 0b001:
-                switch (down){
-                    case 0b001: return "×";
-                    case 0b010: return "寂";
-                    case 0b011: return "い";
-                    case 0b100: return "や";
-                    case 0b101: return "勇";
-                    default: return "×";
-                }
-            case 0b010:
-                switch (down){
-                    case 0b001: return "ず";
-                    case 0b010: return "×";
-                    case 0b011: return "わ";
-                    case 0b100: return "能";
-                    case 0b101: return "の";
-                    default: return "×";
-                }
-            case 0b011:
-                switch (down){
-                    case 0b001: return "ひ";
-                    case 0b010: return "お";
-                    case 0b011: return "×";
-                    case 0b100: return "う";
-                    case 0b101: return "冷";
-                    default: return "×";
-                }
-            case 0b100:
-                switch (down){
-                    case 0b001: return "穏";
-                    case 0b010: return "大";
-                    case 0b011: return "慎";
-                    case 0b100: return "×";
-                    case 0b101: return "な";
-                    default: return "×";
-                }
-            case 0b101:
-                switch (down){
-                    case 0b001: return "臆";
-                    case 0b010: return "せ";
-                    case 0b011: return "陽";
-                    case 0b100: return "む";
-                    case 0b101: return "×";
-                    default: return "×";
-                }
-            default: return "□";
-        }
-    }
 
 
-    getCharacteristicNumOf(c){
-        //n: 000000の6bit 
-        switch(c){
-            case "寂": return 0b001010;
-            case "い": return 0b001011;
-            case "や": return 0b001100;
-            case "勇": return 0b001101;
-            case "ず": return 0b010001;
-            case "太": return 0b010001;//しばらくおいておく
-            case "わ": return 0b010011;
-            case "能": return 0b010100;
-            case "の": return 0b010101;
-            case "ひ": return 0b011001;
-            case "お": return 0b011010;
-            case "う": return 0b011100;
-            case "冷": return 0b011101;
-            case "穏": return 0b100001;
-            case "大": return 0b100010;
-            case "慎": return 0b100011;
-            case "な": return 0b100101;
-            case "臆": return 0b101001;
-            case "せ": return 0b101010;
-            case "陽": return 0b101011;
-            case "む": return 0b101100;
-            default : return 0b000000;      
-        }
-    }
-
-
-    getSubSkillNumOf(name){
-        switch(name){
-            case "oteBonus"     : return sub_num_oteBonus;
-            case "speedS"       : return sub_num_speedS;
-            case "speedM"       : return sub_num_speedM;
-            case "foodS"        : return sub_num_foodS;
-            case "foodM"        : return sub_num_foodM;
-            case "skillS"       : return sub_num_skillS;
-            case "skillM"       : return sub_num_skillM;
-            case "skillLvUpS"   : return sub_num_skillLvUpS;
-            case "skillLvUpM"   : return sub_num_skillLvUpM;
-            case "berryS"       : return sub_num_berryS;
-            case "inventoryS"   : return sub_num_inventoryS;
-            case "inventoryM"   : return sub_num_inventoryM;
-            case "inventoryL"   : return sub_num_inventoryL;
-            case "expBonus"     : return sub_num_expBonus;
-            case "genkiBonus"   : return sub_num_genkiBonus;
-            case "yumeBonus"    : return sub_num_yumeBonus;
-            case "researchBonus": return sub_num_researchBonus;
-            default             : return 0b0;
-            
-        }
-    }
-
-
-    getSubSkillNameFromNum(n){
-        switch(n){
-            case sub_num_oteBonus       : return "oteBonus";
-            case sub_num_speedS         : return "speedS";
-            case sub_num_speedM         : return "speedM";
-            case sub_num_foodS          : return "foodS";
-            case sub_num_foodM          : return "foodM";
-            case sub_num_skillS         : return "skillS";
-            case sub_num_skillM         : return "skillM";
-            case sub_num_skillLvUpS     : return "skillLvUpS";
-            case sub_num_skillLvUpM     : return "skillLvUpM";
-            case sub_num_berryS         : return "berryS";
-            case sub_num_inventoryS     : return "inventoryS";
-            case sub_num_inventoryM     : return "inventoryM";
-            case sub_num_inventoryL     : return "inventoryL";
-            case sub_num_expBonus       : return "expBonus";
-            case sub_num_genkiBonus     : return "genkiBonus";
-            case sub_num_yumeBonus      : return "yumeBonus";
-            case sub_num_researchBonus  : return "researchBonus";
-            default                     : return null;
-        }
-    }
-
-
-    getSubSkillIdentifierOf(n){
-        switch(n){
-            case 0  : return "";
-            case 1  : return "o";
-            case 2  : return ".";
-            case 3  : return ":";
-            case 4  : return "f";
-            case 5  : return "F";
-            case 6  : return "-";
-            case 7  : return "+";
-            case 8  : return "u";
-            case 9  : return "U";
-            case 10 : return "s";
-            case 11 : return "'";
-            case 12 : return '"';
-            case 13 : return "*";
-            case 14 : return "e";
-            case 15 : return "g";
-            case 16 : return "y";
-            case 17 : return "r";
-            default : return "x";
-        }
-    }
-
- 
-    getFoodCodeOf(n){
-        return (n == 0b01) ? "A"
-            : (n == 0b10) ? "B"
-            : (n == 0b11) ? "C" : "X"
-    }
-
-    getFoodNumOf(food){
-        return (food == "A") ? 0b0001
-              : (food == "B") ? 0b0010
-               : (food == "C") ? 0b0011 : 0b0000;
-    }
 
 }

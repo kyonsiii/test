@@ -5,10 +5,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="style.css?t=20260510_3" rel="stylesheet"/>
-        <script src="js/main.js"></script>
-        <script src="js/pokeReport.js?t=v1.021"></script>
-        <script src="js/pokedex2.js?t=v1.021"></script>
-        <script src="js/recipedb.js"></script>
+        <script src="js/main.js?d=20260512_1"></script>
+        <script src="js/pokeReport.js?d=20260512_1"></script>
+        <script src="js/pokedex_data.js?d=20260512_1"></script>
+        <script src="js/pokemonInfo.js?d=20260512_1"></script>
+        <script src="js/pokedex2.js?d=20260512_1"></script>
+        <script src="js/recipedb.js?d=20260512_1"></script>
 
         <title>レポート(仮)</title>
 
@@ -29,7 +31,7 @@
 
         <div class="input_form_area">
             <div style="display: flex; justify-content: space-between; background-color: beige;">
-                <strong id="page_title"> Myポケモン登録v1.021:</strong>
+                <strong id="page_title"> Myポケモン登録d=20260512_1:</strong>
                 <span id="input_mypoke_form_visible" visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this); initializePokeList();">　表示▼</span>
             </div>
             <div id="input_form" style="display: none;">
@@ -614,13 +616,9 @@
                     for (let i = index + 1; i < 5; i++){
                         boxes[i]
                     }
-
                 };
                 let index = area.indexOf(el);
             }
-
-
-
 
 
             function copyCookieValue(){
@@ -705,25 +703,25 @@
                 let json = this.createJsonFromInputForm32(this.document.getElementById('input_mypoke_name').value);
                 if (json == null) return;
 
-                json.backgroundColor = 6;
-
+                json.LvRaw.backgroundColor = 6;
                 this.insertMyPokemons([json], foodName, min, true);//現在入力中のキャラ
             }
 
 
             function showBerryPower(){
-                let json = this.createJsonFromInputForm32(this.document.getElementById('input_mypoke_name').value);
-                if (json == null) return;
+                //let info = pokeReport.createJsonFromCookieValue32(;
+                const info = this.createJsonFromInputForm32(this.document.getElementById('input_mypoke_name').value);
+                if (info == null) return;
 
-        
-                let poke = pokedex.getPokemonByNo(json.no);
-                let mes = json.name + " Lv" + json.lv
-                                    + "\nきのみおてつだい: " + json.otetsudaiCountBerryDay + "/" + json.otetsudaiCountDay
-                                    + "\nきのみパワー: " + json.berryPower
-                                    + "\n1日: " + json.berryPowerDay + "(" + json.berryPowerDayDiff + ")"
-                                    + "\n(きのみS無補正個体: " + pokedex.getBerryPowerDayNoBonus(poke, json.lv) +")"
+                console.log(info);
+                const poke = info.pokemon;
+                const mes =  poke.name + " Lv" + info.LvRaw.lv
+                                    + "\nきのみおてつだい: " + info.LvRaw.rawResult.otetsudaiCountBerryDay.toFixed(0) + "/" + info.LvRaw.rawResult.otetsudaiCountDay.toFixed(0)
+                                    + "\nきのみパワー: " + info.LvRaw.rawResult.berryPower.toFixed(0)
+                                    + "\n1日: " + info.LvRaw.rawResult.berryPowerDay.toFixed(0) + info.berryPowerDayDiff
+                                    + "\n(きのみS無補正個体: " + info.LvRaw.rawResult.berryPowerDayBerryS +")"
                                     + "\n"
-                                    + "\nスキル発動回数: " + json.skillPopDay + "(" + json.skillPopDayDiff + ")";
+                                    + "\nスキル発動回数: " + info.LvRaw.rawResult.skillPopDay.toFixed(0)  + info.skillPopDayDiff;
                 alert(mes);
             }
 
@@ -733,28 +731,26 @@
 
             function registerMyPoke(){
                 let pokeList = this.document.getElementById('input_mypoke_name');
-                let json = this.createJsonFromInputForm32(pokeList.value);
-                if (json == null){
+                let info = this.createJsonFromInputForm32(pokeList.value);
+                if (info == null){
                     alert("登録情報が足りていません。")
                     return;
                 }
                 let src = pokeList.getAttribute("src");
                 if (src == ""){//通常の登録
-                    let res = window.confirm(json.name +  "\nを登録してもよろしいですか？");
+                    let res = window.confirm(info.pokemon.name +  "\nを登録してもよろしいですか？");
                     if (res == false) return;
 
-
                 } else{//再編集
-                    let res = window.confirm(json.name +  "\nの編集を反映してよろしいですか？");
+                    let res = window.confirm(info.pokemon.name +  "\nの編集を反映してよろしいですか？");
                     if (res == false) return;
                     let op = Array.from(document.getElementById("input_mypoke_registered").children).find(op => op.value == src);
                     this.deleteMypoke(op);
                 }
 
-                this.addMyPokeToList(this.createMyPokeOption(json));
 
-                this.listupMyPokeInfo(json)
-
+                this.addMyPokeToList(this.createMyPokeOption(info.LvRaw));
+                this.listupMyPokeInfo(info)
                 pokeReport.setMyPokeListToCookie();
                 this.resetInputForm();
             }
@@ -783,38 +779,41 @@
 
 
 
-            function listupMyPokeInfo(j){
-                let poke = pokedex.getPokemonByNo(j.no);
-                let tbodyList = [];
+            function listupMyPokeInfo(info){
+                const poke = info.pokemon;
+                const tbodyList = [];
                 if (poke.isBerrySpecialty) tbodyList.push(this.tbDetailBerry);
                 if (poke.isFoodSpecialty) tbodyList.push(this.tbDetailFood);
                 if (poke.isSkillSpecialty) tbodyList.push(this.tbDetailSkill);
 
                 /*lvの65、そのうちマジックナンバーなくそう*/
 
+                const j = info.LvRaw;
+                const result = j.rawResult;
                 tbodyList.forEach(tbody => {
                     const tr = document.createElement("tr");
-                    const pow = (poke.specialty == "食材") ? j.foodPowerKariDay : j.berryPowerDay;
+                    const pow = (poke.specialty == "食材") ? Math.round(result.totalFoodPowerKari) : Math.round(result.berryPowerDay);
                     pokeReport.setColorClassTo(tr, j.backgroundColor);
-                    
+
                     tr.setAttribute("value", pow);
                     const nameCell = tr.insertCell();
-                    nameCell.innerHTML = j.name + "Lv" + j.lv + "<br>" + j.foodCode + " " + pokeReport.createIdentifierOf(j);
+                    nameCell.innerHTML = j.name + "Lv" + j.lv + "<br>" + j.foodCode + " " + PokemonInfo.createIdentifierOf(j);
 
                     const berryCell = tr.insertCell();
-                    berryCell.innerHTML = j.berryPowerDay + "(" + j.berryPowerDayDiff + ")"
-                                        + ((poke.specialty != "きのみ") ? "" : "<br>" + j.berryPowerDayNoPicking + "(NP)")
-                                        + ((j.lv < 65) ? "<br> → " + j.berryPowerLvMax + "(Lv" + j.LvMax + ")" : "")
-                                        + ((j.lv >= 65 || poke.specialty != "きのみ") ? "" : "<br> 　 " + j.berryPowerLvMaxNoPicking + "(NP)");
-
+                    berryCell.innerHTML = result.berryPowerDay.toFixed(0) + info.berryPowerDayDiff
+                                        + ((poke.specialty != "きのみ" && poke.specialty != "オール") ? "" : `<br>${result.berryPowerDayNoPicking}(NP)`)
+                                        + ((j.lv <  Pokedex.pokeMaxLv) ? `<br> → ${info.LvMax.rawResult.berryPowerDay}(Lv${info.LvMax.lv})` : "")
+                                        + ((j.lv >= Pokedex.pokeMaxLv || poke.specialty != "きのみ") ? "" : `<br> 　 ${info.LvMax.rawResult.berryPowerDayNoPicking.toFixed(0)}(NP)`);
                     const foodCell = tr.insertCell();
-                    foodCell.innerHTML = j.foodPowerKariDayDiff + ((j.lv < 60) ? "<br> → " + j.foodPowerKariDayLv60 + "(Lv60)" : "");
+                    foodCell.innerHTML = result.totalFoodPowerKari.toFixed(0)  + info.foodPowerDayDiff
+                                       + ((j.lv < Pokedex.pokeMaxLv) ? "<br> → " + info.LvMax.rawResult.totalFoodPowerKari.toFixed(0) + "(Lv" + info.LvMax.lv + ")" : "");
 
                     const skillCell = tr.insertCell();
-                    skillCell.innerHTML = j.skillPopDay.toFixed(1) + "("+ j.skillPopDayDiff + ")"  + ((j.lv < 65) ? "<br> → " + j.skillPopDayLvMax + "(Lv" + j.LvMax + ")" : "");
+                    skillCell.innerHTML = result.skillPopDay.toFixed(1) + info.skillPopDayDiff + ((j.lv < Pokedex.pokeMaxLv) ? "<br> → " + info.LvMax.rawResult.skillPopDay.toFixed(1) + "(Lv" + info.LvMax.lv + ")" : "");
 
                     const totalCell = tr.insertCell();
-                    const total =  (j.berryPowerDay + j.foodPowerKariDay);
+                    const total =  (result.berryPowerDay + result.totalFoodPowerKari).toFixed(0) + ((j.lv < Pokedex.pokeMaxLv) ? "<br> → " + (info.LvMax.rawResult.berryPowerDay + info.LvMax.rawResult.totalFoodPowerKari).toFixed(0) + "(Lv" + info.LvMax.lv + ")" : "");
+;
                     //console.log(j);
                     totalCell.innerHTML = total;
                     totalCell.setAttribute("power", total);
@@ -839,8 +838,8 @@
 
             function createMyPokeOption(json){
                 let op = document.createElement("option");
-                op.value = pokeReport.createCookieValueFromJson32(json);
-                op.text = json.name + "Lv" + json.lv + json.foodCode + " " + pokeReport.createIdentifierOf(json);
+                op.value = new PokemonInfo().createCookieValueFromJson32(json);
+                op.text = json.name + "Lv" + json.lv + json.foodCode + " " + PokemonInfo.createIdentifierOf(json);
                 return op;
             }
 
@@ -859,32 +858,33 @@
 
 
 
-            function createJsonFromInputForm32(name){
+            function createJsonFromInputForm32(name, passInitOtetsudaiInfo = false){
                 if (name == "") return null;
-                let j = {};
 
+                const j = {};
+                const info = new PokemonInfo(pokedex);
                 j.no = pokedex.getNoByName(name);
                 j.name = name;
                 j.lv = Number(this.document.getElementById('input_mypoke_lv').value);
                 j.foodCode = this.getMyPokeFoodCode();
                 j.char = document.getElementById("input_mypoke_char").value;
-
                 if (j.char == "") return null;
 
                 j.ribbonEv = 0;
                 j.ribbonLv = 0;
                 j.backgroundColor = Number(document.querySelector("#input_color_buttons input:checked").value);
-
-                j.subSkillList = pokeReport.getSubSkillList(
+                j.subSkillList = info.  getSubSkillListByName(
                     document.getElementById("sub_skill_lv10").value,
                     document.getElementById("sub_skill_lv25").value,
                     document.getElementById("sub_skill_lv50").value,
                     document.getElementById("sub_skill_lv75").value,
                     document.getElementById("sub_skill_lv100").value);
-
-                pokeReport.setSubSkillsEnabled(j, -1);//AdjustValueの初期化いらないならfalse
-                pokeReport.setOtetsudaiInfoToJson(j);
-                return j;
+                
+                //バカみたいだけどクッキーを作って復元する
+                //structurecopyができないから
+                info.initializeFromCookie(info.createCookieValueFromJson32(j));
+                if (!passInitOtetsudaiInfo) info.initializeOtetsudaiInfo();
+                return info;
             }
 
 
@@ -897,10 +897,10 @@
 
 
 
-            function insertMyPokemons(jsonList, food, min, ignorePotentialChecks = false){
+            function insertMyPokemons(infoList, food, min, ignorePotentialChecks = false){        
                 pokeReport.insertMyPokeListInto(
                     document.getElementById('result_table').tBodies[0],
-                    jsonList,
+                    infoList,
                     food,
                     min,
                     !ignorePotentialChecks && document.getElementById("option_potential_30").checked,
@@ -912,7 +912,7 @@
 
             function insertRegisteredMyPokemons(food, min){
                 if (!document.getElementById("option_mypoke_visible").checked) return;
-                let list = Array.from(document.getElementById("input_mypoke_registered").children).map(op => pokeReport.createJsonFromCookieValue32(op.value));
+                let list = Array.from(document.getElementById("input_mypoke_registered").children).map(op => PokemonInfo.create(pokedex, op.value));
                 this.insertMyPokemons(list, food, min);
             }
 
@@ -988,7 +988,7 @@
                 document.getElementById("sub_skill_lv50").selectedIndex    = 0;
                 document.getElementById("sub_skill_lv75").selectedIndex    = 0;
                 document.getElementById("sub_skill_lv100").selectedIndex   = 0;
-                document.getElementById("sub_skill_import").value          = (json == null) ? "" : json.foodCode + pokeReport.createIdentifierOf(json);
+                document.getElementById("sub_skill_import").value          = (json == null) ? "" : json.foodCode + PokemonInfo.createIdentifierOf(json);
 
                 let bgIndex = (json == null) ? 0 : json.backgroundColor;
                 document.getElementById("input_color_buttons").querySelectorAll("input")[bgIndex].checked = true;
@@ -1005,15 +1005,15 @@
 
 
             function reeditMypoke(){
-                let list = document.getElementById("input_mypoke_registered");
+                const list = document.getElementById("input_mypoke_registered");
                 if (list.children.length == 0) return;
 
                 document.getElementById("input_mypoke_kana").value = "";
                 this.initializePokeList();
 
                 this.showHideInputForm(null);
-                let j = pokeReport.createJsonFromCookieValue32(list.value);
-                if (this.setJsonToInputFormForReEdit(j)) document.getElementById('page_title').scrollIntoView();
+                const info = PokemonInfo.create(pokedex, list.value, true);
+                if (this.setJsonToInputFormForReEdit(info.LvRaw)) document.getElementById('page_title').scrollIntoView();
             }
 
 
@@ -1110,15 +1110,15 @@
                 }
                 if (c == null) return;
 
-                let jss = c.split("/").map(x => pokeReport.createJsonFromCookieValue32(x));
-                let tbTop3 = document.getElementById("mypoke_quick_check_food_top3").tBodies[0];
-                let onlySkyBlue = document.getElementById("option_mypoke_listup_backcolor").checked;
-                pokeReport.setMyPokeFoodListInfo(tbTop3, jss, onlySkyBlue);
+                const infoList = c.split("/").map(x => PokemonInfo.create(pokedex, x, true));                
+                const tbTop3 = document.getElementById("mypoke_quick_check_food_top3").tBodies[0];
+                const onlySkyBlue = document.getElementById("option_mypoke_listup_backcolor").checked;
+                pokeReport.setMyPokeFoodListInfo(tbTop3, infoList, onlySkyBlue);
              
-                for (let i = 0; i < jss.length; i++){
-                    this.listupMyPokeInfo(jss[i]);
+                for (let i = 0; i < infoList.length; i++){
+                    this.listupMyPokeInfo(infoList[i]);
 
-                    let maxFlag = this.addMyPokeToList(this.createMyPokeOption(jss[i]));
+                    let maxFlag = this.addMyPokeToList(this.createMyPokeOption(infoList[i].LvRaw));
                     if (maxFlag){
                         alert("限界");
                         return;

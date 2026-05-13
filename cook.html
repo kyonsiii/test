@@ -5,9 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="style.css" rel="stylesheet"/>
         <script src="js/main.js"></script>
-        <script src="js/recipedb.js?t=20260511_2"></script>
-        <script src="js/pokeCook.js?t=20260511_2"></script>
-        <script src="js/pokedex2.js?t=20260511_2"></script>
+        <script src="js/recipedb.js?d=20260512_1"></script>
+        <script src="js/pokeCook.js?d=20260512_1"></script>
+        <script src="js/pokedex_data.js?d=20260512_1"></script>
+        <script src="js/pokedex2.js?d=20260512_1"></script>
         <title>料理v1.1</title>
     </head>
 
@@ -81,11 +82,12 @@
                 }
             }
             window.onload = ()=>{
+                this.pokedex = new Pokedex();
                 this.recipedb = new RecipeDB();
                 this.pokeCook = new PokeCook(this.recipedb.recipes);
                 this.pokeCook.setTableRows(true);                  
                 this.pokeCook.setOptionsFromCookie(getCookie("cinf")); 
-                document.getElementById("food_buttons").innerHTML = new Pokedex().foodList.map(f => `<img name="${f}" src="img/food/${f}.png" onclick="selectIcon(this); pokeCook.setTarget(this, null)">`).join("");
+                document.getElementById("food_buttons").innerHTML = pokedex.foodList.map(f => `<img name="${f}" src="img/food/${f}.png" onclick="selectIcon(this); pokeCook.setTarget(this, null)">`).join("");
                 
             }
 
