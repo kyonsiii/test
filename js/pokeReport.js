@@ -142,7 +142,6 @@ class PokeReport{
 
 
     setMyPokeFoodListInfo(tbody, infoList, onlySkyBlueGold = false){
-
         let createRow = (food, pacList) => {
             let sorted = pacList.sort((a, b) => b.comb.getExpectionOf(food) - a.comb.getExpectionOf(food));            
             let tr1 = tbody.insertRow();
@@ -201,10 +200,15 @@ class PokeReport{
         infoList.forEach(info => {
             const j = info.LvRaw;
             if (onlySkyBlueGold && (j.backgroundColor == 0 || j.backgroundColor == 7)){
-                pokeAndComb.push({poke: info.pokemon, json: j, comb:info.pokemon.createFoodCombination(j, j.lv, j.foodCode)});
+                pokeAndComb.push(this.getInfoForCombination(info));
             }            
         });
         this.mypokeInfoList = pokeAndComb;
+    }
+
+    getInfoForCombination(info){
+        if (info == null) return;
+        return {poke: info.pokemon, json: info.LvRaw, comb:info.pokemon.createFoodCombination(info.LvRaw, info.LvRaw.lv, info.LvRaw.foodCode)};
     }
 
 
@@ -352,11 +356,6 @@ class PokeReport{
                 btn.style.backgroundColor = "aliceBlue";
                 container.appendChild(btn);
                 btn.addEventListener("click", () => this.insertMypokeRecipeEfficiency(btn, r.name));
-
-
-                //this.insertMypokeRecipeEfficiency(container, r.name);
-
-                
                 return;
             });
 
@@ -370,13 +369,21 @@ class PokeReport{
 
     insertMypokeRecipeEfficiency(span, recipeName){
         const container = span.parentNode;
-        const getCombinations = (arr, n) => {
+        const getCombinations = (arr, n, fixedItems = null) => {
+            const fixedIncluded = (fixedItems != null);
             let results = [{items: [], nextIndex: 0}];
+
+            if (fixedItems != null){                
+                arr = [...fixedItems, ...arr];
+                results = [{items: [...fixedItems], nextIndex: fixedItems.length}];
+                n -= fixedItems.length;
+            }
+
             for (let i = 0; i < n; i++){
                 let res = [];
                 for (let comb of results){
                     for (let k = comb.nextIndex; k < arr.length; k++){                          
-                        res.push({items: [...comb.items, arr[k]], nextIndex: k + 1});
+                        res.push({items: [...comb.items, arr[k]], nextIndex: k + 1, fixedIncluded: fixedIncluded});
                     }
                 }
                 results = res;
@@ -398,9 +405,10 @@ class PokeReport{
         };   
 
         const getCellColor = (min) => {
-            return (min <= 240) ? "Honeydew"
-                    : (min <= 360) ? "white"
-                        : (min <= 540) ? "lightyellow" : "mistyrose"; 
+            return 
+                    (min <= 240) ? "Honeydew"
+                     : (min <= 360) ? "white"
+                       : (min <= 540) ? "lightyellow" : "mistyrose"; 
         };
         
         const getTotalCellColor = (min) => {
@@ -430,8 +438,6 @@ class PokeReport{
                 return tr;
         };
 
-
-
         const createTrHeader = (items) => {
                 const tr = document.createElement("tr");
                 items.forEach(item => {
@@ -454,11 +460,18 @@ class PokeReport{
                 return tr;
         }
 
+        
+        
+
         console.log("◆" + recipeName);
+        const currentPokeInfo = this.getInfoForCombination(createJsonFromInputForm32(true));
+        const currentPoke = (currentPokeInfo == null) ? null : [{expection: 0, info: currentPokeInfo}];
+        //report.htmlで定義されています
         const r = this.recipedb.getRecipeOf(recipeName);
         const candsTop20 = this.mypokeInfoList.map(x => ({info: x, expection: x.comb.getExpectionOf(r.ingredients.map(x => x.name))}))
                             .filter(x => x.expection > 0).sort((a, b) => b.expection - a.expection).slice(0, 20);
-        const tmpCombsExpectionRateMap = getCombinations(candsTop20, 4).map(combs => {
+        
+        const tmpCombsExpectionRateMap = getCombinations(candsTop20, 4, currentPoke).map(combs => {
             let x = {};
             let totalRate = 0;
             r.ingredients.forEach(f => {
@@ -469,7 +482,12 @@ class PokeReport{
                 x[f.name] = {food: f.name, rate: (rate > 1.5) ? 1.5 + ((rate - 1.5) / 10) : rate, expection: sum};
                 totalRate += x[f.name].rate;
             });
-            return {combs: combs, totalRate: totalRate, rateMap: x};
+            const keys = Object.keys(x);
+            if (keys.every(key => x[key].rate >= 1)){
+                keys.forEach(key => x[key].rate *= 1.25);
+                totalRate = keys.reduce((accum, key) => x[key].rate + accum, 0);
+            }
+            return {combs: combs, totalRate: (totalRate / r.ingredients.length) * 5, rateMap: x};
         }).sort((a, b) => b.totalRate - a.totalRate).slice(0, 200);                
         const topRateMap = {};
         topRateMap["Most Efficient Members"] = [{combs: tmpCombsExpectionRateMap[0].combs, rateMap: tmpCombsExpectionRateMap[0].rateMap, totalRate: tmpCombsExpectionRateMap[0].totalRate}];

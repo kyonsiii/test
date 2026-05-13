@@ -4,15 +4,15 @@
         <!--https://csshtml.work/click-button/ 参考にしたボタンの作り方。ありがとう！-->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="style.css?v202605131501" rel="stylesheet"/>
-        <script src="js/main.js?v202605131501"></script>
-        <script src="js/pokeReport.js?v202605131501"></script>
-        <script src="js/pokedex_data_poke.js?v202605131501"></script>
-        <script src="js/pokedex_data_skill.js?v202605131501"></script>
-        <script src="js/pokedex_data_etc.js?v202605131501"></script>
-        <script src="js/pokedex2.js?v202605131501"></script>
-        <script src="js/pokemonInfo.js?v202605131501"></script>
-        <script src="js/recipedb.js?v202605131501"></script>
+        <link href="style.css?v202605131704" rel="stylesheet"/>
+        <script src="js/main.js?v202605131704"></script>
+        <script src="js/pokeReport.js?v202605131704"></script>
+        <script src="js/pokedex_data_poke.js?v202605131704"></script>
+        <script src="js/pokedex_data_skill.js?v202605131704"></script>
+        <script src="js/pokedex_data_etc.js?v202605131704"></script>
+        <script src="js/pokedex2.js?v202605131704"></script>
+        <script src="js/pokemonInfo.js?v202605131704"></script>
+        <script src="js/recipedb.js?v202605131704"></script>
 
         <title>レポート(仮)</title>
 
@@ -33,7 +33,7 @@
 
         <div class="input_form_area">
             <div style="display: flex; justify-content: space-between; background-color: beige;">
-                <strong id="page_title"> Myポケモン登録v202605131501:</strong>
+                <strong id="page_title"> Myポケモン登録v202605131704:</strong>
                 <span id="input_mypoke_form_visible" visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this); initializePokeList();">　表示▼</span>
             </div>
             <div id="input_form" style="display: none;">
@@ -430,6 +430,7 @@
                 label.textContent = cap + delta;
             }
 
+
             function addPokemonToGet(){
                 let poke = pokedex.getPokemonByName(this.pokeList.value);
 
@@ -451,6 +452,7 @@
                 return Array.from(document.querySelectorAll("#food_buttons img")).map(el => el.name);
             }
 
+
             function getFoodIndexOf(food){
                 let foods = this.getFoodNamesOnArea();
                 for (let i = 0; i < foods.length; i++){
@@ -458,6 +460,7 @@
                 }
                 return -1;
             }
+
 
             function selectFoodsByRecipe(el){
                 Array.from(document.querySelectorAll("#food_buttons img")).forEach(c => this.changeIconStyle(c, false));
@@ -478,6 +481,7 @@
                 
                 document.getElementById("select_recipe_total").textContent = nums.map(n => Number(n)).reduce((accum, n) => accum + n);
             }
+
 
             function selectRecipeCategory(el, onlySetItems = false){
                 let sb = document.getElementById("select_recipe");
@@ -505,6 +509,8 @@
 
                 this.selectFoodsByRecipe(sb);
             }
+
+
 
 
             //再編集の時にel=nullで呼び出したいので
@@ -549,6 +555,8 @@
                 }
                 el.previousElementSibling.textContent = "";
             }
+
+
 
             //setDigitによって数値の表記位置を調整する。0の時、すべて削除
             function refreshDigit(el, setDigit = 0){          
@@ -727,9 +735,6 @@
                                     + "\nスキル発動回数: " + info.LvRaw.rawResult.skillPopDay.toFixed(0)  + info.skillPopDayDiff;
                 alert(mes);
             }
-
-
-
    
 
             function registerMyPoke(){
@@ -772,7 +777,6 @@
                 if (res != false) this.deleteMypoke(op);
 
             }
-
 
 
             function deleteMypoke(op){
@@ -887,12 +891,11 @@
                 
                 //バカみたいだけどクッキーを作って復元する
                 //structurecopyができないから
-                console.log(j);
                 const info = PokemonInfo.create(pokedex, PokemonInfo.createCookieValueFromJson32(j), !passInitOtetsudaiInfo);
-                console.log(info);
-
                 return info;
             }
+
+            
 
 
 
