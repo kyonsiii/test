@@ -859,6 +859,12 @@ table.recipe_efficiency_table_topRate td{
     width: 19em;
     flex-shrink: 0;
 }
+.recipe_efficiency_setting_fixed_cell.col5 {
+    /* background-color: paleturquoise; */
+    text-align: left;
+    width: 34em;
+    flex-shrink: 0;
+}
 
 
 .recipe_efficiency_setting_fixed_cell > select{

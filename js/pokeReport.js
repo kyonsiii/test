@@ -546,7 +546,8 @@ class PokeReport{
             const buttonHeader = createTag("div", {classes: "recipe_efficiency_setting_fixed_row", tag: "header", text: "実行"});  
             const row = createTag("div", {classes: "recipe_efficiency_setting_fixed_row", tag: "buttons"});
             const cell1 = createTag("div", {classes: "recipe_efficiency_setting_fixed_cell"});
-            const cell2 = createTag("div", {classes: ["recipe_efficiency_setting_fixed_cell", "col3"]});
+            const cell2 = createTag("div", {classes: ["recipe_efficiency_setting_fixed_cell", "col5"]});
+            const cell3 = createTag("div", {classes: "recipe_efficiency_setting_fixed_cell"});
             const clearButton = createTag("button", {text: "clear"});
             clearButton.id = "recipe_efficiency_simulate_clear";
             clearButton.addEventListener("click", clearResults);
@@ -557,11 +558,11 @@ class PokeReport{
             exeButton.id = "recipe_efficiency_simulate_add10";
             exeButton.addEventListener("click", add10);
             exeButton.oldHandler = add10;
-            exeButton.style.width = "100%";
+            exeButton.style.width = "80%";
 
-            cell2.appendChild(clearButton);
-            cell1.appendChild(exeButton);
-            row.append(cell1, cell2);
+            cell3.appendChild(clearButton);
+            cell2.appendChild(exeButton);
+            row.append(cell1, cell2, cell3);
             setting.appendChild(buttonHeader);
             setting.append(row);
             restoreFixedMypokemons();
