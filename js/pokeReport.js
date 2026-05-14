@@ -420,6 +420,8 @@ class PokeReport{
             let currentIndex = 0;
             const mypokeRows = setting.querySelectorAll('[data-tag="mypoke"]');
             const srcString = getCookie("rpsm");
+            if (srcString == null) return;
+            
             //console.log({cookie: srcString, mypokeRows: mypokeRows});
             const srcItems = srcString.split("/");
             const failedItems = [];
