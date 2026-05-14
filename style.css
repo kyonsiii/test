@@ -813,6 +813,10 @@ table.recipe_efficiency_table_topRate td{
     font-size: 0.7em;
 }
 
+.recipe_efficiency_setting_fixed_row button{
+    height: 100%;
+}
+
 .recipe_efficiency_setting_fixed_cell{
     display: inline-block;
     background-color: lightseagreen;   

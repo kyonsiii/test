@@ -416,9 +416,51 @@ class PokeReport{
             this.insertMypokeRecipeEfficiency(el, resultArea, recipeName);
         }
 
+        const restoreFixedMypokemons = () =>{
+            let currentIndex = 0;
+            const mypokeRows = setting.querySelectorAll('[data-tag="mypoke"]');
+            const srcString = getCookie("rpsm");
+            //console.log({cookie: srcString, mypokeRows: mypokeRows});
+            const srcItems = srcString.split("/");
+            const failedItems = [];
+            for (const src of srcItems){
+                const tmp = src.split("-");
+                const pokeSrc = `${tmp[0]}-${tmp[1]}-${tmp[2]}`;
+                const row = mypokeRows[currentIndex];
+                const boxes = row.querySelectorAll("select");
+                const pokeBox = boxes[0];
+                const target = pokeBox.querySelector(`option[value="${pokeSrc}"]`);
+
+                if (target != null){
+                    const boxSrc = tmp[3];
+                    const lvBox = boxes[1];
+                    const slvBox = boxes[2];
+                    const n = parseInt(boxSrc, 32);
+                    pokeBox.selectedIndex = target.index;
+                    lvBox.selectedIndex = bitToNum(n, 0b00000000000000000000000001111111);
+                    slvBox.selectedIndex = bitToNum(n, 0b00000000000000000000011110000000);
+                    currentIndex++;
+                }
+                else{
+                    failedItems.push(pokeSrc);
+                }
+            }
+
+            if (failedItems.length > 0){
+                for (const info of failedItems.map(x => PokemonInfo.create(this.pokedex, x))){
+                    console.log({info: info});
+                    const mes = `固定ポケモンの情報が変更されたので除外しました。\r\n`
+                              + `${info.pokemon.name}${PokemonInfo.createIdentifierOf(info.LvRaw)} Lv${info.LvRaw.lv}`;
+                    alert(mes);
+                }
+            }
+        }
+
+
         const clearResults = () => {
             resultArea.innerHTML = "";
             el.setAttribute("index", "0");   
+            location.href = "#recipe_efficiency_setting";
         }
 
         let setting = document.getElementById("recipe_efficiency_setting");
@@ -429,9 +471,8 @@ class PokeReport{
             const slvOpList = Array.from({length: 10}, (_, i) => i + 1);
             const check = `<input type="checkbox" id="oe">`;
 
-
             //ヘッダー追加            
-            setting.appendChild(createHeaderRow(["ポケモン:", "Lv", "SLv", "記憶"])); 
+            setting.appendChild(createHeaderRow(["ポケモン:", "Lv", "SLv"])); 
 
             //Myポケ固定欄追加
             for (let i = 0; i < 5; i++){
@@ -439,7 +480,6 @@ class PokeReport{
                 const pokeCell  = createTag("div", {classes: "recipe_efficiency_setting_fixed_cell"});
                 const lvCell    = createTag("div", {classes: "recipe_efficiency_setting_fixed_cell"});
                 const slvCell   = createTag("div", {classes: "recipe_efficiency_setting_fixed_cell"});
-                const checkCell = createTag("div", {classes: "recipe_efficiency_setting_fixed_cell"});
 
                 const pokeSelect = document.createElement("select");
                 pokeSelect.addEventListener("change", (el) => {
@@ -465,11 +505,9 @@ class PokeReport{
                 const slvSelect = document.createElement("select");
                 slvCell.appendChild(setOptions(slvSelect, slvOpList));
 
-                const checkBox = document.createElement("input");
-                checkBox.type = "checkbox";
-                checkCell.appendChild(checkBox);
 
-                row.append(pokeCell, lvCell, slvCell, checkCell);//.forEach(x => row.appendChild(x));
+
+                row.append(pokeCell, lvCell, slvCell);//.forEach(x => row.appendChild(x));
 
                 setting.appendChild(row);
             }
@@ -477,15 +515,15 @@ class PokeReport{
             //備蓄
             const storeHeader = createTag("div", {classes: "recipe_efficiency_setting_fixed_row", tag: "header"});  
             storeHeader.appendChild(createTag("div", {classes: "recipe_efficiency_setting_fixed_cell", text: "食材"}));
-            storeHeader.appendChild(createTag("div", {classes: "recipe_efficiency_setting_fixed_cell", text: "個数"}));
-            storeHeader.appendChild(createTag("div", {classes: ["recipe_efficiency_setting_fixed_cell", "col2"], text: "配分"}));
+            storeHeader.appendChild(createTag("div", {classes: ["recipe_efficiency_setting_fixed_cell"], text: "個数"}));
+            storeHeader.appendChild(createTag("div", {classes: ["recipe_efficiency_setting_fixed_cell"], text: "配分"}));
             setting.appendChild(createTag("div", {classes: "recipe_efficiency_setting_fixed_row", tag: "spacer", text: "備蓄食材:"})); 
-            setting.appendChild(createHeaderRow(["食材", "個数", "配分", ""])); 
+            setting.appendChild(createHeaderRow(["食材", "個数", "配分"])); 
             for (let i = 0; i < 5; i++){
                 const row = createTag("div", {classes: "recipe_efficiency_setting_fixed_row", tag: "food_store"});
                 const foodCell = createTag("div", {classes: "recipe_efficiency_setting_fixed_cell"});
                 const numCell  = createTag("div", {classes: "recipe_efficiency_setting_fixed_cell"});
-                const unitCell = createTag("div", {classes: ["recipe_efficiency_setting_fixed_cell", "col2"]});
+                const unitCell = createTag("div", {classes: "recipe_efficiency_setting_fixed_cell"});
 
                 const foodSelect = document.createElement("select");
                 foodCell.appendChild(setOptions(foodSelect, ["", ...FOOD_DISPLAY_ORDER]));
@@ -506,7 +544,6 @@ class PokeReport{
             const row = createTag("div", {classes: "recipe_efficiency_setting_fixed_row", tag: "buttons"});
             const cell1 = createTag("div", {classes: "recipe_efficiency_setting_fixed_cell"});
             const cell2 = createTag("div", {classes: ["recipe_efficiency_setting_fixed_cell", "col3"]});
-
             const clearButton = createTag("button", {text: "clear"});
             clearButton.id = "recipe_efficiency_simulate_clear";
             clearButton.addEventListener("click", clearResults);
@@ -517,13 +554,14 @@ class PokeReport{
             exeButton.id = "recipe_efficiency_simulate_add10";
             exeButton.addEventListener("click", add10);
             exeButton.oldHandler = add10;
+            exeButton.style.width = "100%";
 
             cell2.appendChild(clearButton);
-            cell2.appendChild(exeButton);
+            cell1.appendChild(exeButton);
             row.append(cell1, cell2);
             setting.appendChild(buttonHeader);
             setting.append(row);
-
+            restoreFixedMypokemons();
         }
         else {
             const exeButton = document.querySelector("#recipe_efficiency_simulate_add10");
@@ -617,8 +655,9 @@ class PokeReport{
             const items = [];
             const setting = document.getElementById("recipe_efficiency_setting");
 
-            const mypokeRows = setting.querySelectorAll('[data-tag="mypoke"]')
-            for (const row of mypokeRows){
+            const mypokeRows = setting.querySelectorAll('[data-tag="mypoke"]');
+            for (let i = 0; i < mypokeRows.length; i++){
+                const row = mypokeRows[i];
                 const tmp = row.getElementsByTagName("select");
                 const poke = tmp[0];
                 const lv = tmp[1];
@@ -630,7 +669,7 @@ class PokeReport{
                 info.LvRaw.skillLv = slv.selectedIndex + 1;
                 info.initializeOtetsudaiInfo();
 
-                items.push({expection: 0, info: this.getInfoForCombination(info)});
+                items.push({expection: 0, info: this.getInfoForCombination(info), boxLvIndex: lv.selectedIndex, boxSLvIndex: slv.selectedIndex});
             }
             
             return items;            
@@ -705,8 +744,6 @@ class PokeReport{
 
 
         const data = passedItems.slice(startIndex, endIndex);
-        console.log({startIndex: startIndex, endIndex: endIndex, data: data});        
-        console.log(startIndex + data.length);
         for (let i = 0; i < data.length; i++){
             const topN = data[i];
                 const header = createDiv("recipe_efficiency_header");
@@ -737,6 +774,16 @@ class PokeReport{
 
         }
         settingEl.setAttribute("index", endIndex);    
+        //クッキーいれとく
+        if (fixedMyPokeList.length > 0){
+            const tmp = fixedMyPokeList.map(x =>{
+                let n  = numToBit(x.boxLvIndex,  0b00000000000000000000000001111111);
+                    n += numToBit(x.boxSLvIndex, 0b00000000000000000000011110000000);
+                return x.info.json.src + "-" + n.toString(32);
+            }).join("/");
+            setCookie("rpsm", tmp, 30)
+        }
+        
     }
 
     minutesToTime(min){
