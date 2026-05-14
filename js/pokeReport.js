@@ -421,7 +421,7 @@ class PokeReport{
             const mypokeRows = setting.querySelectorAll('[data-tag="mypoke"]');
             const srcString = getCookie("rpsm");
             if (srcString == null) return;
-            
+
             //console.log({cookie: srcString, mypokeRows: mypokeRows});
             const srcItems = srcString.split("/");
             const failedItems = [];
@@ -463,6 +463,7 @@ class PokeReport{
             resultArea.innerHTML = "";
             el.setAttribute("index", "0");   
             location.href = "#recipe_efficiency_setting";
+            window.scrollBy(0, -20);
         }
 
         let setting = document.getElementById("recipe_efficiency_setting");
@@ -516,10 +517,10 @@ class PokeReport{
             
             //備蓄
             const storeHeader = createTag("div", {classes: "recipe_efficiency_setting_fixed_row", tag: "header"});  
-            storeHeader.appendChild(createTag("div", {classes: "recipe_efficiency_setting_fixed_cell", text: "食材"}));
+            storeHeader.appendChild(createTag("div", {classes: "recipe_efficiency_setting_fixed_cell", text: "備蓄食材:"}));
             storeHeader.appendChild(createTag("div", {classes: ["recipe_efficiency_setting_fixed_cell"], text: "個数"}));
             storeHeader.appendChild(createTag("div", {classes: ["recipe_efficiency_setting_fixed_cell"], text: "配分"}));
-            setting.appendChild(createTag("div", {classes: "recipe_efficiency_setting_fixed_row", tag: "spacer", text: "備蓄食材:"})); 
+            setting.appendChild(createTag("div", {classes: "recipe_efficiency_setting_fixed_row", tag: "spacer", text: ""})); 
             setting.appendChild(createHeaderRow(["食材", "個数", "配分"])); 
             for (let i = 0; i < 5; i++){
                 const row = createTag("div", {classes: "recipe_efficiency_setting_fixed_row", tag: "food_store"});
