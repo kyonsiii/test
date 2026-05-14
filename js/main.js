@@ -45,6 +45,9 @@ function bitMatch(n, mask){
 }
 
 function getCombinations(arr, n, fixedItems = null){
+    if (fixedItems && fixedItems.length > n){
+        throw new Error(`fixedItemsの数が${n}個を超えています。`);
+    }
     const fixedIncluded = (fixedItems != null);
     let results = [{items: [], nextIndex: 0}];
 

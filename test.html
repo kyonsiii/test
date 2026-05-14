@@ -165,18 +165,63 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="recipe_efficiency_setting" style="border: 1px solid #ccc; margin-top: -1px;">
-                <span>シミュレーションSetting:</span>
-                <div class="recipe_efficiency_setting_fixed_pokemons">
-                    aa
-                </div>
-            </div>
+
+
+            <div id="recipe_efficiency_setting">
+
         </div>
         
         <!--以下、スクリプト-->
         <script>
-            
+            const createTag = (tagName, info = undefined) => {
+                const tag = document.createElement(tagName);
+                if (info.inner != undefined) tag.innerHTML = info.inner;
+                if (info.classes != undefined){
+                    info.classes = Array.isArray(info.classes) ? info.classes : [info.classes];
+                    info.classes.forEach(c => tag.classList.add(c));
+                }
+                return tag;
+            };
 
+            const createRow = (rowName, rowInner, cellValues = undefined) => {
+                const row = document.createElement("div");
+                row.classList.add("recipe_efficiency_setting_fixed_row");
+                row.dataset.name = rowName;
+                if(rowInner != undefined) row.innerHTML = rowInner;
+                if (cellValues == undefined) return row;
+
+                for (const cv of cellValues){
+                    row.appendChild(createTag("div", {classes: "recipe_efficiency_setting_fixed_cell", inner: cv}));
+                }
+
+                return row;
+            };
+
+
+            const setting = document.getElementById("recipe_efficiency_setting");
+            setting.appendChild(createTag("span", {inner: "シミュレーションSetting:"}))   ;
+            const fixedPoke = createTag("div", {classes: "recipe_efficiency_setting_fixed_pokemons"});
+            const opList = ["", "AAA", "BBB"].map(x => `<option>${x}</option>`).join("");
+            const lvOpList = Array.from({length: 100}, (_, i) => i + 1).map(n => `<option>${n}</option>`).join("");
+            const slvOpList = Array.from({length: 10}, (_, i) => i + 1).map(n => `<option>${n}</option>`).join("");
+            const check = `<input type="checkbox" id="oe">`;
+            fixedPoke.appendChild(createRow("header", undefined, ["ポケモン", "Lv", "SLv", "記憶"]));            
+            for (let i = 0; i < 5; i++){
+                fixedPoke.appendChild(createRow("mypoke", undefined, [`<select>${opList}</select>`, `<select>${lvOpList}</select>`, `<select>${slvOpList}</select>`, check]));
+            }
+            
+            fixedPoke.appendChild(createRow("store_header", "備蓄食材:"));
+            for (let i = 0; i < 4; i++){
+                fixedPoke.appendChild(createRow("store", undefined, [`<select>${opList}</select>`, `<select>${lvOpList}</select>`, "3.2個/回", check]));
+            }
+            
+            fixedPoke.appendChild(createRow("controller", "<button>結果を10件表示</button><button>閉じる</button>"))
+
+
+            setting.appendChild(fixedPoke);
+
+// 
+               
             //ロード時の処理
             window.onload = ()=>{};
         </script>
