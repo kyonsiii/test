@@ -862,7 +862,7 @@ table.recipe_efficiency_table_topRate td{
 .recipe_efficiency_setting_fixed_cell.col5 {
     /* background-color: paleturquoise; */
     text-align: left;
-    width: 34em;
+    width: 40%;
     flex-shrink: 0;
 }
 
