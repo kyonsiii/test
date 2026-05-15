@@ -426,17 +426,25 @@ class PokeReport{
             const srcItems = srcString.split("/");
             const failedItems = [];
             for (const src of srcItems){
-                const tmp = src.split("-");
-                const pokeSrc = `${tmp[0]}-${tmp[1]}-${tmp[2]}`;
+                const tmp = src.split("-"); //_blankは(空き枠)で、Cookieでは0で保存されてる
+                const pokeSrc = (tmp == "0") ? "_blank" : `${tmp[0]}-${tmp[1]}-${tmp[2]}`;
+                const boxSrc = tmp[3];
                 const row = mypokeRows[currentIndex];
                 const boxes = row.querySelectorAll("select");
                 const pokeBox = boxes[0];
+                const lvBox   = boxes[1];
+                const slvBox  = boxes[2];
                 const target = pokeBox.querySelector(`option[value="${pokeSrc}"]`);
 
-                if (target != null){
-                    const boxSrc = tmp[3];
-                    const lvBox = boxes[1];
-                    const slvBox = boxes[2];
+                if (src == "0") {
+                    pokeBox.selectedIndex = target.index;
+                    lvBox.selectedIndex = 0;
+                    slvBox.selectedIndex = 0;
+                    currentIndex++;
+                }
+                else if (target != null) {
+                    
+
                     const n = parseInt(boxSrc, 32);
                     pokeBox.selectedIndex = target.index;
                     lvBox.selectedIndex = bitToNum(n, 0b00000000000000000000000001111111);
@@ -486,7 +494,7 @@ class PokeReport{
 
                 const pokeSelect = document.createElement("select");
                 pokeSelect.addEventListener("change", (el) => {
-                    if (el.target.value == ""){
+                    if (el.target.value == "" || el.target.value == "_blank"){
                         lvSelect.selectedIndex = 0;
                         slvSelect.selectedIndex = 0;
                     }
@@ -496,8 +504,11 @@ class PokeReport{
                         slvSelect.selectedIndex = info.LvRaw.skillLv - 1;
                     }
                 });
+                const noItemOp = document.createElement("option");
                 const blankOp = document.createElement("option");
-                pokeSelect.appendChild(blankOp);
+                blankOp.value = "_blank";
+                blankOp.textContent = "(空き枠)";
+                pokeSelect.append(noItemOp, blankOp);
                 Array.from(mypokeList.children).forEach(op => pokeSelect.appendChild(op.cloneNode(true)));//report.html
                 
                 pokeCell.appendChild(pokeSelect);
@@ -668,7 +679,7 @@ class PokeReport{
                 const slv = tmp[2];
                 if (poke.selectedIndex == 0) continue;
 
-                const info = PokemonInfo.create(this.pokedex, poke.value);
+                const info = (poke.value == "_blank") ? PokemonInfo.createBlank(this.pokedex) : PokemonInfo.create(this.pokedex, poke.value);
                 info.LvRaw.lv = lv.selectedIndex + 1;
                 info.LvRaw.skillLv = slv.selectedIndex + 1;
                 info.initializeOtetsudaiInfo();
@@ -754,7 +765,7 @@ class PokeReport{
                 const table = document.createElement("table");
                 const thead = document.createElement("thead");
                 const tbody = document.createElement("tbody"); 
-                const pokeArgs = topN.combs.map(comb => ({text: comb.info.poke.no.toString().padStart(3, "0"), folder: "poke", withImage:true}));     
+                const pokeArgs = topN.combs.map(comb => ({text: (comb.info.json.no).toString().padStart(3, "0"), folder: "poke", withImage:true}));     
                 table.className = "recipe_efficiency_table_topRate";
                 table.appendChild(thead);
                 table.appendChild(tbody);
@@ -781,6 +792,7 @@ class PokeReport{
         //クッキーいれとく
         if (fixedMyPokeList.length > 0){
             const tmp = fixedMyPokeList.map(x =>{
+                if (x.info.json.isBlankPokemon) return "0";
                 let n  = numToBit(x.boxLvIndex,  0b00000000000000000000000001111111);
                     n += numToBit(x.boxSLvIndex, 0b00000000000000000000011110000000);
                 return x.info.json.src + "-" + n.toString(32);

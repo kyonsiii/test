@@ -96,6 +96,16 @@ class PokemonInfo{
         return j;
     }
 
+    static createBlank(pokedex){
+        const info = PokemonInfo.create(pokedex, "82l-g-0");
+        info.LvRaw.isBlankPokemon = true;
+        info.LvRaw.no = 0;
+        info.LvRaw.name = "(空き枠)";
+        
+        info.initializeOtetsudaiInfo();
+        return info;
+    }
+
 
     //jsonに情報付与
     initializeOtetsudaiInfo(){
@@ -106,6 +116,9 @@ class PokemonInfo{
             j.lv = initLv;
             //rawData.lv = (j.lv < initLv) ? initLv : j.lv;
             this.setSubSkillsEnabled(j);
+            if (j.isBlankPokemon){
+                j.charAdjusts.food = -1;
+            }
 
             this.berry = poke.berry;
             rawData.berryPower  = this.pokedex.getBerryPowerOf(this.berry, j.lv);
