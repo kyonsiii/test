@@ -20,9 +20,10 @@ class Pokedex{
         this.berries = BERRY_DATA;
     
         //食材の並び順を調整するため indexで使用、reportもここから使うかも？
-        this.foodList = FOOD_DISPLAY_ORDER
+        this.foodList = FOOD_DATA.sort((a, b) => a.displayOrder - b.displayOrder);
+
         const foodSet = new Set(this.pokemons.map(p => p.foods.map(f => f.name).flat()).flat());
-        const diff = Array.from(foodSet).filter(fs => this.foodList.every(f => f != fs));
+        const diff = Array.from(foodSet).filter(fs => this.foodList.every(f => f.name != fs));
         if (diff.length != 0) alert(`foodListに追加していない食材があります。\r\n\r\n${diff.join("\r\n")}`);
 
 
@@ -381,6 +382,11 @@ class FoodCombination{
 
     getExpectionOf(foodNames){
         this.totalExpectionFinally = this.foods.filter(f => foodNames.includes(f.name)).map(f => f.expection).reduce((p, c) => p + c, 0);
+        return this.totalExpectionFinally;
+    }
+    
+    getExpectionExcept(foodNames){
+        this.totalExpectionFinally = this.foods.filter(f => foodNames.every(targ => targ != f.name)).map(f => f.expection).reduce((p, c) => p + c, 0);
         return this.totalExpectionFinally;
     }
 

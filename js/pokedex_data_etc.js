@@ -65,26 +65,26 @@ const FOOD_EVAL_DATA = {
 //━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //食材の並び順を自分で決めるためのデータ
 //━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const FOOD_DISPLAY_ORDER = [
-            "とくせんリンゴ",
-            "モーモーミルク",
-            "ワカクサ大豆",
-            "あまいミツ",
-            "マメミート",
-            "あったかジンジャー",
-            "あんみんトマト",
-            "とくせんエッグ",
-            "ピュアなオイル",
-            "ほっこりポテト",
-            "げきからハーブ",
-            "リラックスカカオ",
-            "あじわいキノコ",
-            "ふといながねぎ",
-            "おいしいシッポ",
-            "ワカクサコーン",
-            "めざましコーヒー",
-            "ずっしりカボチャ",
-            "つやつやアボカド"
+const FOOD_DATA = [
+            {name: "とくせんリンゴ",        id: 4,  displayOrder: 0},
+            {name: "モーモーミルク",        id: 7,  displayOrder: 1},
+            {name: "ワカクサ大豆",          id: 14, displayOrder: 2},
+            {name: "あまいミツ",            id: 8,  displayOrder: 3},
+            {name: "マメミート",            id: 6,  displayOrder: 4},
+            {name: "あったかジンジャー",    id: 10, displayOrder: 5},
+            {name: "あんみんトマト",        id: 11, displayOrder: 6},
+            {name: "とくせんエッグ",        id: 2,  displayOrder: 7},
+            {name: "ピュアなオイル",        id: 9,  displayOrder: 8},
+            {name: "ほっこりポテト",        id: 3,  displayOrder: 9},
+            {name: "げきからハーブ",        id: 5,  displayOrder: 10},
+            {name: "リラックスカカオ",      id: 12, displayOrder: 11},
+            {name: "あじわいキノコ",        id: 1,  displayOrder: 12},
+            {name: "ふといながねぎ",        id: 0,  displayOrder: 13},
+            {name: "おいしいシッポ",        id: 13, displayOrder: 14},
+            {name: "ワカクサコーン",        id: 15, displayOrder: 15},
+            {name: "めざましコーヒー",      id: 16, displayOrder: 16},
+            {name: "ずっしりカボチャ",      id: 17, displayOrder: 17},
+            {name: "つやつやアボカド",      id: 18, displayOrder: 18}
         ];
 
 

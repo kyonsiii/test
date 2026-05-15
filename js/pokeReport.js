@@ -406,6 +406,7 @@ class PokeReport{
         const setOptions = (selectEl, arr) => {
              for (const item of arr){
                     const op = document.createElement("option");
+                    op.value = item;
                     op.textContent = item;
                     selectEl.appendChild(op);
                 }
@@ -422,7 +423,6 @@ class PokeReport{
             const srcString = getCookie("rpsm");
             if (srcString == null) return;
 
-            //console.log({cookie: srcString, mypokeRows: mypokeRows});
             const srcItems = srcString.split("/");
             const failedItems = [];
             for (const src of srcItems){
@@ -540,7 +540,7 @@ class PokeReport{
                 const unitCell = createTag("div", {classes: "recipe_efficiency_setting_fixed_cell"});
 
                 const foodSelect = document.createElement("select");
-                foodCell.appendChild(setOptions(foodSelect, ["", ...FOOD_DISPLAY_ORDER]));
+                foodCell.appendChild(setOptions(foodSelect, ["", ...this.pokedex.foodList.map(f => f.name)]));
 
                 const numInput = document.createElement("input");
                 numInput.type = "input";
@@ -669,28 +669,50 @@ class PokeReport{
         const getFixedMypokemons = () =>{
             const items = [];
             const setting = document.getElementById("recipe_efficiency_setting");
-
             const mypokeRows = setting.querySelectorAll('[data-tag="mypoke"]');
+
             for (let i = 0; i < mypokeRows.length; i++){
                 const row = mypokeRows[i];
                 const tmp = row.getElementsByTagName("select");
-                const poke = tmp[0];
-                const lv = tmp[1];
-                const slv = tmp[2];
-                if (poke.selectedIndex == 0) continue;
+                const pokeBox = tmp[0];
+                const lvBox = tmp[1];
+                const slvBox = tmp[2];
+                if (pokeBox.selectedIndex == 0) continue;
 
-                const info = (poke.value == "_blank") ? PokemonInfo.createBlank(this.pokedex) : PokemonInfo.create(this.pokedex, poke.value);
-                info.LvRaw.lv = lv.selectedIndex + 1;
-                info.LvRaw.skillLv = slv.selectedIndex + 1;
+                const info = (pokeBox.value == "_blank") ? PokemonInfo.createBlank(this.pokedex) : PokemonInfo.create(this.pokedex, pokeBox.value);
+                info.LvRaw.lv = lvBox.selectedIndex + 1;
+                info.LvRaw.skillLv = slvBox.selectedIndex + 1;
                 info.initializeOtetsudaiInfo();
 
-                items.push({expection: 0, info: this.getInfoForCombination(info), boxLvIndex: lv.selectedIndex, boxSLvIndex: slv.selectedIndex});
-            }
-            
+                items.push({expection: 0, info: this.getInfoForCombination(info), boxLvIndex: lvBox.selectedIndex, boxSLvIndex: slvBox.selectedIndex});
+            }            
             return items;            
         };
 
         
+        const getStoredFoodDic = () =>{
+            const items = {};
+            const setting = document.getElementById("recipe_efficiency_setting");
+            const storeRows = setting.querySelectorAll('[data-tag="food_store"]');
+
+            for (let i = 0; i < storeRows.length; i++){
+                const row = storeRows[i];
+                const tmp = row.querySelectorAll("select,input");
+                const foodBox = tmp[0];
+                const numBox = tmp[1];
+                if (foodBox.selectedIndex == 0) continue;
+
+                console.log({box: numBox, value: numBox.value})
+                const num = Number(numBox.value);
+                if (isNaN(num)){
+                    num = 0;
+                    foodBox.value = num;                    
+                }
+                items[foodBox.value] = (items[foodBox.value] ?? 0) + num;
+            }
+            
+            return items;  
+        }
         
 
         console.log("◆" + recipeName);
@@ -705,9 +727,11 @@ class PokeReport{
         const candsTop20 = mypokeExcludedFixed.map(x => ({info: x, expection: x.comb.getExpectionOf(r.ingredients.map(x => x.name))}))
                             .filter(x => x.expection > 0).sort((a, b) => b.expection - a.expection).slice(0, 20);
     
+        const storedFoodDic = getStoredFoodDic();
         const tmpCombsExpectionRateMap = getCombinations(candsTop20, memberCount, [currentPoke, ...fixedMyPokeList].filter(x => x != null)).map(combs => {
             let x = {};
             let totalRate = 0;
+            //各食材の充足率を求める
             r.ingredients.forEach(f => {
                 const sum = combs.reduce((accum, obj) => accum + obj.info.comb.getExpectionOf(f.name), 0);
                 const tmpRate = (sum == 0) ? 0 : (sum / (f.num * 3));
@@ -718,11 +742,14 @@ class PokeReport{
                 x[f.name] = {food: f.name, rate: (rate > 1.5) ? 1.5 + ((rate - 1.5) / 10) : rate, expection: sum};
                 totalRate += x[f.name].rate;
             });
+
+            //すべての食材の充足率が1以上の時はボーナスをつけてランキングで有利にする
             const keys = Object.keys(x);
             if (keys.every(key => x[key].rate >= 1)){
                 keys.forEach(key => x[key].rate *= 1.2);
                 totalRate = totalRate *= 1.2;
             }
+
             return {combs: combs, totalRate: (totalRate / r.ingredients.length) * 5, rateMap: x};
         }).sort((a, b) => b.totalRate - a.totalRate).slice(0, 200);    
 
@@ -785,6 +812,16 @@ class PokeReport{
                         ""
                     ]));
                 });
+                
+                const etcExceptions = topN.combs.map(c => c.info.comb.getExpectionExcept(foods));
+                const etcSum = etcExceptions.reduce((accum, n) => accum + n, 0);
+                const etcColor = "#ededed";
+                tbody.appendChild(createTr([
+                    {withImage: true, folder: "food", text: "その他", color: etcColor},
+                    ...etcExceptions.map(y => ({text: y == 0 ? "" : y, color: etcColor})),
+                    {text: "----", color: etcColor},
+                    {text: (etcSum == 0) ? "" : `他:${etcSum}`, color: etcColor}
+                ]));
 
 
         }
@@ -854,7 +891,6 @@ class PokeReport{
 
         let rows = tbody.children;
         let target = comb.getExpectionOf(foods);
-
         for (let i = 0; i < rows.length; i++){
             let value = rows[i].getAttribute('expection_total');
             if (value <= target){

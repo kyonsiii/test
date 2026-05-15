@@ -89,7 +89,7 @@
                 this.pokeCook = new PokeCook(this.recipedb.recipes);
                 this.pokeCook.setTableRows(true);                  
                 this.pokeCook.setOptionsFromCookie(getCookie("cinf")); 
-                document.getElementById("food_buttons").innerHTML = pokedex.foodList.map(f => `<img name="${f}" src="img/food/${f}.png" onclick="selectIcon(this); pokeCook.setTarget(this, null)">`).join("");
+                document.getElementById("food_buttons").innerHTML = pokedex.foodList.map(f => `<img name="${f.name}" src="img/food/${f.name}.png" onclick="selectIcon(this); pokeCook.setTarget(this, null)">`).join("");
                 
             }
 
