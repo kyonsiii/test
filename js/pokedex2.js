@@ -60,10 +60,6 @@ class Pokedex{
         return expectionDay * num;
     }
 
-    isFoodGainSkill (skillName){
-
-    }
-
     getFoodsBySkill(poke, skillLv, otetsudaiCountDay){
 
     }

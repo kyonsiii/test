@@ -761,6 +761,7 @@ class PokeReport{
             tmp.pokemon = poke;
             info.json.no = "xxx";
             info.comb.foods = [];
+            console.log({info: info});
             for (const key of Object.keys(foodDic)){
                 info.comb.foods.push({name: key, expection: Math.floor(foodDic[key] / 7)});
             }

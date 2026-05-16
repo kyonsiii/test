@@ -97,7 +97,7 @@ class PokemonInfo{
     }
 
     static createBlank(pokedex){
-        const info = PokemonInfo.create(pokedex, "82l-g-0");
+        const info = PokemonInfo.create(pokedex, "d02l-g-0");//ニャース、フシギダネは食材ゲットで狂った
         info.LvRaw.isBlankPokemon = true;
         info.LvRaw.no = 0;
         info.LvRaw.name = "(空き枠)";
