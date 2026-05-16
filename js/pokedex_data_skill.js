@@ -229,7 +229,7 @@ const SKILL_DATA = {
                         foodGainFunc  : (poke, expectionDay, option1 = 1) => {
                             //そのうち、スキルレベル対応させよう！     
                             const index = (option1 > skillTable.length) ? skillTable.length - 1 : option1 - 1; 
-                            return [{food: "Others", num: skillTable[index] * expectionDay}];
+                            return [{food: "その他", num: skillTable[index] * expectionDay}];
                         },
                         energyGainFunc:  (poke, expectionDay, option1) => 0
                     }
@@ -256,7 +256,7 @@ const SKILL_DATA = {
                         foodGainFunc  : (poke, expectionDay, option1 = 1) => {
                             //そのうち、スキルレベル対応させよう！     
                             const index = (option1 > skillTable.length) ? skillTable.length - 1 : option1 - 1; 
-                            return [{food: "Others", num: skillTable[index] * expectionDay}];
+                            return [{food: "その他", num: skillTable[index] * expectionDay}];
                         },
                         energyGainFunc:  (poke, expectionDay, option1) => 0
                     }
@@ -292,7 +292,7 @@ const SKILL_DATA = {
                         foodGainFunc  : (poke, expectionDay, option1 = 1) => {
                             //そのうち、スキルレベル対応させよう！     
                             const index = (option1 > skillTable.length) ? skillTable.length - 1 : option1 - 1; 
-                            return [{food: "Others", num: skillTable[index] * expectionDay}];
+                            return [{food: "その他", num: skillTable[index] * expectionDay}];
                         },
                         energyGainFunc:  (poke, expectionDay, option1) => 0
                     }

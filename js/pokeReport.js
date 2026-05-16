@@ -980,8 +980,6 @@ class PokeReport{
 
     createPokemonInfoRow(poke, comb, food, json = null, identifier = null){
         let tr = document.createElement("tr");
-
-        //comb.insertResultTo(r, food, poke);昔のやりかた
         this.insertCombinationResultTo(tr, poke, comb, food, null, false);
        
         return tr;
@@ -989,8 +987,6 @@ class PokeReport{
 
     createMyPokemonInfoRow(poke, comb, food, json){
         let tr = document.createElement("tr");
-        //comb.insertResultTo(r, food, poke, PokemonInfo.createIdentifierOf(json));昔のやりかた
-        //this.createPokemonInfoRow(poke, comb, food, json, PokemonInfo.createIdentifierOf(json));
         this.insertCombinationResultTo(tr, poke, comb, food, PokemonInfo.createIdentifierOf(json));
         return tr;
     }
@@ -1044,14 +1040,14 @@ class PokeReport{
 
     setCombinationResultTo(row, comb, targetFoodName){
         if (comb.containsFoodsAtLeast(targetFoodName, 1)){
-            for (let i = 0; i < 3; i++){    //多分これはクリックした食材を一番左にしたいんだと思う
+            for (let i = 0; i < comb.foods.length; i++){    //多分これはクリックした食材を一番左にしたいんだと思う
                 if (comb.foods[i].name == targetFoodName){
                     row.appendChild(this.createFoodNumCell(comb, i));
                     break;
                 }
             }
     
-            for (let i = 0; i < 3; i++){            //i=0かつfoods[0].name==targetの場合はどうすんの？ と思ったら最低でもi=1からじゃないと通らない
+            for (let i = 0; i < 4; i++){            //i=0かつfoods[0].name==targetの場合はどうすんの？ と思ったら最低でもi=1からじゃないと通らない
                 if (i >= comb.foods.length) {       //targetは最初に載せているので、それ以外だったら追加する
                     row.appendChild(this.createFoodNumCell(comb, i));
                 } else if (comb.foods[i].name != targetFoodName){
@@ -1059,7 +1055,7 @@ class PokeReport{
                 }
             }
         } else {        //食材ターゲットを複数選択した際にターゲットが含まれないポケモンも登場する
-            for (let i = 0; i < 3; i++){                
+            for (let i = 0; i < 4; i++){                
                 row.appendChild(this.createFoodNumCell(comb, i));
             }
         }
