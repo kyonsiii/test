@@ -52,6 +52,11 @@ class PokeEvent{
         titleEl.textContent = label;
         [...Array.from(presetItems), ...params].forEach(x =>{
             let li = document.createElement("li");
+            if (x.startsWith("*")){
+                li.style.listStyle = "none";
+                li.style.marginLeft = "-2em";
+                x = x.substr(1,);
+            }
             li.textContent = x;
             ulEl.appendChild(li);
         });
