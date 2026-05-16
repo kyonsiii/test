@@ -426,7 +426,7 @@ class PokeReport{
             const srcString = getCookie("rpsm");
             if (srcString == null) return;
 
-            const tmp = srcString.split("/");
+            const tmp = srcString.includes('/') ? srcString.split("/") : [srcString, ""];
             const cookieData = {pokemonSrc: tmp[0], storeSrc: tmp[1]};
             const srcItems = (cookieData.pokemonSrc == "") ? [] : cookieData.pokemonSrc.split("/");
             const failedItems = [];
