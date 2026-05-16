@@ -768,7 +768,7 @@ table.recipe_efficiency_table_topRate th{
     width: 4em;
 }
 
-table.recipe_efficiency_table_topRate th:nth-child(n+1):nth-child(-n+6){
+table.recipe_efficiency_table_topRate th:nth-child(n+1):nth-child(-n+7){
     text-align: center;
 }
 

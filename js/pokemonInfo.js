@@ -114,7 +114,6 @@ class PokemonInfo{
             const rawData = {}
             const poke = this.pokemon;
             j.lv = initLv;
-            //rawData.lv = (j.lv < initLv) ? initLv : j.lv;
             this.setSubSkillsEnabled(j);
             if (j.isBlankPokemon){
                 j.charAdjusts.food = -1;
@@ -137,6 +136,8 @@ class PokemonInfo{
             
             rawData.totalFoodPowerKari = this.pokemon.createFoodCombination(j).foods.reduce((accum, f) => (f.expection * this.pokedex.getFoodPowerKariFromName(f.name)) + accum, 0);
             rawData.totalPowerKari = rawData.berryPowerDay + rawData.totalFoodPowerKari;
+
+
             j.rawResult = rawData;
         };
 

@@ -68,3 +68,8 @@ function getCombinations(arr, n, fixedItems = null){
     }
     return results.map(x => x.items);
 };
+
+
+
+
+

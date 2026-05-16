@@ -164,7 +164,12 @@ class Pokedex{
 
 
 class Pokemon{
-    constructor(pokedex, json){
+    static createBlank(pokedex){
+        const poke = new Pokemon(pokedex, {}, true);
+        return poke;
+    }
+
+    constructor(pokedex, json, passInitFoods = false){
         this.pokedex = pokedex;
         Object.assign(this, json);
         this.indicatorChar = "|";
@@ -173,10 +178,15 @@ class Pokemon{
         this.isSkillSpecialty = (this.specialty == "スキル" || this.specialty == "オール");
         this.groupName = POKEMON_SAME_GROUP[this.name] ?? this.name;
 
-        this.addFood(this.food1, this.food1Num, "A");
-        if (this.food2 != "") this.addFood(this.food2, this.food2Num, "B");
-        if (this.food3 != "") this.addFood(this.food3, this.food3Num, "C");
-        delete this.food1;
+        if (passInitFoods){
+
+        }
+        else{
+            this.addFood(this.food1, this.food1Num, "A");
+            if (this.food2 != "") this.addFood(this.food2, this.food2Num, "B");
+            if (this.food3 != "") this.addFood(this.food3, this.food3Num, "C");
+        }
+
         ["food1", "food1Num", "food2", "food2Num", "food3", "food3Num"].forEach(x => delete this[x]);
     }
 
