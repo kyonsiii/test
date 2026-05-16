@@ -432,6 +432,7 @@ class PokeReport{
             const failedItems = [];
 
             //ポケモンの復元
+            alert(srcString);
             for (const src of srcItems){
                 const tmp = src.split("-"); //_blankは(空き枠)で、Cookieでは0で保存されてる
                 const pokeSrc = (tmp == "0") ? "_blank" : `${tmp[0]}-${tmp[1]}-${tmp[2]}`;
