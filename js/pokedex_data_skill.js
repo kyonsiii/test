@@ -79,13 +79,25 @@ const SKILL_DATA = {
                     }
                 })(), 
             "きょううん(食材セレクトS)"         : (() => {
-                const skillTable = [];
+                const skillTable = [5,6,8,11,13,16,18];
                 return {
-                        getMaxLv: () => 7,
-                        foodGainFunc  : undefined,
-                        energyGainFunc:  (poke, expectionDay, option1) => 0
+                    getMaxLv: () => skillTable.length,
+                        foodGainFunc  : (poke, expectionDay, option1 = 1) => {
+                        //そのうち、スキルレベル対応させよう
+                        // 大成功16%で、 18 * 0.84 + 36 * 0.16 = 22.88 で計算       
+                        const index = (option1 > skillTable.length) ? skillTable.length - 1 : option1 - 1; 
+                        const normalExpection = skillTable[index];
+                        const expectionPerFood = (normalExpection * 0.84) / 4;             
+                        return [
+                            {food: "あじわいキノコ", num: expectionPerFood * expectionDay},
+                            {food: "マメミート", num: expectionPerFood * expectionDay},
+                            {food: "ワカクサ大豆", num: expectionPerFood * expectionDay},
+                            {food: "めざましコーヒー", num: expectionPerFood * expectionDay}
+                        ];
+                    },
+                    energyGainFunc:  (poke, expectionDay, option1) => undefined
                     }
-                })(), 
+                })(),
             "げんきエールS"                     : (() => {
                 const skillTable = [];
                 return {
