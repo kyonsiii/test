@@ -223,10 +223,14 @@ const SKILL_DATA = {
                     }
                 })(), 
             "ビルドアップ(料理アシストS)"       : (() => {
-                const skillTable = [];
+                const skillTable = [6, 8, 11, 14, 17, 21, 24];
                 return {
-                        getMaxLv: () => 7,
-                        foodGainFunc  : undefined,
+                        getMaxLv: () => skillTable.length,
+                        foodGainFunc  : (poke, expectionDay, option1 = 1) => {
+                            //そのうち、スキルレベル対応させよう！     
+                            const index = (option1 > skillTable.length) ? skillTable.length - 1 : option1 - 1; 
+                            return [{food: "Others", num: skillTable[index] * expectionDay}];
+                        },
                         energyGainFunc:  (poke, expectionDay, option1) => 0
                     }
                 })(), 
@@ -246,10 +250,14 @@ const SKILL_DATA = {
                 }
             })(),
             "プレゼント(食材ゲットS)"           : (() => {
-                const skillTable = [];
+                const skillTable = [4, 6, 8, 10, 12, 15, 17];
                 return {
-                        getMaxLv: () => 7,
-                        foodGainFunc  : undefined,
+                        getMaxLv: () => skillTable.length,
+                        foodGainFunc  : (poke, expectionDay, option1 = 1) => {
+                            //そのうち、スキルレベル対応させよう！     
+                            const index = (option1 > skillTable.length) ? skillTable.length - 1 : option1 - 1; 
+                            return [{food: "Others", num: skillTable[index] * expectionDay}];
+                        },
                         energyGainFunc:  (poke, expectionDay, option1) => 0
                     }
                 })(), 
@@ -278,10 +286,14 @@ const SKILL_DATA = {
                     }
                 })(), 
             "食材ゲットS"                       : (() => {
-                const skillTable = [];
+                const skillTable = [6, 8, 11, 14, 17, 21, 24];
                 return {
-                        getMaxLv: () => 7,
-                        foodGainFunc  : undefined,
+                        getMaxLv: () => skillTable.length,
+                        foodGainFunc  : (poke, expectionDay, option1 = 1) => {
+                            //そのうち、スキルレベル対応させよう！     
+                            const index = (option1 > skillTable.length) ? skillTable.length - 1 : option1 - 1; 
+                            return [{food: "Others", num: skillTable[index] * expectionDay}];
+                        },
                         energyGainFunc:  (poke, expectionDay, option1) => 0
                     }
                 })(), 
