@@ -257,6 +257,10 @@ table thead tr th {
     vertical-align: sub;    
 }
 
+#mypoke_quick_check_food_top3 th:nth-child(2){
+    min-width: 7.5em;
+    overflow: visible;
+}
 
 #mypoke_quick_check_food_top3 img.ex-tiny:not(:first-child),
 #result_table td:first-child img.ex-tiny:not(:first-child){
@@ -268,6 +272,20 @@ table thead tr th {
 #mypoke_quick_check_food_top3 span,
 #result_table td:first-child span{
     margin-right: 0.3em;
+}
+
+#mypoke_quick_check td:first-child{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#mypoke_quick_check_food_top3 .first-row{
+    border-top: 2px solid orange;
+}
+
+.mypoke_outline{
+    white-space: nowrap;
 }
 
 .food_num strong{
@@ -381,15 +399,6 @@ table thead tr th {
     background-color: transparent;
 }
 
-#mypoke_quick_check td:first-child{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-#mypoke_quick_check_food_top3 .first-row{
-    border-top: 2px solid orange;
-}
 
 /*テーブル - クラスセレクタ*/
 .table_sleep th{
