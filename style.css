@@ -825,7 +825,12 @@ table.recipe_efficiency_table_topRate td{
     display: flex;
     font-size: 0.7em;
 }
-
+.recipe_efficiency_setting_fixed_row[data-tag="mypoke"]{
+    height: 3em;
+}
+.recipe_efficiency_setting_fixed_row[data-tag="food_store"]{
+    height: 3em;
+}
 .recipe_efficiency_setting_fixed_row button{
     height: 100%;
 }
@@ -881,6 +886,7 @@ table.recipe_efficiency_table_topRate td{
 
 .recipe_efficiency_setting_fixed_cell > select{
     margin-left: 2px;
+    height: 100%;
     width: calc(100% - 2px);
     font-size: inherit;
     box-sizing: border-box;    
@@ -893,6 +899,7 @@ table.recipe_efficiency_table_topRate td{
 
 .recipe_efficiency_setting_fixed_cell > input{
     width: 100%;
+    height: 100%;
     font-size: inherit;
     box-sizing: border-box;    
     display: block;
