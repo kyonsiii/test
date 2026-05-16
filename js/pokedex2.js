@@ -254,8 +254,9 @@ class Pokemon{
         if (foodGainFunc != undefined){
             const skillCount = (json.isVanilla) ? this.skillExpectionDay 
                               : this.getSkillPopCountWithGuaranteed(lv, json.charAdjusts.speed, json.subAdjusts.speed, json.charAdjusts.skill, json.subAdjusts.skill);
-            comb.skillLv = (!isVanilla) ? json.skillLv
-                          : skillLv ?? this.pokedex.skillCalculators[this.skill].getMaxLv();
+            comb.skillLv = (skillLv != undefined) ? skillLv
+                          : (json.isVanilla) ? json.skillLv
+                           : this.pokedex.skillCalculators[this.skill].getMaxLv();
 
             for (const res of foodGainFunc(this, skillCount, comb.skillLv)){
                 comb.addFood(res.food, res.num);

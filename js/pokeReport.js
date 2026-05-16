@@ -57,13 +57,14 @@ class PokeReport{
         for (let i = 0; i < targetPokemons.length; i++){
             const p = targetPokemons[i];
             const isFoodGainPoke = p.skillIsFoodGainer() && RANKING_SKILL_ARRAY.includes(p.skill);
+
             p.foodCombinations.forEach(c => {
                 if (c.containsFoodsAtLeast(foods, min) && (c.lv != 30 || showLv30) && (c.lv != 60 || showLv60)){
                     pokeAndComb.push({poke: p, comb: c});     
 
                     //this.createPokemonInfoRow(tr, pac.comb, food, pacjson, PokemonInfo.createIdentifierOf(pac.json));
                     if (isFoodGainPoke){
-                        const copiedComb = p.createFoodCombination(null, c.lv, c.code, p.skillLv);
+                        const copiedComb = p.createFoodCombination(null, c.lv, c.code, p.getMaxSkillLv());
                         if (copiedComb.containsFoodsAtLeast(foods, min)) pokeAndComb.push({poke: p, comb: copiedComb});   
                     }    
                 }      
