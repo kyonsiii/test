@@ -428,7 +428,7 @@ class PokeReport{
 
             const tmp = srcString.includes('/') ? srcString.split("/") : [srcString, ""];
             const cookieData = {pokemonSrc: tmp[0], storeSrc: tmp[1]};
-            const srcItems = (cookieData.pokemonSrc == "") ? [] : cookieData.pokemonSrc.split("/");
+            const srcItems = (cookieData.pokemonSrc == "") ? [] : cookieData.pokemonSrc.split(",");
             const failedItems = [];
 
             //ポケモンの復元
@@ -443,6 +443,7 @@ class PokeReport{
                 const slvBox  = boxes[2];
                 const target = pokeBox.querySelector(`option[value="${pokeSrc}"]`);
 
+                console.log(src);
                 if (src == "0") {
                     pokeBox.selectedIndex = target.index;
                     lvBox.selectedIndex = 0;

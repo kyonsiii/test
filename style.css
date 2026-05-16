@@ -888,9 +888,14 @@ table.recipe_efficiency_table_topRate td{
     margin-left: 2px;
     height: 100%;
     width: calc(100% - 2px);
+    text-align-last: center;
     font-size: inherit;
     box-sizing: border-box;    
     display: block;
+}
+
+.recipe_efficiency_setting_fixed_row > .recipe_efficiency_setting_fixed_cell:first-child > select{
+    text-align-last: left;
 }
 
 .recipe_efficiency_setting_fixed_cell > select > option{
@@ -902,6 +907,7 @@ table.recipe_efficiency_table_topRate td{
     height: 100%;
     font-size: inherit;
     box-sizing: border-box;    
+    text-align: center;
     display: block;
 }
 
