@@ -4,15 +4,15 @@
         <!--https://csshtml.work/click-button/ 参考にしたボタンの作り方。ありがとう！-->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="style.css?v202605161531" rel="stylesheet"/>
-        <script src="js/main.js?v202605161531"></script>
-        <script src="js/pokeReport.js?v202605161531"></script>
-        <script src="js/pokedex_data_poke.js?v202605161531"></script>
-        <script src="js/pokedex_data_skill.js?v202605161531"></script>
-        <script src="js/pokedex_data_etc.js?v202605161531"></script>
-        <script src="js/pokedex2.js?v202605161531"></script>
-        <script src="js/pokemonInfo.js?v202605161531"></script>
-        <script src="js/recipedb.js?v202605161531"></script>
+        <link href="style.css?v202605161532" rel="stylesheet"/>
+        <script src="js/main.js?v202605161532"></script>
+        <script src="js/pokeReport.js?v202605161532"></script>
+        <script src="js/pokedex_data_poke.js?v202605161532"></script>
+        <script src="js/pokedex_data_skill.js?v202605161532"></script>
+        <script src="js/pokedex_data_etc.js?v202605161532"></script>
+        <script src="js/pokedex2.js?v202605161532"></script>
+        <script src="js/pokemonInfo.js?v202605161532"></script>
+        <script src="js/recipedb.js?v202605161532"></script>
 
         <title>レポート(仮)</title>
 
@@ -33,7 +33,7 @@
 
         <div class="input_form_area">
             <div style="display: flex; justify-content: space-between; background-color: beige;">
-                <strong id="page_title"> Myポケモン登録v202605161531:</strong>
+                <strong id="page_title"> Myポケモン登録v202605161532:</strong>
                 <span id="input_mypoke_form_visible" visible="false" style="background-color: powderblue; border: grey 1px solid; cursor: default;" onclick="showHideInputForm(this); initializePokeList();">　表示▼</span>
             </div>
             <div id="input_form" style="display: none;">
@@ -375,6 +375,7 @@
                 背景色表示(色単位は未実装)<br>
                 
                 <button style="font-size:1em; vertical-align: middle;" onclick="copyCookieValue();">Cookieを取得</button>
+                <button style="font-size:1em; vertical-align: middle;" onclick="resetSimuCookie();">シミュデータをリフレッシュ</button>
                 <button style="font-size:1em; vertical-align: middle;" onclick="importCookieValue();">復元</button><br>
                 <input id="mypoke_import_cookie" type="text">
             </div>
@@ -637,6 +638,14 @@
                 let tb = document.getElementById("mypoke_import_cookie");
                 tb.value = getCookie("pktg") + ";" + getCookie("rmpl");
                 navigator.clipboard.writeText(tb.value);
+            }
+
+            function resetSimuCookie(){
+                const res = prompt("本当に削除しますか？ もしよければ はい と入力してください。")
+                if (res != "はい") return;
+
+                setCookie("rpsm", "", 30);
+                alert("シミュデータをリセットしました。");
             }
 
 
