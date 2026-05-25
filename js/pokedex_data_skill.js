@@ -247,8 +247,9 @@ const SKILL_DATA = {
                     }
                 })(), 
             "プラス(食材ゲットS)"               : (() => {
-                const skillTable1 = [6,7,8,9,10,11,12];
-                const skillTable2 = [6,7,9,10,12,13,14];
+                const skillTableCommon = [5,7,9,11,13,16,18];
+                const skillTable1 =      [6,7,8,9,10,11,12];
+                const skillTable2 =      [6,7,9,10,12,13,14];
                 return {
                     getMaxLv: () => skillTable1.length,
                     foodGainFunc  : (poke, expectionDay, option1 = 1) => { 
@@ -256,7 +257,7 @@ const SKILL_DATA = {
                         const index = (option1 > skillTable1.length) ? skillTable1.length - 1 : option1 - 1; 
                         const num  = (food == "めざましコーヒー") ? skillTable1[index] 
                                     : (food == "モーモーミルク") ? skillTable2[index]  : 999;                   
-                        return [{food: food, num: num * expectionDay}];
+                        return [{food: food, num: num * expectionDay}, {food:"その他", num: skillTableCommon[index] * expectionDay}];
                     },
                     energyGainFunc:  (poke, expectionDay, option1) => undefined
                 }
