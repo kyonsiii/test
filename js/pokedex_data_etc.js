@@ -17,6 +17,7 @@ const POKEMON_SEARCH_NAME_REPLACE = {
             "ウパー(パルデア)": "ウパー(パルデアのすがた)"
         };
 
+        
 
 
 
