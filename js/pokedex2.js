@@ -15,7 +15,6 @@ class Pokedex{
     constructor(pokemons){
         this.pokemons = POKE_DATA_RAW.map(data => new Pokemon(this, data));        
         this.fullyEvolvedPokemons = this.pokemons.filter(p => p.fullyEvolved);
-        //const groupNameDic = POKEMON_SAME_GROUP;
 
         this.berries = BERRY_DATA;
     
@@ -173,6 +172,7 @@ class Pokemon{
         this.isFoodSpecialty = (this.specialty == "食材" || this.specialty == "オール");
         this.isSkillSpecialty = (this.specialty == "スキル" || this.specialty == "オール");
         this.groupName = POKEMON_SAME_GROUP[this.name] ?? this.name;
+        this.searchName = POKEMON_SEARCH_NAME_REPLACE[this.name] ?? this.name;
 
         if (passInitFoods){
 

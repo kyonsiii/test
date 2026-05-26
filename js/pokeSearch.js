@@ -75,7 +75,6 @@ class PokeSearch{
 
         if (el != null){
             if (el.parentNode.id == "field_buttons"){
-                this.check_onlyFullyEvolved.checked = false;
                 fieldButtonDisabled = (el.value == "ON");
                 Array.from(document.getElementById('field_buttons').children).forEach(c => this.changeIconStyle(c, false)); 
             }
@@ -146,7 +145,7 @@ class PokeSearch{
                                              && (ignoreBerry || selectedBerries.includes(p.berry))
                                              && (ignoreFood || p.existAllInFoodList(selectedFoods))
                                              && (ignoreSkill || p.skill.indexOf(this.box_skill.value) > -1)
-                                             && (ignoreField || fieldInfo.has(p.name)));
+                                             && (ignoreField || fieldInfo.has(p.searchName)));
     
         this.resultTBody.innerHTML = "";
         
