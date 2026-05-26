@@ -9,11 +9,10 @@ class PokeSearch{
         this.resultTBody = this.resultTable.tBodies[0];
         this.button_reset =  document.getElementById('button_reset');
         this.box_specialty = document.getElementById('select_specialty');
+        this.box_sleeptype = document.getElementById('select_sleeptype');
         this.box_skill = document.getElementById('select_skill');
         this.check_onlyFullyEvolved = document.getElementById("option_only_fully_evolved");
-        this.button_reset.addEventListener("click", () =>{this.reset();});
-        this.box_specialty.addEventListener("change", ()=>{this.setResult();});    
-        this.box_skill.addEventListener("change", ()=>{this.setResult();});
+
         
 
     }
@@ -50,51 +49,17 @@ class PokeSearch{
     }
     
     
-    reset(onlyTBody, ignoreSetResult = false, ignoreSpecialtySelection = false, ignoreSkillSelection = false){
+    reset(ignoreSpecialtySelection = false, ignoreSkillSelection = false, ignoreFullyEvolved = false, ignoreSetResult = false){
         this.resultTBody.innerHTML = "";
-        if (onlyTBody) return;
-    
         if (!ignoreSpecialtySelection) this.box_specialty.options[0].selected = true;
         if (!ignoreSkillSelection) this.box_skill.options[0].selected = true;
+        if (!ignoreFullyEvolved) this.check_onlyFullyEvolved.checked = true;  
+
         this.selectIcon(null, ignoreSetResult);
     }
     
     
-    selectField(el){
-        let fieldName = el.name;
-        this.reset(false, true, true, true);
-        
-        if (fieldName == "シアン"){
-            this.selectIcon(this.getBerryIconOf("オレンのみ"), true);
-            this.selectIcon(this.getBerryIconOf("シーヤのみ"), true);
-            this.selectIcon(this.getBerryIconOf("モモンのみ"));
-        }
-        else if (fieldName == "トープ"){
-            this.selectIcon(this.getBerryIconOf("ヒメリのみ"), true);
-            this.selectIcon(this.getBerryIconOf("フィラのみ"), true);
-            this.selectIcon(this.getBerryIconOf("オボンのみ"));
-        }
-        else if (fieldName == "ウノハナ"){
-            this.selectIcon(this.getBerryIconOf("キーのみ"), true);
-            this.selectIcon(this.getBerryIconOf("チーゴのみ"), true);
-            this.selectIcon(this.getBerryIconOf("ウイのみ"));
-        }
-        else if (fieldName == "ラピス"){
-            this.selectIcon(this.getBerryIconOf("ドリのみ"), true);
-            this.selectIcon(this.getBerryIconOf("クラボのみ"), true);
-            this.selectIcon(this.getBerryIconOf("マゴのみ"));
-        }
-        else if (fieldName == "ゴールド"){
-            this.selectIcon(this.getBerryIconOf("ウブのみ"), true);
-            this.selectIcon(this.getBerryIconOf("ブリーのみ"), true);
-            this.selectIcon(this.getBerryIconOf("ベリブのみ"));
-        }
-        else if (fieldName == "アンバー"){
-            this.selectIcon(this.getBerryIconOf("ラムのみ"), true);
-            this.selectIcon(this.getBerryIconOf("カゴのみ"), true);
-            this.selectIcon(this.getBerryIconOf("ヤチェのみ"));
-        }
-    }
+
     
     getBerryIconOf(berryName){
         let a = document.getElementById('berry_buttons').children;
@@ -106,21 +71,36 @@ class PokeSearch{
     
     
     selectIcon(el, ignoreSetResult = false){
+        let fieldButtonDisabled = false;
+
+        if (el != null){
+            if (el.parentNode.id == "field_buttons"){
+                this.check_onlyFullyEvolved.checked = false;
+                fieldButtonDisabled = (el.value == "ON");
+                Array.from(document.getElementById('field_buttons').children).forEach(c => this.changeIconStyle(c, false)); 
+            }
+        }
+
         if (el == null){
             Array.from(document.getElementById('berry_buttons').children).forEach(c => this.changeIconStyle(c, false));
             Array.from(document.getElementById('food_buttons').children).forEach(c => this.changeIconStyle(c, false));
+            Array.from(document.getElementById('field_buttons').children).forEach(c => this.changeIconStyle(c, false));
         }
         else if (el.style.margin == "" || el.style.margin == "4px"){
             el.style.margin = "0px";
             el.style.border = "4px solid blue";
             el.value = "ON";
         }
-        else{
+        else {
             el.style.margin = "4px";
             el.style.border = "";
             el.value = "";
         }
-    
+        
+        if (fieldButtonDisabled){
+            this.reset(true, true, true, false, false);
+            return;
+        }
         if (!ignoreSetResult) this.setResult();
     }
     
@@ -140,24 +120,36 @@ class PokeSearch{
     
     
     setResult(){
-        let onlyFullyEvolved = this.check_onlyFullyEvolved.checked;
-        
-        let selectedBerries = Array.from(document.getElementById('berry_buttons').children).filter(c => c.value == "ON").map(c => c.name).join("");
-        let selectedFoods = Array.from(document.getElementById('food_buttons').children).filter(c => c.value == "ON").map(c => c.name);    
+        const onlyFullyEvolved = this.check_onlyFullyEvolved.checked;
+        const selectedField = Array.from(document.getElementById('field_buttons').children).find(c => c.value == "ON");  
+        const selectedBerries = Array.from(document.getElementById('berry_buttons').children).filter(c => c.value == "ON").map(c => c.name);
+        const selectedFoods = Array.from(document.getElementById('food_buttons').children).filter(c => c.value == "ON").map(c => c.name);    
+          
 
-        let ignoreSpecialty = (this.box_specialty.value == "----");
-        let ignoreBerry = (selectedBerries == "");
-        let ignoreFood = (selectedFoods == "");
-        let ignoreSkill = (this.box_skill.value == "----");
+        const ignoreSpecialty = (this.box_specialty.value == "----");
+        const ignoreSleepType = (this.box_sleeptype.value == "----");
+        const ignoreBerry = (selectedBerries == "");
+        const ignoreFood = (selectedFoods == "");
+        const ignoreSkill = (this.box_skill.value == "----");
+        const ignoreField = (selectedField == undefined);
+        const fieldInfo = (ignoreField) ? null : (() => {
+            const map = new Map();
+            POKE_DATA_FIELD.filter(x => x.fieldName == selectedField.name).forEach(x => {
+                if (!map.has(x.name)) map.set(x.name, x.name);
+            });
+            return map;
+        })();
 
-        let results = this.pokemons.filter(p => (!onlyFullyEvolved || (p.fullyEvolved && onlyFullyEvolved))
+        const results = this.pokemons.filter(p => (!onlyFullyEvolved || (p.fullyEvolved && onlyFullyEvolved))
                                              && (ignoreSpecialty || p.specialty == this.box_specialty.value || p.specialty == "オール")
+                                             && (ignoreSleepType || p.sleepType == this.box_sleeptype.value)
                                              && (ignoreBerry || selectedBerries.includes(p.berry))
                                              && (ignoreFood || p.existAllInFoodList(selectedFoods))
-                                             && (ignoreSkill || p.skill.indexOf(this.box_skill.value) > -1));
+                                             && (ignoreSkill || p.skill.indexOf(this.box_skill.value) > -1)
+                                             && (ignoreField || fieldInfo.has(p.name)));
     
-        this.reset(true);
-    
+        this.resultTBody.innerHTML = "";
+        
         for (let res of results) {
             this.resultTBody.appendChild(this.createTr(res));
         }

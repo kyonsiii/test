@@ -580,9 +580,10 @@ img.normal{
     float: left;
 }
 
-img.field{
+img.fieldIcon{
     width: 22%;
     max-width: 10em;
+    margin: 4px;
 }
 
 
