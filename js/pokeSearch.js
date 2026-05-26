@@ -124,7 +124,6 @@ class PokeSearch{
         const selectedBerries = Array.from(document.getElementById('berry_buttons').children).filter(c => c.value == "ON").map(c => c.name);
         const selectedFoods = Array.from(document.getElementById('food_buttons').children).filter(c => c.value == "ON").map(c => c.name);    
           
-
         const ignoreSpecialty = (this.box_specialty.value == "----");
         const ignoreSleepType = (this.box_sleeptype.value == "----");
         const ignoreBerry = (selectedBerries == "");
