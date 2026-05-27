@@ -3,17 +3,17 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="style.css?v202605270529" rel="stylesheet"/>
-        <script src="js/main.js?v202605270529"></script>
-        <script src="js/pokeSearch.js?v202605270529"></script>
-        <script src="js/pokedex_data_poke.js?v202605270529"></script>
-        <script src="js/pokedex_data_skill.js?v202605270529"></script>
-        <script src="js/pokedex_data_poke_field.js?v202605270529"></script>
-        <script src="js/pokedex_data_etc.js?v202605270529"></script>
-        <script src="js/pokedex2.js?v202605270529"></script>
+        <link href="style.css?v202605271934" rel="stylesheet"/>
+        <script src="js/main.js?v202605271934"></script>
+        <script src="js/pokeSearch.js?v202605271934"></script>
+        <script src="js/pokedex_data_poke.js?v202605271934"></script>
+        <script src="js/pokedex_data_skill.js?v202605271934"></script>
+        <script src="js/pokedex_data_poke_field.js?v202605271934"></script>
+        <script src="js/pokedex_data_etc.js?v202605271934"></script>
+        <script src="js/pokedex2.js?v202605271934"></script>
         
 
-        <title>ポケモンスリープアプリv202605270529</title>
+        <title>ポケモンスリープアプリv202605271934</title>
 
     </head>
 
@@ -47,7 +47,8 @@
                 </select>
                 <br>
 
-                <input type="checkbox" id="option_only_fully_evolved" checked><label for="option_only_fully_evolved">最終進化のみ表示</label>
+                <input type="checkbox" id="option_only_fully_evolved" onchange="pokesearch.setResult();" checked><label for="option_only_fully_evolved">最終進化のみ表示</label>
+                <input type="checkbox" id="option_ignore_detail" onchange="pokesearch.setResult();"><label for="option_ignore_detail">詳細情報の非表示</label>
                 <button id="button_reset" onclick="pokesearch.reset();">リセット</button>
             </div>
 

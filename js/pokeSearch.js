@@ -12,7 +12,7 @@ class PokeSearch{
         this.box_sleeptype = document.getElementById('select_sleeptype');
         this.box_skill = document.getElementById('select_skill');
         this.check_onlyFullyEvolved = document.getElementById("option_only_fully_evolved");
-
+        this.check_ignore_detail = document.getElementById("option_ignore_detail");
         
 
     }
@@ -120,6 +120,7 @@ class PokeSearch{
     
     setResult(){
         const onlyFullyEvolved = this.check_onlyFullyEvolved.checked;
+        const ignoreDetailInfo = this.check_ignore_detail.checked;
         const selectedField = Array.from(document.getElementById('field_buttons').children).find(c => c.value == "ON");  
         const selectedBerries = Array.from(document.getElementById('berry_buttons').children).filter(c => c.value == "ON").map(c => c.name);
         const selectedFoods = Array.from(document.getElementById('food_buttons').children).filter(c => c.value == "ON").map(c => c.name);    
@@ -149,12 +150,12 @@ class PokeSearch{
         this.resultTBody.innerHTML = "";
         
         for (let res of results) {
-            this.resultTBody.appendChild(this.createTr(res));
+            this.resultTBody.appendChild(this.createTr(res, ignoreDetailInfo));
         }
     }
 
 
-    createTr(poke) {
+    createTr(poke, ignoreDetail = false) {
         let r = document.createElement("tr");
         let c;
 
@@ -163,19 +164,26 @@ class PokeSearch{
         + "<br>" + "<img src=\"img/poke/" + String(poke.no).padStart(3, '0') + ".png\" class=\"normal\">" + poke.sleepType + " - " + poke.specialty
         + "<br>" + poke.skill + "<br>"
         + poke.sec
-        + "<p>"
+        + "<p>";
 
-        + "<span class=\"indicator_text\">きのみSPow/日:</span>" + poke.berrySEnergyLvMaxDay.toLocaleString()          
-        + "<br><span class=\"indicator_text\">食材Pow/日:</span>" + poke.foodEnergyLvMaxDay.toLocaleString()
-        + "<br><strong><span class=\"indicator_text\" style='margin-bottom:0.5em;'>Pow合計/日:</span>" + (poke.berrySEnergyLvMaxDay + poke.foodEnergyLvMaxDay).toLocaleString() + "</strong>"
-        + "<br><span class=\"indicator_text\">食材拾い/日:</span>" + poke.foodOtetsudaiCountDay + "回"    
-        + "<br><span class=\"indicator_text\">スキル発動/日:</span>" + poke.skillExpectionDay.toFixed(1) + "回"
-        + "<br><span class=\"indicator_text\">食材確率:</span>"+ (poke.foodRate * 100).toFixed(1) + "%"
-        + "<br><span class=\"indicator_text\">スキル確率:</span>"+ (poke.skillRate * 100).toFixed(1) + "%"
-        + "<br><span class=\"indicator_text\">きのみRank</span> " + poke.getIndicatorBarOf(poke.rankOfBerry)//poke.indicatorChar.repeat(poke.berryIndicator)
-        + "<br><span class=\"indicator_text\">食材Rank</span> " + poke.getIndicatorBarOf(poke.rankOfFood)//poke.indicatorChar.repeat(poke.foodIndicator)
-        + "<br><span class=\"indicator_text\">スキルRank</span> " + poke.getIndicatorBarOf(poke.rankOfSkill)//poke.indicatorChar.repeat(poke.skillIndicator)
-        + "</p>";
+        if (!ignoreDetail){
+            c.innerHTML += "<span class=\"indicator_text\">きのみSPow/日:</span>" + poke.berrySEnergyLvMaxDay.toLocaleString()          
+                        +  "<br><span class=\"indicator_text\">食材Pow/日:</span>" + poke.foodEnergyLvMaxDay.toLocaleString()
+                        +  "<br><strong><span class=\"indicator_text\" style='margin-bottom:0.5em;'>Pow合計/日:</span>" + (poke.berrySEnergyLvMaxDay + poke.foodEnergyLvMaxDay).toLocaleString() + "</strong>"
+                        +  "<br><span class=\"indicator_text\">食材拾い/日:</span>" + poke.foodOtetsudaiCountDay + "回"    
+                        +  "<br><span class=\"indicator_text\">スキル発動/日:</span>" + poke.skillExpectionDay.toFixed(1) + "回"
+                        +  "<br><span class=\"indicator_text\">食材確率:</span>"+ (poke.foodRate * 100).toFixed(1) + "%"
+                        +  "<br><span class=\"indicator_text\">スキル確率:</span>"+ (poke.skillRate * 100).toFixed(1) + "%"
+                        +  "<br><span class=\"indicator_text\">きのみRank</span> " + poke.getIndicatorBarOf(poke.rankOfBerry)//poke.indicatorChar.repeat(poke.berryIndicator)
+                        +  "<br><span class=\"indicator_text\">食材Rank</span> " + poke.getIndicatorBarOf(poke.rankOfFood)//poke.indicatorChar.repeat(poke.foodIndicator)
+                        +  "<br><span class=\"indicator_text\">スキルRank</span> " + poke.getIndicatorBarOf(poke.rankOfSkill)//poke.indicatorChar.repeat(poke.skillIndicator)
+                        +  "</p>";
+        }
+        else{
+            c.innerHTML += "</p>";
+        }
+
+
 
         c = r.insertCell();
         c.innerHTML = "<img src=\"img/berry/" + poke.berry + ".png\" class=\"tiny\">" + poke.berry 
