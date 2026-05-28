@@ -4,18 +4,18 @@
         <!--https://csshtml.work/click-button/ 参考にしたボタンの作り方。ありがとう！-->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="style.css?v202605261804" rel="stylesheet"/>
-        <script src="js/main.js?v202605261804"></script>
-        <script src="js/pokeReport.js?v202605261804"></script>
-        <script src="js/pokedex_data_poke.js?v202605261804"></script>
-        <script src="js/pokedex_data_poke_field.js?v202605261804"></script>
-        <script src="js/pokedex_data_skill.js?v202605261804"></script>
-        <script src="js/pokedex_data_etc.js?v202605261804"></script>
-        <script src="js/pokedex2.js?v202605261804"></script>
-        <script src="js/pokemonInfo.js?v202605261804"></script>
-        <script src="js/recipedb.js?v202605261804"></script>
+        <link href="style.css?v202605282008" rel="stylesheet"/>
+        <script src="js/main.js?v202605282008"></script>
+        <script src="js/pokeReport.js?v202605282008"></script>
+        <script src="js/pokedex_data_poke.js?v202605282008"></script>
+        <script src="js/pokedex_data_poke_field.js?v202605282008"></script>
+        <script src="js/pokedex_data_skill.js?v202605282008"></script>
+        <script src="js/pokedex_data_etc.js?v202605282008"></script>
+        <script src="js/pokedex2.js?v202605282008"></script>
+        <script src="js/pokemonInfo.js?v202605282008"></script>
+        <script src="js/recipedb.js?v202605282008"></script>
 
-        <title>レポート(仮) v202605261804</title>
+        <title>レポート(仮) v202605282008</title>
 
     </head>
 
@@ -745,7 +745,7 @@
                                     + "\n1日: " + info.LvRaw.rawResult.berryPowerDay.toFixed(0) + info.berryPowerDayDiff
                                     + "\n(きのみS無補正個体: " + info.LvRaw.rawResult.berryPowerDayBerryS +")"
                                     + "\n"
-                                    + "\nスキル発動回数: " + info.LvRaw.rawResult.skillPopDay.toFixed(0)  + info.skillPopDayDiff;
+                                    + "\nスキル発動回数: " + info.LvRaw.rawResult.skillPopDay.toFixed(2)  + info.skillPopDayDiff;
                 alert(mes);
             }
    
@@ -829,7 +829,7 @@
                                        + ((j.lv < Pokedex.pokeMaxLv) ? "<br> → " + info.LvMax.rawResult.totalFoodPowerKari.toFixed(0) + "(Lv" + info.LvMax.lv + ")" : "");
 
                     const skillCell = tr.insertCell();
-                    skillCell.innerHTML = result.skillPopDay.toFixed(1) + info.skillPopDayDiff + ((j.lv < Pokedex.pokeMaxLv) ? "<br> → " + info.LvMax.rawResult.skillPopDay.toFixed(1) + "(Lv" + info.LvMax.lv + ")" : "");
+                    skillCell.innerHTML = result.skillPopDay.toFixed(2) + info.skillPopDayDiff + ((j.lv < Pokedex.pokeMaxLv) ? "<br> → " + info.LvMax.rawResult.skillPopDay.toFixed(2) + "(Lv" + info.LvMax.lv + ")" : "");
 
                     const totalCell = tr.insertCell();
                     const total =  (result.berryPowerDay + result.totalFoodPowerKari).toFixed(0) + ((j.lv < Pokedex.pokeMaxLv) ? "<br> → " + (info.LvMax.rawResult.berryPowerDay + info.LvMax.rawResult.totalFoodPowerKari).toFixed(0) + "(Lv" + info.LvMax.lv + ")" : "");
