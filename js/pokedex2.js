@@ -13,11 +13,16 @@ class Pokedex{
     };
 
     constructor(pokemons){
+
+        //foodDBシートにもあるので値を変えたときはそちらも変えること
+        this.foodPowerKariMap = FOOD_EVAL_DATA;
+        this.berryList = BERRY_DATA;
+        this.skillList = Object.fromEntries(Object.keys(SKILL_DATA).map(x => [x, SKILL_DATA[x]]));
+
         this.pokemons = POKE_DATA_RAW.map(data => new Pokemon(this, data));        
         this.fullyEvolvedPokemons = this.pokemons.filter(p => p.fullyEvolved);
 
-        this.berries = BERRY_DATA;
-    
+
         //食材の並び順を調整するため indexで使用、reportもここから使うかも？
         this.foodList = FOOD_DATA.sort((a, b) => a.displayOrder - b.displayOrder);
 
@@ -26,10 +31,6 @@ class Pokedex{
         if (diff.length != 0) alert(`foodListに追加していない食材があります。\r\n\r\n${diff.join("\r\n")}`);
 
 
-        //foodDBシートにもあるので値を変えたときはそちらも変えること
-        this.foodPowerKariMap = FOOD_EVAL_DATA;
-        this.berryList = this.berries;
-        this.skillList = Array.from((new Set(this.pokemons.map(p => p.skill)))).sort();
 
         //たぶん伸ばし棒とかをうまいこと処理してかなを振ってる
         this.pokeKanaDic = {
@@ -46,7 +47,6 @@ class Pokedex{
 
 
         const makeGeneralCalc = (option) => (poke, expectionDay) => this.calcSkillGeneral(poke, expectionDay, option);
-        this.skillCalculators = SKILL_DATA;
     }
 
 
@@ -57,10 +57,6 @@ class Pokedex{
     }
     calcSkillGeneral(poke, expectionDay, num){
         return expectionDay * num;
-    }
-
-    getFoodsBySkill(poke, skillLv, otetsudaiCountDay){
-
     }
 
     
@@ -129,8 +125,8 @@ class Pokedex{
     
 
     getBerryPowerBaseOf(name){
-        for (let i = 0; i < this.berries.length; i++){
-            if (this.berries[i].name == name) return this.berries[i].power;
+        for (let i = 0; i < this.berryList.length; i++){
+            if (this.berryList[i].name == name) return this.berryList[i].power;
         }
         return -1;
     }
@@ -174,6 +170,10 @@ class Pokemon{
         this.groupName = POKEMON_SAME_GROUP[this.name] ?? this.name;
         this.searchName = POKEMON_SEARCH_NAME_REPLACE[this.name] ?? this.name;
 
+        if (pokedex != null && !Object.hasOwn(this.pokedex.skillList, this.skill)){
+            alert("未登録のスキル: " + this.skill);
+        }
+
         if (passInitFoods){
 
         }
@@ -198,20 +198,20 @@ class Pokemon{
     }
 
     skillIsFoodGainer(){
-        const func = this.pokedex.skillCalculators[this.skill];
+        const func = this.pokedex.skillList[this.skill];
         if (func == undefined) return false;
         return (func.foodGainFunc == undefined) ? false : true;
     }
 
     skillLvIsMax(num){
-        const func = this.pokedex.skillCalculators[this.skill];
+        const func = this.pokedex.skillList[this.skill];
         if (func == undefined) return false;
         const getFunc = func.getMaxLv;
         return (getFunc == undefined) ? false : num >= getFunc();
     }
 
     getMaxSkillLv(){
-        const func = this.pokedex.skillCalculators[this.skill];
+        const func = this.pokedex.skillList[this.skill];
         if (func == undefined) return 0;
         const getFunc = func.getMaxLv;
         return (getFunc == undefined) ? 0 : getFunc();
@@ -250,7 +250,7 @@ class Pokemon{
         
         code = code ?? json.foodCode;   //foodCodeの入力がなかったらjsonの情報を見る        
         const comb = new FoodCombination(this, lv, this.getOtetsudaiCountDay(lv, json.charAdjusts.speed, json.subAdjusts.speed), code, json.charAdjusts.food + json.subAdjusts.food);        
-        const foodGainFunc = this.pokedex.skillCalculators[this.skill].foodGainFunc;
+        const foodGainFunc = this.pokedex.skillList[this.skill].foodGainFunc;
         if (foodGainFunc != undefined){
             const skillCount = (json.isVanilla) ? this.skillExpectionDay 
                               : this.getSkillPopCountWithGuaranteed(lv, json.charAdjusts.speed, json.subAdjusts.speed, json.charAdjusts.skill, json.subAdjusts.skill);

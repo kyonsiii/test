@@ -10,6 +10,14 @@ const SKILL_DATA = {
                         energyGainFunc:  (poke, expectionDay, option1) => 0
                     }
                 })(),
+            "りゅうせいぐん(きのみバースト)"     : (() => {
+                const skillTable = [];
+                return {
+                        getMaxLv: () => 6,
+                        foodGainFunc  : undefined,
+                        energyGainFunc:  (poke, expectionDay, option1) => 0
+                    }
+                })(),
             "おてつだいサポートS"               : (() => {
                 const skillTable = [];
                 return {
