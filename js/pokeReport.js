@@ -444,7 +444,6 @@ class PokeReport{
                 const slvBox  = boxes[2];
                 const target = pokeBox.querySelector(`option[value="${pokeSrc}"]`);
 
-                console.log(src);
                 if (src == "0") {
                     pokeBox.selectedIndex = target.index;
                     lvBox.selectedIndex = 0;

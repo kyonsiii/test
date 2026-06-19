@@ -170,7 +170,7 @@ class Pokemon{
         this.groupName = POKEMON_SAME_GROUP[this.name] ?? this.name;
         this.searchName = POKEMON_SEARCH_NAME_REPLACE[this.name] ?? this.name;
 
-        if (pokedex != null && !Object.hasOwn(this.pokedex.skillList, this.skill)){
+        if (pokedex != null && this.skill != null && !Object.hasOwn(this.pokedex.skillList, this.skill)){
             alert("未登録のスキル: " + this.skill);
         }
 

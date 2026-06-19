@@ -1620,6 +1620,7 @@ const POKE_DATA_FIELD = [
 {"fieldName":"ウノハナ雪原","name":"パーモット","researchRank":"マスター14","star":"3"},
 {"fieldName":"ウノハナ雪原","name":"クレセリア","researchRank":"マスター14","star":"3"},
 
+
 {"fieldName":"ラピスラズリ湖畔 ","name":"ピカチュウ","researchRank":"ノーマル1","star":"1"},
 {"fieldName":"ラピスラズリ湖畔 ","name":"ピカチュウ","researchRank":"ノーマル1","star":"2"},
 {"fieldName":"ラピスラズリ湖畔 ","name":"イーブイ","researchRank":"ノーマル1","star":"1"},

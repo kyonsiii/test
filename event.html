@@ -19,9 +19,7 @@
             <a href = "./report.html"><img src="img/pages/report.png"></a>
             <a href = "./event.html" class ="current"><img src="img/pages/event.png"></a>
         </div>
-
-
-
+        
         <div id="event_schedule">
           <event_column id="event_column_date"></event_column>
 
@@ -106,11 +104,12 @@
                 //this.pokeEvent.addEntry("2026/05/25 15:00", "2026/06/01 04:00", true, GetPreset(), "◆新ポケモン【ジジーロン】追加", "うとうと", "*【出現マップ】", "ワカクサ本島・～EX", "ラピスラズリ湖畔", "アンバー渓谷");
                 //this.pokeEvent.addEntry("2026/05/30 04:00", "2026/06/02 04:00", true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.35");
                 
-                this.pokeEvent.addEntry("2026/06/08 15:00", "2026/06/22 04:00", true, GetPreset(), "◆新ポケモン【ラティオス】追加", "うとうと", "*【出現マップ】", "ワカクサ本島・～EX", "ラピスラズリ湖畔", "アンバー渓谷");
-                this.pokeEvent.addEntry("2026/06/08 04:00", "2026/06/15 04:00", false, GetPreset("ラティオスとこころのしずく"), "◆ラティオスとこころのしずく前半", ...GetPreset("ドラゴンタイプ"), this.EventItems["main_skill_lv_plus2"], "*【 中ピックアップ 】", "ラティオス", "*【 小ピックアップ 】", "ミニリュウ / ハクリュー / カイリュー / チルタリス / タツベイ / コモルー / ボーマンダ / ラティアス / オンバット / オンバーン / ジジーロン");
+                //this.pokeEvent.addEntry("2026/06/08 15:00", "2026/06/22 04:00", true, GetPreset(), "◆新ポケモン【ラティオス】追加", "うとうと", "*【出現マップ】", "ワカクサ本島・～EX", "ラピスラズリ湖畔", "アンバー渓谷");
+                //this.pokeEvent.addEntry("2026/06/08 04:00", "2026/06/15 04:00", false, GetPreset("ラティオスとこころのしずく"), "◆ラティオスとこころのしずく前半", ...GetPreset("ドラゴンタイプ"), this.EventItems["main_skill_lv_plus2"], "*【 中ピックアップ 】", "ラティオス", "*【 小ピックアップ 】", "ミニリュウ / ハクリュー / カイリュー / チルタリス / タツベイ / コモルー / ボーマンダ / ラティアス / オンバット / オンバーン / ジジーロン");
                 this.pokeEvent.addEntry("2026/06/15 04:00", "2026/06/22 04:00",  true, GetPreset("ラティオスとこころのしずく"), "◆ラティオスとこころのしずく後半", "大きいカビゴンスタート", ...GetPreset("ドラゴンタイプ"), this.EventItems["main_skill_lv_plus5"], "*【最終日】", "ねむけパワー1.5倍", "*【 中ピックアップ 】", "ラティオス", "*【 小ピックアップ 】", "ミニリュウ / ハクリュー / カイリュー / チルタリス / タツベイ / コモルー / ボーマンダ / ラティアス / オンバット / オンバーン / ジジーロン");                
-                this.pokeEvent.addEntry("2026/06/14 04:00", "2026/06/17 04:00", true, GetPreset("ニュームーンデー2"), "◆第14回ニュームーンデー");
-                
+                this.pokeEvent.addEntry("2026/06/14 04:00", "2026/06/17 04:00",  true, GetPreset("ニュームーンデー2"), "◆第14回ニュームーンデー");
+                this.pokeEvent.addEntry("2026/06/29 04:00", "2026/07/02 04:00",  true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.36");
+
                 //最終的に幅を決める
                 const columns = document.querySelectorAll("event_column").length - 1;
                 pokeEvent.dataField.style.minWidth = (columns * 10 + 3) + "em";
