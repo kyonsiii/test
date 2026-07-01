@@ -7,8 +7,8 @@ const mask_result_op_visible_Lv30         = 0b000000000000000010000000000000;
 const mask_result_op_visible_Lv60         = 0b000000000000000001000000000000;
 const mask_result_op_visible_MyPoke       = 0b000000000000000000100000000000;
 const mask_result_op_visible_MyPokeLv30ft = 0b000000000000000000010000000000;
-const mask_result_op_visible_MyPokeLv50ft = 0b000000000000000000001000000000;
-const mask_result_op_visible_MyPokeLv60ft = 0b000000000000000000000100000000;
+const mask_result_op_visible_MyPokeLv60ft = 0b000000000000000000001000000000;
+const mask_result_op_visible_MyPokeLv70ft = 0b000000000000000000000100000000;
 const mask_result_op_visible_FullyEvolved = 0b000000000000000000000010000000;
 const mask_result_op_visible_minNum       = 0b000000000000000000000001111000;
 const mask_mypoke_op_food_ranking_skyBlue = 0b000000000000000000000000000100;
@@ -101,8 +101,8 @@ class PokeReport{
 
         n += numToBit(document.getElementById("option_mypoke_visible").checked, mask_result_op_visible_MyPoke); 
         n += numToBit(document.getElementById("option_potential_30").checked, mask_result_op_visible_MyPokeLv30ft); 
-        n += numToBit(document.getElementById("option_potential_50").checked, mask_result_op_visible_MyPokeLv50ft); 
-        n += numToBit(document.getElementById("option_potential_60").checked, mask_result_op_visible_MyPokeLv60ft);
+        n += numToBit(document.getElementById("option_potential_60").checked, mask_result_op_visible_MyPokeLv60ft); 
+        n += numToBit(document.getElementById("option_potential_70").checked, mask_result_op_visible_MyPokeLv70ft);
         n += numToBit(document.getElementById("only_fully_evolved").checked, mask_result_op_visible_FullyEvolved);
         n += numToBit(document.getElementById("food_min").selectedIndex, mask_result_op_visible_minNum);
         n += numToBit(document.getElementById("option_mypoke_listup_backcolor").checked, mask_mypoke_op_food_ranking_skyBlue);
@@ -121,8 +121,8 @@ class PokeReport{
 
         document.getElementById("option_mypoke_visible").checked = bitToNum(n, mask_result_op_visible_MyPoke); 
         document.getElementById("option_potential_30").checked = bitToNum(n, mask_result_op_visible_MyPokeLv30ft); 
-        document.getElementById("option_potential_50").checked = bitToNum(n, mask_result_op_visible_MyPokeLv50ft); 
-        document.getElementById("option_potential_60").checked = bitToNum(n, mask_result_op_visible_MyPokeLv60ft);
+        document.getElementById("option_potential_60").checked = bitToNum(n, mask_result_op_visible_MyPokeLv60ft); 
+        document.getElementById("option_potential_70").checked = bitToNum(n, mask_result_op_visible_MyPokeLv70ft);
         document.getElementById("only_fully_evolved").checked = bitToNum(n, mask_result_op_visible_FullyEvolved);
         document.getElementById("food_min").selectedIndex = bitToNum(n, mask_result_op_visible_minNum);
         document.getElementById("option_mypoke_listup_backcolor").checked = bitToNum(n, mask_mypoke_op_food_ranking_skyBlue);
@@ -929,7 +929,7 @@ class PokeReport{
 
 
     //tbのresult_tableはsetResultOfされた時に追加されるので、ない時もあるかも
-    insertMyPokeListInto(tbody, infoList, foods, foodMin, showPotential30, showPotential50, showPotential60){
+    insertMyPokeListInto(tbody, infoList, foods, foodMin, showPotential30, showPotential60, showPotential70){
         for (const info of infoList) {
             const poke = info.pokemon; 
             if (!poke.existAnyInFoodList(foods)) continue;
@@ -941,14 +941,14 @@ class PokeReport{
                 this.insertMyPokeRowInto(tbody, poke, json, 30, foods, foodMin, 3);
             }
 
-            if (json.lv < 50 && showPotential50){
-                info.setSubSkillsEnabled(json, 50);
-                this.insertMyPokeRowInto(tbody, poke, json, 50, foods, foodMin, 4);
-            }
-
             if (json.lv < 60 && showPotential60){
                 info.setSubSkillsEnabled(json, 60);
-                this.insertMyPokeRowInto(tbody, poke, json, 60, foods, foodMin, 5);
+                this.insertMyPokeRowInto(tbody, poke, json, 60, foods, foodMin, 4);
+            }
+
+            if (json.lv < 70 && showPotential70){
+                info.setSubSkillsEnabled(json, 70);
+                this.insertMyPokeRowInto(tbody, poke, json, 70, foods, foodMin, 5);
             }
         }
     }

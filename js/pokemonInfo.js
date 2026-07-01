@@ -179,8 +179,8 @@ class PokemonInfo{
         j.subSkillList.lv10.enabled = j.subSkillList.lv10.lv <= lv;
         j.subSkillList.lv25.enabled = j.subSkillList.lv25.lv <= lv;
         j.subSkillList.lv50.enabled = j.subSkillList.lv50.lv <= lv;
-        j.subSkillList.lv75.enabled = j.subSkillList.lv75.lv <= lv;
-        j.subSkillList.lv100.enabled = j.subSkillList.lv100.lv <= lv;
+        j.subSkillList.lv70.enabled = j.subSkillList.lv70.lv <= lv;
+        j.subSkillList.lv80.enabled = j.subSkillList.lv80.lv <= lv;
 
         let exists = (n) => Object.entries(j.subSkillList).some(([k, v]) => v.value == n && v.lv <= lv);
         j.subOteBonus      = exists(sub_num_oteBonus);
@@ -269,8 +269,8 @@ class PokemonInfo{
         n += numToBit(j.subSkillList.lv10.value, mask32c_sub1);
         n += numToBit(j.subSkillList.lv25.value, mask32c_sub2);
         n += numToBit(j.subSkillList.lv50.value, mask32c_sub3);
-        n += numToBit(j.subSkillList.lv75.value, mask32c_sub4);
-        n += numToBit(j.subSkillList.lv100.value, mask32c_sub5);
+        n += numToBit(j.subSkillList.lv70.value, mask32c_sub4);
+        n += numToBit(j.subSkillList.lv80.value, mask32c_sub5);
         abc.push(n.toString(32));
 
         return abc.join("-");
@@ -440,26 +440,27 @@ class PokemonInfo{
         }
     }
     
-    getSubSkillListByNum = (lv10skill, lv25skill, lv50skill, lv75skill, lv100skill) => PokemonInfo.getSubSkillListByNum(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill);
-    static getSubSkillListByNum(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill){
+    getSubSkillListByNum = (lv10skill, lv25skill, lv50skill, lv70skill, lv80skill) => PokemonInfo.getSubSkillListByNum(lv10skill, lv25skill, lv50skill, lv70skill, lv80skill);
+
+    static getSubSkillListByNum(lv10skill, lv25skill, lv50skill, lv70skill, lv80skill){
         return{
-            lv10:  {value:  lv10skill, name: PokemonInfo.getSubSkillNameFromNum(lv10skill),  lv:  10, enabled: false},
-            lv25:  {value:  lv25skill, name: PokemonInfo.getSubSkillNameFromNum(lv25skill),  lv:  25, enabled: false},
-            lv50:  {value:  lv50skill, name: PokemonInfo.getSubSkillNameFromNum(lv50skill),  lv:  50, enabled: false},
-            lv75:  {value:  lv75skill, name: PokemonInfo.getSubSkillNameFromNum(lv75skill),  lv:  75, enabled: false},
-            lv100: {value: lv100skill, name: PokemonInfo.getSubSkillNameFromNum(lv100skill), lv: 100, enabled: false}
+            lv10: {value: lv10skill, name: PokemonInfo.getSubSkillNameFromNum(lv10skill), lv: 10, enabled: false},
+            lv25: {value: lv25skill, name: PokemonInfo.getSubSkillNameFromNum(lv25skill), lv: 25, enabled: false},
+            lv50: {value: lv50skill, name: PokemonInfo.getSubSkillNameFromNum(lv50skill), lv: 50, enabled: false},
+            lv70: {value: lv70skill, name: PokemonInfo.getSubSkillNameFromNum(lv70skill), lv: 70, enabled: false},
+            lv80: {value: lv80skill, name: PokemonInfo.getSubSkillNameFromNum(lv80skill), lv: 80, enabled: false}
         };
     }
     
 
-    getSubSkillListByName = (lv10skill, lv25skill, lv50skill, lv75skill, lv100skill) => PokemonInfo.getSubSkillListByName(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill);
-    static getSubSkillListByName(lv10skill, lv25skill, lv50skill, lv75skill, lv100skill){
+    getSubSkillListByName = (lv10skill, lv25skill, lv50skill, lv70skill, lv80skill) => PokemonInfo.getSubSkillListByName(lv10skill, lv25skill, lv50skill, lv70skill, lv80skill);
+    static getSubSkillListByName(lv10skill, lv25skill, lv50skill, lv70skill, lv80skill){
         return{
-            lv10:  {value: PokemonInfo.getSubSkillNumOf(lv10skill),  name: lv10skill,  lv:  10, enabled: false},
-            lv25:  {value: PokemonInfo.getSubSkillNumOf(lv25skill),  name: lv25skill,  lv:  25, enabled: false},
-            lv50:  {value: PokemonInfo.getSubSkillNumOf(lv50skill),  name: lv50skill,  lv:  50, enabled: false},
-            lv75:  {value: PokemonInfo.getSubSkillNumOf(lv75skill),  name: lv75skill,  lv:  75, enabled: false},
-            lv100: {value: PokemonInfo.getSubSkillNumOf(lv100skill), name: lv100skill, lv: 100, enabled: false}
+            lv10: {value: PokemonInfo.getSubSkillNumOf(lv10skill), name: lv10skill, lv: 10, enabled: false},
+            lv25: {value: PokemonInfo.getSubSkillNumOf(lv25skill), name: lv25skill, lv: 25, enabled: false},
+            lv50: {value: PokemonInfo.getSubSkillNumOf(lv50skill), name: lv50skill, lv: 50, enabled: false},
+            lv70: {value: PokemonInfo.getSubSkillNumOf(lv70skill), name: lv70skill, lv: 70, enabled: false},
+            lv80: {value: PokemonInfo.getSubSkillNumOf(lv80skill), name: lv80skill, lv: 80, enabled: false}
         };
     }
     

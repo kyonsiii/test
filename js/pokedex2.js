@@ -1,8 +1,10 @@
 class Pokedex{
-
-    static pokeMaxLv = 65;
-    static recipeMaxLv = 75;
+    static pokeMaxLv = 70;
+    /*
+    
+    static recipeMaxLv = 70;
     static fieldBonusMax = 0.85;
+    */
     static otherFoodPower = 350;
     static dakutenMap = {
         'ガ': 'カ', 'ギ': 'キ', 'グ': 'ク', 'ゲ': 'ケ', 'ゴ': 'コ',

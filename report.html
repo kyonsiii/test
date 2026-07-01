@@ -4,18 +4,18 @@
         <!--https://csshtml.work/click-button/ 参考にしたボタンの作り方。ありがとう！-->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="style.css?v202606191315" rel="stylesheet"/>
-        <script src="js/main.js?v202606191315"></script>
-        <script src="js/pokeReport.js?v202606191315"></script>
-        <script src="js/pokedex_data_poke.js?v202606191315"></script>
-        <script src="js/pokedex_data_poke_field.js?v202606191315"></script>
-        <script src="js/pokedex_data_skill.js?v202606191315"></script>
-        <script src="js/pokedex_data_etc.js?v202606191315"></script>
-        <script src="js/pokedex2.js?v202606191315"></script>
-        <script src="js/pokemonInfo.js?v202606191315"></script>
-        <script src="js/recipedb.js?v202606191315"></script>
+        <link href="style.css?v202607011933" rel="stylesheet"/>
+        <script src="js/main.js?v202607011933"></script>
+        <script src="js/pokeReport.js?v202607011933"></script>
+        <script src="js/pokedex_data_poke.js?v202607011933"></script>
+        <script src="js/pokedex_data_poke_field.js?v202607011933"></script>
+        <script src="js/pokedex_data_skill.js?v202607011933"></script>
+        <script src="js/pokedex_data_etc.js?v202607011933"></script>
+        <script src="js/pokedex2.js?v202607011933"></script>
+        <script src="js/pokemonInfo.js?v202607011933"></script>
+        <script src="js/recipedb.js?v202607011933"></script>
 
-        <title>レポート(仮) v202606191315</title>
+        <title>レポート(仮) v202607011933</title>
 
     </head>
 
@@ -96,8 +96,8 @@
                     <select id="sub_skill_lv10" onchange="changeSubSkill(this);"></select>
                     <select id="sub_skill_lv25" onchange="changeSubSkill(this);"></select><br>
                     <select id="sub_skill_lv50" onchange="changeSubSkill(this);"></select>
-                    <select id="sub_skill_lv75" onchange="changeSubSkill(this);"></select><br>
-                    <select id="sub_skill_lv100" onchange="changeSubSkill(this);"></select>
+                    <select id="sub_skill_lv70" onchange="changeSubSkill(this);"></select><br>
+                    <select id="sub_skill_lv80" onchange="changeSubSkill(this);"></select>
 
                     <input id="sub_skill_import" type="text" oninput="setSubSkillsFromIdentifier(this);">
                 </div>
@@ -148,8 +148,8 @@
             <div class="select_button_area">
                 <input type="checkbox" onclick="clickMyPokeVisible(this);" id="option_mypoke_visible" checked><label for="option_mypoke_visible">Myポケ表示</label>
                 <input type="checkbox" onclick="clickMyPokeVisible(this);" id="option_potential_30" checked><label for="option_potential_30">Lv30予定</label>
-                <input type="checkbox" onclick="clickMyPokeVisible(this);" id="option_potential_50" checked><label for="option_potential_50">Lv50予定</label>
-                <input type="checkbox" onclick="clickMyPokeVisible(this);" id="option_potential_60"><label for="option_potential_60">Lv60予定</label>
+                <input type="checkbox" onclick="clickMyPokeVisible(this);" id="option_potential_60" checked><label for="option_potential_60">Lv60予定</label>
+                <input type="checkbox" onclick="clickMyPokeVisible(this);" id="option_potential_70"><label for="option_potential_70">Lv70予定</label>
             </div>
 
             <div class="select_button_area">
@@ -593,11 +593,11 @@
                         case 1: this.toggleFood(document.getElementById("input_mypoke_food_2"), s[1].charCodeAt() - 65); break;
                         case 2: this.toggleFood(document.getElementById("input_mypoke_food_3"), s[2].charCodeAt() - 65); break;
                         case 3: setCharacteristicFromCode(s[3]); break;
-                        case 4: setSkillFromCode(s[4],  10); break;
-                        case 5: setSkillFromCode(s[5],  25); break;
-                        case 6: setSkillFromCode(s[6],  50); break;
-                        case 7: setSkillFromCode(s[7],  75); break;
-                        case 8: setSkillFromCode(s[8], 100); break;
+                        case 4: setSkillFromCode(s[4], 10); break;
+                        case 5: setSkillFromCode(s[5], 25); break;
+                        case 6: setSkillFromCode(s[6], 50); break;
+                        case 7: setSkillFromCode(s[7], 70); break;
+                        case 8: setSkillFromCode(s[8], 80); break;
                         case 9: document.getElementById("input_mypoke_slv").selectedIndex = (Number(s[9]) - 1); break;
                         default: break;
                     }
@@ -683,13 +683,13 @@
             function clickMyPokeVisible(el){
                 let opVisible = document.getElementById("option_mypoke_visible");
                 let op30 = document.getElementById("option_potential_30");
-                let op50 = document.getElementById("option_potential_50");
                 let op60 = document.getElementById("option_potential_60");
+                let op70 = document.getElementById("option_potential_70");
 
                 if ((el == opVisible) && !opVisible.checked){
                     op30.checked = false;
-                    op50.checked = false;
-                    op60.checked = false
+                    op60.checked = false;
+                    op70.checked = false
                 }
                 else if (!opVisible.checked && el.checked){
                     opVisible.checked = true;
@@ -737,7 +737,6 @@
                 const info = this.createJsonFromInputForm32();
                 if (info == null) return;
 
-                console.log(info);
                 const poke = info.pokemon;
                 const mes =  poke.name + " Lv" + info.LvRaw.lv
                                     + "\nきのみおてつだい: " + info.LvRaw.rawResult.otetsudaiCountBerryDay.toFixed(0) + "/" + info.LvRaw.rawResult.otetsudaiCountDay.toFixed(0)
@@ -899,8 +898,8 @@
                     document.getElementById("sub_skill_lv10").value,
                     document.getElementById("sub_skill_lv25").value,
                     document.getElementById("sub_skill_lv50").value,
-                    document.getElementById("sub_skill_lv75").value,
-                    document.getElementById("sub_skill_lv100").value);
+                    document.getElementById("sub_skill_lv70").value,
+                    document.getElementById("sub_skill_lv80").value);
                 
                 //バカみたいだけどクッキーを作って復元する
                 //structurecopyができないから
@@ -927,8 +926,8 @@
                     food,
                     min,
                     !ignorePotentialChecks && document.getElementById("option_potential_30").checked,
-                    !ignorePotentialChecks && document.getElementById("option_potential_50").checked,
-                    !ignorePotentialChecks && document.getElementById("option_potential_60").checked
+                    !ignorePotentialChecks && document.getElementById("option_potential_60").checked,
+                    !ignorePotentialChecks && document.getElementById("option_potential_70").checked
                 );
             }
 
@@ -1015,8 +1014,6 @@
                 el.setAttribute("code", String.fromCharCode(65 + next));
             }
 
-
-           // function resetInputForm(iName = 0, sSrc = "", edidMode = false, nLv = 30, iChar = 0, ilv10skill = 0, ilv25skill = 0, ilv50skill = 0, ilv75skill = 0, ilv100skill = 0, bgIndex = 0){
             function resetInputForm(json = null){
                 const res = window.confirm("入力情報をリセットしてもよろしいですか？");
                 if (!res) return false;
@@ -1035,8 +1032,8 @@
                 document.getElementById("sub_skill_lv10").selectedIndex    = 0;
                 document.getElementById("sub_skill_lv25").selectedIndex    = 0;
                 document.getElementById("sub_skill_lv50").selectedIndex    = 0;
-                document.getElementById("sub_skill_lv75").selectedIndex    = 0;
-                document.getElementById("sub_skill_lv100").selectedIndex   = 0;
+                document.getElementById("sub_skill_lv70").selectedIndex    = 0;
+                document.getElementById("sub_skill_lv80").selectedIndex   = 0;
                 document.getElementById("sub_skill_import").value          = (json == null) ? "" : json.foodCode + PokemonInfo.createIdentifierOf(json);
 
                 let bgIndex = (json == null) ? 0 : json.backgroundColor;
@@ -1128,8 +1125,8 @@
                 subSkillList.forEach(s => addOp("sub_skill_lv10", s[0], s[1], s[2]));
                 subSkillList.forEach(s => addOp("sub_skill_lv25", s[0], s[1], s[2]));
                 subSkillList.forEach(s => addOp("sub_skill_lv50", s[0], s[1], s[2]));
-                subSkillList.forEach(s => addOp("sub_skill_lv75", s[0], s[1], s[2]));
-                subSkillList.forEach(s => addOp("sub_skill_lv100", s[0], s[1], s[2]));
+                subSkillList.forEach(s => addOp("sub_skill_lv70", s[0], s[1], s[2]));
+                subSkillList.forEach(s => addOp("sub_skill_lv80", s[0], s[1], s[2]));
             }
 
             function initializeLvBox(){
