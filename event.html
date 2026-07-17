@@ -114,7 +114,7 @@
                 this.pokeEvent.addEntry("2026/07/13 04:00", "2026/07/20 04:00", false, GetPreset("3周年記念フェスティバル前半"), "◆3周年記念フェスティバル", "*【中ピックアップ】", "*　ナエトル / ヒコザル / ポッチャマ");
                 this.pokeEvent.addEntry("2026/07/14 04:00", "2026/07/16 04:00", true, GetPreset("ニュームーンデー2"), "◆第15回ニュームーンデー");
                 this.pokeEvent.addEntry("2026/07/20 04:00", "2026/07/27 04:00",  true, GetPreset("3周年記念フェスティバル後半"), "◆3周年記念フェスティバル", "*【中ピックアップ】","*　ナエトル / ハヤシガメ / ドダイトス / ヒコザル / モウカザル / ゴウカザル / ポッチャマ / ポッタイシ / エンペルト");
-                
+                this.pokeEvent.addEntry("2026/07/28 04:00", "2026/07/31 04:00",  true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.37");
                 //最終的に幅を決める
                 const columns = document.querySelectorAll("event_column").length - 1;
                 pokeEvent.dataField.style.minWidth = (columns * 10 + 3) + "em";
@@ -241,7 +241,7 @@
                 goodsleepday_exp_bonus
                 : "睡眠Expが1日前/後に2倍、当日は3倍",
                 goodsleepday_power_bonus
-                : "ねむけパワーが1日前/後に1.5倍、当日は3倍",
+                : "ねむけパワーが1日前/後に1.5倍、当日は月曜4倍/火曜3倍/水曜2.5倍/他2倍",
             }
 
             this.EventPresets = {
