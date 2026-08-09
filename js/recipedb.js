@@ -21,13 +21,13 @@ new Recipe({no:15, category: "カレー・シチュー", name: "からくちネ�
 new Recipe({no:16, category: "カレー・シチュー", name: "あぶりテールカレー", recipeLv: 70, fieldBonus: "85%", baseEnergy:7483, food1:"げきからハーブ", food1Num:25, food2:"おいしいシッポ", food2Num:8, food3:"", food3Num:0, food4:"", food4Num:0, food5:"", food5Num:0}),
 new Recipe({no:17, category: "カレー・シチュー", name: "ぜったいねむりバターカレー", recipeLv: 70, fieldBonus: "85%", baseEnergy:9010, food1:"リラックスカカオ", food1Num:12, food2:"モーモーミルク", food2Num:10, food3:"ほっこりポテト", food3Num:18, food4:"あんみんトマト", food4Num:15, food5:"", food5Num:0}),
 new Recipe({no:18, category: "カレー・シチュー", name: "ニンジャカレー", recipeLv: 70, fieldBonus: "85%", baseEnergy:9445, food1:"ワカクサ大豆", food1Num:24, food2:"マメミート", food2Num:9, food3:"ふといながねぎ", food3Num:12, food4:"あじわいキノコ", food4Num:5, food5:"", food5Num:0}),
-new Recipe({no:19, category: "カレー・シチュー", name: "れんごくコーンキーマカレー", recipeLv: 70, fieldBonus: "85%", baseEnergy:13690, food1:"げきからハーブ", food1Num:27, food2:"マメミート", food2Num:24, food3:"ワカクサコーン", food3Num:14, food4:"あったかジンジャー", food4Num:12, food5:"", food5Num:0}),
-new Recipe({no:20, category: "カレー・シチュー", name: "なりきりバケッチャシチュー", recipeLv: 70, fieldBonus: "85%", baseEnergy:15621, food1:"ずっしりカボチャ", food1Num:10, food2:"マメミート", food2Num:16, food3:"ほっこりポテト", food3Num:18, food4:"あじわいキノコ", food4Num:25, food5:"", food5Num:0}),
-new Recipe({no:21, category: "カレー・シチュー", name: "めざめるパワーシチュー", recipeLv: 70, fieldBonus: "85%", baseEnergy:19061, food1:"ワカクサ大豆", food1Num:28, food2:"あんみんトマト", food2Num:25, food3:"あじわいキノコ", food3Num:23, food4:"めざましコーヒー", food4Num:16, food5:"", food5Num:0}),
-new Recipe({no:22, category: "カレー・シチュー", name: "いあいぎりすき焼きカレー", recipeLv: 70, fieldBonus: "85%", baseEnergy:20655, food1:"ふといながねぎ", food1Num:27, food2:"マメミート", food2Num:26, food3:"あまいミツ", food3Num:26, food4:"とくせんエッグ", food4Num:22, food5:"", food5Num:0}),
-new Recipe({no:23, category: "カレー・シチュー", name: "しんりょくアボカドグラタン", recipeLv: 70, fieldBonus: "85%", baseEnergy:24802, food1:"つやつやアボカド", food1Num:22, food2:"ほっこりポテト", food2Num:20, food3:"モーモーミルク", food3Num:41, food4:"ピュアなオイル", food4Num:32, food5:"", food5Num:0}),
-
-
+new Recipe({no:19, category: "カレー・シチュー", name: "ワカクサカレーパン", recipeLv: 70, fieldBonus: "85%", baseEnergy:10945, food1:"あったかジンジャー", food1Num:20, food2:"げきからハーブ", food2Num:20, food3:"ワカクサ大豆", food3Num:8, food4:"ピュアなオイル", food4Num:15, food5:"", food5Num:0}),
+new Recipe({no:20, category: "カレー・シチュー", name: "れんごくコーンキーマカレー", recipeLv: 70, fieldBonus: "85%", baseEnergy:13690, food1:"げきからハーブ", food1Num:27, food2:"マメミート", food2Num:24, food3:"ワカクサコーン", food3Num:14, food4:"あったかジンジャー", food4Num:12, food5:"", food5Num:0}),
+new Recipe({no:21, category: "カレー・シチュー", name: "なりきりバケッチャシチュー", recipeLv: 70, fieldBonus: "85%", baseEnergy:15621, food1:"ずっしりカボチャ", food1Num:10, food2:"マメミート", food2Num:16, food3:"ほっこりポテト", food3Num:18, food4:"あじわいキノコ", food4Num:25, food5:"", food5Num:0}),
+new Recipe({no:22, category: "カレー・シチュー", name: "めざめるパワーシチュー", recipeLv: 70, fieldBonus: "85%", baseEnergy:19061, food1:"ワカクサ大豆", food1Num:28, food2:"あんみんトマト", food2Num:25, food3:"あじわいキノコ", food3Num:23, food4:"めざましコーヒー", food4Num:16, food5:"", food5Num:0}),
+new Recipe({no:23, category: "カレー・シチュー", name: "いあいぎりすき焼きカレー", recipeLv: 70, fieldBonus: "85%", baseEnergy:20655, food1:"ふといながねぎ", food1Num:27, food2:"マメミート", food2Num:26, food3:"あまいミツ", food3Num:26, food4:"とくせんエッグ", food4Num:22, food5:"", food5Num:0}),
+new Recipe({no:24, category: "カレー・シチュー", name: "しんりょくアボカドグラタン", recipeLv: 70, fieldBonus: "85%", baseEnergy:24802, food1:"つやつやアボカド", food1Num:22, food2:"ほっこりポテト", food2Num:20, food3:"モーモーミルク", food3Num:41, food4:"ピュアなオイル", food4Num:32, food5:"", food5Num:0}),
+new Recipe({no:25, category: "カレー・シチュー", name: "とびはねるカレーうどん", recipeLv: 70, fieldBonus: "85%", baseEnergy:25539, food1:"あったかジンジャー", food1Num:39, food2:"あじわいキノコ", food2Num:31, food3:"げきからハーブ", food3Num:22, food4:"マメミート", food4Num:20, food5:"", food5Num:0}),
 
 
 
@@ -104,29 +104,6 @@ new Recipe({no:98, category: "デザート・ドリンク", name: "スパーク�
 new Recipe({no:99, category: "デザート・ドリンク", name: "ドオーのエクレア", recipeLv: 70, fieldBonus: "85%", baseEnergy:20885, food1:"リラックスカカオ", food1Num:30, food2:"モーモーミルク", food2Num:26, food3:"めざましコーヒー", food3Num:24, food4:"あまいミツ", food4Num:22, food5:"", food5Num:0}),
 new Recipe({no:100, category: "デザート・ドリンク", name: "どきどきこわいかおパンケーキ", recipeLv: 70, fieldBonus: "85%", baseEnergy:24354, food1:"とくせんエッグ", food1Num:24, food2:"あんみんトマト", food2Num:29, food3:"あまいミツ", food3Num:32, food4:"ずっしりカボチャ", food4Num:18, food5:"", food5Num:0}),
 new Recipe({no:101, category: "デザート・ドリンク", name: "みつあつめチョコワッフル", recipeLv: 70, fieldBonus: "85%", baseEnergy:25484, food1:"あまいミツ", food1Num:38, food2:"ワカクサコーン", food2Num:28, food3:"ピュアなオイル", food3Num:28, food4:"リラックスカカオ", food4Num:21, food5:"", food5Num:0}),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
