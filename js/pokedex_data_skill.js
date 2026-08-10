@@ -193,6 +193,14 @@ const SKILL_DATA = {
                         foodGainFunc  : undefined,
                         energyGainFunc:  (poke, expectionDay, option1) => 0
                     }
+                })(),
+            "はどうだん(ゆめのかけらゲットS)"   : (() => {
+                const skillTable = [];
+                return {
+                        getMaxLv: () => 8,
+                        foodGainFunc  : undefined,
+                        energyGainFunc:  (poke, expectionDay, option1) => 0
+                    }
                 })(), 
             "ゆめのかけらゲットS(ランダム)"     : (() => {
                 const skillTable = [];

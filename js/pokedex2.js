@@ -312,17 +312,19 @@ class Pokemon{
         return this.skillRate * (1 + skillNatureAdj) * (1 + skillSubAdj);
     }
 
-    getGuaranteedSkillRate(lv, spdNatureAdj = 0.0, spdSubAdj = 0.0, skillNatureAdj = 0.0, skillSubAdj = 0.0, genkiAdj = 0.52){
+    /*getGuaranteedSkillRate(lv, spdNatureAdj = 0.0, spdSubAdj = 0.0, skillNatureAdj = 0.0, skillSubAdj = 0.0, genkiAdj = 0.52){
+        console.log(this);
         const oteCount = this.getOtetsudaiCountDay(lv, spdNatureAdj, spdSubAdj, genkiAdj);
         const skillPopRate = this.getSkillRate(skillNatureAdj, skillSubAdj);
         const minGuaranteedCount = 144000 / this.sec;
         const neverPopProb = (1 - skillPopRate)**oteCount;
         return (oteCount * skillPopRate + neverPopProb) / oteCount
     }
+    */
 
     getGuaranteedSkillRateWithOtetsudaiCount(oteCount, skillNatureAdj = 0.0, skillSubAdj = 0.0){
         const skillPopRate = this.getSkillRate(skillNatureAdj, skillSubAdj);
-        const minGuaranteedCount = 144000 / this.sec;
+        const minGuaranteedCount = (this.specialty == "スキル") ? 144000 / this.sec : 78;
         const neverPopProb = (1 - skillPopRate)**oteCount;
         return (oteCount * skillPopRate + neverPopProb) / oteCount
     }
