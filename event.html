@@ -119,6 +119,17 @@
                 this.pokeEvent.addEntry("2026/08/10 04:00", "2026/08/17 04:00",  true, GetPreset("サマーフェス"), "◆サマーフェスティバル2026", "*【 中ピックアップ 】", "*ルチャブル", "*【 小ピックアップ 】", "*ゼニガメ / キャタピー / コダック / ヤドン / カモネギ / ドードー / カイロス / ワニノコ / ウパー / ツボツボ / ヘラクロス / デリバード / ミズゴロウ / チルット / ポッチャマ / イシズマイ / ワシボン / アゴジムシ / ウッウ / クワッス")
                 this.pokeEvent.addEntry("2026/08/10 15:00", "2026/08/31 00:00", false, GetPreset(), "◆新ポケモン追加", "ルチャブル（ひこう）（ぐっすり）", "出現フィールド", "*ワカクサ本島/EX・シアンの砂浜/EX・ラピスラズリ湖畔")
                 this.pokeEvent.addEntry("2026/08/12 04:00", "2026/08/15 04:00", true, GetPreset("ニュームーンデー2"), "◆第16回ニュームーンデー");
+
+                this.pokeEvent.addEntry("2026/08/17 04:00", "2026/08/24 04:00",false, GetPreset(), "◆アニポケコラボウィーク", EventItems["pickup_other_sleep_type"],EventItems["sleep_get_chance"],EventItems["sleep_exp_bonus_125percent"],EventItems["cooking_power_125percent"],EventItems["main_skill_125percent"],"ねむけパワー","*【8/21(金)】 1.3倍","*【8/22(土)】 1.3倍","*【8/23(日)】 1.3倍")
+                this.pokeEvent.addEntry("2026/08/17 15:00", "2026/08/31 04:00", true, GetPreset(), "◆新ポケモン追加", "カヌチャン/ナカヌチャン/デカヌチャン（フェアリー）（すやすや）", "*▼出現フィールド", "*ワカクサ本島/EX・シアンの砂浜/EX・ゴールド旧発電所")
+   
+            
+
+
+
+
+
+
                 //最終的に幅を決める
                 const columns = document.querySelectorAll("event_column").length - 1;
                 pokeEvent.dataField.style.minWidth = (columns * 10 + 3) + "em";
@@ -142,6 +153,8 @@
                 /*睡眠リサーチ関係*/
                 sleep_exp_bonus_150percent
                 : "睡眠EXP1.5倍",
+                sleep_exp_bonus_125percent
+                : "睡眠EXP1.25倍",
                 sleep_research_exp_bonus_150percent
                 : "リサーチEXP1.5倍",
                 sleep_candy_150percent
