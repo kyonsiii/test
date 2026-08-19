@@ -638,7 +638,6 @@ class PokeReport{
     insertMypokeRecipeEfficiency(settingEl, resultEl, recipeName){
         const container = resultEl;
 
-
         const createDiv = (classname, text = "", foodImageObj = undefined) =>{
             const el = document.createElement("div");
             el.className = classname;

@@ -186,11 +186,31 @@ class PokeSearch{
 
 
         c = r.insertCell();
-        c.innerHTML = "<img src=\"img/berry/" + poke.berry + ".png\" class=\"tiny\">" + poke.berry 
-                    + "<br><br>" + "<img src=\"img/food/" + poke.foods[0].name + ".png\" class=\"tiny\"><b>" + "(確定)</b>" 
-                    + (poke.foods.length <= 1 ? "" : "<br>" + "<img src=\"img/food/" + poke.foods[1].name + ".png\" class=\"tiny\">")
-                    + (poke.foods.length <= 2 ? "" : "<br>" + "<img src=\"img/food/" + poke.foods[2].name + ".png\" class=\"tiny\">");
 
+        const combList = [];
+        const comb = [[0,0],[0,1],[0,2],[1,0],[1,1],[1,2]];//AAA～ABC
+        comb.forEach(c => {
+                const f30Index = c[0];
+                const f60Index = c[1];
+                if (f30Index >= poke.foods.length) return;
+                if (f60Index >= poke.foods.length) return;
+
+                combList.push(`<div style="display: inline-block; position: relative" class="food_num digit1"><img src="img/food/${poke.foods[0].name}.png" class="tiny"><strong style="z-index: 1">${poke.foods[0].nums[0]}</strong></div>` +
+                              `<div style="display: inline-block; position: relative" class="food_num digit1"><img src="img/food/${poke.foods[f30Index].name}.png" class="tiny"><strong style="z-index: 1">${poke.foods[f30Index].nums[1]}</strong></div>` +
+                              `<div style="display: inline-block; position: relative" class="food_num digit1"><img src="img/food/${poke.foods[f60Index].name}.png" class="tiny"><strong style="z-index: 1">${poke.foods[f60Index].nums[2]}</strong></div><br>`
+                );
+
+        });
+
+        c.innerHTML = "<strong>拾うもの:</strong><br>"
+                    + `<img src="img/berry/${poke.berry}.png" class="tiny">${poke.berry}`
+                    + `<br><img src="img/food/${poke.foods[0].name}.png" class="tiny">`
+                    + (poke.foods.length <= 1 ? "" : `<img src="img/food/${poke.foods[1].name}.png" class="tiny">`)
+                    + (poke.foods.length <= 2 ? "" : `<img src="img/food/${poke.foods[2].name}.png" class="tiny">`)
+                    + "<br><br>"
+                    + "<strong>食材組合せ:</strong>"
+                    + combList.join("\r\n");
+        //c.innerHTML = `<div style="position: relative" class="food_num digit1"><img src="img/food/${poke.foods[0].name}.png" class="tiny"><strong style="z-index: 1">${poke.foods[0].nums[0]}</strong></div>`;
         return r;
     }
 }
