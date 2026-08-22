@@ -126,10 +126,7 @@
                 
                 this.pokeEvent.addEntry("2026/08/27 04:00", "2026/08/30 04:00",  true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.38");
             
-
-
-
-
+                this.pokeEvent.addEntry("2026/08/31 04:00", "2026/09/07 00:00", false, GetPreset("ミラクルスナップミニ"), "◆ミラクルスナップミッション ミニ")
 
 
                 //最終的に幅を決める
@@ -151,16 +148,23 @@
                 : "ダークライ 特別ピックアップ",
                 pickup_mythical
                 : "幻のポケモン 特別ピックアップ",
-
+                miracle_snap
+                : "ミラクルスナップを撮影できる(1日1回)",
                 /*睡眠リサーチ関係*/
                 sleep_exp_bonus_150percent
                 : "睡眠EXP1.5倍",
                 sleep_exp_bonus_125percent
                 : "睡眠EXP1.25倍",
+                sleep_research_exp_bonus_125percent
+                : "リサーチEXP1.25倍",
                 sleep_research_exp_bonus_150percent
                 : "リサーチEXP1.5倍",
+                sleep_candy_125percent
+                : "アメ獲得量1.25倍(1回目のみ)",
                 sleep_candy_150percent
                 : "アメ獲得量1.5倍(1回目のみ)",
+                sleep_yumenokakera_1000
+                : "リサーチのゆめのかけら+1000",
                 sleep_yumenokakera_150percent
                 : "リサーチのゆめのかけら1.5倍",
                 sleep_yumenokakera_200_300percent
@@ -294,6 +298,19 @@
                         this.EventItems["sleep_hunger_chance"]
                     ]
                 },
+
+                "ミラクルスナップミニ" : {
+                    items: [
+                        this.EventItems["pickup_other_sleep_type"],
+                        this.EventItems["miracle_snap"],
+                        this.EventItems["mini_candy_boost"],
+                        this.EventItems["sleep_candy_125percent"],
+                        this.EventItems["sleep_research_exp_bonus_125percent"],
+                        this.EventItems["sleep_yumenokakera_1000"],
+                        this.EventItems["sleep_get_chance"]
+                    ]
+                },
+
                  "ピックアップウィーク": {
                     items: [
                         this.EventItems["mini_candy_boost"],
