@@ -120,14 +120,16 @@
                 //this.pokeEvent.addEntry("2026/08/10 15:00", "2026/08/31 00:00", false, GetPreset(), "◆新ポケモン追加", "ルチャブル（ひこう）（ぐっすり）", "出現フィールド", "*ワカクサ本島/EX・シアンの砂浜/EX・ラピスラズリ湖畔")
                 //this.pokeEvent.addEntry("2026/08/12 04:00", "2026/08/15 04:00", true, GetPreset("ニュームーンデー2"), "◆第16回ニュームーンデー");
 
-                this.pokeEvent.addEntry("2026/08/17 04:00", "2026/08/24 04:00",false, GetPreset(), "◆アニポケコラボウィーク", EventItems["pickup_other_sleep_type"],EventItems["sleep_get_chance"],EventItems["sleep_exp_bonus_125percent"],EventItems["cooking_power_125percent"],EventItems["main_skill_125percent"],"ねむけパワー","*【8/21(金)】 1.3倍","*【8/22(土)】 1.3倍","*【8/23(日)】 1.3倍")
-                this.pokeEvent.addEntry("2026/08/17 15:00", "2026/08/31 04:00", true, GetPreset(), "◆新ポケモン追加", "カヌチャン/ナカヌチャン/デカヌチャン（フェアリー）（すやすや）", "*▼出現フィールド", "*ワカクサ本島/EX・シアンの砂浜/EX・ゴールド旧発電所")
-                this.pokeEvent.addEntry("2026/08/17 15:00", "2026/08/31 04:00", true, GetPreset(), "◆新ポケモン追加", "ピカチュウ(キャプテン)（でんき）（すやすや）", "*▼出現フィールド", "*ワカクサ本島(/EX?)", "イベント中は全フィールドで出現")
+                this.pokeEvent.addEntry("2026/08/17 04:00", "2026/08/24 04:00",false, GetPreset(), "◆アニポケコラボウィーク", EventItems["pickup_other_sleep_type"],EventItems["sleep_get_chance"],EventItems["sleep_exp_bonus_125percent"],EventItems["cooking_power_125percent"],EventItems["main_skill_125percent"],"ねむけパワー","*【8/21(金)】 1.3倍","*【8/22(土)】 1.3倍","*【8/23(日)】 1.3倍");
+                this.pokeEvent.addEntry("2026/08/17 15:00", "2026/08/31 04:00", true, GetPreset(), "◆新ポケモン追加", "カヌチャン/ナカヌチャン/デカヌチャン（フェアリー）（すやすや）", "*▼出現フィールド", "*ワカクサ本島/EX・シアンの砂浜/EX・ゴールド旧発電所");
+                this.pokeEvent.addEntry("2026/08/17 15:00", "2026/08/31 04:00", true, GetPreset(), "◆新ポケモン追加", "ピカチュウ(キャプテン)（でんき）（すやすや）", "*▼出現フィールド", "*ワカクサ本島(/EX?)", "イベント中は全フィールドで出現");
                 
                 this.pokeEvent.addEntry("2026/08/27 04:00", "2026/08/30 04:00",  true, GetPreset("グッドスリープデー"), "◆グッドスリープデーVol.38");
             
-                this.pokeEvent.addEntry("2026/08/31 04:00", "2026/09/07 00:00", false, GetPreset("ミラクルスナップミニ"), "◆ミラクルスナップミッション ミニ")
-
+                this.pokeEvent.addEntry("2026/08/31 04:00", "2026/09/07 00:00", false, GetPreset("ミラクルスナップミニ"), "◆ミラクルスナップミッション ミニ");
+                this.pokeEvent.addEntry("2026/09/10 04:00", "2026/09/13 04:00", true, GetPreset("ニュームーンデー2"), "◆第17回ニュームーンデー");
+                this.pokeEvent.addEntry("2026/09/14 04:00", "2026/09/21 04:00", false, GetPreset("秘境リサーチ！ミュウツーをおいかけて"), "◆秘境リサーチ！ミュウツーをおいかけて 前半", "すべてのおてつだいポケモンの 最大所持数が+8個", "エスパータイプのおてつだいポケモンのメインスキル発動時に メインスキルのレベル+2");
+                this.pokeEvent.addEntry("2026/09/21 04:00", "2026/09/27 04:00",  true, GetPreset("秘境リサーチ！ミュウツーをおいかけて"), "◆秘境リサーチ！ミュウツーをおいかけて 後半", "ミュウツーをチームに編成して一緒に眠ると、ねむけパワー1.3倍", "すべてのおてつだいポケモンの 最大所持数が+15個", "エスパータイプのおてつだいポケモンのメインスキル発動時に メインスキルのレベル+5", "大きいカビゴンが登場し 一定のエナジーからカビゴン育成が開始される");
 
                 //最終的に幅を決める
                 const columns = document.querySelectorAll("event_column").length - 1;
@@ -522,7 +524,23 @@
                         this.EventItems["main_skill_150percent"]
                         
                     ]
-                }
+                },
+                "秘境リサーチ！ミュウツーをおいかけて" : {
+                    items:[
+                        "ワカクサ、～EXで開催",
+                        this.EventItems["pickup_other_sleep_type"],
+                        this.EventItems["exchange_shop"],
+                        this.EventItems["exchange_item"],
+                        "エスパータイプの拾ってくる食材+1",
+                        "エスパータイプのメインスキル発生確率1.5倍",
+                        this.EventItems["main_skill_150percent"],
+                        "1日1回目のおやつタイムにて、ミュウツーが 満腹になりづらくなる",
+                        "ミュウまたはミュウツーをチームに編成して一緒にねむると、 ねむけパワー1.1倍",
+                        "カビゴンの好きなきのみがマゴに固定、残り2種類はランダム",
+                        "すべてのおてつだいポケモンが、通常のおてつだいで「とてもおおきなマゴのみ」を追加で拾ってくることがある"
+                    ]
+                },
+
             }
 
             function GetPreset(key = ""){
