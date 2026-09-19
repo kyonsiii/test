@@ -2,6 +2,14 @@
 //スキルのデータ
 //━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const SKILL_DATA = {
+            "サイコブレイク(きのみゾーン)"     : (() => {
+                const skillTable = [];
+                return {
+                        getMaxLv: () => 6,
+                        foodGainFunc  : undefined,
+                        energyGainFunc:  (poke, expectionDay, option1) => 0
+                    }
+                })(),
             "いやしのはどう(げんきエールS)"     : (() => {
                 const skillTable = [];
                 return {
