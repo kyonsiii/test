@@ -19,7 +19,7 @@ class PokeSleeping{
         el.appendChild(createField("gold", "ゴールド旧発電所", "602万～", "1434万～", "3050万～	", "4992万～", "9732万～"));
         el.appendChild(createField("amber", "アンバー渓谷", "638万～", "1521万～", "3121万～", "5182万～", "9994万～"));
         el.appendChild(createField("waka_ex", "ワカクサ本島EX", "602万～", "1434万～", "3050万～	", "4992万～", "9732万～"));
-        
+        el.appendChild(createField("cyan_ex", "シアンの砂浜EX", "1089万～","1499万～", "3256万～	", "5436万～", "10653万～"));
         //el.appendChild(createField("", "", "", "", "", ""));
         //el.appendChild(createField("", "", "", "", "", ""));
 
