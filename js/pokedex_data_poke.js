@@ -1,7 +1,6 @@
 //ポケモンデータはここに貼り付け
 const POKE_DATA_RAW = [
 
-
 {no:1,name:"フシギダネ",sleepType:"うとうと",specialty:"食材",berry:"ドリのみ",food1:"あまいミツ",food1Num:[2,5,7],food2:"あんみんトマト",food2Num:[0,4,7],food3:"ほっこりポテト",food3Num:[0,0,6],skill:"食材ゲットS",fp:5,sec:4400,fullyEvolved:false,skillLv:1,expType:600,foodRate:0.257,foodOtetsudaiCountDay:11.3,skillRate:0.019,skillExpectionDay:0.83,berryEnergy:30,berrySEnergyLvMaxDay:9485,foodEnergyLvMaxDay:18389,rankOfBerry:1,rankOfFood:4,rankOfSkill:2},
 {no:2,name:"フシギソウ",sleepType:"うとうと",specialty:"食材",berry:"ドリのみ",food1:"あまいミツ",food1Num:[2,5,7],food2:"あんみんトマト",food2Num:[0,4,7],food3:"ほっこりポテト",food3Num:[0,0,6],skill:"食材ゲットS",fp:12,sec:3300,fullyEvolved:false,skillLv:2,expType:600,foodRate:0.255,foodOtetsudaiCountDay:14.9,skillRate:0.019,skillExpectionDay:1.1,berryEnergy:30,berrySEnergyLvMaxDay:12680,foodEnergyLvMaxDay:24328,rankOfBerry:3,rankOfFood:7,rankOfSkill:2},
 {no:3,name:"フシギバナ",sleepType:"うとうと",specialty:"食材",berry:"ドリのみ",food1:"あまいミツ",food1Num:[2,5,7],food2:"あんみんトマト",food2Num:[0,4,7],food3:"ほっこりポテト",food3Num:[0,0,6],skill:"食材ゲットS",fp:20,sec:2800,fullyEvolved:true,skillLv:3,expType:600,foodRate:0.266,foodOtetsudaiCountDay:18.3,skillRate:0.021,skillExpectionDay:1.39,berryEnergy:30,berrySEnergyLvMaxDay:14724,foodEnergyLvMaxDay:29909,rankOfBerry:5,rankOfFood:9,rankOfSkill:3},
@@ -58,7 +57,7 @@ const POKE_DATA_RAW = [
 {no:85,name:"ドードリオ",sleepType:"ぐっすり",specialty:"きのみ",berry:"シーヤのみ",food1:"ワカクサ大豆",food1Num:[1,2,4],food2:"リラックスカカオ",food2Num:[0,1,2],food3:"マメミート",food3Num:[0,0,3],skill:"げんきチャージS",fp:12,sec:2300,fullyEvolved:true,skillLv:2,expType:600,foodRate:0.184,foodOtetsudaiCountDay:15.4,skillRate:0.02,skillExpectionDay:1.64,berryEnergy:24,berrySEnergyLvMaxDay:23913,foodEnergyLvMaxDay:12593,rankOfBerry:11,rankOfFood:1,rankOfSkill:4},
 {no:92,name:"ゴース",sleepType:"うとうと",specialty:"食材",berry:"ブリーのみ",food1:"げきからハーブ",food1Num:[2,5,7],food2:"あじわいキノコ",food2Num:[0,4,6],food3:"ピュアなオイル",food3Num:[0,0,8],skill:"エナジーチャージS(ランダム)",fp:5,sec:3800,fullyEvolved:false,skillLv:1,expType:600,foodRate:0.144,foodOtetsudaiCountDay:7.3,skillRate:0.015,skillExpectionDay:0.83,berryEnergy:26,berrySEnergyLvMaxDay:10965,foodEnergyLvMaxDay:16070,rankOfBerry:2,rankOfFood:2,rankOfSkill:2},
 {no:93,name:"ゴースト",sleepType:"うとうと",specialty:"食材",berry:"ブリーのみ",food1:"げきからハーブ",food1Num:[2,5,7],food2:"あじわいキノコ",food2Num:[0,4,6],food3:"ピュアなオイル",food3Num:[0,0,8],skill:"エナジーチャージS(ランダム)",fp:12,sec:3000,fullyEvolved:false,skillLv:2,expType:600,foodRate:0.157,foodOtetsudaiCountDay:10.1,skillRate:0.022,skillExpectionDay:1.34,berryEnergy:26,berrySEnergyLvMaxDay:13679,foodEnergyLvMaxDay:22192,rankOfBerry:4,rankOfFood:6,rankOfSkill:3},
-{no:94,name:"ゲンガー",sleepType:"うとうと",specialty:"食材",berry:"ブリーのみ",food1:"げきからハーブ",food1Num:[2,5,7],food2:"あじわいキノコ",food2Num:[0,4,6],food3:"ピュアなオイル",food3Num:[0,0,8],skill:"エナジーチャージS(ランダム)",fp:22,sec:2200,fullyEvolved:true,skillLv:3,expType:600,foodRate:0.161,foodOtetsudaiCountDay:14.1,skillRate:0.024,skillExpectionDay:1.96,berryEnergy:26,berrySEnergyLvMaxDay:18564,foodEnergyLvMaxDay:31033,rankOfBerry:7,rankOfFood:9,rankOfSkill:5},
+{no:94,name:"ゲンガー",sleepType:"うとうと",specialty:"食材",berry:"ブリーのみ",food1:"げきからハーブ",food1Num:[2,5,7],food2:"あじわいキノコ",food2Num:[0,4,6],food3:"ピュアなオイル",food3Num:[0,0,8],skill:"エナジーチャージS(ランダム)",fp:22,sec:2200,fullyEvolved:true,skillLv:3,expType:600,foodRate:0.166,foodOtetsudaiCountDay:14.5,skillRate:0.024,skillExpectionDay:1.96,berryEnergy:26,berrySEnergyLvMaxDay:18453,foodEnergyLvMaxDay:31997,rankOfBerry:7,rankOfFood:10,rankOfSkill:5},
 {no:95,name:"イワーク",sleepType:"ぐっすり",specialty:"きのみ",berry:"オボンのみ",food1:"あんみんトマト",food1Num:[1,2,4],food2:"マメミート",food2Num:[0,2,4],food3:"ほっこりポテト",food3Num:[0,0,3],skill:"食材ゲットS",fp:16,sec:3100,fullyEvolved:true,skillLv:1,expType:600,foodRate:0.132,foodOtetsudaiCountDay:8.2,skillRate:0.023,skillExpectionDay:1.34,berryEnergy:30,berrySEnergyLvMaxDay:23590,foodEnergyLvMaxDay:6703,rankOfBerry:11,rankOfFood:1,rankOfSkill:3},
 {no:104,name:"カラカラ",sleepType:"ぐっすり",specialty:"きのみ",berry:"フィラのみ",food1:"あったかジンジャー",food1Num:[1,2,4],food2:"リラックスカカオ",food2Num:[0,2,3],food3:"",food3Num:[],skill:"げんきチャージS",fp:5,sec:4800,fullyEvolved:false,skillLv:1,expType:600,foodRate:0.223,foodOtetsudaiCountDay:9,skillRate:0.044,skillExpectionDay:1.54,berryEnergy:29,berrySEnergyLvMaxDay:13183,foodEnergyLvMaxDay:9552,rankOfBerry:4,rankOfFood:1,rankOfSkill:3},
 {no:105,name:"ガラガラ",sleepType:"ぐっすり",specialty:"きのみ",berry:"フィラのみ",food1:"あったかジンジャー",food1Num:[1,2,4],food2:"リラックスカカオ",food2Num:[0,2,3],food3:"",food3Num:[],skill:"げんきチャージS",fp:12,sec:3300,fullyEvolved:true,skillLv:2,expType:600,foodRate:0.225,foodOtetsudaiCountDay:13.1,skillRate:0.045,skillExpectionDay:2.28,berryEnergy:29,berrySEnergyLvMaxDay:19127,foodEnergyLvMaxDay:14018,rankOfBerry:8,rankOfFood:1,rankOfSkill:5},
@@ -251,6 +250,41 @@ const POKE_DATA_RAW = [
 {no:974,name:"アルクジラ",sleepType:"ぐっすり",specialty:"食材",berry:"チーゴのみ",food1:"ほっこりポテト",food1Num:[2,5,7],food2:"マメミート",food2Num:[0,5,9],food3:"ずっしりカボチャ",food3Num:[0,0,4],skill:"げんきチャージS",fp:5,sec:5100,fullyEvolved:false,skillLv:1,expType:600,foodRate:0.223,foodOtetsudaiCountDay:8.4,skillRate:0.042,skillExpectionDay:1.38,berryEnergy:32,berrySEnergyLvMaxDay:9128,foodEnergyLvMaxDay:17699,rankOfBerry:1,rankOfFood:3,rankOfSkill:3},
 {no:975,name:"ハルクジラ",sleepType:"ぐっすり",specialty:"食材",berry:"チーゴのみ",food1:"ほっこりポテト",food1Num:[2,5,7],food2:"マメミート",food2Num:[0,5,9],food3:"ずっしりカボチャ",food3Num:[0,0,4],skill:"げんきチャージS",fp:20,sec:2800,fullyEvolved:true,skillLv:2,expType:600,foodRate:0.209,foodOtetsudaiCountDay:14.4,skillRate:0.042,skillExpectionDay:2.52,berryEnergy:32,berrySEnergyLvMaxDay:16925,foodEnergyLvMaxDay:30214,rankOfBerry:6,rankOfFood:9,rankOfSkill:6},
 {no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材",berry:"カゴのみ",food1:"リラックスカカオ",food1Num:[2,5,7],food2:"めざましコーヒー",food2Num:[0,4,7],food3:"ほっこりポテト",food3Num:[0,0,9],skill:"げんきチャージS",fp:12,sec:3500,fullyEvolved:true,skillLv:2,expType:600,foodRate:0.208,foodOtetsudaiCountDay:11.5,skillRate:0.055,skillExpectionDay:2.62,berryEnergy:32,berrySEnergyLvMaxDay:13557,foodEnergyLvMaxDay:30471,rankOfBerry:4,rankOfFood:9,rankOfSkill:6},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
