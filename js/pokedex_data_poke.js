@@ -1,6 +1,5 @@
 //ポケモンデータはここに貼り付け
 const POKE_DATA_RAW = [
-
 {no:1,name:"フシギダネ",sleepType:"うとうと",specialty:"食材",berry:"ドリのみ",food1:"あまいミツ",food1Num:[2,5,7],food2:"あんみんトマト",food2Num:[0,4,7],food3:"ほっこりポテト",food3Num:[0,0,6],skill:"食材ゲットS",fp:5,sec:4400,fullyEvolved:false,skillLv:1,expType:600,foodRate:0.257,foodOtetsudaiCountDay:11.3,skillRate:0.019,skillExpectionDay:0.83,berryEnergy:30,berrySEnergyLvMaxDay:9485,foodEnergyLvMaxDay:18389,rankOfBerry:1,rankOfFood:4,rankOfSkill:2},
 {no:2,name:"フシギソウ",sleepType:"うとうと",specialty:"食材",berry:"ドリのみ",food1:"あまいミツ",food1Num:[2,5,7],food2:"あんみんトマト",food2Num:[0,4,7],food3:"ほっこりポテト",food3Num:[0,0,6],skill:"食材ゲットS",fp:12,sec:3300,fullyEvolved:false,skillLv:2,expType:600,foodRate:0.255,foodOtetsudaiCountDay:14.9,skillRate:0.019,skillExpectionDay:1.1,berryEnergy:30,berrySEnergyLvMaxDay:12680,foodEnergyLvMaxDay:24328,rankOfBerry:3,rankOfFood:7,rankOfSkill:2},
 {no:3,name:"フシギバナ",sleepType:"うとうと",specialty:"食材",berry:"ドリのみ",food1:"あまいミツ",food1Num:[2,5,7],food2:"あんみんトマト",food2Num:[0,4,7],food3:"ほっこりポテト",food3Num:[0,0,6],skill:"食材ゲットS",fp:20,sec:2800,fullyEvolved:true,skillLv:3,expType:600,foodRate:0.266,foodOtetsudaiCountDay:18.3,skillRate:0.021,skillExpectionDay:1.39,berryEnergy:30,berrySEnergyLvMaxDay:14724,foodEnergyLvMaxDay:29909,rankOfBerry:5,rankOfFood:9,rankOfSkill:3},
@@ -104,6 +103,7 @@ const POKE_DATA_RAW = [
 {no:197,name:"ブラッキー",sleepType:"うとうと",specialty:"スキル",berry:"ウイのみ",food1:"モーモーミルク",food1Num:[1,2,4],food2:"リラックスカカオ",food2Num:[0,1,2],food3:"マメミート",food3Num:[0,0,3],skill:"つきのひかり",fp:20,sec:3200,fullyEvolved:true,skillLv:2,expType:600,foodRate:0.219,foodOtetsudaiCountDay:13.2,skillRate:0.101,skillExpectionDay:5.25,berryEnergy:31,berrySEnergyLvMaxDay:14165,foodEnergyLvMaxDay:10773,rankOfBerry:4,rankOfFood:1,rankOfSkill:12},
 {no:198,name:"ヤミカラス",sleepType:"うとうと",specialty:"スキル",berry:"ウイのみ",food1:"めざましコーヒー",food1Num:[1,2,4],food2:"ワカクサ大豆",food2Num:[0,3,6],food3:"げきからハーブ",food3Num:[0,0,4],skill:"きょううん(食材セレクトS)",fp:16,sec:3600,fullyEvolved:false,skillLv:1,expType:600,foodRate:0.141,foodOtetsudaiCountDay:7.5,skillRate:0.062,skillExpectionDay:2.95,berryEnergy:31,berrySEnergyLvMaxDay:13849,foodEnergyLvMaxDay:9236,rankOfBerry:4,rankOfFood:1,rankOfSkill:7},
 {no:199,name:"ヤドキング",sleepType:"すやすや",specialty:"スキル",berry:"オレンのみ",food1:"リラックスカカオ",food1Num:[1,2,4],food2:"おいしいシッポ",food2Num:[0,1,2],food3:"あんみんトマト",food3Num:[0,0,5],skill:"げんきエールS",fp:20,sec:3400,fullyEvolved:true,skillLv:2,expType:600,foodRate:0.166,foodOtetsudaiCountDay:9.4,skillRate:0.087,skillExpectionDay:4.28,berryEnergy:31,berrySEnergyLvMaxDay:14237,foodEnergyLvMaxDay:15904,rankOfBerry:4,rankOfFood:2,rankOfSkill:11},
+{no:200,name:"ムウマ",sleepType:"うとうと",specialty:"スキル",berry:"ブリーのみ",food1:"ほっこりポテト",food1Num:[1,2,4],food2:"めざましコーヒー",food2Num:[0,2,3],food3:"あんみんトマト",food3Num:[0,0,4],skill:"料理パワーアップS",fp:16,sec:2800,fullyEvolved:false,skillLv:1,expType:600,foodRate:0.15,foodOtetsudaiCountDay:10.3,skillRate:0.047,skillExpectionDay:2.89,berryEnergy:26,berrySEnergyLvMaxDay:14777,foodEnergyLvMaxDay:10842,rankOfBerry:5,rankOfFood:1,rankOfSkill:7},
 {no:202,name:"ソーナンス",sleepType:"すやすや",specialty:"スキル",berry:"マゴのみ",food1:"とくせんリンゴ",food1Num:[1,2,4],food2:"あじわいキノコ",food2Num:[0,1,2],food3:"ピュアなオイル",food3Num:[0,0,3],skill:"げんきエールS",fp:7,sec:3500,fullyEvolved:true,skillLv:2,expType:600,foodRate:0.211,foodOtetsudaiCountDay:11.6,skillRate:0.082,skillExpectionDay:3.93,berryEnergy:26,berrySEnergyLvMaxDay:10973,foodEnergyLvMaxDay:9490,rankOfBerry:2,rankOfFood:1,rankOfSkill:10},
 {no:208,name:"ハガネール",sleepType:"ぐっすり",specialty:"きのみ",berry:"ベリブのみ",food1:"あんみんトマト",food1Num:[1,2,4],food2:"マメミート",food2Num:[0,2,4],food3:"ほっこりポテト",food3Num:[0,0,3],skill:"食材ゲットS",fp:20,sec:3000,fullyEvolved:true,skillLv:3,expType:600,foodRate:0.154,foodOtetsudaiCountDay:9.9,skillRate:0.032,skillExpectionDay:1.83,berryEnergy:33,berrySEnergyLvMaxDay:26135,foodEnergyLvMaxDay:8081,rankOfBerry:12,rankOfFood:1,rankOfSkill:4},
 {no:213,name:"ツボツボ",sleepType:"うとうと",specialty:"スキル",berry:"ラムのみ",food1:"ピュアなオイル",food1Num:[1,2,4],food2:"めざましコーヒー",food2Num:[0,2,3],food3:"あまいミツ",food3Num:[0,0,4],skill:"きのみジュース(げんきオールS)",fp:16,sec:3600,fullyEvolved:true,skillLv:1,expType:600,foodRate:0.205,foodOtetsudaiCountDay:11,skillRate:0.059,skillExpectionDay:2.82,berryEnergy:24,berrySEnergyLvMaxDay:9923,foodEnergyLvMaxDay:11525,rankOfBerry:1,rankOfFood:1,rankOfSkill:7},
@@ -175,6 +175,7 @@ const POKE_DATA_RAW = [
 {no:405,name:"レントラー",sleepType:"すやすや",specialty:"食材",berry:"ウブのみ",food1:"あんみんトマト",food1Num:[2,5,7],food2:"ピュアなオイル",food2Num:[0,4,7],food3:"めざましコーヒー",food3Num:[0,0,5],skill:"料理パワーアップS",fp:20,sec:2400,fullyEvolved:true,skillLv:3,expType:600,foodRate:0.2,foodOtetsudaiCountDay:16.1,skillRate:0.023,skillExpectionDay:1.74,berryEnergy:25,berrySEnergyLvMaxDay:15602,foodEnergyLvMaxDay:30252,rankOfBerry:5,rankOfFood:9,rankOfSkill:4},
 {no:425,name:"フワンテ",sleepType:"うとうと",specialty:"スキル",berry:"ブリーのみ",food1:"ワカクサコーン",food1Num:[1,2,4],food2:"ピュアなオイル",food2Num:[0,3,4],food3:"ほっこりポテト",food3Num:[0,0,4],skill:"たくわえる(エナジーチャージS)",fp:5,sec:4800,fullyEvolved:false,skillLv:1,expType:600,foodRate:0.137,foodOtetsudaiCountDay:5.5,skillRate:0.071,skillExpectionDay:2.58,berryEnergy:26,berrySEnergyLvMaxDay:8752,foodEnergyLvMaxDay:6602,rankOfBerry:1,rankOfFood:1,rankOfSkill:6},
 {no:426,name:"フワライド",sleepType:"うとうと",specialty:"スキル",berry:"ブリーのみ",food1:"ワカクサコーン",food1Num:[1,2,4],food2:"ピュアなオイル",food2Num:[0,3,4],food3:"ほっこりポテト",food3Num:[0,0,4],skill:"たくわえる(エナジーチャージS)",fp:12,sec:2500,fullyEvolved:true,skillLv:2,expType:600,foodRate:0.128,foodOtetsudaiCountDay:9.9,skillRate:0.063,skillExpectionDay:4.21,berryEnergy:26,berrySEnergyLvMaxDay:16979,foodEnergyLvMaxDay:11843,rankOfBerry:6,rankOfFood:1,rankOfSkill:11},
+{no:429,name:"ムウマージ",sleepType:"うとうと",specialty:"スキル",berry:"ブリーのみ",food1:"ほっこりポテト",food1Num:[1,2,4],food2:"めざましコーヒー",food2Num:[0,2,3],food3:"あんみんトマト",food3Num:[0,0,4],skill:"マジカルフレイム(料理アドバンスS)",fp:20,sec:2400,fullyEvolved:true,skillLv:2,expType:600,foodRate:0.142,foodOtetsudaiCountDay:11.4,skillRate:0.036,skillExpectionDay:2.62,berryEnergy:26,berrySEnergyLvMaxDay:17402,foodEnergyLvMaxDay:11975,rankOfBerry:7,rankOfFood:1,rankOfSkill:6},
 {no:430,name:"ドンカラス",sleepType:"うとうと",specialty:"スキル",berry:"ウイのみ",food1:"めざましコーヒー",food1Num:[1,2,4],food2:"ワカクサ大豆",food2Num:[0,3,6],food3:"げきからハーブ",food3Num:[0,0,4],skill:"きょううん(食材セレクトS)",fp:20,sec:3200,fullyEvolved:true,skillLv:2,expType:600,foodRate:0.143,foodOtetsudaiCountDay:8.6,skillRate:0.067,skillExpectionDay:3.53,berryEnergy:31,berrySEnergyLvMaxDay:15544,foodEnergyLvMaxDay:10537,rankOfBerry:5,rankOfFood:1,rankOfSkill:9},
 {no:438,name:"ウソハチ",sleepType:"ぐっすり",specialty:"スキル",berry:"オボンのみ",food1:"あんみんトマト",food1Num:[1,2,4],food2:"ワカクサ大豆",food2Num:[0,2,4],food3:"あじわいキノコ",food3Num:[0,0,2],skill:"エナジーチャージM",fp:5,sec:6300,fullyEvolved:false,skillLv:1,expType:600,foodRate:0.189,foodOtetsudaiCountDay:5.8,skillRate:0.061,skillExpectionDay:1.88,berryEnergy:30,berrySEnergyLvMaxDay:7230,foodEnergyLvMaxDay:4722,rankOfBerry:1,rankOfFood:1,rankOfSkill:4},
 {no:439,name:"マネネ",sleepType:"ぐっすり",specialty:"食材",berry:"マゴのみ",food1:"あんみんトマト",food1Num:[2,5,7],food2:"ほっこりポテト",food2Num:[0,4,6],food3:"ふといながねぎ",food3Num:[0,0,4],skill:"へんしん(スキルコピー)",fp:5,sec:4300,fullyEvolved:false,skillLv:1,expType:600,foodRate:0.201,foodOtetsudaiCountDay:9,skillRate:0.032,skillExpectionDay:1.28,berryEnergy:26,berrySEnergyLvMaxDay:9045,foodEnergyLvMaxDay:15618,rankOfBerry:1,rankOfFood:2,rankOfSkill:3},
@@ -250,6 +251,37 @@ const POKE_DATA_RAW = [
 {no:974,name:"アルクジラ",sleepType:"ぐっすり",specialty:"食材",berry:"チーゴのみ",food1:"ほっこりポテト",food1Num:[2,5,7],food2:"マメミート",food2Num:[0,5,9],food3:"ずっしりカボチャ",food3Num:[0,0,4],skill:"げんきチャージS",fp:5,sec:5100,fullyEvolved:false,skillLv:1,expType:600,foodRate:0.223,foodOtetsudaiCountDay:8.4,skillRate:0.042,skillExpectionDay:1.38,berryEnergy:32,berrySEnergyLvMaxDay:9128,foodEnergyLvMaxDay:17699,rankOfBerry:1,rankOfFood:3,rankOfSkill:3},
 {no:975,name:"ハルクジラ",sleepType:"ぐっすり",specialty:"食材",berry:"チーゴのみ",food1:"ほっこりポテト",food1Num:[2,5,7],food2:"マメミート",food2Num:[0,5,9],food3:"ずっしりカボチャ",food3Num:[0,0,4],skill:"げんきチャージS",fp:20,sec:2800,fullyEvolved:true,skillLv:2,expType:600,foodRate:0.209,foodOtetsudaiCountDay:14.4,skillRate:0.042,skillExpectionDay:2.52,berryEnergy:32,berrySEnergyLvMaxDay:16925,foodEnergyLvMaxDay:30214,rankOfBerry:6,rankOfFood:9,rankOfSkill:6},
 {no:980,name:"ドオー",sleepType:"うとうと",specialty:"食材",berry:"カゴのみ",food1:"リラックスカカオ",food1Num:[2,5,7],food2:"めざましコーヒー",food2Num:[0,4,7],food3:"ほっこりポテト",food3Num:[0,0,9],skill:"げんきチャージS",fp:12,sec:3500,fullyEvolved:true,skillLv:2,expType:600,foodRate:0.208,foodOtetsudaiCountDay:11.5,skillRate:0.055,skillExpectionDay:2.62,berryEnergy:32,berrySEnergyLvMaxDay:13557,foodEnergyLvMaxDay:30471,rankOfBerry:4,rankOfFood:9,rankOfSkill:6},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

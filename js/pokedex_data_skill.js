@@ -10,6 +10,14 @@ const SKILL_DATA = {
                         energyGainFunc:  (poke, expectionDay, option1) => 0
                     }
                 })(),
+            "マジカルフレイム(料理アドバンスS)"     : (() => {
+                const skillTable = [];
+                return {
+                        getMaxLv: () => 7,
+                        foodGainFunc  : undefined,
+                        energyGainFunc:  (poke, expectionDay, option1) => 0
+                    }
+                })(),
             "いやしのはどう(げんきエールS)"     : (() => {
                 const skillTable = [];
                 return {
