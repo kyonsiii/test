@@ -56,6 +56,9 @@ class PokeEvent{
                 li.style.listStyle = "none";
                 li.style.marginLeft = "-2em";
                 x = x.substr(1,);
+            } else if (x.startsWith(" ")){
+                li.style.listStyle = "none";
+                x = x.substr(1,);
             }
             li.textContent = x;
             ulEl.appendChild(li);
