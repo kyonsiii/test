@@ -138,8 +138,8 @@
                 this.pokeEvent.addEntry("2026/11/16 04:00", "2026/11/23 04:00", true, GetPreset("ごちそうウィーク"), "◆なんでもペロリ！ごちそうウィーク vol.1", "*【中ピックアップ】", "*モンメン / エルフーン");
                 this.pokeEvent.addEntry("2026/11/16 04:00", "2026/11/30 04:00", true, GetPreset(), "◆新レシピ追加", "*【カレー】", "ワカクサコーン / ずっしりカボチャ / ひとくちナッツ", " 計: 39", "*【サラダ】", "あったかジンジャー / あんみんトマト / つやつやアボカド / ひとくちナッツ", " 計: 121", "*【デザート】", "とくせんエッグ / おいしいシッポ / ワカクサ大豆 / ひとくちナッツ", " 計: 91");
                 this.pokeEvent.addEntry("2026/11/16 15:00", "2026/11/30 04:00", true, GetPreset(), "◆新ポケモン追加", "モンメン/エルフーン(フェアリー）（すやすや）", "*▼出現フィールド", "*ワカクサ本島/EX", "*シアンの砂浜/EX", "*アンバー渓谷");
-                
-                
+                this.pokeEvent.addEntry("2026/11/23 04:00", "2026/11/26 04:00",  true, GetPreset("グッドスリープデー2"), "◆グッドスリープデーVol.41");
+                this.pokeEvent.addEntry("2026/11/23 04:00", "2026/11/30 04:00", true, GetPreset("ゆめのカケラGETウィーク"), "◆ゆめのカケラGETウィークVol.2");
                 
                 
                 
@@ -337,7 +337,17 @@
 
                 "グッドスリープデー" : {
                     items: [
+                        this.EventItems["pickup_undiscovered"],                        
+                        "ピィ/ピッピ/ピクシー 中ピックアップ",
+                        this.EventItems["goodsleepday_power_bonus"],
+                        this.EventItems["goodsleepday_exp_bonus"],
+                        this.EventItems["goodsleepday_point_bonus"]
+                    ]
+                },
+                "グッドスリープデー2" : {
+                    items: [
                         this.EventItems["pickup_undiscovered"],
+                        "ミュウ特別ピックアップ",
                         "ピィ/ピッピ/ピクシー 中ピックアップ",
                         this.EventItems["goodsleepday_power_bonus"],
                         this.EventItems["goodsleepday_exp_bonus"],
