@@ -185,7 +185,7 @@ class PokeReport{
         const mil = this.mypokeInfoList;
 
         //MyPokeを食材ごとに割り振る（重複あり）
-        this.pokedex.foodList.recipedb.foods.sort((a, b) => a.power - b.power).map(f => f.name).forEach(f =>{
+        this.pokedex.foodList.sort((a, b) => a.power - b.power).map(f => f.name).forEach(f =>{
             let x = [];
             for (let i = 0; i < mil.length; i++){
                 let pac = mil[i];
