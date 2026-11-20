@@ -97,27 +97,27 @@ const FOOD_EVAL_DATA = {
 //食材の並び順を自分で決めるためのデータ
 //━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const FOOD_DATA = [
-            {name: "とくせんリンゴ",        id: 4,  displayOrder: 0},
-            {name: "モーモーミルク",        id: 7,  displayOrder: 1},
-            {name: "ワカクサ大豆",          id: 14, displayOrder: 2},
-            {name: "あまいミツ",            id: 8,  displayOrder: 3},
-            {name: "マメミート",            id: 6,  displayOrder: 4},
-            {name: "あったかジンジャー",    id: 10, displayOrder: 5},
-            {name: "あんみんトマト",        id: 11, displayOrder: 6},
-            {name: "とくせんエッグ",        id: 2,  displayOrder: 7},
-            {name: "ピュアなオイル",        id: 9,  displayOrder: 8},
-            {name: "ほっこりポテト",        id: 3,  displayOrder: 9},
-            {name: "げきからハーブ",        id: 5,  displayOrder: 10},
-            {name: "リラックスカカオ",      id: 12, displayOrder: 11},
-            {name: "あじわいキノコ",        id: 1,  displayOrder: 12},
-            {name: "ふといながねぎ",        id: 0,  displayOrder: 13},
-            {name: "おいしいシッポ",        id: 13, displayOrder: 14},
-            {name: "ワカクサコーン",        id: 15, displayOrder: 15},
-            {name: "めざましコーヒー",      id: 16, displayOrder: 16},
-            {name: "ずっしりカボチャ",      id: 17, displayOrder: 17},
-            {name: "つやつやアボカド",      id: 18, displayOrder: 18}
+            {name: "とくせんリンゴ",        id: 4,  displayOrder: 0,  power: 90},
+            {name: "モーモーミルク",        id: 7,  displayOrder: 1,  power: 98},
+            {name: "ワカクサ大豆",          id: 14, displayOrder: 2,  power: 100},
+            {name: "あまいミツ",            id: 8,  displayOrder: 3,  power: 101},
+            {name: "マメミート",            id: 6,  displayOrder: 4,  power: 103},
+            {name: "あったかジンジャー",    id: 10, displayOrder: 5,  power: 109},
+            {name: "あんみんトマト",        id: 11, displayOrder: 6,  power: 110},
+            {name: "とくせんエッグ",        id: 2,  displayOrder: 7,  power: 115},
+            {name: "ピュアなオイル",        id: 9,  displayOrder: 8,  power: 121},
+            {name: "ほっこりポテト",        id: 3,  displayOrder: 9,  power: 124},
+            {name: "げきからハーブ",        id: 5,  displayOrder: 10, power: 130},
+            {name: "リラックスカカオ",      id: 12, displayOrder: 11, power: 151},
+            {name: "あじわいキノコ",        id: 1,  displayOrder: 12, power: 167},
+            {name: "ふといながねぎ",        id: 0,  displayOrder: 13, power: 185},
+            {name: "おいしいシッポ",        id: 13, displayOrder: 14, power: 342},
+            {name: "ワカクサコーン",        id: 15, displayOrder: 15, power: 140},
+            {name: "めざましコーヒー",      id: 16, displayOrder: 16, power: 153},
+            {name: "ずっしりカボチャ",      id: 17, displayOrder: 17, power: 250},
+            {name: "つやつやアボカド",      id: 18, displayOrder: 18, power: 162},
+            {name: "ひとくちナッツ",        id: 19, displayOrder: 19, power: 112},
         ];
-
 
 const RECIPE_BONUS_DATA = [
         /*Lv1  ～ Lv10 */0.00, 0.02, 0.04, 0.06, 0.08, 0.09, 0.11, 0.13, 0.16, 0.18,

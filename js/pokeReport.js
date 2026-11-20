@@ -30,12 +30,13 @@ class PokeReport{
 
         this.pokeFoodMap = {};
         //食べ物ごと
-        recipedb.foods.forEach(f => {
+        this.pokedex.foodList.forEach(f => {
             let cands = this.pokedex.pokemons.filter(p => p.fullyEvolved && p.existAnyInFoodList([f.name]))
                          .map(p => ({pokemon: p.name, name: p.name, expection: Math.max(...p.foodCombinations.map(fc => fc.getExpectionOf(f.name)))}));
             let p = cands.reduce((prev, cur) => (cur.expection > prev.expection ? cur: prev));
             this.pokeFoodMap[f.name] = {NoAdjust: {no: this.pokedex.getPokemonByName(p.pokemon).no, name: p.pokemon, expection: p.expection}};
         });
+        //20261120: 新食材追加したが入手するポケモンをデータに入れていないせいでエラーが出ていた
     }
 
 
@@ -184,7 +185,7 @@ class PokeReport{
         const mil = this.mypokeInfoList;
 
         //MyPokeを食材ごとに割り振る（重複あり）
-        this.recipedb.foods.sort((a, b) => a.power - b.power).map(f => f.name).forEach(f =>{
+        this.pokedex.foodList.recipedb.foods.sort((a, b) => a.power - b.power).map(f => f.name).forEach(f =>{
             let x = [];
             for (let i = 0; i < mil.length; i++){
                 let pac = mil[i];

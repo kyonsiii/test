@@ -26,6 +26,7 @@ class Pokedex{
 
 
         //食材の並び順を調整するため indexで使用、reportもここから使うかも？
+        //20261120
         this.foodList = FOOD_DATA.sort((a, b) => a.displayOrder - b.displayOrder);
 
         const foodSet = new Set(this.pokemons.map(p => p.foods.map(f => f.name).flat()).flat());
